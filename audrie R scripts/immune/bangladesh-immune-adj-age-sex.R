@@ -3,7 +3,7 @@
 #
 # audrie lin (audrielin@berkeley.edu)
 #
-# Hello world
+# 
 # calculate adjusted age sex differences
 # between treatment arms for immune assays
 #---------------------------------------
