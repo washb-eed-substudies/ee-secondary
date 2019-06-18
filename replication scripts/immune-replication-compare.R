@@ -1,0 +1,123 @@
+
+
+da %>% group_by(tr) %>% summarise(N=n(), mean(as.numeric(factor(sex))), mean(igf_t2, na.rm=T))
+d %>% group_by(tr) %>% summarise(N=n(), mean(sex), mean(igf_t2, na.rm=T))
+
+da <- read.csv("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Data/Cleaned/Audrie/bangladesh-dm-ee-anthro-diar-ee-med-plasma-blind-tr-enrol-covariates-lab.csv")
+table(is.na(da$agemth_bt1))
+table(is.na(da$agemth_bt2))
+table(is.na(da$agemth_bt3))
+
+mean(da$agemth_bt2, na.rm=T)
+
+table(d$mons)
+
+rm(list=ls())
+library(tidyverse)
+library(haven)
+library(washb)
+library(data.table)
+
+#load immune outcomes
+imm<-read_dta("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Data/Untouched/immune/washb-bangladesh-immun-lab-t2-t3.dta")
+imm <- as.data.frame(imm)
+imm$childid <- as.numeric(imm$childid)
+head(imm)
+
+#log transform outcomes
+table(is.na(imm[,-1]))
+imm[,-1] <- log(imm[,-1])
+table(is.na(imm[,-1]))
+
+fulld <- read.csv("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Data/Cleaned/Andrew/EE-BD_fulldata.csv")
+colnames(fulld)
+
+#Subset to needed variables
+
+#Merge in immune outcomes
+dim(imm)
+dim(fulld)
+fulld$childid <- as.numeric(fulld$childid)
+d <- semi_join(imm, fulld, by="childid")
+dim(d)
+
+table(is.na(d$sex))
+
+
+
+
+#Covariate comparison
+Wvars<-c("monsoon_bt2","ageday_bt2", "sex","birthord", "momage","momheight","momedu", 
+         "hfiacat", "Nlt18","Ncomp", "watmin", "walls", "floor", "elec", "asset_wardrobe", 
+         "asset_table", "asset_chair", "asset_clock","asset_khat", "asset_chouki", "asset_radio", 
+         "asset_tv", "asset_refrig", "asset_bike", "asset_moto", "asset_sewmach", "asset_mobile", 
+         "n_cattle", "n_goat", "n_chicken")
+
+
+#Monsoon is off for the two of us
+table(W2$monsoon2)
+table(da$monsoon_bt2)
+
+#I'm missing one age
+summary(W2$aged2)
+summary(da$ageday_bt2)
+
+# table(W2$sex)
+# table(da$sex)
+
+# table(W2$birthord)
+# table(da$birthord)
+
+# summary(W2$momage)
+# summary(da$momage)
+
+# summary(W2$momheight)
+# summary(da$momheight)
+
+# summary(W2$momedu)
+# summary(da$momedu)
+
+# summary(W2$momedu)
+# summary(da$momedu)
+
+# summary(W2$Nlt18)
+# summary(da$Nlt18)
+
+# summary(W2$Ncomp)
+# summary(da$Ncomp)
+
+# summary(W2$watmin)
+# summary(da$watmin)
+
+wvars <- c("hfiacat", "walls", "floor", "elec", "asset_wardrobe", 
+"asset_table", "asset_chair", "asset_clock","asset_khat", "asset_chouki", "asset_radio", 
+"asset_tv", "asset_refrig", "asset_bike", "asset_moto", "asset_sewmach", "asset_mobile")
+
+for(i in 1:length(wvars)){
+  print(wvars[i])
+  print(table(W2[,wvars[i]]))
+  print(table(da[,wvars[i]]))
+}
+
+#All matching
+
+
+#Missing 7 obs
+# summary(W2$n_cows)
+# summary(da$n_cattle)
+
+#Missing 7 obs
+# summary(W2$n_goats)
+# summary(da$n_goat)
+
+#Missing 7 obs
+# summary(W2$n_chickens)
+# summary(da$n_chicken)
+
+# miss_ids <- d$childid[is.na(d$n_chickens)]
+# miss_ids
+# 
+# da$n_cattle[da$childid %in% miss_ids]
+# da$n_goat[da$childid %in% miss_ids]
+# da$n_chicken[da$childid %in% miss_ids]
+#Audrie's assets are numeric rather than factors
