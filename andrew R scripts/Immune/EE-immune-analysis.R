@@ -1,10 +1,9 @@
 
 
 rm(list=ls())
-library(tidyverse)
-library(haven)
-library(washb)
-library(data.table)
+source(here::here("0-config.R"))
+
+
 
 #load immune outcomes
 imm<-read_dta("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Data/Untouched/immune/washb-bangladesh-immun-lab-t2-t3.dta")
@@ -21,8 +20,8 @@ fulld <- read.csv("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Data
 colnames(fulld)
 
 
-fulld$n_chickens[fulld$childid=="52061"]
-52061  76011 124071 133041 147011 207081 406071
+# fulld$n_chickens[fulld$childid=="52061"]
+# 52061  76011 124071 133041 147011 207081 406071
 
 #Subset to needed variables
 
@@ -76,6 +75,7 @@ d$agem3[d$childid==433011] <- d$agemth_bt3[d$childid==433011]
 
 #Save data.frame
 save(d, file = c("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Data/Cleaned/Andrew/BD-EE-immune.Rdata"))
+save(d, file = c(here("/BD-EE-immune.Rdata")))
 
 
 #Compare ages between Andrew and Audrie
