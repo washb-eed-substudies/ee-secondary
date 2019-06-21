@@ -10,6 +10,7 @@
 library(tidyverse)
 library(haven)
 library(washb)
+library(foreign)
 library(here)
 
 dropboxDir <- NULL

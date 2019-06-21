@@ -10,6 +10,8 @@
 
 #Clean environment
 rm(list=ls())
+source(here::here("0-config.R"))
+
 
 #Useful functions:
 multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL, title="",hjust=0,vjust=-7) {
@@ -60,13 +62,7 @@ grid.text(title, gp = gpar(fontsize = 18), hjust=hjust,vjust=vjust)
 
 
 ###Load in data
-library(foreign)
-library(dplyr)
-library(washb)
-library(tidyverse)
-
-
-setwd("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Data/Untouched/")
+setwd(paste0(dropboxDir,"Data/Untouched/"))
 load("washb-BD-EE-blind-tr.Rdata")
 levels(treatment$tr)
 treatment$tr <- factor(treatment$tr,levels=c("Control","WSH","Nutrition","Nutrition + WSH"))
@@ -79,7 +75,7 @@ main_anthro<-main_anthro %>%
   rename(main_svy=svy) %>%
   select(dataid, childid, clusterid, main_svy, anthrodate, month, dob, aged, agem, agey, laz, laz_x, lazminus2, lazminus3, waz, waz_x, wazminus2, wazminus3, whz, whz_x, whzminus2, whzminus3,  bmiz, bmiz_x, hcz, hcz_x)
 
-setwd("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Data/Cleaned/Andrew")
+setwd(paste0(dropboxDir,"Data/Cleaned/Andrew"))
 telo<-read.csv("BD-EE-telo.csv")
 anthro<-read.csv("BD-EE-anthro.csv",stringsAsFactors = TRUE)
 
