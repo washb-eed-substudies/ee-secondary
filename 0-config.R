@@ -19,7 +19,9 @@ if(dir.exists("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/")){
 if(dir.exists("C:/Users/audrielin/Dropbox/WBB-EE-analysis/Data/Cleaned/Audrie/")){ 
   dropboxDir <- "C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/"
 }
-
+if(dir.exists("C:/Users/Sophie/Dropbox/WASH")){ 
+  dropboxDir <- "C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/"
+}
 
 
 
