@@ -6,7 +6,7 @@ source(here::here("0-config.R"))
 
 
 #load immune outcomes
-imm<-read_dta("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Data/Untouched/immune/washb-bangladesh-immun-lab-t2-t3.dta")
+imm<-read_dta(paste0(dropboxDir,"Data/Untouched/immune/washb-bangladesh-immun-lab-t2-t3.dta"))
 imm <- as.data.frame(imm)
 imm$childid <- as.numeric(imm$childid)
 head(imm)
@@ -16,7 +16,7 @@ table(is.na(imm[,-1]))
 imm[,-1] <- log(imm[,-1])
 table(is.na(imm[,-1]))
 
-fulld <- read.csv("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Data/Cleaned/Andrew/EE-BD_fulldata.csv")
+fulld <- read.csv(paste0(dropboxDir,"Data/Cleaned/Andrew/EE-BD_fulldata.csv"))
 colnames(fulld)
 
 
@@ -38,14 +38,14 @@ d <- subset(d, select = -c(tr))
 d <- subset(d, select = -c(ur_agem1, ur_agem2, ur_agem3, st_agem1, st_agem2, st_agem3))
 
 #Merge in blinded treatment
-blind_tr <- read.csv("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Data/Untouched/washb-bangladesh-tr.csv")
+blind_tr <- read.csv(paste0(dropboxDir,"Data/Untouched/washb-bangladesh-tr.csv"))
 blind_tr$clusterid <- as.numeric(blind_tr$clusterid)
 d <- left_join(d, blind_tr, by=c("block", "clusterid"))
 dim(d)
 table(d$tr)
 
 #Load and merge in ages and dates at blood collection from 
-ages <- read.csv("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Data/Cleaned/Andrew/BD-EE-telo.csv")
+ages <- read.csv(paste0(dropboxDir,"Data/Cleaned/Andrew/BD-EE-telo.csv"))
 ages <- ages %>% subset(., select = c(dataid, childNo, aged2, agem2, aged3, agem3, month2, month3))
 dim(d)
 d <- left_join(d, ages, by=c("dataid", "childNo"))
@@ -55,7 +55,7 @@ table(is.na(d$agem3))
 
 #NOTE: TEMP
 #Need to get ages for childid 30061 and 433011 from Audrie
-da <- read.csv("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Data/Cleaned/Audrie/bangladesh-dm-ee-anthro-diar-ee-med-plasma-blind-tr-enrol-covariates-lab.csv")
+da <- read.csv(paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-dm-ee-anthro-diar-ee-med-plasma-blind-tr-enrol-covariates-lab.csv"))
 da <- da %>% subset(., select = c(childid,agemth_bt2, agemth_bt3)) 
 
 dim(d)
@@ -74,7 +74,7 @@ d$agem2[d$childid==433011] <- d$agemth_bt2[d$childid==433011]
 d$agem3[d$childid==433011] <- d$agemth_bt3[d$childid==433011]
 
 #Save data.frame
-save(d, file = c("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Data/Cleaned/Andrew/BD-EE-immune.Rdata"))
+save(d, file = c(paste0(dropboxDir,"Data/Cleaned/Andrew/BD-EE-immune.Rdata")))
 save(d, file = c(here("/BD-EE-immune.Rdata")))
 
 
@@ -93,7 +93,7 @@ table(df2$agem3==df2$agemth_bt3)
 df3 <- df2[df2$agem2!=df2$agemth_bt2 | df2$agem3!=df2$agemth_bt3,]
 df3
 #load in names of Audrie's objects
-nm <- list.files(path="C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Results/Audrie/")
+nm <- list.files(path=paste0(dropboxDir,"Results/Audrie/"))
 nm
 
 
@@ -116,7 +116,7 @@ age_t3_blood_M <- rbind(age3_overall, age3_tr)
 
 
 #Compare to Audrie's
-load("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Results/Audrie/immune-age-stats.RData")
+load(paste0(dropboxDir,"Results/Audrie/immune-age-stats.RData"))
 age_t2_blood_L[,-1] - age_t2_blood_M[,-1]
 age_t3_blood_L[,-1] - age_t3_blood_M[,-1]
 
@@ -143,7 +143,7 @@ mean_sd <- data.frame(Y=gsub("_mean","",mean_sd[1:n,1]), mean=mean_sd[1:n,2], sd
 
 #Compare to Audrie's
 
-load("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Results/Audrie/immune_N_means.RData")
+load(paste0(dropboxDir,"Results/Audrie/immune_N_means.RData"))
 ls()
 
 aud_N <- as.data.frame(rbindlist(lapply(ls(pattern="_N_L"), get)))
@@ -190,7 +190,7 @@ res_unadj$Y <-colnames(Y)
 
 
 #Compare to Audrie's objects
-load("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Results/Audrie/immune_unadj_glm.RData")
+load(paste0(dropboxDir,"Results/Audrie/immune_unadj_glm.RData"))
 
 aud_unadj <- as.data.frame(rbindlist(lapply(lapply(ls(pattern="_unadj_L"), get), as.data.frame)))
 aud_unadj$Y = gsub("_unadj_L","",ls(pattern="_unadj_L"))
@@ -227,7 +227,7 @@ colnames(res_sex)<-c("RD","ci.l","ci.u", "Std. Error", "z value", "Pval")
 res_sex$Y <-colnames(Y)
 
 #Compare to Audrie's objects
-load("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Results/Audrie/immune_adj_sex_age_glm.RData")
+load(paste0(dropboxDir,"Results/Audrie/immune_adj_sex_age_glm.RData"))
 
 aud_sex <- as.data.frame(rbindlist(lapply(lapply(ls(pattern="_adj_sex_age_L"), get), as.data.frame)))
 aud_sex$Y = gsub("_adj_sex_age_L","",ls(pattern="_adj_sex_age_L"))
@@ -462,7 +462,7 @@ colnames(res_adj)<-c("RD","ci.l","ci.u", "Std. Error", "z value", "Pval")
 res_adj$Y <-colnames(Y)
 
 #Compare to Audrie's objects
-load("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Results/Audrie/immune_adj_glm.RData")
+load(paste0(dropboxDir,"Results/Audrie/immune_adj_glm.RData"))
 
 aud_adj <- as.data.frame(rbindlist(lapply(lapply(ls(pattern="_adj_L"), get), as.data.frame)))
 aud_adj$Y = gsub("_adj_L","",ls(pattern="_adj_L"))
@@ -492,7 +492,7 @@ colnames(res_sub)<-c("sex","RD","ci.l","ci.u", "Std. Error", "z value", "Pval")
 res_sub$Y <-rep(colnames(Y), each=2)
 res_sub <- res_sub %>% mutate(subgroup = case_when(sex==1 ~ "male", sex==0 ~ "female", TRUE~""), subgroup=factor(subgroup))
 
-load("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Results/Audrie/immune_subgroup.RData")
+load(paste0(dropboxDir,"Results/Audrie/immune_subgroup.RData"))
 aud_sub <- as.data.frame(rbindlist(lapply(lapply(ls(pattern="_subgroup_L"), get), as.data.frame)))
 aud_sub$Y = gsub("_subgroup_L","",ls(pattern="_subgroup_L"))
 
@@ -523,7 +523,7 @@ ggplot(res_adj, aes(x=Y, y=RD)) + geom_point() +
 #Examine baseline data
 ##############################################
 
-load("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Results/Audrie/immune_enrol_baseline_char.RData")
-load("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Results/Audrie/immune_enrol_supp_baseline_char_t2.RData")
-load("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Results/Audrie/immune_enrol_supp_baseline_char_lost_t3.RData")
+load(paste0(dropboxDir,"Results/Audrie/immune_enrol_baseline_char.RData"))
+load(paste0(dropboxDir,"Results/Audrie/immune_enrol_supp_baseline_char_t2.RData"))
+load(paste0(dropboxDir,"Results/Audrie/immune_enrol_supp_baseline_char_lost_t3.RData"))
 
