@@ -24,7 +24,7 @@ d<-left_join(telo,treatment, by="clusterid")
 dim(d)
 head(d)
 table(d$tr)
-table(is.na(d$tr))
+ table(is.na(d$tr))
  
 
  

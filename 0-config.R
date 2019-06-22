@@ -12,6 +12,9 @@ library(haven)
 library(washb)
 library(foreign)
 library(here)
+library(data.table)
+library(tmle)
+library(tmleAb)
 
 dropboxDir <- NULL
 if(dir.exists("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/")){ 
