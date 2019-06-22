@@ -24,15 +24,9 @@
 # preamble
 #---------------------------------------
 rm(list=ls())
-library(tmle)
-library(SuperLearner)
+source(here::here("0-config.R"))
 
-library(devtools)
-library(foreign) #Run each time R is started up to load the package into working memory
-library(washb) 
-library(dplyr)
-
-setwd("~/Dropbox/WBB-EE-analysis/Data/Cleaned/Audrie/") #Set working directory
+setwd(paste0(dropboxDir,"Data/Cleaned/Audrie/")) #Set working directory
 
 #t2
 
@@ -724,6 +718,6 @@ save (t2_igf_adj_sex_age_L,
       d23_ratio_th2_il10_adj_sex_age_L,  
       d23_ratio_th17_il10_adj_sex_age_L,
       d23_ratio_th1_th2_adj_sex_age_L,
-      d23_ratio_th1_th17_adj_sex_age_L, file="~/Dropbox/WBB-EE-analysis/Results/Audrie/immune_adj_sex_age_glm.RData")
+      d23_ratio_th1_th17_adj_sex_age_L, file=here("audrie results/immune_adj_sex_age_glm.RData"))
 
 

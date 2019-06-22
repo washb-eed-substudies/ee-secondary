@@ -20,15 +20,10 @@
 # preamble
 #---------------------------------------
 rm(list=ls())
-library(tmle)
-library(SuperLearner)
+source(here::here("0-config.R"))
 
-library(devtools)
-library(foreign) #Run each time R is started up to load the package into working memory
-library(washb) 
-library(dplyr)
 
-setwd("~/Dropbox/WBB-EE-analysis/Data/Cleaned/Audrie/") #Set working directory
+setwd(paste0(dropboxDir,"Data/Cleaned/Audrie/")) #Set working directory
 
 #---------------------------------------
 # Load the analysis dataset,

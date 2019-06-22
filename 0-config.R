@@ -15,6 +15,8 @@ library(here)
 library(data.table)
 library(tmle)
 library(tmleAb)
+library(SuperLearner)
+library(devtools)
 
 dropboxDir <- NULL
 if(dir.exists("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/")){ 
