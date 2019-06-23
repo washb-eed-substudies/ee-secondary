@@ -3,17 +3,12 @@
 # ~/Dropbox/WBB-EE-analysis/Data/Cleaned/Audrie/bangladesh-dm-ee-telo-growth-covariates-telolab-anthro.csv (from 3-bangladesh-dm-ee-telo-growth-covariates-telolab-anthro.do)
 
 rm(list=ls())
-library(tidyverse)
-library(haven)
-library(washb)
-library(data.table)
-library(tmle)
-library(tmleAb)
+source(here::here("0-config.R"))
 
 source("~/ee-secondary/audrie R scripts/observational/0-base-quartileTMLE_functions.R")
 
 #load immune outcomes
-load("~/Dropbox/WBB-EE-analysis/Data/Cleaned/Audrie/bangladesh-dm-ee-telo-growth-covariates-telolab-anthro.csv")
+load(paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-dm-ee-telo-growth-covariates-telolab-anthro.csv"))
 
 
 #Unadjusted, with continious outcome
