@@ -2,19 +2,17 @@
 ###Load in data
 rm(list=ls())
 try(detach(package:plyr))
-library(foreign)
-library(dplyr)
-library(washb)
+source(here::here("0-config.R"))
 
 
 
-setwd("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Data/Untouched/")
+setwd(paste0(dropboxDir,"Data/Untouched/"))
 load("washb-bangladesh-tr.Rdata")
 d$clusterid<-as.numeric(d$clusterid)
 treatment<-d
 levels(treatment$tr)
 
-setwd("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Data/Cleaned/Andrew")
+setwd(paste0(dropboxDir,"Data/Cleaned/Andrew"))
 telo<-read.csv("BD-EE-telo.csv")
 anthro<-read.csv("BD-EE-anthro.csv",stringsAsFactors = TRUE)
 

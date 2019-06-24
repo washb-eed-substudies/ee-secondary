@@ -1,17 +1,12 @@
 
 
 rm(list=ls())
-library(tidyverse)
-library(haven)
-library(washb)
-library(data.table)
-library(tmle)
-library(tmleAb)
+source(here::here("0-config.R"))
 
 source("C:/Users/andre/Documents/WASHB_EE_Analysis/WBB EE Analysis/R EE outcome code/Observational Analyses/quartileTMLE_functions.R")
 
 #load immune outcomes
-load("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Data/Cleaned/Andrew/BD-EE-immune.Rdata")
+load(paste0(dropboxDir,"Data/Cleaned/Andrew/BD-EE-immune.Rdata"))
 
 
 #Unadjusted, with continious outcome

@@ -24,18 +24,14 @@ rm(list=ls())
 ###Load in packages
 ######################
 
-#Load packages
-library(devtools)
-library(foreign) #Run each time R is started up to load the package into working memory
-library(washb) 
-library(dplyr)
+source(here::here("0-config.R"))
 
 ######################
 ###Load in data
 ######################
 
 #Set working directory to load in blinded treatment assignment and enrolment information
-setwd("~/Dropbox/WBB-EE-analysis/Data/Cleaned/Audrie/") #Set working directory
+setwd(paste0(dropboxDir,"Data/Cleaned/Audrie/")) #Set working directory
 
 #Load in enrollment data,blinded tr data, stool data for adjusted analysis. Use read.dta() to read the .dta files, or read.csv() to 
 #read .csv files. Use stringAsFactors=TRUE so that any character-based variable will be read in as a factor.
@@ -827,7 +823,7 @@ age_t3_blood_L
 
 
 #save R objects
-save(age_t2_blood_L, age_t3_blood_L, file="~/Dropbox/WBB-EE-analysis/Results/Audrie/immune-age-stats.RData")
+save(age_t2_blood_L, age_t3_blood_L, file=here("audrie results/immune-age-stats.RData"))
 
 
 
@@ -1382,5 +1378,5 @@ save (t2_igf_unadj_L,
       d23_ratio_th1_th2_unadj_L, 
       d23_ratio_th1_th17_unadj_L,
       
-      file="~/Dropbox/WBB-EE-analysis/Results/Audrie/immune_unadj_glm.RData")
+      file=here("audrie results/immune_unadj_glm.RData"))
 
