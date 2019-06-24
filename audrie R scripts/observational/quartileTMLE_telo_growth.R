@@ -33,13 +33,11 @@ source(here::here("0-config.R"))
 
 source("~/ee-secondary/audrie R scripts/observational/0-base-quartileTMLE_functions.R")
 
-<<<<<<< HEAD
+
+
 #load covariates, exposures, outcomes dataset
-load("~/Dropbox/WBB-EE-analysis/Data/Cleaned/Audrie/bangladesh-dm-ee-telo-growth-covariates-telolab-anthro.RData")
-=======
-#load immune outcomes
-load(paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-dm-ee-telo-growth-covariates-telolab-anthro.csv"))
->>>>>>> 215cd99f2d4fc6f7b184fb8808f99b27603d9890
+load(paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-dm-ee-telo-growth-covariates-telolab-anthro.RData"))
+
 
 
 #Hypothesis 1
