@@ -36,7 +36,76 @@ source("~/ee-secondary/audrie R scripts/observational/0-base-quartileTMLE_functi
 
 
 #load covariates, exposures, outcomes dataset
-load(paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-dm-ee-telo-growth-covariates-telolab-anthro.RData"))
+load("~/Dropbox/WBB-EE-analysis/Data/Cleaned/Audrie/bangladesh-dm-ee-telo-growth-covariates-telolab-anthro.RData")
+
+#check if variables are factors/numeric
+for(i in 1:ncol(d)){
+  cat(colnames(d)[i],"  ",class(d[,i]),"\n")
+}
+#set variables as factors/numeric
+d$sex<-as.factor(d$sex)
+d$sex <- factor(d$sex, labels = c("female", "male"))
+d$birthord<-as.factor(d$birthord)
+d$momage<-as.numeric(d$momage)
+d$momheight<-as.numeric(d$momheight)
+d$momedu<-as.factor(d$momedu)
+d$hfiacat<-as.factor(d$hfiacat)
+d$Nlt18<-as.numeric(d$Nlt18)
+d$Ncomp<-as.numeric(d$Ncomp)
+d$watmin<-as.numeric(d$watmin)
+d$floor<-as.factor(d$floor)
+d$walls<-as.factor(d$walls)
+d$elec<-as.factor(d$elec)
+d$asset_wardrobe<-as.factor(d$asset_wardrobe)
+d$asset_table<-as.factor(d$asset_table)
+d$asset_chair<-as.factor(d$asset_chair)
+d$asset_clock<-as.factor(d$asset_clock)
+d$asset_khat<-as.factor(d$asset_khat)
+d$asset_chouki<-as.factor(d$asset_chouki)
+d$asset_radio<-as.factor(d$asset_radio)
+d$asset_tv<-as.factor(d$asset_tv)
+d$asset_refrig<-as.factor(d$asset_refrig)
+d$asset_bike<-as.factor(d$asset_bike)
+d$asset_moto<-as.factor(d$asset_moto)
+d$asset_sewmach<-as.factor(d$asset_sewmach)
+d$asset_mobile<-as.factor(d$asset_mobile)
+d$n_cattle<-as.numeric(d$n_cattle)
+d$n_goat<-as.numeric(d$n_goat)
+d$n_chicken<-as.numeric(d$n_chicken)
+
+d$lenhei_med_t2<-as.numeric(d$lenhei_med_t2)
+d$weight_med_t2<-as.numeric(d$weight_med_t2)
+
+d$monsoon_ht2<-as.factor(d$monsoon_ht2)
+d$monsoon_ht2<-addNA(d$monsoon_ht2)
+levels(d$monsoon_ht2)[length(levels(d$monsoon_ht2))]<-"Missing"
+
+d$monsoon_ht3<-as.factor(d$monsoon_ht3)
+d$monsoon_ht3<-addNA(d$monsoon_ht3)
+levels(d$monsoon_ht3)[length(levels(d$monsoon_ht3))]<-"Missing"
+
+d$ageday_ht2<-as.numeric(d$ageday_ht2)
+d$ageday_ht3<-as.numeric(d$ageday_ht3)
+
+d$anthro_days_btwn_t2_t3<-as.numeric(d$anthro_days_btwn_t2_t3)
+
+d$tr <- factor(d$tr,levels=c("Control","Nutrition + WSH"))
+
+d$cesd_sum_t2<-as.numeric(d$cesd_sum_t2)
+d$cesd_sum_ee_t3<-as.numeric(d$cesd_sum_ee_t3)
+d$pss_sum_mom_t3<-as.numeric(d$pss_sum_mom_t3)
+
+d$diar7d_t2<-as.factor(d$diar7d_t2)
+d$diar7d_t2<-addNA(d$diar7d_t2)
+levels(d$diar7d_t2)[length(levels(d$diar7d_t2))]<-"Missing"
+
+d$diar7d_t3<-as.factor(d$diar7d_t3)
+d$diar7d_t3<-addNA(d$diar7d_t3)
+levels(d$diar7d_t3)[length(levels(d$diar7d_t3))]<-"Missing"
+
+d$life_viol_any_t3<-as.factor(d$life_viol_any_t3)
+d$life_viol_any_t3<-addNA(d$life_viol_any_t3)
+levels(d$life_viol_any_t3)[length(levels(d$life_viol_any_t3))]<-"Missing"
 
 
 
@@ -94,10 +163,12 @@ h1unadj.res
 
 #adjusted
 
+
+
 #null dataframe
 h1adj.res = NULL 
 
-Wvars<-c("sex","birthord", "momheight","momedu", 
+Wvars<-c("sex","birthord", "momage","momheight","momedu", 
          "hfiacat", "Nlt18", "Ncomp", "watmin", 
          "floor", "walls", "elec", "asset_wardrobe", "asset_table", "asset_chair", "asset_clock", "asset_khat", 
          "asset_chouki", "asset_radio", "asset_tv", "asset_refrig",
@@ -199,7 +270,7 @@ h2unadj.res
 #null dataframe
 h2adj.res = NULL 
 
-Wvars<-c("sex","birthord", "momheight","momedu", 
+Wvars<-c("sex","birthord", "momage","momheight","momedu", 
          "hfiacat", "Nlt18", "Ncomp", "watmin", 
          "floor", "walls", "elec", "asset_wardrobe", "asset_table", "asset_chair", "asset_clock", "asset_khat", 
          "asset_chouki", "asset_radio", "asset_tv", "asset_refrig",
@@ -303,7 +374,7 @@ h3unadj.res
 #null dataframe
 h3adj.res = NULL 
 
-Wvars<-c("sex","birthord", "momheight","momedu", 
+Wvars<-c("sex","birthord", "momage", "momheight","momedu", 
          "hfiacat", "Nlt18", "Ncomp", "watmin", 
          "floor", "walls", "elec", "asset_wardrobe", "asset_table", "asset_chair", "asset_clock", "asset_khat", 
          "asset_chouki", "asset_radio", "asset_tv", "asset_refrig",
@@ -420,7 +491,7 @@ h4unadj.res
 #Null data.frame
 h4adj.res = NULL
 
-Wvars<-c("sex","birthord", "momheight","momedu", 
+Wvars<-c("sex","birthord", "momage", "momheight","momedu", 
          "hfiacat", "Nlt18", "Ncomp", "watmin", "floor", 
          "walls", "elec", "asset_wardrobe", "asset_table", 
          "asset_chair", "asset_clock", "asset_khat", 
@@ -535,7 +606,7 @@ h5unadj.res
 #null dataframe
 h5adj.res = NULL 
 
-Wvars<-c("sex","birthord", "momheight","momedu", 
+Wvars<-c("sex","birthord", "momage", "momheight","momedu", 
          "hfiacat", "Nlt18", "Ncomp", "watmin", 
          "floor", "walls", "elec", "asset_wardrobe", "asset_table", "asset_chair", "asset_clock", "asset_khat", 
          "asset_chouki", "asset_radio", "asset_tv", "asset_refrig",
@@ -646,7 +717,7 @@ h6unadj.res
 #null dataframe
 h6adj.res = NULL 
 
-Wvars<-c("sex","birthord", "momheight","momedu", 
+Wvars<-c("sex","birthord", "momage", "momheight","momedu", 
          "hfiacat", "Nlt18", "Ncomp", "watmin", 
          "floor", "walls", "elec", "asset_wardrobe", "asset_table", "asset_chair", "asset_clock", "asset_khat", 
          "asset_chouki", "asset_radio", "asset_tv", "asset_refrig",
@@ -747,7 +818,7 @@ h7unadj.res
 #null dataframe
 h7adj.res = NULL 
 
-Wvars<-c("sex","birthord", "momheight","momedu", 
+Wvars<-c("sex","birthord", "momage", "momheight","momedu", 
          "hfiacat", "Nlt18", "Ncomp", "watmin", 
          "floor", "walls", "elec", "asset_wardrobe", "asset_table", "asset_chair", "asset_clock", "asset_khat", 
          "asset_chouki", "asset_radio", "asset_tv", "asset_refrig",
@@ -848,7 +919,7 @@ h8unadj.res
 #null dataframe
 h8adj.res = NULL 
 
-Wvars<-c("sex","birthord", "momheight","momedu", 
+Wvars<-c("sex","birthord", "momage", "momheight","momedu", 
          "hfiacat", "Nlt18", "Ncomp", "watmin", 
          "floor", "walls", "elec", "asset_wardrobe", "asset_table", "asset_chair", "asset_clock", "asset_khat", 
          "asset_chouki", "asset_radio", "asset_tv", "asset_refrig",
@@ -953,7 +1024,7 @@ h2bunadj.res
 #null dataframe
 h2badj.res = NULL 
 
-Wvars<-c("sex","birthord", "momheight","momedu", 
+Wvars<-c("sex","birthord", "momage", "momheight","momedu", 
          "hfiacat", "Nlt18", "Ncomp", "watmin", 
          "floor", "walls", "elec", "asset_wardrobe", "asset_table", "asset_chair", "asset_clock", "asset_khat", 
          "asset_chouki", "asset_radio", "asset_tv", "asset_refrig",
@@ -1044,7 +1115,7 @@ h7bunadj.res
 #null dataframe
 h7badj.res = NULL 
 
-Wvars<-c("sex","birthord", "momheight","momedu", 
+Wvars<-c("sex","birthord", "momage", "momheight","momedu", 
          "hfiacat", "Nlt18", "Ncomp", "watmin", 
          "floor", "walls", "elec", "asset_wardrobe", "asset_table", "asset_chair", "asset_clock", "asset_khat", 
          "asset_chouki", "asset_radio", "asset_tv", "asset_refrig",
