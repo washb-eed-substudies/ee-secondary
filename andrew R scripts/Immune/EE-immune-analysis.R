@@ -444,6 +444,11 @@ for(i in 1:ncol(W3)){
 #Run GLMs for the adjusted parameter estimates
 ##############################################
 
+Y = log(Y)
+for(i in 1:ncol(Y)){
+  Y[is.nan(Y[,i]) | is.infinite(Y[,i]),i] <- NA
+}
+
 
 #Fully adjusted glm models
 res_adj <- NULL

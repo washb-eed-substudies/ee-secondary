@@ -37,7 +37,7 @@ mean(W2$momage,na.rm=T)
 
 list_immune$t2_ln_igf
 res_adj[res_adj$Y=="igf_t2",]
-
+ 
 
 head(W2)
 head(wa)
@@ -80,6 +80,19 @@ table(dm$tr)
 
 mean(da$igf_t2, na.rm=T)
 mean(dm$igf_t2, na.rm=T)
+
+mean(log(da$igf_t2), na.rm=T)
+dm$ln_igf_t2 <- log(dm$igf_t2)
+
+
+mean(da$igf_t2, na.rm=T)
+mean(dm$ln_igf_t2, na.rm=T)
+
+
+washb_function(da, "igf_t2", wa)
+washb_function(dm, "ln_igf_t2", W2)
+
+
 
 # da %>% group_by(tr) %>% summarise(N=n(), mean(as.numeric(factor(sex))), mean(igf_t2, na.rm=T))
 # d %>% group_by(tr) %>% summarise(N=n(), mean(sex), mean(igf_t2, na.rm=T))
