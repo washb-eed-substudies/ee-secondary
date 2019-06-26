@@ -31,7 +31,7 @@
 rm(list=ls())
 source(here::here("0-config.R"))
 
-source("~/ee-secondary/audrie R scripts/observational/0-base-quartileTMLE_functions.R")
+source(here("/audrie R scripts/observational/0-base-quartileTMLE_functions.R"))
 
 
 

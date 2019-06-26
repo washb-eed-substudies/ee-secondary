@@ -38,7 +38,7 @@ d <- subset(d, select = -c(tr))
 d <- subset(d, select = -c(ur_agem1, ur_agem2, ur_agem3, st_agem1, st_agem2, st_agem3))
 
 #Merge in blinded treatment
-blind_tr <- read.csv(paste0(dropboxDir,"Data/Untouched/washb-bangladesh-tr.csv"))
+blind_tr <- read.csv(paste0(dropboxDir,"Data/Untouched/washb-BD-telo-blind-tr.csv"))
 blind_tr$clusterid <- as.numeric(blind_tr$clusterid)
 d <- left_join(d, blind_tr, by=c("block", "clusterid"))
 dim(d)
@@ -75,7 +75,6 @@ d$agem3[d$childid==433011] <- d$agemth_bt3[d$childid==433011]
 
 #Save data.frame
 save(d, file = c(paste0(dropboxDir,"Data/Cleaned/Andrew/BD-EE-immune.Rdata")))
-save(d, file = c(here("/BD-EE-immune.Rdata")))
 
 
 #Compare ages between Andrew and Audrie
@@ -461,19 +460,22 @@ res_adj <- as.data.frame(res_adj)
 colnames(res_adj)<-c("RD","ci.l","ci.u", "Std. Error", "z value", "Pval")
 res_adj$Y <-colnames(Y)
 
-#Compare to Audrie's objects
-load(paste0(dropboxDir,"Results/Audrie/immune_adj_glm.RData"))
+# #Compare to Audrie's objects
+# load(paste0(dropboxDir,"Results/Audrie/immune_adj_glm.RData"))
+# 
+# aud_adj <- as.data.frame(rbindlist(lapply(lapply(ls(pattern="_adj_L"), get), as.data.frame)))
+# aud_adj$Y = gsub("_adj_L","",ls(pattern="_adj_L"))
+# 
+# dim(res_adj)
+# dim(aud_adj)
+# comp_adj <- full_join(res_adj, aud_adj, by="Y")
+# dim(comp_adj)
+# comp_adj$RD.x - comp_adj$RD.y
 
-aud_adj <- as.data.frame(rbindlist(lapply(lapply(ls(pattern="_adj_L"), get), as.data.frame)))
-aud_adj$Y = gsub("_adj_L","",ls(pattern="_adj_L"))
-
-dim(res_adj)
-dim(aud_adj)
-comp_adj <- full_join(res_adj, aud_adj, by="Y")
-dim(comp_adj)
-comp_adj$RD.x - comp_adj$RD.y
-
-
+#Save intermediate R objects for replication comparison
+dm <- d
+Wa <- W
+save(res_adj, W, W2, W3, dm, file = here("replication objects/andrew_immune_W.rdata"))
 
 
 ##############################################
