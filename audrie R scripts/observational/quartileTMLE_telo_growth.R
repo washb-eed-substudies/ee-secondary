@@ -36,7 +36,14 @@ source(here("/audrie R scripts/observational/0-base-quartileTMLE_functions.R"))
 
 
 #load covariates, exposures, outcomes dataset
-load("~/Dropbox/WBB-EE-analysis/Data/Cleaned/Audrie/bangladesh-dm-ee-telo-growth-covariates-telolab-anthro.RData")
+load(paste0(dropboxDir, "Data/Cleaned/Audrie/bangladesh-dm-ee-telo-growth-covariates-telolab-anthro.RData"))
+
+#Temp make spline plots with 
+p <- ggplot(d,aes(x = delta_TS)) +
+  geom_smooth(aes(y = delta_laz_t2_t3)) 
+ggsave(p, file = here("figures/telo-growth-splines-H1_temp.png"), height=10, width=14)
+  
+
 
 #check if variables are factors/numeric
 for(i in 1:ncol(d)){
@@ -1028,18 +1035,73 @@ h8_delta_hcz_v_ts_t2gam.res <- GAM_simulCI(Y=d$delta_hcz_t2_t3, X=d$ts_t2, W = N
 
 
 
-#Example plot (I will write a function for prettier plots, but for initial visualization)
-p <- ggplot(h1_delta_laz_v_delta_tsgam.res,aes(x = X)) +
-  geom_smooth(aes(y = fit), se = F) +
-  geom_ribbon(aes(ymin=lwrS, ymax=uprS), alpha=0.1)
-p
+
+
+#Save tmle results
+save(
+  h1unadj.res,
+  h1adj.res,
+  h2unadj.res,
+  h2adj.res,
+  h3unadj.res,
+  h3adj.res,
+  h4unadj.res,
+  h4adj.res,
+  h5unadj.res,
+  h5adj.res,
+  h6unadj.res,
+  h6adj.res,
+  h7unadj.res,
+  h7adj.res,
+  h8unadj.res,
+  h8adj.res,
+  file=here("/audrie results/telo_growth_results.Rdata")
+)
 
 
 
-
-
-#Note - the confidence intervals look terrible because I'm not predicting values frequently enough (rather than them being wrong)
-#Will fix in the function code.
+#Save spline results
+save(
+  #Hypothesis 1
+  h1_delta_laz_v_delta_tsgam.res,
+  h1_delta_waz_v_delta_tsgam.res, 
+  h1_delta_whz_v_delta_tsgam.res,
+  h1_delta_hcz_v_delta_tsgam.res,
+  #Hypothesis 2
+  h2_len_velocity_v_delta_tsgam.res,
+  h2_wei_velocity_v_delta_tsgam.res,
+  h2_hc_velocity_v_delta_tsgam.res,
+  #Hypothesis 3
+  h3_laz_t3_vs_delta_tsgam.res, 
+  h3_waz_t3_vs_delta_tsgam.res,
+  h3_whz_t3_vs_delta_tsgam.res, 
+  h3_hcz_t3_vs_delta_tsgam.res, 
+  #Hypothesis 4
+  h4_laz_t2_vs_ts_t2gam.res, 
+  h4_waz_t2_vs_ts_t2gam.res,
+  h4_whz_t2_vs_ts_t2gam.res, 
+  h4_hcz_t2_vs_ts_t2gam.res, 
+  #Hypothesis 5
+  h5_laz_t3_vs_ts_t3gam.res, 
+  h5_waz_t3_vs_ts_t3gam.res, 
+  h5_whz_t3_vs_ts_t3gam.res, 
+  h5_hcz_t3_vs_ts_t3gam.res, 
+  #Hypothesis 6
+  h6_laz_t3_vs_ts_t2gam.res, 
+  h6_waz_t3_vs_ts_t2gam.res, 
+  h6_whz_t3_vs_ts_t2gam.res, 
+  h6_hcz_t3_vs_ts_t2gam.res, 
+  #Hypothesis 7
+  h7_len_veloc_vs_ts_t2gam.res, 
+  h7_wei_veloc_vs_ts_t2gam.res, 
+  h7_hc_veloc_vs_ts_t2gam.res,
+  #Hypothesis 8
+  h8_delta_laz_v_ts_t2gam.res,
+  h8_delta_waz_v_ts_t2gam.res,
+  h8_delta_whz_v_ts_t2gam.res, 
+  #h8_delta_hcz_v_ts_t2gam.res,  TEMP, not fitting
+  file=here("/audrie results/telo_growth_spline_fits.Rdata"))
+  
 
 
 
