@@ -238,21 +238,22 @@ GAM_simulCI<-function (Y, X, W = NULL, id = NULL, SL.library = c( "SL.gam"), cvC
     }
     pY <- rep(NA, length(As))
     fitd <- fulld[complete.cases(fulld), ]
+    fitd <- fitd %>% arrange(X)
     n.orig <- dim(fulld)[1]
     n.fit <- dim(fitd)[1]
     
     
-    if (n.orig > n.fit) 
+    if(n.orig > n.fit) 
         warning(paste("\n\n", n.orig - n.fit, "observations were dropped due to missing values\n in the outcome, X, or adjustement covariates. \n The original dataset contained", 
             n.orig, "observations,\n but GAM_simulCI is fitting the curve using", 
             n.fit, "observations."))
     X <- subset(fitd, select = -c(1:2))
-    if (length(grep("SL.gam", SL.library)) > 0) {
+    if(length(grep("SL.gam", SL.library)) > 0){
       set.seed(123456)
         cvGAM <- ab_cvGAM(Y = fitd$Y, X = data.frame(X=fitd$X, temp=1), 
-                          #id = fitd$id, 
+                          id = fitd$id, 
                           SL.library = SL.library, 
-                          #cvControl = cvControl, 
+                          cvControl = cvControl, 
                           df = gamdf)
         SL.library <- cvGAM$SL.library
     }

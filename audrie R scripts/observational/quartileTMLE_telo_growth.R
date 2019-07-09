@@ -984,8 +984,6 @@ h8adj.res
 #Calculating splines (unadjusted)
 #Y=outcome
 #X=exposure
-#NOTE! I'm currently having trouble getting the ID argument to work, so 
-#Currently not using it... will fix, should not greatly affect estimates
 
 #Hypothesis 1
 h1_delta_laz_v_delta_tsgam.res <- GAM_simulCI(Y=d$delta_laz_t2_t3, X=d$delta_TS, W = NULL, id = NULL)
@@ -1066,7 +1064,7 @@ save(
   h1_delta_laz_v_delta_tsgam.res,
   h1_delta_waz_v_delta_tsgam.res, 
   h1_delta_whz_v_delta_tsgam.res,
-  h1_delta_hcz_v_delta_tsgam.res,
+  #h1_delta_hcz_v_delta_tsgam.res,
   #Hypothesis 2
   h2_len_velocity_v_delta_tsgam.res,
   h2_wei_velocity_v_delta_tsgam.res,

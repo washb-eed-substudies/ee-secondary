@@ -191,10 +191,23 @@ res_unadj$Y <-colnames(Y)
 #Compare to Audrie's objects
 load(paste0(dropboxDir,"Results/Audrie/immune_unadj_glm.RData"))
 
-aud_unadj <- as.data.frame(rbindlist(lapply(lapply(ls(pattern="_unadj_L"), get), as.data.frame)))
-aud_unadj$Y = gsub("_unadj_L","",ls(pattern="_unadj_L"))
 
-agp_t2_unadj_L
+#Function to load and compile Audrie's objects
+load_aud <- function(name.pattern, object_list){
+  print(object_list)
+  df <- lapply(object_list, get)
+  for(i in which(sapply(df, is.null))){
+    print(object_list[i])
+    df[[i]] <- data.frame(RD=NA, ci.lb=NA, ci.ub=NA, SE=NA, z=NA, `P-value`=NA)
+  }
+  df <- data.frame(rbindlist(lapply(df, as.data.frame)),Y = gsub(name.pattern,"",object_list))
+  
+  return(df)
+}
+
+name.pattern="_unadj_L"
+object_list=ls(pattern=name.pattern)
+aud_unadj <- load_aud(name.pattern, object_list)
 
 dim(res_unadj)
 dim(aud_unadj)
