@@ -127,9 +127,7 @@ W$n_goat<-as.numeric(W$n_goat)
 W$n_chicken<-as.numeric(W$n_chicken)
 
 # Set up the WASHB function
-# df=data frame
-
-washb_function <- function(df,x) {
+washb_function <- function(d,x) {
   
   temp <- washb_glm(Y=d[,x], tr=d$tr, pair=NULL, W=W, id=d$block, contrast = c("Control","Nutrition + WSH"), family="gaussian", print=TRUE)
   temp_metric <-as.matrix(temp$TR)
@@ -137,6 +135,8 @@ washb_function <- function(df,x) {
   colnames(temp_metric) <-c("RD","ci.lb","ci.ub","SE","z","P-value")
   return(temp_metric)
 }
+
+#washb_function(d, "igf_t2")
 
 #grab the variables with prefix 't2_' from the data frame and then apply the washb_function
 list_immune <- lapply(names(d)[grep('t2_', names(d))],  function(x) washb_function(d,x))
@@ -149,9 +149,13 @@ names(list_immune) <- names(d)[grep('t2_', names(d))]
 #resulting matrix
 list_immune
 
+#Save intermediate R objects for replication comparison
+da <- d
+wa <-W
+save(da, wa, list_immune, file = here("replication objects/audrie_immune_W.rdata"))
+
+
 #to save each matrix separately for comparing with Andrew. 
-
-
 t2_igf_adj_L<-list_immune$t2_ln_igf
 t2_crp_adj_L<-list_immune$t2_ln_crp
 t2_agp_adj_L<-list_immune$t2_ln_agp
