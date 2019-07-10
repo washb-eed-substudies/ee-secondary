@@ -422,7 +422,7 @@ d23_ratio_ifn_il21_subgroup_L<-list_immune$d23_ratio_ifn_il21
 
 d23_ratio_pro_il10_subgroup_L<-list_immune$d23_ratio_pro_il10 
 d23_ratio_th1_il10_subgroup_L<-list_immune$d23_ratio_th1_il10 
-d23_ratio_th2_il10_subgroup_L<-list_immune$d23_ratio_th2_il10_unadj  
+d23_ratio_th2_il10_subgroup_L<-list_immune$d23_ratio_th2_il10  
 d23_ratio_th17_il10_subgroup_L<-list_immune$d23_ratio_th17_il10
 d23_ratio_th1_th2_subgroup_L<-list_immune$d23_ratio_th1_th2
 d23_ratio_th1_th17_subgroup_L<-list_immune$d23_ratio_th1_th17
