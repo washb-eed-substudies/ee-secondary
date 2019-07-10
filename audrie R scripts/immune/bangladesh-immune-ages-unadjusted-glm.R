@@ -872,7 +872,7 @@ t2_gmc_unadj_L<-list_immune$t2_ln_gmc
 t2_ifn_unadj_L<-list_immune$t2_ln_ifn
 t2_il10_unadj_L<-list_immune$t2_ln_il10
 t2_il12_unadj_L<-list_immune$t2_ln_il12 
-t2_il13_unadj_L<-list_immune$t2_t3_ln_il1
+t2_il13_unadj_L<-list_immune$t2_ln_il13
 t2_il17_unadj_L<-list_immune$t2_ln_il17
 t2_il1_unadj_L<-list_immune$t2_ln_il1
 t2_il2_unadj_L<-list_immune$t2_ln_il21
@@ -957,7 +957,7 @@ t3_gmc_unadj_L<-list_immune$t3_ln_gmc
 t3_ifn_unadj_L<-list_immune$t3_ln_ifn
 t3_il10_unadj_L<-list_immune$t3_ln_il10
 t3_il12_unadj_L<-list_immune$t3_ln_il12
-t3_il13_unadj_L<-list_immune$t3_t3_ln_il1
+t3_il13_unadj_L<-list_immune$t3_ln_il13
 t3_il17_unadj_L<-list_immune$t3_ln_il17
 t3_il1_unadj_L<-list_immune$t3_ln_il1
 t3_il2_unadj_L<-list_immune$t3_ln_il2
@@ -1082,7 +1082,7 @@ d23_ratio_ifn_il21_unadj_L<-list_immune$d23_ratio_ifn_il21
 
 d23_ratio_pro_il10_unadj_L<-list_immune$d23_ratio_pro_il10 
 d23_ratio_th1_il10_unadj_L<-list_immune$d23_ratio_th1_il10 
-d23_ratio_th2_il10_unadj_L<-list_immune$d23_ratio_th2_il10_unadj  
+d23_ratio_th2_il10_unadj_L<-list_immune$d23_ratio_th2_il10  
 d23_ratio_th17_il10_unadj_L<-list_immune$d23_ratio_th17_il10
 d23_ratio_th1_th2_unadj_L<-list_immune$d23_ratio_th1_th2
 d23_ratio_th1_th17_unadj_L<-list_immune$d23_ratio_th1_th17
