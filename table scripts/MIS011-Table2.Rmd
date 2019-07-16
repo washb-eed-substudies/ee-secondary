@@ -264,4 +264,7 @@ tbl <- kable(tbl) %>%
   add_header_above((c(" "=6, "T/S Ratio Year 1, Q1 v. Q2"=2, "T/S Ratio Year 1, Q1 v. Q3"=2,  "T/S Ratio Year 1, Q1 v. Q4"=2)))
 tbl
 ```
+```{r}
+save_kable(tbl, file=here("tables/table2.html"))
+```
 

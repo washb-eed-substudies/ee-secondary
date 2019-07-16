@@ -93,6 +93,6 @@ tbl3
 ```
 
 ```{r}
-write2
+save_kable(tbl3, file=here("tables/table3.html"))
 ```
 
