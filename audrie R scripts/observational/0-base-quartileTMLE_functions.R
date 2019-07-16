@@ -272,13 +272,12 @@ se.fit <- pred$se.fit
 
 N <- 10000
 
+set.seed(123456)
 BUdiff <- rmvn(N, mu = rep(0, nrow(Vb)), sig = Vb)
 Cg <- predict(m, data.frame(X = newd), type = "lpmatrix")
 simDev <- Cg %*% t(BUdiff)
 
-
 absDev <- abs(sweep(simDev, 1, se.fit, FUN = "/"))
-
 
 masd <- apply(absDev, 2L, max)
 crit <- quantile(masd, prob = 0.95, type = 8)
@@ -289,7 +288,6 @@ pred <- transform(cbind(data.frame(pred), newd),
                   lwrS = fit - (crit * se.fit))  
         
 pred<-data.frame(Y=fitd$Y, X=fitd$X, pred, Pval=rep(pval, nrow(fitd)))  
-
 
     return(pred)    
 }

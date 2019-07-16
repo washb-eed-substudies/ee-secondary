@@ -38,11 +38,6 @@ source(here("/audrie R scripts/observational/0-base-quartileTMLE_functions.R"))
 #load covariates, exposures, outcomes dataset
 load(paste0(dropboxDir, "Data/Cleaned/Audrie/bangladesh-dm-ee-telo-growth-covariates-telolab-anthro.RData"))
 
-#Temp make spline plots with 
-p <- ggplot(d,aes(x = delta_TS)) +
-  geom_smooth(aes(y = delta_laz_t2_t3)) 
-ggsave(p, file = here("figures/telo-growth-splines-H1_temp.png"), height=10, width=14)
-  
 
 
 #check if variables are factors/numeric
