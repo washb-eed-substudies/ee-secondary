@@ -1,0 +1,98 @@
+---
+title: "MIS011-Table3"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+rm(list=ls())
+source(here::here("0-config.R"))
+source(here("audrie R scripts/observational/quartileTMLE_telo_growth.R"))
+```
+
+```{r}
+tbl3 <- data.table("Outcome"=character(), "N"=numeric(), "Q1 Mean"=numeric(), "Q2 Mean"=numeric(), "Q3 Mean"=numeric(), "Q4 Mean"=numeric(), "Unadjusted"=character(), "Fully adjusted"=character(), "Unadjusted"=character(), "Fully adjusted"=character(), "Unadjusted"=character(), "Fully adjusted"=character())
+```
+
+```{r}
+#Hypothesis 5
+#LAZ Year 2
+#round function to use for tables
+round_df <- function(df, digits) {
+  nums <- vapply(df, is.numeric, FUN.VALUE = logical(1))
+
+  df[,nums] <- round(df[,nums], digits = digits)
+
+  (df)
+}
+h5unadj.res <- round_df(h5unadj.res, 2)
+h5adj.res <- round_df(h5adj.res, 2)
+
+Nlazy2h5 <- nrow(h5_laz_t3_vs_ts_t3gam.res)
+lazy2h5unadj <- filter(h5unadj.res, Y == "laz_t3")
+lazy2h5adj <- filter(h5adj.res, Y == "laz_t3")
+tbl3 <- rbind(tbl3, list("Outcome" = "LAZ, Year 2", "N" = Nlazy2h5, "Q1 Mean" = lazy2h5unadj$meanY[1], "Q2 Mean" =lazy2h5unadj$meanY[2], "Q3 Mean" = lazy2h5unadj$meanY[3], "Q4 Mean" = lazy2h5unadj$meanY[4],
+                       "Unadjusted" = paste(lazy2h5unadj$ATE[2], ", (", lazy2h5unadj$CI1[2], ", ", lazy2h5unadj$CI2[2], ")"), 
+                       "Fully adjusted" = paste(lazy2h5adj$ATE[2], ", (", lazy2h5adj$CI1[2], ", ", lazy2h5adj$CI2[2], ")"),
+                       "Unadjusted" = paste(lazy2h5unadj$ATE[3], ", (", lazy2h5unadj$CI1[3], ", ", lazy2h5unadj$CI2[3], ")"), 
+                       "Fully adjusted" = paste(lazy2h5adj$ATE[3], ", (", lazy2h5adj$CI1[3], ", ", lazy2h5adj$CI2[3], ")"),
+                       "Unadjusted" = paste(lazy2h5unadj$ATE[4], ", (", lazy2h5unadj$CI1[4], ", ", lazy2h5unadj$CI2[4], ")"), 
+                       "Fully adjusted" = paste(lazy2h5adj$ATE[4], ", (", lazy2h5adj$CI1[4], ", ", lazy2h5adj$CI2[4], ")")), stringsAsFactors=FALSE)
+
+#WAZ Year 2
+Nwazy2h5<- nrow(h5_waz_t3_vs_ts_t3gam.res)
+wazy2h5unadj <- filter(h5unadj.res, Y == "waz_t3")
+wazy2h5adj <- filter(h5adj.res, Y == "waz_t3")
+tbl3 <- rbind(tbl3, list("Outcome"="WAZ, Year 2", "N"=Nwazy2h5, "Q1 Mean"=wazy2h5unadj$meanY[1], "Q2 Mean"=wazy2h5unadj$meanY[2], "Q3 Mean"=wazy2h5unadj$meanY[3], "Q4 Mean" = wazy2h5unadj$meanY[4],
+                       "Unadjusted" = paste(wazy2h5unadj$ATE[2], ", (", wazy2h5unadj$CI1[2], ", ", wazy2h5unadj$CI2[2], ")"), 
+                       "Fully adjusted" = paste(wazy2h5adj$ATE[2], ", (", wazy2h5adj$CI1[2], ", ", wazy2h5adj$CI2[2], ")"),
+                       "Unadjusted" = paste(wazy2h5unadj$ATE[3], ", (", wazy2h5unadj$CI1[3], ", ", wazy2h5unadj$CI2[3], ")"), 
+                       "Fully adjusted" = paste(wazy2h5adj$ATE[3], ", (", wazy2h5adj$CI1[3], ", ", wazy2h5adj$CI2[3], ")"),
+                       "Unadjusted" = paste(wazy2h5unadj$ATE[4], ", (", wazy2h5unadj$CI1[4], ", ", wazy2h5unadj$CI2[4], ")"), 
+                       "Fully adjusted" = paste(wazy2h5adj$ATE[4], ", (", wazy2h5adj$CI1[4], ", ", wazy2h5adj$CI2[4], ")")), stringsAsFactors=FALSE)
+
+#WLZ Year 2
+Nwlzy2h5 <- nrow(h5_whz_t3_vs_ts_t3gam.res)
+wlzy2h5unadj <- filter(h5unadj.res, Y == "whz_t3")
+wlzy2h5adj <- filter(h5adj.res, Y == "whz_t3")
+tbl3 <- rbind(tbl3, list("Outcome"="WLZ, Year 2", "N"=Nwlzy2h5, "Q1 Mean"=wlzy2h5unadj$meanY[1], "Q2 Mean"=wlzy2h5unadj$meanY[2], "Q3 Mean"=wlzy2h5unadj$meanY[3], "Q4 Mean" = wlzy2h5unadj$meanY[4],
+                       "Unadjusted" = paste(wlzy2h5unadj$ATE[2], ", (", wlzy2h5unadj$CI1[2], ", ", wlzy2h5unadj$CI2[2], ")"), 
+                       "Fully adjusted" = paste(wlzy2h5adj$ATE[2], ", (", wlzy2h5adj$CI1[2], ", ", wlzy2h5adj$CI2[2], ")"),
+                       "Unadjusted" = paste(wlzy2h5unadj$ATE[3], ", (", wlzy2h5unadj$CI1[3], ", ", wlzy2h5unadj$CI2[3], ")"), 
+                       "Fully adjusted" = paste(wlzy2h5adj$ATE[3], ", (", wlzy2h5adj$CI1[3], ", ", wlzy2h5adj$CI2[3], ")"),
+                       "Unadjusted" = paste(wlzy2h5unadj$ATE[4], ", (", wlzy2h5unadj$CI1[4], ", ", wlzy2h5unadj$CI2[4], ")"), 
+                       "Fully adjusted" = paste(wlzy2h5adj$ATE[4], ", (", wlzy2h5adj$CI1[4], ", ", wlzy2h5adj$CI2[4], ")")), stringsAsFactors=FALSE)
+
+#HCZ Year 2
+Nhczy2h5 <- nrow(h5_hcz_t3_vs_ts_t3gam.res)
+hczy2h5unadj <- filter(h5unadj.res, Y == "hcz_t3")
+hczy2h5adj <- filter(h5adj.res, Y == "hcz_t3")
+tbl3 <- rbind(tbl3, list("Outcome"="HCZ, Year 2", "N"=Nhczy2h5, "Q1 Mean"=hczy2h5unadj$meanY[1], "Q2 Mean"=hczy2h5unadj$meanY[2], "Q3 Mean"=hczy2h5unadj$meanY[3], "Q4 Mean" = hczy2h5unadj$meanY[4],
+                       "Unadjusted" = paste(hczy2h5unadj$ATE[2], ", (", hczy2h5unadj$CI1[2], ", ", hczy2h5unadj$CI2[2], ")"), 
+                       "Fully adjusted" = paste(hczy2h5adj$ATE[2], ", (", hczy2h5adj$CI1[2], ", ", hczy2h5adj$CI2[2], ")"),
+                       "Unadjusted" = paste(hczy2h5unadj$ATE[3], ", (", hczy2h5unadj$CI1[3], ", ", hczy2h5unadj$CI2[3], ")"), 
+                       "Fully adjusted" = paste(hczy2h5adj$ATE[3], ", (", hczy2h5adj$CI1[3], ", ", hczy2h5adj$CI2[3], ")"),
+                       "Unadjusted" = paste(hczy2h5unadj$ATE[4], ", (", hczy2h5unadj$CI1[4], ", ", hczy2h5unadj$CI2[4], ")"), 
+                       "Fully adjusted" = paste(hczy2h5adj$ATE[4], ", (", hczy2h5adj$CI1[4], ", ", hczy2h5adj$CI2[4], ")")), stringsAsFactors=FALSE)
+
+#blank row
+tbl3 <- rbind(tbl3, list("Outcome"=" ", "N"=" ", "Q1 Mean"=" ", "Q2 Mean"=" ", "Q3 Mean"=" ", "Q4 Mean"=" ",
+                       "Unadjusted" = " ", 
+                       "Fully adjusted" = " ",
+                       "Unadjusted" = " ", 
+                       "Fully adjusted" = " ",
+                       "Unadjusted" = " ", 
+                       "Fully adjusted" =" "), stringsAsFactors=FALSE)
+```
+
+```{r}
+tbl3 <- kable(tbl3) %>%
+  add_header_above((c(" "=6, "Coefficient (95% CI)"=2, "Coefficient (95% CI)"=2, "Coefficient (95% CI)"=2))) %>%
+  add_header_above((c(" "=6, "T/S Ratio Year 1, Q1 v. Q2"=2, "T/S Ratio Year 1, Q1 v. Q3"=2,  "T/S Ratio Year 1, Q1 v. Q4"=2)))
+tbl3
+```
+
+```{r}
+write2
+```
+

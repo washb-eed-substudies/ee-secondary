@@ -1,0 +1,202 @@
+---
+title: "MIS011-Table4"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+rm(list=ls())
+source(here::here("0-config.R"))
+source(here("audrie R scripts/observational/quartileTMLE_telo_growth.R"))
+```
+
+```{r}
+tbl4 <- data.table("Outcome"=character(), "N"=numeric(), "Q1 Mean"=numeric(), "Q2 Mean"=numeric(), "Q3 Mean"=numeric(), "Q4 Mean"=numeric(), "Unadjusted"=character(), "Fully adjusted"=character(), "Unadjusted"=character(), "Fully adjusted"=character(), "Unadjusted"=character(), "Fully adjusted"=character())
+```
+
+```{r}
+round_df <- function(df, digits) {
+  nums <- vapply(df, is.numeric, FUN.VALUE = logical(1))
+
+  df[,nums] <- round(df[,nums], digits = digits)
+
+  (df)
+}
+
+#Hypothesis 3
+h3unadj.res <- round_df(h3unadj.res, 2)
+h3adj.res <- round_df(h3adj.res, 2)
+
+#LAZ Year 2
+Nlazy2h3 <- nrow(h3_laz_t3_vs_delta_tsgam.res)
+lazy2h3unadj <- filter(h3unadj.res, Y == "laz_t3")
+lazy2h3adj <- filter(h3adj.res, Y == "laz_t3")
+tbl4 <- rbind(tbl4, list("Outcome" = "LAZ, Year 2", "N" = Nlazy2h3, "Q1 Mean" = lazy2h3unadj$meanY[1], "Q2 Mean" =lazy2h3unadj$meanY[2], "Q3 Mean" = lazy2h3unadj$meanY[3], "Q4 Mean" = lazy2h3unadj$meanY[4],
+                       "Unadjusted" = paste(lazy2h3unadj$ATE[2], ", (", lazy2h3unadj$CI1[2], ", ", lazy2h3unadj$CI2[2], ")"), 
+                       "Fully adjusted" = paste(lazy2h3adj$ATE[2], ", (", lazy2h3adj$CI1[2], ", ", lazy2h3adj$CI2[2], ")"),
+                       "Unadjusted" = paste(lazy2h3unadj$ATE[3], ", (", lazy2h3unadj$CI1[3], ", ", lazy2h3unadj$CI2[3], ")"), 
+                       "Fully adjusted" = paste(lazy2h3adj$ATE[3], ", (", lazy2h3adj$CI1[3], ", ", lazy2h3adj$CI2[3], ")"),
+                       "Unadjusted" = paste(lazy2h3unadj$ATE[4], ", (", lazy2h3unadj$CI1[4], ", ", lazy2h3unadj$CI2[4], ")"), 
+                       "Fully adjusted" = paste(lazy2h3adj$ATE[4], ", (", lazy2h3adj$CI1[4], ", ", lazy2h3adj$CI2[4], ")")), stringsAsFactors=FALSE)
+
+#WAZ Year 2
+Nwazy2h3<- nrow(h3_waz_t3_vs_delta_tsgam.res)
+wazy2h3unadj <- filter(h3unadj.res, Y == "waz_t3")
+wazy2h3adj <- filter(h3adj.res, Y == "waz_t3")
+tbl4 <- rbind(tbl4, list("Outcome"="WAZ, Year 2", "N"=Nwazy2h3, "Q1 Mean"=wazy2h3unadj$meanY[1], "Q2 Mean"=wazy2h3unadj$meanY[2], "Q3 Mean"=wazy2h3unadj$meanY[3], "Q4 Mean" = wazy2h3unadj$meanY[4],
+                       "Unadjusted" = paste(wazy2h3unadj$ATE[2], ", (", wazy2h3unadj$CI1[2], ", ", wazy2h3unadj$CI2[2], ")"), 
+                       "Fully adjusted" = paste(wazy2h3adj$ATE[2], ", (", wazy2h3adj$CI1[2], ", ", wazy2h3adj$CI2[2], ")"),
+                       "Unadjusted" = paste(wazy2h3unadj$ATE[3], ", (", wazy2h3unadj$CI1[3], ", ", wazy2h3unadj$CI2[3], ")"), 
+                       "Fully adjusted" = paste(wazy2h3adj$ATE[3], ", (", wazy2h3adj$CI1[3], ", ", wazy2h3adj$CI2[3], ")"),
+                       "Unadjusted" = paste(wazy2h3unadj$ATE[4], ", (", wazy2h3unadj$CI1[4], ", ", wazy2h3unadj$CI2[4], ")"), 
+                       "Fully adjusted" = paste(wazy2h3adj$ATE[4], ", (", wazy2h3adj$CI1[4], ", ", wazy2h3adj$CI2[4], ")")), stringsAsFactors=FALSE)
+
+#WLZ Year 2
+Nwlzy2h3 <- nrow(h3_whz_t3_vs_delta_tsgam.res)
+wlzy2h3unadj <- filter(h3unadj.res, Y == "whz_t3")
+wlzy2h3adj <- filter(h3adj.res, Y == "whz_t3")
+tbl4 <- rbind(tbl4, list("Outcome"="WLZ, Year 2", "N"=Nwlzy2h3, "Q1 Mean"=wlzy2h3unadj$meanY[1], "Q2 Mean"=wlzy2h3unadj$meanY[2], "Q3 Mean"=wlzy2h3unadj$meanY[3], "Q4 Mean" = wlzy2h3unadj$meanY[4],
+                       "Unadjusted" = paste(wlzy2h3unadj$ATE[2], ", (", wlzy2h3unadj$CI1[2], ", ", wlzy2h3unadj$CI2[2], ")"), 
+                       "Fully adjusted" = paste(wlzy2h3adj$ATE[2], ", (", wlzy2h3adj$CI1[2], ", ", wlzy2h3adj$CI2[2], ")"),
+                       "Unadjusted" = paste(wlzy2h3unadj$ATE[3], ", (", wlzy2h3unadj$CI1[3], ", ", wlzy2h3unadj$CI2[3], ")"), 
+                       "Fully adjusted" = paste(wlzy2h3adj$ATE[3], ", (", wlzy2h3adj$CI1[3], ", ", wlzy2h3adj$CI2[3], ")"),
+                       "Unadjusted" = paste(wlzy2h3unadj$ATE[4], ", (", wlzy2h3unadj$CI1[4], ", ", wlzy2h3unadj$CI2[4], ")"), 
+                       "Fully adjusted" = paste(wlzy2h3adj$ATE[4], ", (", wlzy2h3adj$CI1[4], ", ", wlzy2h3adj$CI2[4], ")")), stringsAsFactors=FALSE)
+
+#HCZ Year 2
+Nhczy2h3 <- nrow(h3_hcz_t3_vs_delta_tsgam.res)
+hczy2h3unadj <- filter(h3unadj.res, Y == "hcz_t3")
+hczy2h3adj <- filter(h3adj.res, Y == "hcz_t3")
+tbl4 <- rbind(tbl4, list("Outcome"="HCZ, Year 2", "N"=Nhczy2h3, "Q1 Mean"=hczy2h3unadj$meanY[1], "Q2 Mean"=hczy2h3unadj$meanY[2], "Q3 Mean"=hczy2h3unadj$meanY[3], "Q4 Mean" = hczy2h3unadj$meanY[4],
+                       "Unadjusted" = paste(hczy2h3unadj$ATE[2], ", (", hczy2h3unadj$CI1[2], ", ", hczy2h3unadj$CI2[2], ")"), 
+                       "Fully adjusted" = paste(hczy2h3adj$ATE[2], ", (", hczy2h3adj$CI1[2], ", ", hczy2h3adj$CI2[2], ")"),
+                       "Unadjusted" = paste(hczy2h3unadj$ATE[3], ", (", hczy2h3unadj$CI1[3], ", ", hczy2h3unadj$CI2[3], ")"), 
+                       "Fully adjusted" = paste(hczy2h3adj$ATE[3], ", (", hczy2h3adj$CI1[3], ", ", hczy2h3adj$CI2[3], ")"),
+                       "Unadjusted" = paste(hczy2h3unadj$ATE[4], ", (", hczy2h3unadj$CI1[4], ", ", hczy2h3unadj$CI2[4], ")"), 
+                       "Fully adjusted" = paste(hczy2h3adj$ATE[4], ", (", hczy2h3adj$CI1[4], ", ", hczy2h3adj$CI2[4], ")")), stringsAsFactors=FALSE)
+
+#blank row
+tbl4 <- rbind(tbl4, list("Outcome"=" ", "N"=" ", "Q1 Mean"=" ", "Q2 Mean"=" ", "Q3 Mean"=" ", "Q4 Mean"=" ",
+                       "Unadjusted" = " ", 
+                       "Fully adjusted" = " ",
+                       "Unadjusted" = " ", 
+                       "Fully adjusted" = " ",
+                       "Unadjusted" = " ", 
+                       "Fully adjusted" =" "), stringsAsFactors=FALSE)
+```
+
+```{r}
+#Hypothesis 1
+h1adj.res <- round_df(h1adj.res, 2)
+h1unadj.res <- round_df(h1unadj.res, 2)
+
+#Change in LAZ between Year 1 to Year 2
+Nlazh1 <- nrow(h1_delta_laz_v_delta_tsgam.res)
+lazh1unadj <- filter(h1unadj.res, Y == "delta_laz_t2_t3")
+lazh1adj <- filter(h1adj.res, Y == "delta_laz_t2_t3")
+tbl4 <- rbind(tbl4, list("Outcome" = "Change in LAZ between Year 1 to Year 2", "N" = Nlazh1, "Q1 Mean" = lazh1unadj$meanY[1], "Q2 Mean" =lazh1unadj$meanY[2], "Q3 Mean" = lazh1unadj$meanY[3], "Q4 Mean" = lazh1unadj$meanY[4],
+                       "Unadjusted" = paste(lazh1unadj$ATE[2], ", (", lazh1unadj$CI1[2], ", ", lazh1unadj$CI2[2], ")"), 
+                       "Fully adjusted" = paste(lazh1adj$ATE[2], ", (", lazh1adj$CI1[2], ", ", lazh1adj$CI2[2], ")"),
+                       "Unadjusted" = paste(lazh1unadj$ATE[3], ", (", lazh1unadj$CI1[3], ", ", lazh1unadj$CI2[3], ")"), 
+                       "Fully adjusted" = paste(lazh1adj$ATE[3], ", (", lazh1adj$CI1[3], ", ", lazh1adj$CI2[3], ")"),
+                       "Unadjusted" = paste(lazh1unadj$ATE[4], ", (", lazh1unadj$CI1[4], ", ", lazh1unadj$CI2[4], ")"), 
+                       "Fully adjusted" = paste(lazh1adj$ATE[4], ", (", lazh1adj$CI1[4], ", ", lazh1adj$CI2[4], ")")), stringsAsFactors=FALSE)
+
+#Change in WAZ between Year 1 to Year 2
+Nwazh1 <- nrow(h1_delta_waz_v_delta_tsgam.res)
+wazh1unadj <- filter(h1unadj.res, Y == "delta_waz_t2_t3")
+wazh1adj <- filter(h1adj.res, Y == "delta_waz_t2_t3")
+tbl4 <- rbind(tbl4, list("Outcome" = "Change in WAZ between Year 1 to Year 2", "N" = Nwazh1, "Q1 Mean" = wazh1unadj$meanY[1], "Q2 Mean" =wazh1unadj$meanY[2], "Q3 Mean" = wazh1unadj$meanY[3], "Q4 Mean" = wazh1unadj$meanY[4],
+                       "Unadjusted" = paste(wazh1unadj$ATE[2], ", (", wazh1unadj$CI1[2], ", ", wazh1unadj$CI2[2], ")"), 
+                       "Fully adjusted" = paste(wazh1adj$ATE[2], ", (", wazh1adj$CI1[2], ", ", wazh1adj$CI2[2], ")"),
+                       "Unadjusted" = paste(wazh1unadj$ATE[3], ", (", wazh1unadj$CI1[3], ", ", wazh1unadj$CI2[3], ")"), 
+                       "Fully adjusted" = paste(wazh1adj$ATE[3], ", (", wazh1adj$CI1[3], ", ", wazh1adj$CI2[3], ")"),
+                       "Unadjusted" = paste(wazh1unadj$ATE[4], ", (", wazh1unadj$CI1[4], ", ", wazh1unadj$CI2[4], ")"), 
+                       "Fully adjusted" = paste(wazh1adj$ATE[4], ", (", wazh1adj$CI1[4], ", ", wazh1adj$CI2[4], ")")), stringsAsFactors=FALSE)
+
+#Change in WLZ between Year 1 to Year 2
+Nwlzh1 <- nrow(h1_delta_whz_v_delta_tsgam.res)
+wlzh1unadj <- filter(h1unadj.res, Y == "delta_whz_t2_t3")
+wlzh1adj <- filter(h1adj.res, Y == "delta_whz_t2_t3")
+tbl4 <- rbind(tbl4, list("Outcome" = "Change in WLZ between Year 1 to Year 2", "N" = Nwlzh1, "Q1 Mean" = wlzh1unadj$meanY[1], "Q2 Mean" =wlzh1unadj$meanY[2], "Q3 Mean" = wlzh1unadj$meanY[3], "Q4 Mean" = wlzh1unadj$meanY[4],
+                       "Unadjusted" = paste(wlzh1unadj$ATE[2], ", (", wlzh1unadj$CI1[2], ", ", wlzh1unadj$CI2[2], ")"), 
+                       "Fully adjusted" = paste(wlzh1adj$ATE[2], ", (", wlzh1adj$CI1[2], ", ", wlzh1adj$CI2[2], ")"),
+                       "Unadjusted" = paste(wlzh1unadj$ATE[3], ", (", wlzh1unadj$CI1[3], ", ", wlzh1unadj$CI2[3], ")"), 
+                       "Fully adjusted" = paste(wlzh1adj$ATE[3], ", (", wlzh1adj$CI1[3], ", ", wlzh1adj$CI2[3], ")"),
+                       "Unadjusted" = paste(wlzh1unadj$ATE[4], ", (", wlzh1unadj$CI1[4], ", ", wlzh1unadj$CI2[4], ")"), 
+                       "Fully adjusted" = paste(wlzh1adj$ATE[4], ", (", wlzh1adj$CI1[4], ", ", wlzh1adj$CI2[4], ")")), stringsAsFactors=FALSE)
+
+#Change in HCZ between Year 1 to Year 2
+Nhczh1 <- nrow(h1_delta_hcz_v_delta_tsgam.res)
+hczh1unadj <- filter(h1unadj.res, Y == "delta_hcz_t2_t3")
+hczh1adj <- filter(h1adj.res, Y == "delta_hcz_t2_t3")
+tbl4 <- rbind(tbl4, list("Outcome" = "Change in HCZ between Year 1 to Year 2", "N" = Nhczh1, "Q1 Mean" = hczh1unadj$meanY[1], "Q2 Mean" =hczh1unadj$meanY[2], "Q3 Mean" = hczh1unadj$meanY[3], "Q4 Mean" = hczh1unadj$meanY[4],
+                       "Unadjusted" = paste(hczh1unadj$ATE[2], ", (", hczh1unadj$CI1[2], ", ", hczh1unadj$CI2[2], ")"), 
+                       "Fully adjusted" = paste(hczh1adj$ATE[2], ", (", hczh1adj$CI1[2], ", ", hczh1adj$CI2[2], ")"),
+                       "Unadjusted" = paste(hczh1unadj$ATE[3], ", (", hczh1unadj$CI1[3], ", ", hczh1unadj$CI2[3], ")"), 
+                       "Fully adjusted" = paste(hczh1adj$ATE[3], ", (", hczh1adj$CI1[3], ", ", hczh1adj$CI2[3], ")"),
+                       "Unadjusted" = paste(hczh1unadj$ATE[4], ", (", hczh1unadj$CI1[4], ", ", hczh1unadj$CI2[4], ")"), 
+                       "Fully adjusted" = paste(hczh1adj$ATE[4], ", (", hczh1adj$CI1[4], ", ", hczh1adj$CI2[4], ")")), stringsAsFactors=FALSE)
+
+
+#blank row
+tbl4 <- rbind(tbl4, list("Outcome"=" ", "N"=" ", "Q1 Mean"=" ", "Q2 Mean"=" ", "Q3 Mean"=" ", "Q4 Mean"=" ",
+                       "Unadjusted" = " ", 
+                       "Fully adjusted" = " ",
+                       "Unadjusted" = " ", 
+                       "Fully adjusted" = " ",
+                       "Unadjusted" = " ", 
+                       "Fully adjusted" =" "), stringsAsFactors=FALSE)
+```
+
+```{r}
+#Hypothesis 2
+h2adj.res <- round_df(h2adj.res, 2)
+h2unadj.res <- round_df(h2unadj.res, 2)
+
+#Length velocity (cm/month)
+Nlenv <- nrow(h2_len_velocity_v_delta_tsgam.res)
+lenvunadj <- filter(h2unadj.res, Y == "len_velocity_t2_t3")
+lenvadj <- filter(h2adj.res, Y == "len_velocity_t2_t3")
+tbl4 <- rbind(tbl4, list("Outcome" = "Length velocity (cm/month)", "N" = Nlenv, "Q1 Mean" = lenvunadj$meanY[1], "Q2 Mean" =lenvunadj$meanY[2], "Q3 Mean" = lenvunadj$meanY[3], "Q4 Mean" = lenvunadj$meanY[4],
+                       "Unadjusted" = paste(lenvunadj$ATE[2], ", (", lenvunadj$CI1[2], ", ", lenvunadj$CI2[2], ")"), 
+                       "Fully adjusted" = paste(lenvadj$ATE[2], ", (", lenvadj$CI1[2], ", ", lenvadj$CI2[2], ")"),
+                       "Unadjusted" = paste(lenvunadj$ATE[3], ", (", lenvunadj$CI1[3], ", ", lenvunadj$CI2[3], ")"), 
+                       "Fully adjusted" = paste(lenvadj$ATE[3], ", (", lenvadj$CI1[3], ", ", lenvadj$CI2[3], ")"),
+                       "Unadjusted" = paste(lenvunadj$ATE[4], ", (", lenvunadj$CI1[4], ", ", lenvunadj$CI2[4], ")"), 
+                       "Fully adjusted" = paste(lenvadj$ATE[4], ", (", lenvadj$CI1[4], ", ", lenvadj$CI2[4], ")")), stringsAsFactors=FALSE)
+
+#Weight velocity (kg/month)
+Nweiv <- nrow(h2_wei_velocity_v_delta_tsgam.res)
+weivunadj <- filter(h2unadj.res, Y == "wei_velocity_t2_t3")
+weivadj <- filter(h2adj.res, Y == "wei_velocity_t2_t3")
+tbl4 <- rbind(tbl4, list("Outcome" = "Length velocity (cm/month)", "N" = Nweiv, "Q1 Mean" = weivunadj$meanY[1], "Q2 Mean" =weivunadj$meanY[2], "Q3 Mean" = weivunadj$meanY[3], "Q4 Mean" = weivunadj$meanY[4],
+                       "Unadjusted" = paste(weivunadj$ATE[2], ", (", weivunadj$CI1[2], ", ", weivunadj$CI2[2], ")"), 
+                       "Fully adjusted" = paste(weivadj$ATE[2], ", (", weivadj$CI1[2], ", ", weivadj$CI2[2], ")"),
+                       "Unadjusted" = paste(weivunadj$ATE[3], ", (", weivunadj$CI1[3], ", ", weivunadj$CI2[3], ")"), 
+                       "Fully adjusted" = paste(weivadj$ATE[3], ", (", weivadj$CI1[3], ", ", weivadj$CI2[3], ")"),
+                       "Unadjusted" = paste(weivunadj$ATE[4], ", (", weivunadj$CI1[4], ", ", weivunadj$CI2[4], ")"), 
+                       "Fully adjusted" = paste(weivadj$ATE[4], ", (", weivadj$CI1[4], ", ", weivadj$CI2[4], ")")), stringsAsFactors=FALSE)
+
+#Head circumference velocity (cm/month)
+Nhcv <- nrow(h2_hc_velocity_v_delta_tsgam.res)
+hcvunadj <- filter(h2unadj.res, Y == "hc_velocity_t2_t3")
+hcvadj <- filter(h2adj.res, Y == "hc_velocity_t2_t3")
+tbl4 <- rbind(tbl4, list("Outcome" = "Head circumference velocity (cm/month)", "N" = Nhcv, "Q1 Mean" = hcvunadj$meanY[1], "Q2 Mean" =hcvunadj$meanY[2], "Q3 Mean" = hcvunadj$meanY[3], "Q4 Mean" = hcvunadj$meanY[4],
+                       "Unadjusted" = paste(hcvunadj$ATE[2], ", (", hcvunadj$CI1[2], ", ", hcvunadj$CI2[2], ")"), 
+                       "Fully adjusted" = paste(hcvadj$ATE[2], ", (", hcvadj$CI1[2], ", ", hcvadj$CI2[2], ")"),
+                       "Unadjusted" = paste(hcvunadj$ATE[3], ", (", hcvunadj$CI1[3], ", ", hcvunadj$CI2[3], ")"), 
+                       "Fully adjusted" = paste(hcvadj$ATE[3], ", (", hcvadj$CI1[3], ", ", hcvadj$CI2[3], ")"),
+                       "Unadjusted" = paste(hcvunadj$ATE[4], ", (", hcvunadj$CI1[4], ", ", hcvunadj$CI2[4], ")"), 
+                       "Fully adjusted" = paste(hcvadj$ATE[4], ", (", hcvadj$CI1[4], ", ", hcvadj$CI2[4], ")")), stringsAsFactors=FALSE)
+tbl4
+```
+
+
+```{r}
+tbl4 <- kable(tbl4) %>%
+  add_header_above((c(" "=6, "Coefficient (95% CI)"=2, "Coefficient (95% CI)"=2, "Coefficient (95% CI)"=2))) %>%
+  add_header_above((c(" "=6, "T/S Ratio Year 1, Q1 v. Q2"=2, "T/S Ratio Year 1, Q1 v. Q3"=2,  "T/S Ratio Year 1, Q1 v. Q4"=2)))
+tbl4
+```
+
