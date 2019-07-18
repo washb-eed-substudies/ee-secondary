@@ -981,50 +981,50 @@ h8adj.res
 #X=exposure
 
 #Hypothesis 1
-h1_delta_laz_v_delta_tsgam.res <- GAM_simulCI(Y=d$delta_laz_t2_t3, X=d$delta_TS, W = NULL, id = NULL)
-h1_delta_waz_v_delta_tsgam.res <- GAM_simulCI(Y=d$delta_waz_t2_t3, X=d$delta_TS, W = NULL, id = NULL)
-h1_delta_whz_v_delta_tsgam.res <- GAM_simulCI(Y=d$delta_whz_t2_t3, X=d$delta_TS, W = NULL, id = NULL)
-h1_delta_hcz_v_delta_tsgam.res <- GAM_simulCI(Y=d$delta_hcz_t2_t3, X=d$delta_TS, W = NULL, id = NULL)
+h1_delta_laz_v_delta_tsgam.res <- GAM_simulCI(Y=d$delta_laz_t2_t3, X=d$delta_TS, W = NULL)
+h1_delta_waz_v_delta_tsgam.res <- GAM_simulCI(Y=d$delta_waz_t2_t3, X=d$delta_TS, W = NULL)
+h1_delta_whz_v_delta_tsgam.res <- GAM_simulCI(Y=d$delta_whz_t2_t3, X=d$delta_TS, W = NULL)
+h1_delta_hcz_v_delta_tsgam.res <- GAM_simulCI(Y=d$delta_hcz_t2_t3, X=d$delta_TS, W = NULL, gamdf = 2:9) #drop df failing to converge
 
 #Hypothesis 2
-h2_len_velocity_v_delta_tsgam.res <- GAM_simulCI(Y=d$len_velocity_t2_t3, X=d$delta_TS, W = NULL, id = NULL)
-h2_wei_velocity_v_delta_tsgam.res <- GAM_simulCI(Y=d$wei_velocity_t2_t3, X=d$delta_TS, W = NULL, id = NULL)
-h2_hc_velocity_v_delta_tsgam.res <- GAM_simulCI(Y=d$hc_velocity_t2_t3, X=d$delta_TS, W = NULL, id = NULL)
+h2_len_velocity_v_delta_tsgam.res <- GAM_simulCI(Y=d$len_velocity_t2_t3, X=d$delta_TS, W = NULL)
+h2_wei_velocity_v_delta_tsgam.res <- GAM_simulCI(Y=d$wei_velocity_t2_t3, X=d$delta_TS, W = NULL)
+h2_hc_velocity_v_delta_tsgam.res <- GAM_simulCI(Y=d$hc_velocity_t2_t3, X=d$delta_TS, W = NULL)
 
 #Hypothesis 3
-h3_laz_t3_vs_delta_tsgam.res <- GAM_simulCI(Y=d$laz_t3, X=d$delta_TS, W = NULL, id = NULL)
-h3_waz_t3_vs_delta_tsgam.res <- GAM_simulCI(Y=d$waz_t3, X=d$delta_TS, W = NULL, id = NULL)
-h3_whz_t3_vs_delta_tsgam.res <- GAM_simulCI(Y=d$whz_t3, X=d$delta_TS, W = NULL, id = NULL)
-h3_hcz_t3_vs_delta_tsgam.res <- GAM_simulCI(Y=d$hcz_t3, X=d$delta_TS, W = NULL, id = NULL)
+h3_laz_t3_vs_delta_tsgam.res <- GAM_simulCI(Y=d$laz_t3, X=d$delta_TS, W = NULL)
+h3_waz_t3_vs_delta_tsgam.res <- GAM_simulCI(Y=d$waz_t3, X=d$delta_TS, W = NULL)
+h3_whz_t3_vs_delta_tsgam.res <- GAM_simulCI(Y=d$whz_t3, X=d$delta_TS, W = NULL)
+h3_hcz_t3_vs_delta_tsgam.res <- GAM_simulCI(Y=d$hcz_t3, X=d$delta_TS, W = NULL)
 
 #Hypothesis 4
-h4_laz_t2_vs_ts_t2gam.res <- GAM_simulCI(Y=d$laz_t2, X=d$TS_t2, W = NULL, id = NULL)
-h4_waz_t2_vs_ts_t2gam.res <- GAM_simulCI(Y=d$waz_t2, X=d$TS_t2, W = NULL, id = NULL)
-h4_whz_t2_vs_ts_t2gam.res <- GAM_simulCI(Y=d$whz_t2, X=d$TS_t2, W = NULL, id = NULL)
-h4_hcz_t2_vs_ts_t2gam.res <- GAM_simulCI(Y=d$hcz_t2, X=d$TS_t2, W = NULL, id = NULL)
+h4_laz_t2_vs_ts_t2gam.res <- GAM_simulCI(Y=d$laz_t2, X=d$TS_t2, W = NULL)
+h4_waz_t2_vs_ts_t2gam.res <- GAM_simulCI(Y=d$waz_t2, X=d$TS_t2, W = NULL)
+h4_whz_t2_vs_ts_t2gam.res <- GAM_simulCI(Y=d$whz_t2, X=d$TS_t2, W = NULL)
+h4_hcz_t2_vs_ts_t2gam.res <- GAM_simulCI(Y=d$hcz_t2, X=d$TS_t2, W = NULL)
 
 #Hypothesis 5
-h5_laz_t3_vs_ts_t3gam.res <- GAM_simulCI(Y=d$laz_t3, X=d$TS_t3, W = NULL, id = NULL)
-h5_waz_t3_vs_ts_t3gam.res <- GAM_simulCI(Y=d$waz_t3, X=d$TS_t3, W = NULL, id = NULL)
-h5_whz_t3_vs_ts_t3gam.res <- GAM_simulCI(Y=d$whz_t3, X=d$TS_t3, W = NULL, id = NULL)
-h5_hcz_t3_vs_ts_t3gam.res <- GAM_simulCI(Y=d$hcz_t3, X=d$TS_t3, W = NULL, id = NULL)
+h5_laz_t3_vs_ts_t3gam.res <- GAM_simulCI(Y=d$laz_t3, X=d$TS_t3, W = NULL)
+h5_waz_t3_vs_ts_t3gam.res <- GAM_simulCI(Y=d$waz_t3, X=d$TS_t3, W = NULL)
+h5_whz_t3_vs_ts_t3gam.res <- GAM_simulCI(Y=d$whz_t3, X=d$TS_t3, W = NULL)
+h5_hcz_t3_vs_ts_t3gam.res <- GAM_simulCI(Y=d$hcz_t3, X=d$TS_t3, W = NULL)
 
 #Hypothesis 6
-h6_laz_t3_vs_ts_t2gam.res <- GAM_simulCI(Y=d$laz_t3, X=d$TS_t2, W = NULL, id = NULL)
-h6_waz_t3_vs_ts_t2gam.res <- GAM_simulCI(Y=d$waz_t3, X=d$TS_t2, W = NULL, id = NULL)
-h6_whz_t3_vs_ts_t2gam.res <- GAM_simulCI(Y=d$whz_t3, X=d$TS_t2, W = NULL, id = NULL)
-h6_hcz_t3_vs_ts_t2gam.res <- GAM_simulCI(Y=d$hcz_t3, X=d$TS_t2, W = NULL, id = NULL)
+h6_laz_t3_vs_ts_t2gam.res <- GAM_simulCI(Y=d$laz_t3, X=d$TS_t2, W = NULL)
+h6_waz_t3_vs_ts_t2gam.res <- GAM_simulCI(Y=d$waz_t3, X=d$TS_t2, W = NULL)
+h6_whz_t3_vs_ts_t2gam.res <- GAM_simulCI(Y=d$whz_t3, X=d$TS_t2, W = NULL)
+h6_hcz_t3_vs_ts_t2gam.res <- GAM_simulCI(Y=d$hcz_t3, X=d$TS_t2, W = NULL)
 
 #Hypothesis 7
-h7_len_veloc_vs_ts_t2gam.res <- GAM_simulCI(Y=d$len_velocity_t2_t3, X=d$TS_t2, W = NULL, id = NULL)
-h7_wei_veloc_vs_ts_t2gam.res <- GAM_simulCI(Y=d$wei_velocity_t2_t3, X=d$TS_t2, W = NULL, id = NULL)
-h7_hc_veloc_vs_ts_t2gam.res <- GAM_simulCI(Y=d$hc_velocity_t2_t3, X=d$TS_t2, W = NULL, id = NULL)
+h7_len_veloc_vs_ts_t2gam.res <- GAM_simulCI(Y=d$len_velocity_t2_t3, X=d$TS_t2, W = NULL)
+h7_wei_veloc_vs_ts_t2gam.res <- GAM_simulCI(Y=d$wei_velocity_t2_t3, X=d$TS_t2, W = NULL)
+h7_hc_veloc_vs_ts_t2gam.res <- GAM_simulCI(Y=d$hc_velocity_t2_t3, X=d$TS_t2, W = NULL)
 
 #Hypothesis 8
-h8_delta_laz_v_ts_t2gam.res <- GAM_simulCI(Y=d$delta_laz_t2_t3, X=d$ts_t2, W = NULL, id = NULL)
-h8_delta_waz_v_ts_t2gam.res <- GAM_simulCI(Y=d$delta_waz_t2_t3, X=d$ts_t2, W = NULL, id = NULL)
-h8_delta_whz_v_ts_t2gam.res <- GAM_simulCI(Y=d$delta_whz_t2_t3, X=d$ts_t2, W = NULL, id = NULL)
-h8_delta_hcz_v_ts_t2gam.res <- GAM_simulCI(Y=d$delta_hcz_t2_t3, X=d$ts_t2, W = NULL, id = NULL)
+h8_delta_laz_v_ts_t2gam.res <- GAM_simulCI(Y=d$delta_laz_t2_t3, X=d$ts_t2, W = NULL)
+h8_delta_waz_v_ts_t2gam.res <- GAM_simulCI(Y=d$delta_waz_t2_t3, X=d$ts_t2, W = NULL)
+h8_delta_whz_v_ts_t2gam.res <- GAM_simulCI(Y=d$delta_whz_t2_t3, X=d$ts_t2, W = NULL)
+h8_delta_hcz_v_ts_t2gam.res <- GAM_simulCI(Y=d$delta_hcz_t2_t3, X=d$ts_t2, W = NULL, gamdf = c(1:5)) #drop df failing to converge)
 
 
 
@@ -1059,7 +1059,7 @@ save(
   h1_delta_laz_v_delta_tsgam.res,
   h1_delta_waz_v_delta_tsgam.res, 
   h1_delta_whz_v_delta_tsgam.res,
-  #h1_delta_hcz_v_delta_tsgam.res,
+  h1_delta_hcz_v_delta_tsgam.res,
   #Hypothesis 2
   h2_len_velocity_v_delta_tsgam.res,
   h2_wei_velocity_v_delta_tsgam.res,
@@ -1092,7 +1092,7 @@ save(
   h8_delta_laz_v_ts_t2gam.res,
   h8_delta_waz_v_ts_t2gam.res,
   h8_delta_whz_v_ts_t2gam.res, 
-  #h8_delta_hcz_v_ts_t2gam.res,  TEMP, not fitting
+  h8_delta_hcz_v_ts_t2gam.res, 
   file=here("/audrie results/telo_growth_spline_fits.Rdata"))
   
 

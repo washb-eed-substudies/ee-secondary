@@ -13,47 +13,55 @@ load(here("/audrie results/telo_growth_spline_fits.Rdata"))
 
 
 d1 <- rbind(
-  data.frame(y="Change in LAZ", h1_delta_laz_v_delta_tsgam.res),
-  data.frame(y="Change in WLZ", h1_delta_whz_v_delta_tsgam.res),
-  data.frame(y="Change in WAZ", h1_delta_waz_v_delta_tsgam.res))#,
-  #data.frame(y="Change in HCZ", h1_delta_hcz_v_delta_tsgam.res))
+  data.frame(x="Change in T/S ratio", y="Change in LAZ", h1_delta_laz_v_delta_tsgam.res),
+  data.frame(x="Change in T/S ratio", y="Change in WLZ", h1_delta_whz_v_delta_tsgam.res),
+  data.frame(x="Change in T/S ratio", y="Change in WAZ", h1_delta_waz_v_delta_tsgam.res),
+  data.frame(x="Change in T/S ratio", y="Change in HCZ", h1_delta_hcz_v_delta_tsgam.res))
 d2 <- rbind(
-  data.frame(y="Change in Length", h2_len_velocity_v_delta_tsgam.res),
-  data.frame(y="Change in Weight", h2_wei_velocity_v_delta_tsgam.res),
-  data.frame(y="Change in Head Circumference", h2_hc_velocity_v_delta_tsgam.res))
+  data.frame(x="Change in T/S ratio", y="Change in Length", h2_len_velocity_v_delta_tsgam.res),
+  data.frame(x="Change in T/S ratio", y="Change in Weight", h2_wei_velocity_v_delta_tsgam.res),
+  data.frame(x="Change in T/S ratio", y="Change in Head Circumference", h2_hc_velocity_v_delta_tsgam.res))
 d3 <- rbind(
-  data.frame(y="LAZ", h3_laz_t3_vs_delta_tsgam.res),
-  data.frame(y="WLZ", h3_waz_t3_vs_delta_tsgam.res),
-  data.frame(y="WAZ", h3_whz_t3_vs_delta_tsgam.res),
-  data.frame(y="HCZ", h3_hcz_t3_vs_delta_tsgam.res))
+  data.frame(x="Change in T/S ratio", y="LAZ - year 2", h3_laz_t3_vs_delta_tsgam.res),
+  data.frame(x="Change in T/S ratio", y="WLZ - year 2", h3_waz_t3_vs_delta_tsgam.res),
+  data.frame(x="Change in T/S ratio", y="WAZ - year 2", h3_whz_t3_vs_delta_tsgam.res),
+  data.frame(x="Change in T/S ratio", y="HCZ - year 2", h3_hcz_t3_vs_delta_tsgam.res))
 d4 <- rbind(
-  data.frame(y="LAZ", h4_laz_t2_vs_ts_t2gam.res),
-  data.frame(y="WLZ", h4_waz_t2_vs_ts_t2gam.res),
-  data.frame(y="WAZ", h4_whz_t2_vs_ts_t2gam.res),
-  data.frame(y="HCZ", h4_hcz_t2_vs_ts_t2gam.res))
+  data.frame(x="T/S ratio - year 1", y="LAZ - year 1", h4_laz_t2_vs_ts_t2gam.res),
+  data.frame(x="T/S ratio - year 1", y="WLZ - year 1", h4_waz_t2_vs_ts_t2gam.res),
+  data.frame(x="T/S ratio - year 1", y="WAZ - year 1", h4_whz_t2_vs_ts_t2gam.res),
+  data.frame(x="T/S ratio - year 1", y="HCZ - year 1", h4_hcz_t2_vs_ts_t2gam.res))
+d5 <- rbind(
+  data.frame(x="T/S ratio - year 2", y="LAZ - year 2", h5_laz_t3_vs_ts_t3gam.res),
+  data.frame(x="T/S ratio - year 2", y="WLZ - year 2", h5_waz_t3_vs_ts_t3gam.res),
+  data.frame(x="T/S ratio - year 2", y="WAZ - year 2", h5_whz_t3_vs_ts_t3gam.res),
+  data.frame(x="T/S ratio - year 2", y="HCZ - year 2", h5_hcz_t3_vs_ts_t3gam.res))
+d6 <- rbind(
+  data.frame(x="T/S ratio - year 1", y="LAZ - year 2", h6_laz_t3_vs_ts_t2gam.res),
+  data.frame(x="T/S ratio - year 1", y="WLZ - year 2", h6_waz_t3_vs_ts_t2gam.res),
+  data.frame(x="T/S ratio - year 1", y="WAZ - year 2", h6_whz_t3_vs_ts_t2gam.res),
+  data.frame(x="T/S ratio - year 1", y="HCZ - year 2", h6_hcz_t3_vs_ts_t2gam.res))
+d7 <- rbind(
+  data.frame(x="T/S ratio - year 1", y="Change in Length", h7_len_veloc_vs_ts_t2gam.res),
+  data.frame(x="T/S ratio - year 1", y="Change in Weight", h7_wei_veloc_vs_ts_t2gam.res),
+  data.frame(x="T/S ratio - year 1", y="Change in Head Circumference", h7_hc_veloc_vs_ts_t2gam.res))
+d8 <- rbind(
+  data.frame(x="T/S ratio - year 1", y="Change in LAZ", h8_delta_laz_v_ts_t2gam.res),
+  data.frame(x="T/S ratio - year 1", y="Change in WLZ", h8_delta_waz_v_ts_t2gam.res),
+  data.frame(x="T/S ratio - year 1", y="Change in WAZ", h8_delta_whz_v_ts_t2gam.res),
+  data.frame(x="T/S ratio - year 1", y="Change in HCZ", h8_delta_hcz_v_ts_t2gam.res))
+
+d1$y <- factor(d1$y)
+d2$y <- factor(d2$y)
+d3$y <- factor(d3$y)
+d4$y <- factor(d4$y)
+d5$y <- factor(d5$y)
+d6$y <- factor(d6$y)
+d7$y <- factor(d7$y)
+d8$y <- factor(d8$y)
 
 
 
-# 
-# #Hypothesis 5
-# h5_laz_t3_vs_ts_t3gam.res, 
-# h5_waz_t3_vs_ts_t3gam.res, 
-# h5_whz_t3_vs_ts_t3gam.res, 
-# h5_hcz_t3_vs_ts_t3gam.res, 
-# #Hypothesis 6
-# h6_laz_t3_vs_ts_t2gam.res, 
-# h6_waz_t3_vs_ts_t2gam.res, 
-# h6_whz_t3_vs_ts_t2gam.res, 
-# h6_hcz_t3_vs_ts_t2gam.res, 
-# #Hypothesis 7
-# h7_len_veloc_vs_ts_t2gam.res, 
-# h7_wei_veloc_vs_ts_t2gam.res, 
-# h7_hc_veloc_vs_ts_t2gam.res,
-# #Hypothesis 8
-# h8_delta_laz_v_ts_t2gam.res,
-# h8_delta_waz_v_ts_t2gam.res,
-# h8_delta_whz_v_ts_t2gam.res, 
-# #h8_delta_hcz_v_ts_t2gam.res,  TEMP, not fitting
 
 spline_plot_functions <- function(d){
   
@@ -70,61 +78,108 @@ spline_plot_functions <- function(d){
   d <- left_join(d, quantiles, by="y")
   
   p1 <- d[d$y==levels(d$y)[1],] %>% {ggplot(.,aes(x = X)) +
-    geom_smooth(aes(y = fit), se = F) +
-    geom_ribbon(aes(ymin=lwrS, ymax=uprS), alpha=0.5) +
-    geom_point(aes(y=Y), alpha=0.1) +
+    geom_smooth(aes(y = fit, color=y), se = F) +
+    geom_ribbon(aes(ymin=lwrS, ymax=uprS, fill=y, color=y), alpha=0.5) +
+    geom_point(aes(y=Y), alpha=0.5) +
     coord_cartesian(xlim = c(.$x.lb, .$x.ub), ylim = c(.$y.lb, .$y.ub)) +
-    xlab("T/S ratio") + ylab(.$y[1])
+    scale_colour_manual(values=tableau10[c(1:4,1:4,1:4,5:7)], drop=FALSE) + 
+    scale_fill_manual(values=tableau10[c(1:4,1:4,1:4,5:7)], drop=FALSE) + 
+    xlab(.$x[1]) + ylab(.$y[1])
   }
   p2 <- d[d$y==levels(d$y)[2],] %>% {ggplot(.,aes(x = X)) +
-      geom_smooth(aes(y = fit), se = F) +
-      geom_ribbon(aes(ymin=lwrS, ymax=uprS), alpha=0.5) +
-      geom_point(aes(y=Y), alpha=0.1) +
+      geom_smooth(aes(y = fit, color=y), se = F) +
+      geom_ribbon(aes(ymin=lwrS, ymax=uprS, fill=y, color=y), alpha=0.5) +
+      geom_point(aes(y=Y), alpha=0.5) +
       coord_cartesian(xlim = c(.$x.lb, .$x.ub), ylim = c(.$y.lb, .$y.ub)) +
-      xlab("T/S ratio") + ylab(.$y[1])
+      scale_colour_manual(values=tableau10[c(1:4,1:4,1:4,5:7)], drop=FALSE) + 
+      scale_fill_manual(values=tableau10[c(1:4,1:4,1:4,5:7)], drop=FALSE) + 
+      xlab(.$x[1]) + ylab(.$y[1])
   }
   p3 <- d[d$y==levels(d$y)[3],] %>% {ggplot(.,aes(x = X)) +
-      geom_smooth(aes(y = fit), se = F) +
-      geom_ribbon(aes(ymin=lwrS, ymax=uprS), alpha=0.5) +
-      geom_point(aes(y=Y), alpha=0.1) +
+      geom_smooth(aes(y = fit, color=y), se = F) +
+      geom_ribbon(aes(ymin=lwrS, ymax=uprS, fill=y, color=y), alpha=0.5) +
+      geom_point(aes(y=Y), alpha=0.5) +
       coord_cartesian(xlim = c(.$x.lb, .$x.ub), ylim = c(.$y.lb, .$y.ub)) +
-      xlab("T/S ratio") + ylab(.$y[1])
+      scale_colour_manual(values=tableau10[c(1:4,1:4,1:4,5:7)], drop=FALSE) + 
+      scale_fill_manual(values=tableau10[c(1:4,1:4,1:4,5:7)], drop=FALSE) + 
+      xlab(.$x[1]) + ylab(.$y[1])
   }
   if(nlevels==4){
     p4 <- d[d$y==levels(d$y)[4],] %>% {ggplot(.,aes(x = X)) +
-        geom_smooth(aes(y = fit), se = F) +
-        geom_ribbon(aes(ymin=lwrS, ymax=uprS), alpha=0.5) +
-        geom_point(aes(y=Y), alpha=0.1) +
+        geom_smooth(aes(y = fit, color=y), se = F) +
+        geom_ribbon(aes(ymin=lwrS, ymax=uprS, fill=y, color=y), alpha=0.5) +
+        geom_point(aes(y=Y), alpha=0.5) +
         coord_cartesian(xlim = c(.$x.lb, .$x.ub), ylim = c(.$y.lb, .$y.ub)) +
-        xlab("T/S ratio") + ylab(.$y[1])
+        scale_colour_manual(values=tableau10[c(1:4,1:4,1:4,5:7)], drop=FALSE) + 
+        scale_fill_manual(values=tableau10[c(1:4,1:4,1:4,5:7)], drop=FALSE) + 
+        xlab(.$x[1]) + ylab(.$y[1])
     }    
   }
 
   if(nlevels==4){
-    p <- p1 + p2 + p3 + p4
+    #p <- p1 + p2 + p3 + p4 + plot_layout(nrow = 1)
+    return(list(p1, p2, p3, p4))
   }else{
-    p <- p1 + p2 + p3 
+    #p <- p1 + p2 + p3 + plot_layout(nrow = 1) 
+    return(list(p1, p2, p3))
   }
   
   return(p)
 }
 
-p1 <- spline_plot_functions(d1)
-p2 <- spline_plot_functions(d2)
-p3 <- spline_plot_functions(d3)
-p4 <- spline_plot_functions(d4)
+plist1 <- spline_plot_functions(d1)
+plist2 <- spline_plot_functions(d2)
+plist3 <- spline_plot_functions(d3)
+plist4 <- spline_plot_functions(d4)
+plist5 <- spline_plot_functions(d5)
+plist6 <- spline_plot_functions(d6)
+plist7 <- spline_plot_functions(d7)
+plist8 <- spline_plot_functions(d8)
+
+
+p1 <- plot_grid(plist1[[1]], plist1[[2]], plist1[[3]], plist1[[4]], nrow=1, labels = c("","","",""))
+p2 <- plot_grid(plist2[[1]], plist2[[2]], plist2[[3]], nrow=1, labels = c("","",""))
+p3 <- plot_grid(plist3[[1]], plist3[[2]], plist3[[3]], plist3[[4]], nrow=1, labels = c("","","",""))
+p4 <- plot_grid(plist4[[1]], plist4[[2]], plist4[[3]], plist4[[4]], nrow=1, labels = c("","","",""))
+p5 <- plot_grid(plist5[[1]], plist5[[2]], plist5[[3]], plist5[[4]], nrow=1, 
+                labels = c("Adjusted differences between quartiles of telomere length at Year 2 for each growth outcome","","",""),
+                hjust=1,vjust=1)
+p6 <- plot_grid(plist6[[1]], plist6[[2]], plist6[[3]], plist6[[4]], nrow=1, labels = c("","","",""))
+p7 <- plot_grid(plist7[[1]], plist7[[2]], plist7[[3]], nrow=1, labels = c("","",""))
+p8 <- plot_grid(plist8[[1]], plist8[[2]], plist8[[3]], plist8[[4]], nrow=1, labels = c("","","",""))
+
+
+
+
+pcomb1 <- plot_grid(p1,
+                p2,
+                p3,
+                ncol=1,
+                labels = c("Adjusted differences between quartiles of change in telomere length between Years 1 and 2 for each growth outcome","",""),
+                hjust=0.5, vjust=0.5,
+                rel_heights = c(1, 1, 1))
+pcomb2 <- plot_grid(p4,
+                p6,
+                p7,
+                p8,
+                ncol=1,
+                labels = c("Adjusted differences between quartiles of telomere length at Year 1 for each growth outcome","","",""),
+                hjust=0.5,vjust=0.5,
+                rel_heights = c(1, 1, 1, 1))
+
+
+
+
+ggsave(pcomb1, file = here("figures/telo-growth-splines_1.png"), height=12, width=14)
+ggsave(pcomb2, file = here("figures/telo-growth-splines_2.png"), height=16, width=14)
+ggsave(p5, file = here("figures/telo-growth-splines_3.png"), height=4, width=14)
 
 
 
 # ggplot(d,aes(x = X)) +
-#   geom_smooth(aes(y = fit), se = F) +
-#   geom_ribbon(aes(ymin=lwrS, ymax=uprS), alpha=0.5) +
+#   geom_smooth(aes(y = fit, color=y), se = F) +
+#   geom_ribbon(aes(ymin=lwrS, ymax=uprS, fill=y, color=y), alpha=0.5) +
 #   geom_rug(aes(y=Y)) +
 #   facet_wrap(~y)
 
 
-
-ggsave(p1, file = here("figures/telo-growth-splines-H1.png"), height=10, width=14)
-ggsave(p2, file = here("figures/telo-growth-splines-H2.png"), height=10, width=14)
-ggsave(p3, file = here("figures/telo-growth-splines-H3.png"), height=10, width=14)
-ggsave(p4, file = here("figures/telo-growth-splines-H4.png"), height=10, width=14)
