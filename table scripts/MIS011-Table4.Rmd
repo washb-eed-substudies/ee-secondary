@@ -170,7 +170,7 @@ tbl4 <- rbind(tbl4, list("Outcome" = "Length velocity (cm/month)", "N" = Nlenv, 
 Nweiv <- nrow(h2_wei_velocity_v_delta_tsgam.res)
 weivunadj <- filter(h2unadj.res, Y == "wei_velocity_t2_t3")
 weivadj <- filter(h2adj.res, Y == "wei_velocity_t2_t3")
-tbl4 <- rbind(tbl4, list("Outcome" = "Length velocity (cm/month)", "N" = Nweiv, "Q1 Mean" = weivunadj$meanY[1], "Q2 Mean" =weivunadj$meanY[2], "Q3 Mean" = weivunadj$meanY[3], "Q4 Mean" = weivunadj$meanY[4],
+tbl4 <- rbind(tbl4, list("Outcome" = "Weight velocity (kg/month)", "N" = Nweiv, "Q1 Mean" = weivunadj$meanY[1], "Q2 Mean" =weivunadj$meanY[2], "Q3 Mean" = weivunadj$meanY[3], "Q4 Mean" = weivunadj$meanY[4],
                        "Unadjusted" = paste(weivunadj$ATE[2], " (", weivunadj$CI1[2], ", ", weivunadj$CI2[2], ")", sep=""), 
                        "Fully adjusted" = paste(weivadj$ATE[2], " (", weivadj$CI1[2], ", ", weivadj$CI2[2], ")", sep=""),
                        "Unadjusted" = paste(weivunadj$ATE[3], " (", weivunadj$CI1[3], ", ", weivunadj$CI2[3], ")", sep=""), 
@@ -194,12 +194,10 @@ tbl4
 
 
 ```{r}
-tbl4 <- kable(tbl4) %>%
+kable(tbl4) %>%
   add_header_above((c(" "=6, "Coefficient (95% CI)"=2, "Coefficient (95% CI)"=2, "Coefficient (95% CI)"=2))) %>%
-  add_header_above((c(" "=6, "Change in T/S Ratio between Year 1 to Year 2, Q1 v. Q2"=2, "Change in T/S Ratio between Year 1 to Year 2, Q1 v. Q3"=2,  "Change in T/S Ratio between Year 1 to Year 2, Q1 v. Q4"=2)))
-tbl4
-```
-```{r}
-save_kable(tbl4, file=here("tables/table4.pdf"))
-```
+  add_header_above((c(" "=6, "Change in T/S Ratio between Year 1 to Year 2, Q1 v. Q2"=2, "Change in T/S Ratio between Year 1 to Year 2, Q1 v. Q3"=2,  "Change in T/S Ratio between Year 1 to Year 2, Q1 v. Q4"=2))) %>%
+  kable_styling(font_size = 9, full_width = TRUE) %>%
+  save_kable(file=here("tables/table4.html"))
+``````
 

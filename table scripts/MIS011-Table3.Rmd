@@ -86,13 +86,12 @@ tbl3 <- rbind(tbl3, list("Outcome"=" ", "N"=" ", "Q1 Mean"=" ", "Q2 Mean"=" ", "
 ```
 
 ```{r}
-tbl3 <- kable(tbl3) %>%
+kable(tbl3) %>%
   add_header_above((c(" "=6, "Coefficient (95% CI)"=2, "Coefficient (95% CI)"=2, "Coefficient (95% CI)"=2))) %>%
-  add_header_above((c(" "=6, "T/S Ratio Year 2, Q1 v. Q2"=2, "T/S Ratio Year 2, Q1 v. Q3"=2,  "T/S Ratio Year 2, Q1 v. Q4"=2)))
-tbl3
+  add_header_above((c(" "=6, "T/S Ratio Year 2, Q1 v. Q2"=2, "T/S Ratio Year 2, Q1 v. Q3"=2,  "T/S Ratio Year 2, Q1 v. Q4"=2))) %>%
+  kable_styling(font_size = 9, full_width = TRUE) %>%
+  save_kable(file=here("tables/table3.html"))
 ```
 
-```{r}
-save_kable(tbl3, file=here("tables/table3.pdf"))
-```
+
 
