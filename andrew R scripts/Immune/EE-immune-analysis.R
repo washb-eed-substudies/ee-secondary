@@ -169,12 +169,18 @@ colnames(d) <- gsub("ifng","ifn",colnames(d))
 
 #dataframe of urine biomarkers:
 colnames(d)
-Y<-d %>% select(igf_t2,          igf_t3,          crp_t2,          agp_t2,          gmc_t2,       
-                ifn_t2,         il10_t2,         il12_t2,         il13_t2,         il17_t2,        
-                il1_t2,          il2_t2,          il21_t2,         il4_t2,          il5_t2,         
-                 il6_t2,          tnf_t2,         gmc_t3,        ifn_t3,         il10_t3,        
-                il12_t3,         il13_t3,         il17_t3,         il1_t3,          il2_t3,         
-                il21_t3,         il4_t3,          il5_t3,          il6_t3,          tnf_t3)
+Y<-d %>% rename(t2_igf=igf_t2,          t3_igf=igf_t3,          t2_crp=crp_t2,          t2_agp=agp_t2,          t2_gmc=gmc_t2,       
+                t2_ifn=ifn_t2,         t2_il10=il10_t2,         t2_il12=il12_t2,         t2_il13=il13_t2,         t2_il17=il17_t2,        
+                t2_il1=il1_t2,          t2_il2=il2_t2,          t2_il21=il21_t2,         t2_il4=il4_t2,          t2_il5=il5_t2,         
+                t2_il6=il6_t2,          t2_tnf=tnf_t2,         t3_gmc=gmc_t3,        t3_ifn=ifn_t3,         t3_il10=il10_t3,        
+                t3_il12=il12_t3,         t3_il13=il13_t3,         t3_il17=il17_t3,         t3_il1=il1_t3,          t3_il2=il2_t3,         
+                t3_il21=il21_t3,         t3_il4=il4_t3,          t3_il5=il5_t3,          t3_il6=il6_t3,          t3_tnf=tnf_t3) %>%
+  select(t2_igf,          t3_igf,          t2_crp,          t2_agp,          t2_gmc,       
+         t2_ifn,         t2_il10,         t2_il12,         t2_il13,         t2_il17,        
+         t2_il1,          t2_il2,          t2_il21,         t2_il4,          t2_il5,         
+         t2_il6,          t2_tnf,         t3_gmc,        t3_ifn,         t3_il10,        
+         t3_il12,         t3_il13,         t3_il17,         t3_il1,          t3_il2,         
+         t3_il21,         t3_il4,          t3_il5,          t3_il6,          t3_tnf)
 
 #Unadjusted glm models
 res_unadj <- NULL
@@ -478,17 +484,17 @@ res_adj <- as.data.frame(res_adj)
 colnames(res_adj)<-c("RD","ci.l","ci.u", "Std. Error", "z value", "Pval")
 res_adj$Y <-colnames(Y)
 
-# #Compare to Audrie's objects
-# load(paste0(dropboxDir,"Results/Audrie/immune_adj_glm.RData"))
-# 
-# aud_adj <- as.data.frame(rbindlist(lapply(lapply(ls(pattern="_adj_L"), get), as.data.frame)))
-# aud_adj$Y = gsub("_adj_L","",ls(pattern="_adj_L"))
-# 
-# dim(res_adj)
-# dim(aud_adj)
-# comp_adj <- full_join(res_adj, aud_adj, by="Y")
-# dim(comp_adj)
-# comp_adj$RD.x - comp_adj$RD.y
+#Compare to Audrie's objects
+name.pattern="_adj_L"
+object_list=ls(pattern=name.pattern)
+aud_adj <- load_aud(name.pattern, object_list)
+
+
+dim(res_adj)
+dim(aud_adj)
+comp_adj <- full_join(res_adj, aud_adj, by="Y")
+dim(comp_adj)
+comp_adj$RD.x - comp_adj$RD.y
 
 #Save intermediate R objects for replication comparison
 dm <- d

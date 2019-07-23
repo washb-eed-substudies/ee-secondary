@@ -13,14 +13,14 @@ load(here("/audrie results/telo_growth_spline_fits.Rdata"))
 
 
 d1 <- rbind(
-  data.frame(x="Change in T/S ratio", y="Change in LAZ", h1_delta_laz_v_delta_tsgam.res),
-  data.frame(x="Change in T/S ratio", y="Change in WLZ", h1_delta_whz_v_delta_tsgam.res),
-  data.frame(x="Change in T/S ratio", y="Change in WAZ", h1_delta_waz_v_delta_tsgam.res),
-  data.frame(x="Change in T/S ratio", y="Change in HCZ", h1_delta_hcz_v_delta_tsgam.res))
+  data.frame(x="Change in T/S ratio", y="Change in LAZ\nbetween years 1 and 2", h1_delta_laz_v_delta_tsgam.res),
+  data.frame(x="Change in T/S ratio", y="Change in WLZ\nbetween years 1 and 2", h1_delta_whz_v_delta_tsgam.res),
+  data.frame(x="Change in T/S ratio", y="Change in WAZ\nbetween years 1 and 2", h1_delta_waz_v_delta_tsgam.res),
+  data.frame(x="Change in T/S ratio", y="Change in HCZ\nbetween years 1 and 2", h1_delta_hcz_v_delta_tsgam.res))
 d2 <- rbind(
-  data.frame(x="Change in T/S ratio", y="Change in Length", h2_len_velocity_v_delta_tsgam.res),
-  data.frame(x="Change in T/S ratio", y="Change in Weight", h2_wei_velocity_v_delta_tsgam.res),
-  data.frame(x="Change in T/S ratio", y="Change in Head Circumference", h2_hc_velocity_v_delta_tsgam.res))
+  data.frame(x="Change in T/S ratio", y="Length velocity\nbetween years 1 and 2", h2_len_velocity_v_delta_tsgam.res),
+  data.frame(x="Change in T/S ratio", y="Weight velocity\nbetween years 1 and 2", h2_wei_velocity_v_delta_tsgam.res),
+  data.frame(x="Change in T/S ratio", y="Head circumference velocity\nbetween years 1 and 2", h2_hc_velocity_v_delta_tsgam.res))
 d3 <- rbind(
   data.frame(x="Change in T/S ratio", y="LAZ - year 2", h3_laz_t3_vs_delta_tsgam.res),
   data.frame(x="Change in T/S ratio", y="WLZ - year 2", h3_waz_t3_vs_delta_tsgam.res),
@@ -42,14 +42,14 @@ d6 <- rbind(
   data.frame(x="T/S ratio - year 1", y="WAZ - year 2", h6_whz_t3_vs_ts_t2gam.res),
   data.frame(x="T/S ratio - year 1", y="HCZ - year 2", h6_hcz_t3_vs_ts_t2gam.res))
 d7 <- rbind(
-  data.frame(x="T/S ratio - year 1", y="Change in Length", h7_len_veloc_vs_ts_t2gam.res),
-  data.frame(x="T/S ratio - year 1", y="Change in Weight", h7_wei_veloc_vs_ts_t2gam.res),
-  data.frame(x="T/S ratio - year 1", y="Change in Head Circumference", h7_hc_veloc_vs_ts_t2gam.res))
+  data.frame(x="T/S ratio - year 1", y="Length velocity\nbetween years 1 and 2", h7_len_veloc_vs_ts_t2gam.res),
+  data.frame(x="T/S ratio - year 1", y="Weight velocity\nbetween years 1 and 2", h7_wei_veloc_vs_ts_t2gam.res),
+  data.frame(x="T/S ratio - year 1", y="Head circumference velocity\nbetween years 1 and 2", h7_hc_veloc_vs_ts_t2gam.res))
 d8 <- rbind(
-  data.frame(x="T/S ratio - year 1", y="Change in LAZ", h8_delta_laz_v_ts_t2gam.res),
-  data.frame(x="T/S ratio - year 1", y="Change in WLZ", h8_delta_waz_v_ts_t2gam.res),
-  data.frame(x="T/S ratio - year 1", y="Change in WAZ", h8_delta_whz_v_ts_t2gam.res),
-  data.frame(x="T/S ratio - year 1", y="Change in HCZ", h8_delta_hcz_v_ts_t2gam.res))
+  data.frame(x="T/S ratio - year 1", y="Change in LAZ\nbetween years 1 and 2", h8_delta_laz_v_ts_t2gam.res),
+  data.frame(x="T/S ratio - year 1", y="Change in WLZ\nbetween years 1 and 2", h8_delta_waz_v_ts_t2gam.res),
+  data.frame(x="T/S ratio - year 1", y="Change in WAZ\nbetween years 1 and 2", h8_delta_whz_v_ts_t2gam.res),
+  data.frame(x="T/S ratio - year 1", y="Change in HCZ\nbetween years 1 and 2", h8_delta_hcz_v_ts_t2gam.res))
 
 d1$y <- factor(d1$y)
 d2$y <- factor(d2$y)
@@ -160,8 +160,8 @@ pcomb1 <- plot_grid(p1,
                 rel_heights = c(1, 1, 1))
 pcomb2 <- plot_grid(p4,
                 p6,
-                p7,
                 p8,
+                p7,
                 ncol=1,
                 labels = c("Adjusted differences between quartiles of telomere length at Year 1 for each growth outcome","","",""),
                 hjust=0.5,vjust=0.5,
