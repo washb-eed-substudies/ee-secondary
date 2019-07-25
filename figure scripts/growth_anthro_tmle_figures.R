@@ -96,11 +96,14 @@ tmle_plot_fun <- function(d, hypo, title, yrange=c(-0.5, 0.5)){
 
 
 
-pH1 <- tmle_plot_fun(d, 1, title="Adjusted differences between quartiles of change in telomere length between Years 1 and 2 for each growth outcome")
-pH2 <- tmle_plot_fun(d, 2, c(-0.03, 0.03), title="")
+#pH1 <- tmle_plot_fun(d, 1, title="Adjusted differences between quartiles of change in telomere length between Years 1 and 2 for each growth outcome")
+pH1 <- tmle_plot_fun(d, 1, title="")
+pH2 <- tmle_plot_fun(d, 2, c(-0.05, 0.03), title="")
 pH3 <- tmle_plot_fun(d, 3, title="")
-pH4 <- tmle_plot_fun(d, 4, title="Adjusted differences between quartiles of telomere length at Year 1 for each growth outcome")
-pH5 <- tmle_plot_fun(d, 5, title="Adjusted differences between quartiles of telomere length at Year 2 for each growth outcome")
+# pH4 <- tmle_plot_fun(d, 4, title="Adjusted differences between quartiles of telomere length at Year 1 for each growth outcome")
+# pH5 <- tmle_plot_fun(d, 5, title="Adjusted differences between quartiles of telomere length at Year 2 for each growth outcome")
+pH4 <- tmle_plot_fun(d, 4, title="")
+pH5 <- tmle_plot_fun(d, 5, title="")
 pH6 <- tmle_plot_fun(d, 6, title="")
 pH7 <- tmle_plot_fun(d, 7, c(-0.03, 0.03), title="")
 pH8 <- tmle_plot_fun(d, 8, title="")

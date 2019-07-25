@@ -53,9 +53,8 @@ tmle_quart<-function(dat=d,
   table(findInterval(a[,1], Acuts))
   
   if(!is.null(Acuts)){
-    a[,1]<-findInterval(a[,1], Acuts)
-    a[,1]<-factor(a[,1])
-    if(!is.null(Alevels)){levels(a[,1])<-Alevels[as.numeric(levels(a[,1]))+1]}
+    a[,1]<-factor(findInterval(a[,1], Acuts))
+    if(!is.null(Alevels)){levels(a[,1])<-Alevels
   }
   
   a[,1]<-as.factor(a[,1])

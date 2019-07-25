@@ -1021,10 +1021,10 @@ h7_wei_veloc_vs_ts_t2gam.res <- GAM_simulCI(Y=d$wei_velocity_t2_t3, X=d$TS_t2, W
 h7_hc_veloc_vs_ts_t2gam.res <- GAM_simulCI(Y=d$hc_velocity_t2_t3, X=d$TS_t2, W = NULL)
 
 #Hypothesis 8
-h8_delta_laz_v_ts_t2gam.res <- GAM_simulCI(Y=d$delta_laz_t2_t3, X=d$ts_t2, W = NULL)
-h8_delta_waz_v_ts_t2gam.res <- GAM_simulCI(Y=d$delta_waz_t2_t3, X=d$ts_t2, W = NULL)
-h8_delta_whz_v_ts_t2gam.res <- GAM_simulCI(Y=d$delta_whz_t2_t3, X=d$ts_t2, W = NULL)
-h8_delta_hcz_v_ts_t2gam.res <- GAM_simulCI(Y=d$delta_hcz_t2_t3, X=d$ts_t2, W = NULL, gamdf = c(1:5)) #drop df failing to converge)
+h8_delta_laz_v_ts_t2gam.res <- GAM_simulCI(Y=d$delta_laz_t2_t3, X=d$TS_t2, W = NULL)
+h8_delta_waz_v_ts_t2gam.res <- GAM_simulCI(Y=d$delta_waz_t2_t3, X=d$TS_t2, W = NULL)
+h8_delta_whz_v_ts_t2gam.res <- GAM_simulCI(Y=d$delta_whz_t2_t3, X=d$TS_t2, W = NULL)
+h8_delta_hcz_v_ts_t2gam.res <- GAM_simulCI(Y=d$delta_hcz_t2_t3, X=d$TS_t2, W = NULL, gamdf = c(1:5)) #drop df failing to converge)
 
 
 

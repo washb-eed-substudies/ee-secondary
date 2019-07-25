@@ -61,9 +61,22 @@ d7$y <- factor(d7$y)
 d8$y <- factor(d8$y)
 
 
+#set colors
+
+#Create a custom color scale
+library(RColorBrewer)
+myColors <- brewer.pal(5,"Set1")
+names(myColors) <- levels(dat$grp)
+colScale <- scale_colour_manual(name = "grp",values = myColors)
 
 
+#spline plot function
 spline_plot_functions <- function(d){
+  
+  color_levels = c("Change in LAZ\nbetween years 1 and 2", "Change in WLZ\nbetween years 1 and 2", "Change in WAZ\nbetween years 1 and 2", "Change in HCZ\nbetween years 1 and 2",  
+                   "LAZ - year 1", "WLZ - year 1","WAZ - year q", "HCZ - year 1" ,
+                   "LAZ - year 2", "WLZ - year 2","WAZ - year 2", "HCZ - year 2" ,
+                   "Length velocity\nbetween years 1 and 2", "Weight velocity\nbetween years 1 and 2", "Head circumference velocity\nbetween years 1 and 2")
   
   nlevels <- length(levels(d$y))
 
@@ -82,8 +95,8 @@ spline_plot_functions <- function(d){
     geom_ribbon(aes(ymin=lwrS, ymax=uprS, fill=y, color=y), alpha=0.5) +
     geom_point(aes(y=Y), alpha=0.5) +
     coord_cartesian(xlim = c(.$x.lb, .$x.ub), ylim = c(.$y.lb, .$y.ub)) +
-    scale_colour_manual(values=tableau10[c(1:4,1:4,1:4,5:7)], drop=FALSE) + 
-    scale_fill_manual(values=tableau10[c(1:4,1:4,1:4,5:7)], drop=FALSE) + 
+    scale_colour_manual(values=tableau10[c(1:4,1:4,1:4,5:7)], drop=TRUE, limits=color_levels) + 
+    scale_fill_manual(values=tableau10[c(1:4,1:4,1:4,5:7)], drop=TRUE, limits=color_levels) + 
     xlab(.$x[1]) + ylab(.$y[1])
   }
   p2 <- d[d$y==levels(d$y)[2],] %>% {ggplot(.,aes(x = X)) +
@@ -91,8 +104,8 @@ spline_plot_functions <- function(d){
       geom_ribbon(aes(ymin=lwrS, ymax=uprS, fill=y, color=y), alpha=0.5) +
       geom_point(aes(y=Y), alpha=0.5) +
       coord_cartesian(xlim = c(.$x.lb, .$x.ub), ylim = c(.$y.lb, .$y.ub)) +
-      scale_colour_manual(values=tableau10[c(1:4,1:4,1:4,5:7)], drop=FALSE) + 
-      scale_fill_manual(values=tableau10[c(1:4,1:4,1:4,5:7)], drop=FALSE) + 
+      scale_colour_manual(values=tableau10[c(1:4,1:4,1:4,5:7)], drop=TRUE, limits=color_levels) + 
+      scale_fill_manual(values=tableau10[c(1:4,1:4,1:4,5:7)], drop=TRUE, limits=color_levels) + 
       xlab(.$x[1]) + ylab(.$y[1])
   }
   p3 <- d[d$y==levels(d$y)[3],] %>% {ggplot(.,aes(x = X)) +
@@ -100,8 +113,8 @@ spline_plot_functions <- function(d){
       geom_ribbon(aes(ymin=lwrS, ymax=uprS, fill=y, color=y), alpha=0.5) +
       geom_point(aes(y=Y), alpha=0.5) +
       coord_cartesian(xlim = c(.$x.lb, .$x.ub), ylim = c(.$y.lb, .$y.ub)) +
-      scale_colour_manual(values=tableau10[c(1:4,1:4,1:4,5:7)], drop=FALSE) + 
-      scale_fill_manual(values=tableau10[c(1:4,1:4,1:4,5:7)], drop=FALSE) + 
+      scale_colour_manual(values=tableau10[c(1:4,1:4,1:4,5:7)], drop=TRUE, limits=color_levels) + 
+      scale_fill_manual(values=tableau10[c(1:4,1:4,1:4,5:7)], drop=TRUE, limits=color_levels) + 
       xlab(.$x[1]) + ylab(.$y[1])
   }
   if(nlevels==4){
@@ -110,8 +123,8 @@ spline_plot_functions <- function(d){
         geom_ribbon(aes(ymin=lwrS, ymax=uprS, fill=y, color=y), alpha=0.5) +
         geom_point(aes(y=Y), alpha=0.5) +
         coord_cartesian(xlim = c(.$x.lb, .$x.ub), ylim = c(.$y.lb, .$y.ub)) +
-        scale_colour_manual(values=tableau10[c(1:4,1:4,1:4,5:7)], drop=FALSE) + 
-        scale_fill_manual(values=tableau10[c(1:4,1:4,1:4,5:7)], drop=FALSE) + 
+        scale_colour_manual(values=tableau10[c(1:4,1:4,1:4,5:7)], drop=TRUE, limits=color_levels) + 
+        scale_fill_manual(values=tableau10[c(1:4,1:4,1:4,5:7)], drop=TRUE, limits=color_levels) + 
         xlab(.$x[1]) + ylab(.$y[1])
     }    
   }
@@ -150,20 +163,21 @@ p8 <- plot_grid(plist8[[1]], plist8[[2]], plist8[[3]], plist8[[4]], nrow=1, labe
 
 
 
-
+#Adjusted differences between quartiles of change in telomere length between Years 1 and 2 for each growth outcome
 pcomb1 <- plot_grid(p1,
                 p2,
                 p3,
                 ncol=1,
-                labels = c("Adjusted differences between quartiles of change in telomere length between Years 1 and 2 for each growth outcome","",""),
+                labels = c("","",""),
                 hjust=0.5, vjust=0.5,
                 rel_heights = c(1, 1, 1))
+#Adjusted differences between quartiles of telomere length at Year 1 for each growth outcome
 pcomb2 <- plot_grid(p4,
                 p6,
                 p8,
                 p7,
                 ncol=1,
-                labels = c("Adjusted differences between quartiles of telomere length at Year 1 for each growth outcome","","",""),
+                labels = c("","","",""),
                 hjust=0.5,vjust=0.5,
                 rel_heights = c(1, 1, 1, 1))
 
