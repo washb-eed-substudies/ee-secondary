@@ -1,0 +1,41 @@
+rm(list=ls())
+source(here::here("0-config.R"))
+
+# Table 3: Effect of intervention on cytokine ratios at age 14 months
+tbl3 <- data.table(
+  "Outcome, Arm" = c(paste("Ln IL-1", expression(beta), "/IL-10", sep=""), "Control", "Nutrition + WSH", 
+                     "Ln IL-6/IL-10", "Control", "Nutrition + WSH", 
+                     paste("Ln TNF-", expression(alpha), "/IL-10", sep=""), "Control", "Nutrition + WSH",
+                     "Ln IL-12/IL-10", "Control", "Nutrition + WSH", 
+                     paste("Ln IFN-", expression(gamma), "/IL-10", sep=""), "Control", "Nutrition + WSH", 
+                     "Ln IL-4/IL-10", "Control", "Nutrition + WSH", 
+                     "Ln IL-5/IL-10", "Control", "Nutrition + WSH", 
+                     "Ln IL-13/IL-10", "Control", "Nutrition + WSH", 
+                     "Ln IL-17A/IL-10", "Control", "Nutrition + WSH", 
+                     "Ln IL-21/IL-10", "Control", "Nutrition + WSH", 
+                     "Ln IL-2/IL-10", "Control", "Nutrition + WSH", 
+                     "Ln GM-CSF/IL-10", "Control", "Nutrition + WSH",
+                     "Ln IL-12/IL-4", "Control", "Nutrition + WSH", 
+                     paste("Ln IFN-", expression(gamma), "/IL-4", sep=""), "Control", "Nutrition + WSH",
+                     "Ln IL-12/IL-5", "Control", "Nutrition + WSH", 
+                     paste("Ln IFN-", expression(gamma), "/IL-5", sep=""), "Control", "Nutrition + WSH",
+                     "Ln IL-12/IL-13", "Control", "Nutrition + WSH", 
+                     paste("Ln IFN-", expression(gamma), "/IL-13", sep=""), "Control", "Nutrition + WSH",
+                     "Ln IL-12/IL-17A", "Control", "Nutrition + WSH", 
+                     paste("Ln IFN-", expression(gamma), "/IL-17A", sep=""), "Control", "Nutrition + WSH",
+                     "Ln IL-12/IL-21", "Control", "Nutrition + WSH", 
+                     paste("Ln IFN-", expression(gamma), "/IL-21", sep=""), "Control", "Nutrition + WSH",
+                     "Ln Pro-inflammatory cytokines*/IL-10", "Control", "Nutrition + WSH",
+                     "Ln Th1**/IL-10", "Control", "Nutrition + WSH", 
+                     "Ln Th2***/IL-10", "Control", "Nutrition + WSH", 
+                     "Ln Th17****/IL-10", "Control", "Nutrition + WSH", 
+                     "Ln Th1**/Th2***", "Control", "Nutrition + WSH", 
+                     "Ln Th1**/Th17****", "Control", "Nutrition + WSH"),
+  "N" = c(), 
+  "Absolute Mean" = c(),
+  "Mean" = c(), 
+  "SD" = c(),
+  "Unadjusted difference: Intervention vs. Control (95% CI)" = c(),
+  "Age- and sex- adjusted difference: Intervention vs. Control (95% CI)" = c(), 
+  "Fully adjusted difference: Intervention vs. Control (95% CI)" = c()
+)
