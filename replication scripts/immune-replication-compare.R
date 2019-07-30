@@ -63,17 +63,29 @@ covariate_compare <- function(d1, d2, var1, var2, subset1=NULL, subset2=NULL){
 }
 
 
-washb_function <- function(d,x, W) {
-  
-  temp <- washb_glm(Y=d[,x], tr=d$tr, pair=NULL, W=W, id=d$block, contrast = c("Control","Nutrition + WSH"), family="gaussian", print=F)
+washb_function <- function(d,x, Wvars, logtrans=F) {
+  if(logtrans){d[,x]=log(d[,x])}
+  temp <- washb_glm(Y=d[,x], tr=d$tr, pair=NULL, W=Wvars, id=d$block, contrast = c("Control","Nutrition + WSH"), family="gaussian", print=F)
   temp_metric <-as.matrix(temp$TR)
   rownames(temp_metric) <- c("Nutrition + WSH v C")
   colnames(temp_metric) <-c("RD","ci.lb","ci.ub","SE","z","P-value")
   return(temp_metric)
 }
 
-washb_function(da, "igf_t2", wa)
-washb_function(dm, "igf_t2", W2)
+summary(da$igf_t2)
+summary(dm$igf_t2)
+
+summary(log(da$igf_t2))
+summary(log(dm$igf_t2))
+
+
+washb_function(d=da, x="igf_t2", Wvars=wa, logtrans=T)
+washb_function(d=dm, x="igf_t2", Wvars=W2)
+
+
+washb_function(d=da, x="igf_t2", Wvars=NULL)
+washb_function(d=dm, x="igf_t2", Wvars=NULL)
+
 
 table(da$tr)
 table(dm$tr)

@@ -3,6 +3,7 @@
 # load packages
 rm(list=ls())
 source(here::here("0-config.R"))
+library(cowplot)
 
 
 #load covariates, exposures, outcomes dataset
@@ -29,25 +30,34 @@ TS_density_plot<-function(Y, X, Xlabel, Ylabel, col_i=1){
   #colnames(dat)[1] <- Ylabel
   dat <- dat[complete.cases(dat),]
   
+  
   Acuts=as.numeric(summary(dat$X)[c(2,3,5)])
 
 
   dat$x<-factor(findInterval(dat$X, Acuts))
   levels(dat$x) = c("Quartile 1","Quartile 2","Quartile 3","Quartile 4")
   
+  dat <- dat %>% group_by(x) %>% mutate(Xmedian=median(Y), Xmedian2=ifelse(row_number()==1, Xmedian, NA)) %>% ungroup()
+                          
+  
   Y_color=rep(tableau10[col_i],4)
 
   
   p <- ggplot(data=dat, aes(x=Y,group=x, fill=x)) +
     facet_wrap(~x,ncol=1) +
-    geom_density(aes(y=..density.., alpha=x),color=NA) +
-   # scale_alpha_manual(values=c(0.25, 0.5, 0.75, 1),guide=F) +
+    geom_density(aes(y=..density.. , alpha=x),color=NA) +
+    geom_vline(aes(xintercept = Xmedian)) +
+    geom_text(aes(x = Xmedian, y=1, label=Xmedian2), hjust=-0.5) +
+    scale_alpha_manual(values=c(0.4, 0.6, 0.8, 1),guide=F) +
     #scale_colour_manual(values=tableau10[c(1:4,1:4,1:4,5:7)], drop=TRUE, limits=color_levels) + 
     #scale_fill_manual(values=tableau10[c(1:4,1:4,1:4,5:7)], drop=TRUE, limits=color_levels) + 
+    #scale_color_manual(values=Y_color) + 
     scale_fill_manual(values=Y_color) + 
     labs(x=Xlabel, y=paste0("Quartile of ",Ylabel)) +
     theme_minimal(base_size=16) +
     theme(legend.position = "none")
+  
+  return(p)
   
 }
 
@@ -185,16 +195,6 @@ save(
   h8_delta_hcz_v_ts_t2_dens, nrow=1, labels = c("","","",""))
 
 
-p1 <- plot_grid(plist11, plist12, plist13, plist14, nrow=1, labels = c("","","",""))
-p2 <- plot_grid(plist21, plist22, plist23, nrow=1, labels = c("","",""))
-p3 <- plot_grid(plist31, plist32, plist33, plist34, nrow=1, labels = c("","","",""))
-p4 <- plot_grid(plist41, plist42, plist43, plist44, nrow=1, labels = c("","","",""))
-p5 <- plot_grid(plist51, plist52, plist53, plist54, nrow=1, 
-                labels = c("Adjusted differences between quartiles of telomere length at Year 2 for each growth outcome","","",""),
-                hjust=1,vjust=1)
-p6 <- plot_grid(plist61, plist62, plist63, plist64, nrow=1, labels = c("","","",""))
-p7 <- plot_grid(plist71, plist72, plist73, nrow=1, labels = c("","",""))
-p8 <- plot_grid(plist81, plist82, plist83, plist84, nrow=1, labels = c("","","",""))
 
 ggsave(p1, file = here("figures/density plots/telo-density_h1.png"), height=6, width=14)
 ggsave(p2, file = here("figures/density plots/telo-density_h2.png"), height=6, width=14)
@@ -204,33 +204,3 @@ ggsave(p5, file = here("figures/density plots/telo-density_h5.png"), height=6, w
 ggsave(p6, file = here("figures/density plots/telo-density_h6.png"), height=6, width=14)
 ggsave(p7, file = here("figures/density plots/telo-density_h7.png"), height=6, width=14)
 ggsave(p8, file = here("figures/density plots/telo-density_h8.png"), height=6, width=14)
-
-# #Adjusted differences between quartiles of change in telomere length between Years 1 and 2 for each growth outcome
-# pcomb1 <- plot_grid(p1,
-#                     p2,
-#                     p3,
-#                     ncol=1,
-#                     labels = c("","",""),
-#                     hjust=0.5, vjust=0.5,
-#                     rel_heights = c(1, 1, 1))
-# #Adjusted differences between quartiles of telomere length at Year 1 for each growth outcome
-# pcomb2 <- plot_grid(p4,
-#                     p6,
-#                     p8,
-#                     p7,
-#                     ncol=1,
-#                     labels = c("","","",""),
-#                     hjust=0.5,vjust=0.5,
-#                     rel_heights = c(1, 1, 1, 1))
-# 
-# 
-# 
-# 
-# ggsave(pcomb1, file = here("figures/telo-growth-splines_1.png"), height=12, width=14)
-# ggsave(pcomb2, file = here("figures/telo-growth-splines_2.png"), height=16, width=14)
-# ggsave(p5, file = here("figures/telo-growth-splines_3.png"), height=4, width=14)
-
-
-
-
-
