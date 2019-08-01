@@ -99,6 +99,8 @@ dm$ln_igf_t2 <- log(dm$igf_t2)
 
 mean(da$igf_t2, na.rm=T)
 mean(dm$ln_igf_t2, na.rm=T)
+mean(log(da$igf_t2), na.rm=T)
+mean(log(dm$igf_t2), na.rm=T)
 
 
 washb_function(da, "igf_t2", wa)
