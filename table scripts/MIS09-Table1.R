@@ -1,6 +1,11 @@
 rm(list=ls())
 source(here::here("0-config.R"))
 
+source(here('audrie R scripts/immune/bangladesh-immune-adj-age-sex.R'))
+source(here('audrie R scripts/immune/bangladesh-immune-subgroup.R'))
+source(here('audrie R scripts/immune/bangladesh-immune-ages-unadjusted-glm.R'))
+source(here('audrie R scripts/immune/bangladesh-immune-adj.R'))
+
 # Table 1: Enrollment characteristics by intervention group
 tbl1 <- data.table(
   "No. of compounds:" = c(" ", "Maternal", "Age(years)", "Years of education", 
@@ -13,6 +18,6 @@ tbl1 <- data.table(
                           "Human feces observed in the", "House", "Child's play area",
                           "Handwashing location", "Within six steps of latrine", "Has water", "Has soap", "Within six steps of kitchen", "Has water", "Has soap", 
                           "Nutrition", "Household is food secure"),
-  "Control (N=)" = list("%/mean", ),
-  "N + WSH (N=)" = list("%/mean", )
+  paste("Control (N=", len(), ")", sep="") = c("%/mean", ),
+  paste("N + WSH (N=", len(), ")", sep="") = c("%/mean", )
 )

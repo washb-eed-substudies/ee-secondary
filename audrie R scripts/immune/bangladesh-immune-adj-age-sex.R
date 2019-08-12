@@ -23,7 +23,7 @@
 #---------------------------------------
 # preamble
 #---------------------------------------
-rm(list=ls())
+#rm(list=ls())
 source(here::here("0-config.R"))
 
 setwd(paste0(dropboxDir,"Data/Cleaned/Audrie/")) #Set working directory
