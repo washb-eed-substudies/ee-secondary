@@ -1,6 +1,8 @@
 rm(list=ls())
 source(here::here("0-config.R"))
 
+#NEEDS ABSOLUTE MEAN COLUMN STILL!
+
 source(here('audrie R scripts/immune/bangladesh-immune-ages-unadjusted-glm.R'))
 outcometbl2 <- c(paste("Ln IL-1", expression(beta), " (pg/ml)", sep=""), "Control", "Nutrition + WSH", 
              "Ln IL-6 (pg/ml)", "Control", "Nutrition + WSH", 
