@@ -105,6 +105,24 @@ unadjtbl2 <- c(" ", " ", paste(t2_il1_unadj_L[1], "(", t2_il1_unadj_L[2], ", ", 
                " ", " ", paste(t2_igf_unadj_L[1], "(", t2_igf_unadj_L[2], ", ", t2_igf_unadj_L[3], ")", sep="")) 
 
 source(here('audrie R scripts/immune/bangladesh-immune-adj-age-sex.R'))
+
+t2_agp_adj_sex_age_L <- round(t2_agp_adj_sex_age_L, 2)
+t2_crp_adj_sex_age_L <- round(t2_crp_adj_sex_age_L, 2)
+t2_gmc_adj_sex_age_L <- round(t2_gmc_adj_sex_age_L, 2)
+t2_ifn_adj_sex_age_L <- round(t2_ifn_adj_sex_age_L, 2)
+t2_igf_adj_sex_age_L <- round(t2_igf_adj_sex_age_L, 2)
+t2_il1_adj_sex_age_L <- round(t2_il1_adj_sex_age_L, 2)
+t2_il10_adj_sex_age_L <- round(t2_il10_adj_sex_age_L, 2)
+t2_il12_adj_sex_age_L <- round(t2_il12_adj_sex_age_L, 2)
+t2_il13_adj_sex_age_L <- round(t2_il13_adj_sex_age_L, 2)
+t2_il17_adj_sex_age_L <- round(t2_il17_adj_sex_age_L, 2)
+t2_il2_adj_sex_age_L <- round(t2_il2_adj_sex_age_L, 2)
+t2_il21_adj_sex_age_L <- round(t2_il21_adj_sex_age_L, 2)
+t2_il4_adj_sex_age_L <- round(t2_il4_adj_sex_age_L, 2)
+t2_il5_adj_sex_age_L <- round(t2_il5_adj_sex_age_L, 2)
+t2_il6_adj_sex_age_L <- round(t2_il6_adj_sex_age_L, 2)
+t2_tnf_adj_sex_age_L <- round(t2_tnf_adj_sex_age_L, 2)
+
 asadjtbl2 <- c(" ", " ", paste(t2_il1_adj_sex_age_L[1], "(", t2_il1_adj_sex_age_L[2], ", ", t2_il1_adj_sex_age_L[3], ")", sep=""),
                " ", " ", paste(t2_il6_adj_sex_age_L[1], "(", t2_il6_adj_sex_age_L[2], ", ", t2_il6_adj_sex_age_L[3], ")", sep=""),
                " ", " ", paste(t2_tnf_adj_sex_age_L[1], "(", t2_tnf_adj_sex_age_L[2], ", ", t2_tnf_adj_sex_age_L[3], ")", sep=""),
@@ -123,6 +141,24 @@ asadjtbl2 <- c(" ", " ", paste(t2_il1_adj_sex_age_L[1], "(", t2_il1_adj_sex_age_
                " ", " ", paste(t2_igf_adj_sex_age_L[1], "(", t2_igf_adj_sex_age_L[2], ", ", t2_igf_adj_sex_age_L[3], ")", sep=""))  
 
 source(here('audrie R scripts/immune/bangladesh-immune-adj.R'))
+
+t2_agp_adj_L <- round(t2_agp_adj_L, 2)
+t2_crp_adj_L <- round(t2_crp_adj_L, 2)
+t2_gmc_adj_L <- round(t2_gmc_adj_L, 2)
+t2_ifn_adj_L <- round(t2_ifn_adj_L, 2)
+t2_igf_adj_L <- round(t2_igf_adj_L, 2)
+t2_il1_adj_L <- round(t2_il1_adj_L, 2)
+t2_il10_adj_L <- round(t2_il10_adj_L, 2)
+t2_il12_adj_L <- round(t2_il12_adj_L, 2)
+t2_il13_adj_L <- round(t2_il13_adj_L, 2)
+t2_il17_adj_L <- round(t2_il17_adj_L, 2)
+t2_il2_adj_L <- round(t2_il2_adj_L, 2)
+t2_il21_adj_L <- round(t2_il21_adj_L, 2)
+t2_il4_adj_L <- round(t2_il4_adj_L, 2)
+t2_il5_adj_L <- round(t2_il5_adj_L, 2)
+t2_il6_adj_L <- round(t2_il6_adj_L, 2)
+t2_tnf_adj_L <- round(t2_tnf_adj_L, 2)
+
 adjtbl2 <- c(" ", " ", paste(t2_il1_adj_L[1], "(", t2_il1_adj_L[2], ", ", t2_il1_adj_L[3], ")", sep=""),
              " ", " ", paste(t2_il6_adj_L[1], "(", t2_il6_adj_L[2], ", ", t2_il6_adj_L[3], ")", sep=""),
              " ", " ", paste(t2_tnf_adj_L[1], "(", t2_tnf_adj_L[2], ", ", t2_tnf_adj_L[3], ")", sep=""),
@@ -152,3 +188,4 @@ tbl2 <- data.table(
   "Fully adjusted difference: Intervention vs. Control (95% CI)" = adjtbl2)
 
 write.csv(tbl2, file=here('tables/mis09-table2.csv'))
+
