@@ -1059,7 +1059,7 @@ save(
   h1_delta_laz_v_delta_tsgam.res,
   h1_delta_waz_v_delta_tsgam.res, 
   h1_delta_whz_v_delta_tsgam.res,
-  h1_delta_hcz_v_delta_tsgam.res,
+  #h1_delta_hcz_v_delta_tsgam.res,
   #Hypothesis 2
   h2_len_velocity_v_delta_tsgam.res,
   h2_wei_velocity_v_delta_tsgam.res,
