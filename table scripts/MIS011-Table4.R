@@ -169,3 +169,4 @@ tbl4 <- data.table(
 
 
 write.csv(tbl4, file=here("tables/mis011-table4.csv"))
+

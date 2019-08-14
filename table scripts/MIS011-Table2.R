@@ -230,3 +230,4 @@ tbl2 <- data.table(
 
 
 write.csv(tbl2, file=here("tables/mis011-table2.csv"))
+

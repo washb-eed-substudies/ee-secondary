@@ -69,3 +69,4 @@ tbl3 <- data.table(
 
 
 write.csv(tbl3, file=here("tables/mis011-table3.csv"))
+
