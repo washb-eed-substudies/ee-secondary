@@ -1,7 +1,15 @@
+---
+title: "MIS011-Table1"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
 rm(list=ls())
 source(here::here("0-config.R"))
+```
 
-# load data to be included in Table 1
+```{r}
 d <- read.csv(paste0(dropboxDir, "Data/Cleaned/Audrie/bangladesh-dm-ee-telo-growth-covariates-telolab-anthro.csv"))
 
 # calculating quantiles/n for each variable 
@@ -80,7 +88,11 @@ tbl <- rbind(tbl, list(" " = " ", " " = "Perceived stress at Year 2", " " = "Per
                        "n (%) or median (IQR)" = paste(PPS[3], " (", PPS[2], ", ", PPS[4], ")", sep="")), stringsAsFactors=FALSE)
 tbl <- rbind(tbl, list(" " = " ", " " = "Intimate partner violence (%)", " " = "Any lifetime exposure: number of women", 
                        "n (%) or median (IQR)" = paste(sum(d$life_viol_any_t3, na.rm=TRUE), " (", viol, "%)", sep="")), stringsAsFactors=FALSE)
+```
 
-# export table as csv
-write.csv(tbl, file = here("tables/mis011-table1.csv"))
 
+```{r}
+kable(tbl) %>%
+  kable_styling(font_size = 12, full_width = TRUE) %>%
+  save_kable(file=here("tables/table1.html"))
+``````
