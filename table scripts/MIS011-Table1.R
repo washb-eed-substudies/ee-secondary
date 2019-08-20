@@ -39,7 +39,7 @@ tbl <- rbind(tbl, list(" " = " ", " " = "Telomere length at Year 1", " " = "T/S 
 tbl <- rbind(tbl, list(" " = " ", " " = " ", " " = "Base Pairs", 
                        "n (%) or median (IQR)" = paste(telo1bpmed[3]," (", telo1bpmed[2], ", ", telo1bpmed[4], ")", sep="")), stringsAsFactors=FALSE)
 tbl <- rbind(tbl, list(" " = " ", " " = "Telomere length at Year 2", " " = "T/S Ratio", 
-                       "n (%) or median (IQR)" = paste(telo2med[3]," (", telo2med[2], ", ", telo2bpmed[4], ")", sep="")), stringsAsFactors=FALSE)
+                       "n (%) or median (IQR)" = paste(telo2med[3]," (", telo2med[2], ", ", telo2med[4], ")", sep="")), stringsAsFactors=FALSE)
 tbl <- rbind(tbl, list(" " = " ", " " = " ", " " = "Base Pairs", 
                        "n (%) or median (IQR)" = paste(telo2bpmed[3]," (", telo2bpmed[2], ", ", telo2bpmed[4], ")", sep="")), stringsAsFactors=FALSE)
 tbl <- rbind(tbl, list(" " = " ", " " = "Change in telomere length between Year 1 and Year 2", " " = "T/S Ratio", 
@@ -82,5 +82,5 @@ tbl <- rbind(tbl, list(" " = " ", " " = "Intimate partner violence (%)", " " = "
                        "n (%) or median (IQR)" = paste(sum(d$life_viol_any_t3, na.rm=TRUE), " (", viol, "%)", sep="")), stringsAsFactors=FALSE)
 
 # export table as csv
-write.csv(tbl, file = here("tables/table1.csv"))
+write.csv(tbl, file = here("tables/mis011-table1.csv"))
 
