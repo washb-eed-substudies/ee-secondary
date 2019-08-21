@@ -80,7 +80,7 @@ tbl3 <- data.table(
 ```{r}
 kable(tbl3) %>%
   kable_styling(font_size = 8, full_width = TRUE) %>%
-  save_kable(file=here("tables/table3.html"))
+  save_kable(file=here("tables/misO11-table3.html"))
 ```
 
 

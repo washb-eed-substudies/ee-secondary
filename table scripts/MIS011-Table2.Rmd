@@ -244,6 +244,6 @@ tbl2 <- data.table(
 ```{r}
 kable(tbl2) %>%
   kable_styling(font_size = 8, full_width = TRUE) %>%
-  save_kable(file=here("tables/table2.html"))
+  save_kable(file=here("tables/misO11-table2.html"))
 ```
 

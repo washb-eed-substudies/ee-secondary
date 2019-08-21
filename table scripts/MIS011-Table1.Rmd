@@ -94,5 +94,5 @@ tbl <- rbind(tbl, list(" " = " ", " " = "Intimate partner violence (%)", " " = "
 ```{r}
 kable(tbl) %>%
   kable_styling(font_size = 12, full_width = TRUE) %>%
-  save_kable(file=here("tables/table1.html"))
+  save_kable(file=here("tables/misO11-table1.html"))
 ``````
