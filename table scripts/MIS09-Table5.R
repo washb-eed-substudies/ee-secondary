@@ -34,11 +34,93 @@ outcometbl5 <- c(paste("Ln IL-1", expression(beta), "/IL-10", sep=""), "Control"
                  "Ln Th1**/Th2***", "Control", "Nutrition + WSH", 
                  "Ln Th1**/Th17****", "Control", "Nutrition + WSH")
 
-Ntbl5 <- c()
+Ntbl5 <- c(" ", as.character(t3_ratio_il1_il10_N_tr$t3_ratio_il1_il10_N_tr[1]), as.character(t3_ratio_il1_il10_N_tr$t3_ratio_il1_il10_N_tr[2]), 
+           " ", as.character(t3_ratio_il6_il10_N_tr$t3_ratio_il6_il10_N_tr[1]), as.character(t3_ratio_il6_il10_N_tr$t3_ratio_il6_il10_N_tr[2]), 
+           " ", as.character(t3_ratio_tnf_il10_N_tr$t3_ratio_tnf_il10_N_tr[1]), as.character(t3_ratio_tnf_il10_N_tr$t3_ratio_tnf_il10_N_tr[2]),
+           " ", as.character(t3_ratio_il12_il10_N_tr$t3_ratio_il12_il10_N_tr[1]), as.character(t3_ratio_il12_il10_N_tr$t3_ratio_il12_il10_N_tr[2]),
+           " ", as.character(t3_ratio_ifn_il10_N_tr$t3_ratio_ifn_il10_N_tr[1]), as.character(t3_ratio_ifn_il10_N_tr$t3_ratio_ifn_il10_N_tr[2]),
+           " ", as.character(t3_ratio_il4_il10_N_tr$t3_ratio_il4_il10_N_tr[1]), as.character(t3_ratio_il4_il10_N_tr$t3_ratio_il4_il10_N_tr[2]),
+           " ", as.character(t3_ratio_il5_il10_N_tr$t3_ratio_il5_il10_N_tr[1]), as.character(t3_ratio_il5_il10_N_tr$t3_ratio_il5_il10_N_tr[2]),
+           " ", as.character(t3_ratio_il13_il10_N_tr$t3_ratio_il13_il10_N_tr[1]), as.character(t3_ratio_il13_il10_N_tr$t3_ratio_il13_il10_N_tr[2]),
+           " ", as.character(t3_ratio_il17_il10_N_tr$t3_ratio_il17_il10_N_tr[1]), as.character(t3_ratio_il17_il10_N_tr$t3_ratio_il17_il10_N_tr[2]),
+           " ", as.character(t3_ratio_il21_il10_N_tr$t3_ratio_il21_il10_N_tr[1]), as.character(t3_ratio_il21_il10_N_tr$t3_ratio_il21_il10_N_tr[2]),
+           " ", as.character(t3_ratio_il2_il10_N_tr$t3_ratio_il2_il10_N_tr[1]), as.character(t3_ratio_il2_il10_N_tr$t3_ratio_il2_il10_N_tr[2]),
+           " ", as.character(t3_ratio_gmc_il10_N_tr$t3_ratio_gmc_il10_N_tr[1]), as.character(t3_ratio_gmc_il10_N_tr$t3_ratio_gmc_il10_N_tr[2]),
+           " ", as.character(t3_ratio_il12_il4_N_tr$t3_ratio_il12_il4_N_tr[1]), as.character(t3_ratio_il12_il4_N_tr$t3_ratio_il12_il4_N_tr[2]),
+           " ", as.character(t3_ratio_ifn_il4_N_tr$t3_ratio_ifn_il4_N_tr[1]), as.character(t3_ratio_ifn_il4_N_tr$t3_ratio_ifn_il4_N_tr[2]),
+           " ", as.character(t3_ratio_il12_il5_N_tr$t3_ratio_il12_il5_N_tr[1]), as.character(t3_ratio_il12_il5_N_tr$t3_ratio_il12_il5_N_tr[2]),
+           " ", as.character(t3_ratio_ifn_il5_N_tr$t3_ratio_ifn_il5_N_tr[1]), as.character(t3_ratio_ifn_il5_N_tr$t3_ratio_ifn_il5_N_tr[2]),
+           " ", as.character(t3_ratio_il12_il13_N_tr$t3_ratio_il12_il13_N_tr[1]), as.character(t3_ratio_il12_il13_N_tr$t3_ratio_il12_il13_N_tr[2]),
+           " ", as.character(t3_ratio_ifn_il13_N_tr$t3_ratio_ifn_il13_N_tr[1]), as.character(t3_ratio_ifn_il13_N_tr$t3_ratio_ifn_il13_N_tr[2]),
+           " ", as.character(t3_ratio_il12_il17_N_tr$t3_ratio_il12_il17_N_tr[1]), as.character(t3_ratio_il12_il17_N_tr$t3_ratio_il12_il17_N_tr[2]),
+           " ", as.character(t3_ratio_ifn_il17_N_tr$t3_ratio_ifn_il17_N_tr[1]), as.character(t3_ratio_ifn_il17_N_tr$t3_ratio_ifn_il17_N_tr[2]),
+           " ", as.character(t3_ratio_il12_il21_N_tr$t3_ratio_il12_il21_N_tr[1]), as.character(t3_ratio_il12_il21_N_tr$t3_ratio_il12_il21_N_tr[2]),
+           " ", as.character(t3_ratio_ifn_il21_N_tr$t3_ratio_ifn_il21_N_tr[1]), as.character(t3_ratio_ifn_il21_N_tr$t3_ratio_ifn_il21_N_tr[2]),
+           " ", as.character(t3_ratio_pro_il10_N_tr$t3_ratio_pro_il10_N_tr[1]), as.character(t3_ratio_pro_il10_N_tr$t3_ratio_pro_il10_N_tr[2]),
+           " ", as.character(t3_ratio_th1_il10_N_tr$t3_ratio_th1_il10_N_tr[1]), as.character(t3_ratio_th1_il10_N_tr$t3_ratio_th1_il10_N_tr[2]),
+           " ", as.character(t3_ratio_th2_il10_N_tr$t3_ratio_th2_il10_N_tr[1]), as.character(t3_ratio_th2_il10_N_tr$t3_ratio_th2_il10_N_tr[2]),
+           " ", as.character(t3_ratio_th17_il10_N_tr$t3_ratio_th17_il10_N_tr[1]), as.character(t3_ratio_th17_il10_N_tr$t3_ratio_th17_il10_N_tr[2]),
+           " ", as.character(t3_ratio_th1_th2_N_tr$t3_ratio_th1_th2_N_tr[1]), as.character(t3_ratio_th1_th2_N_tr$t3_ratio_th1_th2_N_tr[2]),
+           " ", as.character(t3_ratio_th1_th17_N_tr$t3_ratio_th1_th17_N_tr[1]), as.character(t3_ratio_th1_th17_N_tr$t3_ratio_th1_th17_N_tr[2])
+           )
 
-meantbl5 <- c()
+meantbl5 <- c(" ", as.character(round(t3_ratio_il1_il10_N_tr$mean[1], 2)), as.character(round(t3_ratio_il1_il10_N_tr$mean[2], 2)), 
+              " ", as.character(round(t3_ratio_il6_il10_N_tr$mean[1], 2)), as.character(round(t3_ratio_il6_il10_N_tr$mean[2], 2)), 
+              " ", as.character(round(t3_ratio_tnf_il10_N_tr$mean[1], 2)), as.character(round(t3_ratio_tnf_il10_N_tr$mean[2], 2)),
+              " ", as.character(round(t3_ratio_il12_il10_N_tr$mean[1], 2)), as.character(round(t3_ratio_il12_il10_N_tr$mean[2], 2)),
+              " ", as.character(round(t3_ratio_ifn_il10_N_tr$mean[1], 2)), as.character(round(t3_ratio_ifn_il10_N_tr$mean[2], 2)),
+              " ", as.character(round(t3_ratio_il4_il10_N_tr$mean[1], 2)), as.character(round(t3_ratio_il4_il10_N_tr$mean[2], 2)),
+              " ", as.character(round(t3_ratio_il5_il10_N_tr$mean[1], 2)), as.character(round(t3_ratio_il5_il10_N_tr$mean[2], 2)),
+              " ", as.character(round(t3_ratio_il13_il10_N_tr$mean[1], 2)), as.character(round(t3_ratio_il13_il10_N_tr$mean[2], 2)),
+              " ", as.character(round(t3_ratio_il17_il10_N_tr$mean[1], 2)), as.character(round(t3_ratio_il17_il10_N_tr$mean[2], 2)),
+              " ", as.character(round(t3_ratio_il21_il10_N_tr$mean[1], 2)), as.character(round(t3_ratio_il21_il10_N_tr$mean[2], 2)),
+              " ", as.character(round(t3_ratio_il2_il10_N_tr$mean[1], 2)), as.character(round(t3_ratio_il2_il10_N_tr$mean[2], 2)),
+              " ", as.character(round(t3_ratio_gmc_il10_N_tr$mean[1], 2)), as.character(round(t3_ratio_gmc_il10_N_tr$mean[2], 2)),
+              " ", as.character(round(t3_ratio_il12_il4_N_tr$mean[1], 2)), as.character(round(t3_ratio_il12_il4_N_tr$mean[2], 2)),
+              " ", as.character(round(t3_ratio_ifn_il4_N_tr$mean[1], 2)), as.character(round(t3_ratio_ifn_il4_N_tr$mean[2], 2)),
+              " ", as.character(round(t3_ratio_il12_il5_N_tr$mean[1], 2)), as.character(round(t3_ratio_il12_il5_N_tr$mean[2], 2)),
+              " ", as.character(round(t3_ratio_ifn_il5_N_tr$mean[1], 2)), as.character(round(t3_ratio_ifn_il5_N_tr$mean[2], 2)),
+              " ", as.character(round(t3_ratio_il12_il13_N_tr$mean[1], 2)), as.character(round(t3_ratio_il12_il13_N_tr$mean[2], 2)),
+              " ", as.character(round(t3_ratio_ifn_il13_N_tr$mean[1], 2)), as.character(round(t3_ratio_ifn_il13_N_tr$mean[2], 2)),
+              " ", as.character(round(t3_ratio_il12_il17_N_tr$mean[1], 2)), as.character(round(t3_ratio_il12_il17_N_tr$mean[2], 2)),
+              " ", as.character(round(t3_ratio_ifn_il17_N_tr$mean[1], 2)), as.character(round(t3_ratio_ifn_il17_N_tr$mean[2], 2)),
+              " ", as.character(round(t3_ratio_il12_il21_N_tr$mean[1], 2)), as.character(round(t3_ratio_il12_il21_N_tr$mean[2], 2)),
+              " ", as.character(round(t3_ratio_ifn_il21_N_tr$mean[1], 2)), as.character(round(t3_ratio_ifn_il21_N_tr$mean[2], 2)),
+              " ", as.character(round(t3_ratio_pro_il10_N_tr$mean[1], 2)), as.character(round(t3_ratio_pro_il10_N_tr$mean[2], 2)),
+              " ", as.character(round(t3_ratio_th1_il10_N_tr$mean[1], 2)), as.character(round(t3_ratio_th1_il10_N_tr$mean[2], 2)),
+              " ", as.character(round(t3_ratio_th2_il10_N_tr$mean[1], 2)), as.character(round(t3_ratio_th2_il10_N_tr$mean[2], 2)),
+              " ", as.character(round(t3_ratio_th17_il10_N_tr$mean[1], 2)), as.character(round(t3_ratio_th17_il10_N_tr$mean[2], 2)),
+              " ", as.character(round(t3_ratio_th1_th2_N_tr$mean[1], 2)), as.character(round(t3_ratio_th1_th2_N_tr$mean[2], 2)),
+              " ", as.character(round(t3_ratio_th1_th17_N_tr$mean[1], 2)), as.character(round(t3_ratio_th1_th17_N_tr$mean[2], 2)))
 
-sdtbl5 <- c()
+sdtbl5 <- c(" ", as.character(round(t3_ratio_il1_il10_N_tr$sd[1], 2)), as.character(round(t3_ratio_il1_il10_N_tr$sd[2], 2)), 
+            " ", as.character(round(t3_ratio_il6_il10_N_tr$sd[1], 2)), as.character(round(t3_ratio_il6_il10_N_tr$sd[2], 2)), 
+            " ", as.character(round(t3_ratio_tnf_il10_N_tr$sd[1], 2)), as.character(round(t3_ratio_tnf_il10_N_tr$sd[2], 2)),
+            " ", as.character(round(t3_ratio_il12_il10_N_tr$sd[1], 2)), as.character(round(t3_ratio_il12_il10_N_tr$sd[2], 2)),
+            " ", as.character(round(t3_ratio_ifn_il10_N_tr$sd[1], 2)), as.character(round(t3_ratio_ifn_il10_N_tr$sd[2], 2)),
+            " ", as.character(round(t3_ratio_il4_il10_N_tr$sd[1], 2)), as.character(round(t3_ratio_il4_il10_N_tr$sd[2], 2)),
+            " ", as.character(round(t3_ratio_il5_il10_N_tr$sd[1], 2)), as.character(round(t3_ratio_il5_il10_N_tr$sd[2], 2)),
+            " ", as.character(round(t3_ratio_il13_il10_N_tr$sd[1], 2)), as.character(round(t3_ratio_il13_il10_N_tr$sd[2], 2)),
+            " ", as.character(round(t3_ratio_il17_il10_N_tr$sd[1], 2)), as.character(round(t3_ratio_il17_il10_N_tr$sd[2], 2)),
+            " ", as.character(round(t3_ratio_il21_il10_N_tr$sd[1], 2)), as.character(round(t3_ratio_il21_il10_N_tr$sd[2], 2)),
+            " ", as.character(round(t3_ratio_il2_il10_N_tr$sd[1], 2)), as.character(round(t3_ratio_il2_il10_N_tr$sd[2], 2)),
+            " ", as.character(round(t3_ratio_gmc_il10_N_tr$sd[1], 2)), as.character(round(t3_ratio_gmc_il10_N_tr$sd[2], 2)),
+            " ", as.character(round(t3_ratio_il12_il4_N_tr$sd[1], 2)), as.character(round(t3_ratio_il12_il4_N_tr$sd[2], 2)),
+            " ", as.character(round(t3_ratio_ifn_il4_N_tr$sd[1], 2)), as.character(round(t3_ratio_ifn_il4_N_tr$sd[2], 2)),
+            " ", as.character(round(t3_ratio_il12_il5_N_tr$sd[1], 2)), as.character(round(t3_ratio_il12_il5_N_tr$sd[2], 2)),
+            " ", as.character(round(t3_ratio_ifn_il5_N_tr$sd[1], 2)), as.character(round(t3_ratio_ifn_il5_N_tr$sd[2], 2)),
+            " ", as.character(round(t3_ratio_il12_il13_N_tr$sd[1], 2)), as.character(round(t3_ratio_il12_il13_N_tr$sd[2], 2)),
+            " ", as.character(round(t3_ratio_ifn_il13_N_tr$sd[1], 2)), as.character(round(t3_ratio_ifn_il13_N_tr$sd[2], 2)),
+            " ", as.character(round(t3_ratio_il12_il17_N_tr$sd[1], 2)), as.character(round(t3_ratio_il12_il17_N_tr$sd[2], 2)),
+            " ", as.character(round(t3_ratio_ifn_il17_N_tr$sd[1], 2)), as.character(round(t3_ratio_ifn_il17_N_tr$sd[2], 2)),
+            " ", as.character(round(t3_ratio_il12_il21_N_tr$sd[1], 2)), as.character(round(t3_ratio_il12_il21_N_tr$sd[2], 2)),
+            " ", as.character(round(t3_ratio_ifn_il21_N_tr$sd[1], 2)), as.character(round(t3_ratio_ifn_il21_N_tr$sd[2], 2)),
+            " ", as.character(round(t3_ratio_pro_il10_N_tr$sd[1], 2)), as.character(round(t3_ratio_pro_il10_N_tr$sd[2], 2)),
+            " ", as.character(round(t3_ratio_th1_il10_N_tr$sd[1], 2)), as.character(round(t3_ratio_th1_il10_N_tr$sd[2], 2)),
+            " ", as.character(round(t3_ratio_th2_il10_N_tr$sd[1], 2)), as.character(round(t3_ratio_th2_il10_N_tr$sd[2], 2)),
+            " ", as.character(round(t3_ratio_th17_il10_N_tr$sd[1], 2)), as.character(round(t3_ratio_th17_il10_N_tr$sd[2], 2)),
+            " ", as.character(round(t3_ratio_th1_th2_N_tr$sd[1], 2)), as.character(round(t3_ratio_th1_th2_N_tr$sd[2], 2)),
+            " ", as.character(round(t3_ratio_th1_th17_N_tr$sd[1], 2)), as.character(round(t3_ratio_th1_th17_N_tr$sd[2], 2)))
 
 t3_ratio_il1_il10_unadj_L <- round(t3_ratio_il1_il10_unadj_L, 2)
 t3_ratio_il6_il10_unadj_L <- round(t3_ratio_il6_il10_unadj_L, 2)
@@ -228,3 +310,4 @@ tbl5 <- data.table(
 )
 
 write.csv(tbl5, file=here('tables/miso9-table5.csv'))
+
