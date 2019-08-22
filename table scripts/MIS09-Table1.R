@@ -12,18 +12,18 @@ Nwsh<-length(ages$tr[ages$tr=="Nutrition + WSH"])
 
 #functions for calculating %/mean for all variables in table based on arm
 meansdfunc <- function(variable) {
-  ctrlmean<-round(mean(variable[ages$tr=="Control"], na.rm=TRUE), 2)
-  ctrlsd<-round(sd(variable[ages$tr=="Control"], na.rm=TRUE), 2)
-  wshmean<-round(mean(variable[ages$tr=="Nutrition + WSH"], na.rm=TRUE), 2)
-  wshsd<-round(sd(variable[ages$tr=="Nutrition + WSH"], na.rm=TRUE), 2)
+  ctrlmean<-round(mean(variable[ages$tr=="Control"], na.rm=TRUE))
+  ctrlsd<-round(sd(variable[ages$tr=="Control"], na.rm=TRUE))
+  wshmean<-round(mean(variable[ages$tr=="Nutrition + WSH"], na.rm=TRUE))
+  wshsd<-round(sd(variable[ages$tr=="Nutrition + WSH"], na.rm=TRUE))
   c(ctrlmean, ctrlsd, wshmean, wshsd)
 }
 
 npercfunc <- function(variable) {
   ctrln<-sum(variable[ages$tr=="Control"], na.rm=TRUE)
-  ctrlperc<-round(mean(variable[ages$tr=="Control"], na.rm=TRUE)*100, 2)
+  ctrlperc<-round(mean(variable[ages$tr=="Control"], na.rm=TRUE)*100)
   wshn<-sum(variable[ages$tr=="Nutrition + WSH"], na.rm=TRUE)
-  wshperc<-round(mean(variable[ages$tr=="Nutrition + WSH"], na.rm=TRUE)*100, 2)
+  wshperc<-round(mean(variable[ages$tr=="Nutrition + WSH"], na.rm=TRUE)*100)
   c(ctrln, ctrlperc, wshn, wshperc)
 }
 
@@ -70,7 +70,7 @@ charobjectperc<-function(variable, num) {
   paste(variable[num], "(", variable[num+1], "%)", sep="")
 }
 
-ctrl<-c("%/mean", " ", charobject(momage, 1),charobject(momeduy, 1), " ", charobject(dadeduy, 1), charobjectperc(dadagri, 1),
+ctrl<-c(" ", charobject(momage, 1),charobject(momeduy, 1), " ", charobject(dadeduy, 1), charobjectperc(dadagri, 1),
         " ", charobject(Nhh, 1), charobjectperc(elec, 1), charobjectperc(cement, 1), charobject(acres, 1),
         " ", charobjectperc(tubewell, 1), charobjectperc(storewater, 1), charobjectperc(treatwater, 1), charobject(waterdis, 1), 
         " ", " ", charobjectperc(odmen, 1), charobjectperc(odwomen, 1), charobjectperc(odchild815, 1), charobjectperc(odchild38, 1), charobjectperc(odchild03, 1), 
@@ -80,7 +80,7 @@ ctrl<-c("%/mean", " ", charobject(momage, 1),charobject(momeduy, 1), " ", charob
         " ", charobjectperc(handlat, 1), charobjectperc(handlatwater, 1), charobjectperc(handlatsoap, 1), 
         charobjectperc(handkit, 1), charobjectperc(handkitwater, 1), charobjectperc(handkitsoap, 1), 
         " ", charobject(foodsecure, 1))
-wsh<-c("%/mean", " ", charobject(momage, 3),charobject(momeduy, 3), " ", charobject(dadeduy, 3), charobjectperc(dadagri, 3),
+wsh<-c(" ", charobject(momage, 3),charobject(momeduy, 3), " ", charobject(dadeduy, 3), charobjectperc(dadagri, 3),
        " ", charobject(Nhh, 3), charobjectperc(elec, 3), charobjectperc(cement, 3), charobject(acres, 3),
        " ", charobjectperc(tubewell, 3), charobjectperc(storewater, 3), charobjectperc(treatwater, 3), charobject(waterdis, 3), 
        " ", " ", charobjectperc(odmen, 3), charobjectperc(odwomen, 3), charobjectperc(odchild815, 3), charobjectperc(odchild38, 3), charobjectperc(odchild03, 3), 
@@ -93,7 +93,7 @@ wsh<-c("%/mean", " ", charobject(momage, 3),charobject(momeduy, 3), " ", charobj
   
 # Table 1: Enrollment characteristics by intervention group
 tbl1 <- data.table(
-  "No. of compounds:" = c(" ", "Maternal", "Age(years)", "Years of education", 
+  "No. of compounds:" = c("Maternal", "Age(years)", "Years of education", 
                           "Paternal", "Years of education", "Works in agriculture", 
                           "Household", "Number of people", "Has electricity", "Has a cement floor", "Acres of agricultural land owned", 
                           "Drinking Water", "Shallow tubewell primary water source", "Stored water observed at home", "Reported treating water yesterday", "Distance (mins) to primary water source",
