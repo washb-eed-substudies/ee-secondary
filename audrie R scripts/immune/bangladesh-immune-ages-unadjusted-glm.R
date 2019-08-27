@@ -1664,6 +1664,50 @@ t2_ratio_th1_th17_N_tr<-lab %>%
 
 t2_ratio_th1_th17_N_tr
 
+#calculate absolute mean of biomarkers at t2 by arm
+absmean<-function(a){
+  tbl<-data.frame(var=a, tr=lab$tr)
+  ctrl<-tbl%>%subset(tr=="Control")
+  wsh<-tbl%>%subset(tr=="Nutrition + WSH")
+  data.frame(tr=c("Control", "Nutrition+WSH"), 
+             mean=c(mean(ctrl$var, na.rm=TRUE), mean(wsh$var, na.rm=TRUE)),
+             sd=c(sd(ctrl$var, na.rm=TRUE), sd(wsh$var, na.rm=TRUE)))
+}
+
+abs_il1_t2_N_tr<-absmean(lab$il1_t2)
+abs_il6_t2_N_tr<-absmean(lab$il6_t2)
+abs_tnf_t2_N_tr<-absmean(lab$tnfa_t2)
+abs_crp_t2_N_tr<-absmean(lab$crp_t2)
+abs_il12_t2_N_tr<-absmean(lab$il12_t2)
+abs_ifn_t2_N_tr<-absmean(lab$ifng_t2)
+abs_il4_t2_N_tr<-absmean(lab$il4_t2)
+abs_il5_t2_N_tr<-absmean(lab$il5_t2)
+abs_il13_t2_N_tr<-absmean(lab$il13_t2)
+abs_il17_t2_N_tr<-absmean(lab$il17_t2)
+abs_il21_t2_N_tr<-absmean(lab$il21_t2)
+abs_il10_t2_N_tr<-absmean(lab$il10_t2)
+abs_il2_t2_N_tr<-absmean(lab$il2_t2)
+abs_gmc_t2_N_tr<-absmean(lab$gmcsf_t2)
+abs_agp_t2_N_tr<-absmean(lab$agp_t2)
+abs_igf_t2_N_tr<-absmean(lab$igf_t2)
+
+
+#calculate absolute means of biomarkers at t3 by arm
+abs_il1_t3_N_tr<-absmean(lab$il1_t3)
+abs_il6_t3_N_tr<-absmean(lab$il6_t3)
+abs_tnf_t3_N_tr<-absmean(lab$tnfa_t3)
+abs_il12_t3_N_tr<-absmean(lab$il12_t3)
+abs_ifn_t3_N_tr<-absmean(lab$ifng_t3)
+abs_il4_t3_N_tr<-absmean(lab$il4_t3)
+abs_il5_t3_N_tr<-absmean(lab$il5_t3)
+abs_il13_t3_N_tr<-absmean(lab$il13_t3)
+abs_il17_t3_N_tr<-absmean(lab$il17_t3)
+abs_il21_t3_N_tr<-absmean(lab$il21_t3)
+abs_il10_t3_N_tr<-absmean(lab$il10_t3)
+abs_il2_t3_N_tr<-absmean(lab$il2_t3)
+abs_gmc_t3_N_tr<-absmean(lab$gmcsf_t3)
+abs_igf_t3_N_tr<-absmean(lab$igf_t3)
+
 #calculate N's and mean of biomarkers at t3 by arm
 igf_t3_N_tr<-lab %>%
   subset(t3_ln_igf!="NA") %>%
@@ -2057,6 +2101,23 @@ d23_ln_igf_N_tr<-lab %>%
   summarize(d23_ln_igf_N_tr=n(), mean=mean(d23_ln_igf, na.rm = T),  sd=sd(d23_ln_igf, na.rm = T))
 
 d23_ln_igf_N_tr  
+
+
+#calculate absolute means for d23 by arm
+abs_d23_il1_N_tr<-absmean(lab$d23_ln_il1)
+abs_d23_il6_N_tr<-absmean(lab$d23_ln_il6)
+abs_d23_tnf_N_tr<-absmean(lab$d23_ln_tnf)
+abs_d23_il12_N_tr<-absmean(lab$d23_ln_il12)
+abs_d23_ifn_N_tr<-absmean(lab$d23_ln_ifn)
+abs_d23_il4_N_tr<-absmean(lab$d23_ln_il4)
+abs_d23_il5_N_tr<-absmean(lab$d23_ln_il5)
+abs_d23_il13_N_tr<-absmean(lab$d23_ln_il13)
+abs_d23_il17_N_tr<-absmean(lab$d23_ln_il17)
+abs_d23_il21_N_tr<-absmean(lab$d23_ln_il21)
+abs_d23_il10_N_tr<-absmean(lab$d23_ln_il10)
+abs_d23_il2_N_tr<-absmean(lab$d23_ln_il2)
+abs_d23_gmc_N_tr<-absmean(lab$d23_ln_gmc)
+abs_d23_igf_N_tr<-absmean(lab$d23_ln_igf)
 
 
 #display
