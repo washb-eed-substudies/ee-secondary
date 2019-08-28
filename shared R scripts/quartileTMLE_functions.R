@@ -164,6 +164,16 @@ tmle_quart<-function(dat=d,
                      "meanY", "mean.sd","mean.se","mean.CI1","mean.CI2")
   }
   rownames(res)<-NULL
+  
+  #add in quartiles
+  Acuts <- round(Acuts,2)
+  res$cutpoints <- c(
+    paste0("< ", Acuts[1]),
+    paste0("[", Acuts[1],", ", Acuts[2], ")"),
+    paste0("[", Acuts[2],", ", Acuts[3], ")"),
+    paste0(">= ", Acuts[3])
+  )
+  
 
   if(!is.null(outputdf)){
     return(rbind(outputdf,res))

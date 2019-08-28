@@ -56,7 +56,7 @@ table(is.na(d$agem3))
 #NOTE: TEMP
 #Need to get ages for childid 30061 and 433011 from Audrie
 da <- read.csv(paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-dm-ee-anthro-diar-ee-med-plasma-blind-tr-enrol-covariates-lab.csv"))
-da <- da %>% subset(., select = c(childid,agemth_bt2, agemth_bt3)) 
+da <- da %>% subset(., select = c(childid,agemth_bt2, agemth_bt3, month_t2, month_t3, ageday_bt2, ageday_bt3)) 
 
 dim(d)
 dim(da)
@@ -64,14 +64,30 @@ d <- full_join(d, da, by="childid")
 dim(d)
 
 #Note: Audrie's ages have 1 less decimal place
-d$agem2 <- round(d$agem2, 5)
-d$agem3 <- round(d$agem3, 5)
+# d$agem2 <- round(d$agem2, 5)
+# d$agem3 <- round(d$agem3, 5)
 
-#Add ages for 2 IDs
-d$agem2[d$childid==30061] <- d$agemth_bt2[d$childid==30061]
-d$agem3[d$childid==30061] <- d$agemth_bt3[d$childid==30061]
-d$agem2[d$childid==433011] <- d$agemth_bt2[d$childid==433011]
-d$agem3[d$childid==433011] <- d$agemth_bt3[d$childid==433011]
+# d$childid[which(is.na(d$agem2) & !is.na(d$agemth_bt2))]
+# d$childid[which(d$agem2 != d$agemth_bt2)]
+# 
+# data.frame(d$agem2, d$agemth_bt2)
+# 
+# #Add ages for 2 IDs
+# d$agem2[d$childid==30061] <- d$agemth_bt2[d$childid==30061]
+# d$agem3[d$childid==30061] <- d$agemth_bt3[d$childid==30061]
+# d$agem2[d$childid==433011] <- d$agemth_bt2[d$childid==433011]
+# d$agem3[d$childid==433011] <- d$agemth_bt3[d$childid==433011]
+
+#TEMP - need to make my child ages match Audrie's
+d$agem2 <- d$agemth_bt2
+d$agem3 <- d$agemth_bt3
+
+d$aged2 <- d$ageday_bt2
+d$aged3 <- d$ageday_bt3
+
+d$month2 <- d$month_t2
+d$month3 <- d$month_t3
+
 
 #Save data.frame
 save(d, file = c(paste0(dropboxDir,"Data/Cleaned/Andrew/BD-EE-immune.Rdata")))
@@ -84,13 +100,14 @@ head(df2)
 df2[df2$childid=="439021",]
 
 #Note: Audrie's ages have 1 less decimal place
-df2$agem2 <- round(df2$agem2, 5)
-df2$agem3 <- round(df2$agem3, 5)
-table(df2$agem2==df2$agemth_bt2)
-table(df2$agem3==df2$agemth_bt3)
+# df2$agem2 <- round(df2$agem2, 5)
+# df2$agem3 <- round(df2$agem3, 5)
+# table(df2$agem2==df2$agemth_bt2)
+# table(df2$agem3==df2$agemth_bt3)
+# 
+# df3 <- df2[df2$agem2!=df2$agemth_bt2 | df2$agem3!=df2$agemth_bt3,]
+# df3
 
-df3 <- df2[df2$agem2!=df2$agemth_bt2 | df2$agem3!=df2$agemth_bt3,]
-df3
 #load in names of Audrie's objects
 nm <- list.files(path=paste0(dropboxDir,"Results/Audrie/"))
 nm
@@ -222,6 +239,8 @@ dim(comp_unadj)
 
 comp_unadj$RD.x - comp_unadj$RD.y
 
+#t2_il2 is off, mean(Y$t2_il2, na.rm= T) matches both andrew and audrie's means, so is audrie's unadjusted object off?
+
 #------------------------------------------------------------------------------------------------
 # Age and sex adjusted GLMs
 #------------------------------------------------------------------------------------------------
@@ -257,15 +276,17 @@ dim(comp_sex)
 
 comp_sex$RD.x - comp_sex$RD.y
 
+#t2_il2 is off here too
+
 #------------------
 #Adjusted GLM
 #------------------
 
 #Set birthorder to 1, >=2, or missing
-class(d$birthord)
-d$birthord[d$birthord>1]<-"2+"
-d$birthord[is.na(d$birthord)]<-"missing"
-d$birthord<-factor(d$birthord)
+# class(d$birthord)
+# d$birthord[d$birthord>1]<-"2+"
+# d$birthord[is.na(d$birthord)]<-"missing"
+# d$birthord<-factor(d$birthord)
 
 #Make vectors of adjustment variable names
 Wvars<-c('sex', 'birthord',
@@ -358,9 +379,8 @@ d$asset_chair<-factor(d$asset_chair)
 d$asset_chair<-addNA(d$asset_chair)
 levels(d$asset_chair)<-c("No chair","Chair","Missing")
 d$asset_chair=relevel(d$asset_chair,ref="No chair")
-d$asset_clock[is.na(d$asset_clock)]<-99
 d$asset_clock<-factor(d$asset_clock)
-d$asset_clock<-addNA(d$asset_clock)
+d$asset_clock=relevel(d$asset_clock,ref="No clock")
 levels(d$asset_clock)<-c("No clock","Clock","Missing", "Missing")
 d$asset_clock=relevel(d$asset_clock,ref="No clock")
 d$asset_khat<-factor(d$asset_khat)
@@ -463,16 +483,27 @@ for(i in 1:ncol(W3)){
 #Run GLMs for the adjusted parameter estimates
 ##############################################
 
-Y = log(Y)
-for(i in 1:ncol(Y)){
-  Y[is.nan(Y[,i]) | is.infinite(Y[,i]),i] <- NA
-}
 
+# for(i in 1:ncol(Y)){
+#   Y[is.nan(Y[,i]) | is.infinite(Y[,i]),i] <- NA
+# }
+Y<-d %>% rename(t2_igf=igf_t2,          t3_igf=igf_t3,          t2_crp=crp_t2,          t2_agp=agp_t2,          t2_gmc=gmc_t2,       
+                t2_ifn=ifn_t2,         t2_il10=il10_t2,         t2_il12=il12_t2,         t2_il13=il13_t2,         t2_il17=il17_t2,        
+                t2_il1=il1_t2,          t2_il2=il2_t2,          t2_il21=il21_t2,         t2_il4=il4_t2,          t2_il5=il5_t2,         
+                t2_il6=il6_t2,          t2_tnf=tnf_t2,         t3_gmc=gmc_t3,        t3_ifn=ifn_t3,         t3_il10=il10_t3,        
+                t3_il12=il12_t3,         t3_il13=il13_t3,         t3_il17=il17_t3,         t3_il1=il1_t3,          t3_il2=il2_t3,         
+                t3_il21=il21_t3,         t3_il4=il4_t3,          t3_il5=il5_t3,          t3_il6=il6_t3,          t3_tnf=tnf_t3) %>%
+  select(t2_igf,          t3_igf,          t2_crp,          t2_agp,          t2_gmc,       
+         t2_ifn,         t2_il10,         t2_il12,         t2_il13,         t2_il17,        
+         t2_il1,          t2_il2,          t2_il21,         t2_il4,          t2_il5,         
+         t2_il6,          t2_tnf,         t3_gmc,        t3_ifn,         t3_il10,        
+         t3_il12,         t3_il13,         t3_il17,         t3_il1,          t3_il2,         
+         t3_il21,         t3_il4,          t3_il5,          t3_il6,          t3_tnf)
 
 #Fully adjusted glm models
 res_adj <- NULL
 for(i in 1:ncol(Y)){
-  if(i < 18){
+  if(grepl("t2_", colnames(Y)[i])){
     temp<-washb_glm(Y=(Y[,i]), tr=d$tr, W=W2, id=d$block, pair=NULL, family="gaussian", contrast= c("Control","Nutrition + WSH"), print=F)
   }else{
     temp<-washb_glm(Y=(Y[,i]), tr=d$tr, W=W3, id=d$block, pair=NULL, family="gaussian", contrast= c("Control","Nutrition + WSH"), print=F)
@@ -485,6 +516,7 @@ colnames(res_adj)<-c("RD","ci.l","ci.u", "Std. Error", "z value", "Pval")
 res_adj$Y <-colnames(Y)
 
 #Compare to Audrie's objects
+load(paste0(dropboxDir,"Results/Audrie/immune_adj_glm.RData"))
 name.pattern="_adj_L"
 object_list=ls(pattern=name.pattern)
 aud_adj <- load_aud(name.pattern, object_list)
@@ -495,61 +527,68 @@ dim(aud_adj)
 comp_adj <- full_join(res_adj, aud_adj, by="Y")
 dim(comp_adj)
 comp_adj$RD.x - comp_adj$RD.y
+comp_adj$Pval - comp_adj$P.value
 
 #Save intermediate R objects for replication comparison
 dm <- d
-Wa <- W
-save(res_adj, W, W2, W3, dm, file = here("replication objects/andrew_immune_W.rdata"))
+save(res_adj, W, W2, W3, dm, comp_adj, Y, file = here("replication objects/andrew_immune_W.rdata"))
 
 
-##############################################
-#Run GLMs for the sex-stratified subgroup analysis
-##############################################
-
-#sex stratified glm models
-res_sub <- NULL
-for(i in 1:ncol(Y)){
-  temp<-washb_glm(Y=(Y[,i]), tr=d$tr, W=data.frame(sex=d$sex), V="sex", id=d$block, pair=NULL, family="gaussian", contrast= c("Control","Nutrition + WSH"), print=F)
-  res_sub<-rbind(res_sub, temp$lincom)
-}
-res_sub <- as.data.frame(res_sub)
-
-colnames(res_sub)<-c("sex","RD","ci.l","ci.u", "Std. Error", "z value", "Pval")
-res_sub$Y <-rep(colnames(Y), each=2)
-res_sub <- res_sub %>% mutate(subgroup = case_when(sex==1 ~ "male", sex==0 ~ "female", TRUE~""), subgroup=factor(subgroup))
-
-load(paste0(dropboxDir,"Results/Audrie/immune_subgroup.RData"))
-aud_sub <- as.data.frame(rbindlist(lapply(lapply(ls(pattern="_subgroup_L"), get), as.data.frame)))
-aud_sub$Y = gsub("_subgroup_L","",ls(pattern="_subgroup_L"))
-
-dim(res_sub)
-dim(aud_sub)
-comp_sub <- full_join(res_sub, aud_sub, by=c("Y","subgroup"))
-dim(comp_sub)
-
-comp_sub$RD.x - comp_sub$RD.y
-
-il6_t3_subgroup_L
-
-##############################################
-#Plot results
-##############################################
-
-res_adj$marker <- str_split(res_adj$Y, "_t", simplify=T)[,1]
-res_adj$round <- as.numeric(str_split(res_adj$Y, "_t", simplify=T)[,2])
-res_adj <- res_adj %>% arrange(round, RD) %>%
-  mutate(Y=factor(Y, levels=unique(Y)))
-
-ggplot(res_adj, aes(x=Y, y=RD)) + geom_point() +
-  geom_pointrange(aes(ymin=ci.l, ymax=ci.u)) + geom_hline(yintercept = 0) + 
-  facet_wrap(~round, scales="free_x") + theme_bw()
+set.seed(12345)
+washb_glm(Y=(Y[,1]), tr=d$tr, W=W2, id=d$block, pair=NULL, family="gaussian", contrast= c("Control","Nutrition + WSH"), print=F)$TR
+set.seed(12345)
+washb_glm(Y=d$igf_t2, tr=d$tr, W=W2, id=d$block, pair=NULL, family="gaussian", contrast= c("Control","Nutrition + WSH"), print=F)$TR
 
 
-##############################################
-#Examine baseline data
-##############################################
-
-load(paste0(dropboxDir,"Results/Audrie/immune_enrol_baseline_char.RData"))
-load(paste0(dropboxDir,"Results/Audrie/immune_enrol_supp_baseline_char_t2.RData"))
-load(paste0(dropboxDir,"Results/Audrie/immune_enrol_supp_baseline_char_lost_t3.RData"))
-
+ 
+# ##############################################
+# #Run GLMs for the sex-stratified subgroup analysis
+# ##############################################
+# 
+# #sex stratified glm models
+# res_sub <- NULL
+# for(i in 1:ncol(Y)){
+#   temp<-washb_glm(Y=(Y[,i]), tr=d$tr, W=data.frame(sex=d$sex), V="sex", id=d$block, pair=NULL, family="gaussian", contrast= c("Control","Nutrition + WSH"), print=F)
+#   res_sub<-rbind(res_sub, temp$lincom)
+# }
+# res_sub <- as.data.frame(res_sub)
+# 
+# colnames(res_sub)<-c("sex","RD","ci.l","ci.u", "Std. Error", "z value", "Pval")
+# res_sub$Y <-rep(colnames(Y), each=2)
+# res_sub <- res_sub %>% mutate(subgroup = case_when(sex==1 ~ "male", sex==0 ~ "female", TRUE~""), subgroup=factor(subgroup))
+# 
+# load(paste0(dropboxDir,"Results/Audrie/immune_subgroup.RData"))
+# aud_sub <- as.data.frame(rbindlist(lapply(lapply(ls(pattern="_subgroup_L"), get), as.data.frame)))
+# aud_sub$Y = gsub("_subgroup_L","",ls(pattern="_subgroup_L"))
+# 
+# dim(res_sub)
+# dim(aud_sub)
+# comp_sub <- full_join(res_sub, aud_sub, by=c("Y","subgroup"))
+# dim(comp_sub)
+# 
+# comp_sub$RD.x - comp_sub$RD.y
+# 
+# il6_t3_subgroup_L
+# 
+# ##############################################
+# #Plot results
+# ##############################################
+# 
+# res_adj$marker <- str_split(res_adj$Y, "_t", simplify=T)[,1]
+# res_adj$round <- as.numeric(str_split(res_adj$Y, "_t", simplify=T)[,2])
+# res_adj <- res_adj %>% arrange(round, RD) %>%
+#   mutate(Y=factor(Y, levels=unique(Y)))
+# 
+# ggplot(res_adj, aes(x=Y, y=RD)) + geom_point() +
+#   geom_pointrange(aes(ymin=ci.l, ymax=ci.u)) + geom_hline(yintercept = 0) + 
+#   facet_wrap(~round, scales="free_x") + theme_bw()
+# 
+# 
+# ##############################################
+# #Examine baseline data
+# ##############################################
+# 
+# load(paste0(dropboxDir,"Results/Audrie/immune_enrol_baseline_char.RData"))
+# load(paste0(dropboxDir,"Results/Audrie/immune_enrol_supp_baseline_char_t2.RData"))
+# load(paste0(dropboxDir,"Results/Audrie/immune_enrol_supp_baseline_char_lost_t3.RData"))
+# 

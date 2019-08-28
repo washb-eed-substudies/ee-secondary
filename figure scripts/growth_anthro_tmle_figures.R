@@ -23,6 +23,8 @@ d <- rbind(
 #Clean dataframe
 d$ATE[d$level=="Q1"] <- 0
 
+d$level <- paste0(d$level, "\n", d$cutpoints)
+
 unique(d$Y)
 unique(d$A)
 
@@ -40,9 +42,9 @@ d <- d %>% arrange(Y) %>%
     Y=="delta_wlz_t2_t3" ~ "Change in WLZ\nbetween years 1 and 2",
     Y=="delta_waz_t2_t3" ~ "Change in WAZ\nbetween years 1 and 2",
     Y=="delta_hcz_t2_t3" ~ "Change in HCZ\nbetween years 1 and 2",
-    Y=="len_velocity_t2_t3" ~ "Length velocity\nbetween years 1 and 2",
-    Y=="wei_velocity_t2_t3" ~ "Weight velocity\nbetween years 1 and 2",
-    Y=="hc_velocity_t2_t3" ~ "Head circumference velocity\nbetween years 1 and 2",
+    Y=="len_velocity_t2_t3" ~ "Length velocity (cm)\nbetween years 1 and 2",
+    Y=="wei_velocity_t2_t3" ~ "Weight velocity (kg)\nbetween years 1 and 2",
+    Y=="hc_velocity_t2_t3" ~ "Head circumference velocity (cm)\nbetween years 1 and 2",
     Y=="laz_t2" ~ "LAZ at year 1",
     Y=="wlz_t2" ~ "WLZ at year 1",
     Y=="waz_t2" ~ "WAZ at year 1",
@@ -60,7 +62,7 @@ d <- d %>% arrange(Y) %>%
 
 
 
-tmle_plot_fun <- function(d, hypo, title, yrange=c(-0.5, 0.5)){
+tmle_plot_fun <- function(d, hypo, title, ylabel="", yrange=c(-0.5, 0.5)){
   df <- d[d$hypothesis==hypo,]
   
   p <- ggplot(df, aes(x=level, y=ATE)) + 
@@ -68,7 +70,7 @@ tmle_plot_fun <- function(d, hypo, title, yrange=c(-0.5, 0.5)){
     geom_linerange(aes(ymin=CI1, ymax=CI2, color=Ylab),
                    alpha=0.5, size = 1) +
     facet_grid(~Ylab) +
-    labs(y = "", x =  df$Alab[1]) +
+    labs(y = ylabel, x =  df$Alab[1]) +
     geom_hline(yintercept = 0) +
     coord_cartesian(ylim=yrange) +
     scale_colour_manual(values=tableau10[c(1:4,1:4,1:4,5:7)], drop=FALSE) + 
@@ -96,18 +98,14 @@ tmle_plot_fun <- function(d, hypo, title, yrange=c(-0.5, 0.5)){
 
 
 
-#pH1 <- tmle_plot_fun(d, 1, title="Adjusted differences between quartiles of change in telomere length between Years 1 and 2 for each growth outcome")
-pH1 <- tmle_plot_fun(d, 1, title="")
-pH2 <- tmle_plot_fun(d, 2, c(-0.05, 0.03), title="")
-pH3 <- tmle_plot_fun(d, 3, title="")
-# pH4 <- tmle_plot_fun(d, 4, title="Adjusted differences between quartiles of telomere length at Year 1 for each growth outcome")
-# pH5 <- tmle_plot_fun(d, 5, title="Adjusted differences between quartiles of telomere length at Year 2 for each growth outcome")
-pH4 <- tmle_plot_fun(d, 4, title="")
-pH5 <- tmle_plot_fun(d, 5, title="")
-pH6 <- tmle_plot_fun(d, 6, title="")
-pH7 <- tmle_plot_fun(d, 7, c(-0.03, 0.03), title="")
-pH8 <- tmle_plot_fun(d, 8, title="")
-
+pH1 <- tmle_plot_fun(d, 1, title="", ylabel="Difference in\nchange in Z-score")
+pH2 <- tmle_plot_fun(d, 2, c(-0.05, 0.03), title="", ylabel="Difference in\nvelocity in cm or kg")
+pH3 <- tmle_plot_fun(d, 3, title="", ylabel="Z-score difference")
+pH4 <- tmle_plot_fun(d, 4, title="", ylabel="Z-score difference")
+pH5 <- tmle_plot_fun(d, 5, title="", ylabel="Z-score difference")
+pH6 <- tmle_plot_fun(d, 6, title="", ylabel="Z-score difference")
+pH7 <- tmle_plot_fun(d, 7, c(-0.03, 0.03), title="", ylabel="Difference in\nvelocity in cm or kg")
+pH8 <- tmle_plot_fun(d, 8, title="", ylabel="Difference in\nchange in Z-score")
 
 
 

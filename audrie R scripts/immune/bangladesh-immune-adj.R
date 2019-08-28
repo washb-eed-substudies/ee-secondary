@@ -300,6 +300,12 @@ W$n_cattle<-as.numeric(W$n_cattle)
 W$n_goat<-as.numeric(W$n_goat)
 W$n_chicken<-as.numeric(W$n_chicken)
 
+
+# Save t3 covariates
+Wa3 <- W
+save(Wa3, file=here("replication objects/andrew_immune_W3.rdata"))
+
+
 # Set up the WASHB function
 # df=data frame
 

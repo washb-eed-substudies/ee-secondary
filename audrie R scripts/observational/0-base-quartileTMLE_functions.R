@@ -8,23 +8,24 @@ select_groups <- function(data, groups, ...) {
 
 
 
-tmle_quart<-function(dat=d, 
-                    Y="LAZ", 
-                    W=NULL, 
-                    n.cat=4, 
-                    A="logval", 
-                    id="block",
-                    Alevels=c("Q1","Q2","Q3","Q4"), 
-                    reflevel=1, 
-                    family="gaussian", 
-                    SLlibrary="SL.gam", 
-                    outputdf=NULL,
-                    sparseN=0){
 
+tmle_quart<-function(dat=d, 
+                     Y="LAZ", 
+                     W=NULL, 
+                     n.cat=4, 
+                     A="logval", 
+                     id="block",
+                     Alevels=c("Q1","Q2","Q3","Q4"), 
+                     reflevel=1, 
+                     family="gaussian", 
+                     SLlibrary="SL.gam", 
+                     outputdf=NULL,
+                     sparseN=0){
+  
   
   
   Acuts=as.numeric(summary( subset(dat, select=A)[,1])[c(2,3,5)])
-   cat("Cutpoints: ", Acuts, "\nNumbers per category:\n")
+  cat("Cutpoints: ", Acuts, "\nNumbers per category:\n")
   
   id<-subset(dat, select=id)
   dat$STUDYID<-id[,1]
@@ -53,8 +54,9 @@ tmle_quart<-function(dat=d,
   table(findInterval(a[,1], Acuts))
   
   if(!is.null(Acuts)){
-    a[,1]<-factor(findInterval(a[,1], Acuts))
-    if(!is.null(Alevels)){levels(a[,1])<-Alevels}
+    a[,1]<-findInterval(a[,1], Acuts)
+    a[,1]<-factor(a[,1])
+    if(!is.null(Alevels)){levels(a[,1])<-Alevels[as.numeric(levels(a[,1]))+1]}
   }
   
   a[,1]<-as.factor(a[,1])
@@ -66,8 +68,8 @@ tmle_quart<-function(dat=d,
     suppressWarnings(Wscreen <- washb_prescreen(Y = y[,1], 
                                                 Ws = screenW, family = family, pval = 0.2, print = T))
     
-  w<-subset(dat, select=Wscreen)
-  w<-design_matrix(w)
+    w<-subset(dat, select=Wscreen)
+    w<-design_matrix(w)
   }else{
     w<-data.frame(w=rep(1, nrow(dat)))
   }
@@ -85,7 +87,7 @@ tmle_quart<-function(dat=d,
   
   #Extract desired levels
   levelmeans<-levelmeans[1:n.cat,]
-
+  
   
   res<-NULL
   for(i in comparisons){
@@ -163,13 +165,27 @@ tmle_quart<-function(dat=d,
                      "meanY", "mean.sd","mean.se","mean.CI1","mean.CI2")
   }
   rownames(res)<-NULL
-
+  
+  #add in quartiles
+  Acuts <- round(Acuts,2)
+  res$cutpoints <- c(
+    paste0("<", Acuts[1]),
+    paste0("[", Acuts[1],", ", Acuts[2], ")"),
+    paste0("[", Acuts[2],", ", Acuts[3], ")"),
+    paste0(">=", Acuts[3])
+  )
+  
+  
   if(!is.null(outputdf)){
     return(rbind(outputdf,res))
   }else{
     return(res)
   }
 }
+
+
+
+
 
 
 

@@ -6,6 +6,7 @@ source(here::here("0-config.R"))
 
 load(here("replication objects/audrie_immune_W.rdata"))
 load(here("replication objects/andrew_immune_W.rdata"))
+load(here("replication objects/andrew_immune_W3.rdata"))
 
 # da
 # wa
@@ -63,9 +64,9 @@ covariate_compare <- function(d1, d2, var1, var2, subset1=NULL, subset2=NULL){
 }
 
 
-washb_function <- function(d,x, Wvars, logtrans=F) {
+washb_function <- function(d,x, Wvars, logtrans=F, print=F) {
   if(logtrans){d[,x]=log(d[,x])}
-  temp <- washb_glm(Y=d[,x], tr=d$tr, pair=NULL, W=Wvars, id=d$block, contrast = c("Control","Nutrition + WSH"), family="gaussian", print=F)
+  temp <- washb_glm(Y=d[,x], tr=d$tr, pair=NULL, W=Wvars, id=d$block, contrast = c("Control","Nutrition + WSH"), family="gaussian", print=print)
   temp_metric <-as.matrix(temp$TR)
   rownames(temp_metric) <- c("Nutrition + WSH v C")
   colnames(temp_metric) <-c("RD","ci.lb","ci.ub","SE","z","P-value")
@@ -85,6 +86,7 @@ washb_function(d=dm, x="igf_t2", Wvars=W2)
 
 washb_function(d=da, x="igf_t2", Wvars=NULL)
 washb_function(d=dm, x="igf_t2", Wvars=NULL)
+washb_function(d=da, x="t2_ln_igf", Wvars=NULL)
 
 
 table(da$tr)
@@ -102,10 +104,66 @@ mean(dm$ln_igf_t2, na.rm=T)
 mean(log(da$igf_t2), na.rm=T)
 mean(log(dm$igf_t2), na.rm=T)
 
+summary(dm$igf_t2)
+summary(da$t2_ln_igf)
 
-washb_function(da, "igf_t2", wa)
-washb_function(dm, "ln_igf_t2", W2)
+summary(dm$igf_t3)
+summary(da$t3_ln_igf)
 
+
+res_a <- washb_function(da, "t3_ln_igf", wa)
+res_m <- washb_function(dm, "igf_t3", W2)
+res_a
+res_m
+
+res_a <- washb_function(da, "t3_ln_igf", Wa3)
+res_m <- washb_function(dm, "igf_t3", W3)
+res_a
+res_m
+
+
+# Compare T3 covariates
+colnames(Wa3)
+colnames(W3)
+
+#Our monsoons are off
+summary(wa$monsoon_bt2)
+summary(W2$monsoon2)
+
+summary(Wa3$monsoon_bt3)
+summary(W3$monsoon3)
+
+#Our ages are off at both times
+summary(wa$ageday_bt2)
+summary(W2$aged2)
+
+summary(Wa3$ageday_bt3)
+summary(W3$aged3)
+
+
+summary(Wa3$sex)
+summary(W3$sex)
+summary(Wa3$birthord)
+summary(W3$birthord)
+summary(Wa3$hfiacat)
+summary(W3$hfiacat)
+
+res_a <- washb_function(da, "t3_ln_igf", Wa3)
+res_m <- washb_function(dm, "igf_t3", W3)
+res_a
+res_m
+
+
+
+# Compare child differences
+dim(dm)
+dim(da)
+d <- full_join(dm, da, by = c("childid"))
+dim(d)
+
+d$childid[as.numeric(d$monsoon2)!=as.numeric(d$monsoon_bt2)]
+d$monsoon2[as.numeric(d$monsoon2)!=as.numeric(d$monsoon_bt2)]
+d$monsoon_bt2[as.numeric(d$monsoon2)!=as.numeric(d$monsoon_bt2)]
 
 
 # da %>% group_by(tr) %>% summarise(N=n(), mean(as.numeric(factor(sex))), mean(igf_t2, na.rm=T))
