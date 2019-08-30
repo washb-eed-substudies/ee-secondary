@@ -24,4 +24,4 @@ tbls3<-data.table(" "=outcome,
                   "Child Age 14 Months"=t2,
                   "Child Age 28 Months"=t3)
 
-write.csv(tbls3, file=here('tables/miso9-supptable2.csv'))
+write.csv(tbls3, file=here('tables/miso9-supptable3.csv'))
