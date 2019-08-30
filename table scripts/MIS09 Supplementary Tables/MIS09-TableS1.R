@@ -20,3 +20,5 @@ tbls1<-data.table(" "=append(c("No. of compounds:"), tbl1$`No. of compounds:`),
                   "Immune Status Study"=append(c("Control (N=402)"), tbl1$`Control (N=402)`),
                   " "=append(c("N + WSH (N=404)"), tbl1$`N + WSH (N=404)`)
 )
+
+write.csv(tbls1, file=here("tables/miso9-supptable1.csv"))
