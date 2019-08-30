@@ -34,11 +34,13 @@ dadagri<-npercfunc(ages$dadagri)
 Nhh<-meansdfunc(ages$Nhh)
 elec<-npercfunc(ages$elec)
 cement<-npercfunc(ages$cement)
+
 acresctrlm<-round(mean(ages$landacre[ages$tr=="Control"], na.rm=TRUE), 2)
 acresctrlsd<-round(sd(ages$landacre[ages$tr=="Control"], na.rm=TRUE), 2)
 acreswshm<-round(mean(ages$landacre[ages$tr=="Nutrition + WSH"], na.rm=TRUE), 2)
 acreswshsd<-round(mean(ages$landacre[ages$tr=="Nutrition + WSH"], na.rm=TRUE), 2)
 acres<-c(acresctrlm, acresctrlsd, acreswshm, acreswshsd)
+
 tubewell<-npercfunc(ages$tubewell)
 storewater<-npercfunc(ages$storewat)
 treatwater<-npercfunc(ages$treatwat)
@@ -59,7 +61,12 @@ handlatwater<-npercfunc(ages$hwlatwat)
 handlatsoap<-npercfunc(ages$hwlatsoap)
 handkitwater<-npercfunc(ages$hwkitwat)
 handkitsoap<-npercfunc(ages$hwkitsoap)
-foodsecure<-meansdfunc(ages$hfias)
+
+fsctrln<-length(ages$hfiacat[ages$tr=="Control" & ages$hfiacat=="Food Secure"])
+fsctrlperc<-round(fsctrln/length(ages$hfiacat[ages$tr=="Control"])*100)
+fswshn<-length(ages$hfiacat[ages$tr=="Nutrition + WSH" & ages$hfiacat=="Food Secure"])
+fswshperc<-round(fswshn/length(ages$hfiacat[ages$tr=="Nutrition + WSH"])*100)
+foodsecure<-c(fsctrln, fsctrlperc, fswshn, fswshperc)
 
 #make vectors to put in table
 #function combines n and percent or mean and sd for vectors created from npercfunc or meansdfunc
@@ -81,7 +88,7 @@ ctrl<-c(" ", charobject(momage, 1),charobject(momeduy, 1), " ", charobject(daded
         " ", charobjectperc(feceshouse, 1), charobjectperc(feceschildarea, 1), 
         " ", " ", charobjectperc(handlatwater, 1), charobjectperc(handlatsoap, 1), 
         " ", charobjectperc(handkitwater, 1), charobjectperc(handkitsoap, 1), 
-        " ", charobject(foodsecure, 1))
+        " ", charobjectperc(foodsecure, 1))
 wsh<-c(" ", charobject(momage, 3),charobject(momeduy, 3), " ", charobject(dadeduy, 3), charobjectperc(dadagri, 3),
        " ", charobject(Nhh, 3), charobjectperc(elec, 3), charobjectperc(cement, 3), charobject(acres, 3),
        " ", charobjectperc(tubewell, 3), charobjectperc(storewater, 3), charobjectperc(treatwater, 3), charobject(waterdis, 3), 
@@ -91,7 +98,7 @@ wsh<-c(" ", charobject(momage, 3),charobject(momeduy, 3), " ", charobject(dadedu
        " ", charobjectperc(feceshouse, 3), charobjectperc(feceschildarea, 3), 
        " ", " ", charobjectperc(handlatwater, 3), charobjectperc(handlatsoap, 3), 
        " ", charobjectperc(handkitwater, 3), charobjectperc(handkitsoap, 3), 
-       " ", charobject(foodsecure, 3))
+       " ", charobjectperc(foodsecure, 3))
   
 # Table 1: Enrollment characteristics by intervention group
 tbl1 <- data.table(
@@ -110,3 +117,4 @@ tbl1 <- data.table(
 )
 
 write.csv(tbl1, file=here('tables/miso9-table1.csv'))
+
