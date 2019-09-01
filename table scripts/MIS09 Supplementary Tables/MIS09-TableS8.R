@@ -25,6 +25,7 @@ ipcws8<-c(" ", " ", maketblvalue(d23_il1_adj_ipcw_L$`unlist(d23_il1_adj_ipcw$est
           " ", " ", maketblvalue(d23_igf_adj_ipcw_L$`unlist(d23_igf_adj_ipcw$estimates$ATE)`))
 
 tbls8<-cbind(tbl6, ipcws8)
+#once absolute mean column is added to table 6 change index from 8 to 9
 names(tbls8)[8]<-"IPCW adjusted difference: Intervention vs. Control (95% CI)"
 
 write.csv(tbls8, file=here('tables/miso9-supptable8.csv'))
