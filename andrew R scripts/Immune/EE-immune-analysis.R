@@ -212,7 +212,7 @@ res_unadj$Y <-colnames(Y)
 
 
 #Compare to Audrie's objects
-load(paste0(dropboxDir,"Results/Audrie/immune_unadj_glm.RData"))
+load(here("audrie results/immune_unadj_glm.RData"))
 
 
 #Function to load and compile Audrie's objects
@@ -239,7 +239,6 @@ dim(comp_unadj)
 
 comp_unadj$RD.x - comp_unadj$RD.y
 
-#t2_il2 is off, mean(Y$t2_il2, na.rm= T) matches both andrew and audrie's means, so is audrie's unadjusted object off?
 
 #------------------------------------------------------------------------------------------------
 # Age and sex adjusted GLMs
@@ -251,7 +250,7 @@ d$sex=relevel(d$sex,ref="0")
 #Age and sex adjusted glm models
 res_sex <- NULL
 for(i in 1:ncol(Y)){
-  if(i < 18){
+  if(grepl("t2_", colnames(Y)[i])){
     temp<-washb_glm(Y=(Y[,i]), tr=d$tr, W=cbind(d$sex, d$agem2), id=d$block, pair=NULL, family="gaussian", contrast= c("Control","Nutrition + WSH"), print=F)
   }else{
     temp<-washb_glm(Y=(Y[,i]), tr=d$tr, W=cbind(d$sex, d$agem3), id=d$block, pair=NULL, family="gaussian", contrast= c("Control","Nutrition + WSH"), print=F)
@@ -264,7 +263,7 @@ colnames(res_sex)<-c("RD","ci.l","ci.u", "Std. Error", "z value", "Pval")
 res_sex$Y <-colnames(Y)
 
 #Compare to Audrie's objects
-load(paste0(dropboxDir,"Results/Audrie/immune_adj_sex_age_glm.RData"))
+load(here("audrie results/immune_adj_sex_age_glm.RData"))
 
 aud_sex <- as.data.frame(rbindlist(lapply(lapply(ls(pattern="_adj_sex_age_L"), get), as.data.frame)))
 aud_sex$Y = gsub("_adj_sex_age_L","",ls(pattern="_adj_sex_age_L"))
@@ -276,7 +275,6 @@ dim(comp_sex)
 
 comp_sex$RD.x - comp_sex$RD.y
 
-#t2_il2 is off here too
 
 #------------------
 #Adjusted GLM
