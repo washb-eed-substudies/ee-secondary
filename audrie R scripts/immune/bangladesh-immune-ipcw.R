@@ -17,7 +17,7 @@
 #---------------------------------------
 
 #Clear out R environment (remove and loaded data)
-rm(list=ls())
+#rm(list=ls())
 
 
 ######################
@@ -50,13 +50,13 @@ setwd(paste0(dropboxDir,"Data/Cleaned/Audrie/")) #Set working directory
 #---------------------------------------
 
 #load the immune lab data
-washb_bd_immun<- read.csv("~/Dropbox/WBB-EE-analysis/Data/Cleaned/Audrie/washb-bangladesh-plasma-lab-t2-t3-ipcw.csv", stringsAsFactors = TRUE)
+washb_bd_immun<- read.csv("washb-bangladesh-plasma-lab-t2-t3-ipcw.csv", stringsAsFactors = TRUE)
 
 #load
-dfull<- read.csv("~/Dropbox/WBB-EE-analysis/Data/Cleaned/Audrie/washb-bangladesh-anthro-diar-ee-med-enrol-tracking-immun-ipcw2.csv", stringsAsFactors = TRUE)
+dfull<- read.csv("washb-bangladesh-anthro-diar-ee-med-enrol-tracking-immun-ipcw2.csv", stringsAsFactors = TRUE)
 
 #load blinded treatment data
-washb_bd_tr <- read.csv("~/Dropbox/WBB-EE-analysis/Data/Untouched/washb-bangladesh-tr.csv", stringsAsFactors = TRUE)
+washb_bd_tr <- read.csv(paste0(dropboxDir, "Data/Untouched/washb-bangladesh-tr.csv"), stringsAsFactors = TRUE)
 
 # merge treatment and enrollment data onto this shell of the full data
 dfull <- merge(dfull,washb_bd_tr,by=c("clusterid","block"),all.x=T,all.y=F)
@@ -687,13 +687,13 @@ tnf_t2_unadj_ipcw
 #---------------------------------------
 
 #load the immune lab data
-washb_bd_immun<- read.csv("~/Dropbox/WBB-EE-analysis/Data/Cleaned/Audrie/washb-bangladesh-plasma-lab-t2-t3-ipcw.csv", stringsAsFactors = TRUE)
+washb_bd_immun<- read.csv(paste0(dropboxDir, "Data/Cleaned/Audrie/washb-bangladesh-plasma-lab-t2-t3-ipcw.csv"), stringsAsFactors = TRUE)
 
 #load
-dfull<- read.csv("~/Dropbox/WBB-EE-analysis/Data/Cleaned/Audrie/washb-bangladesh-anthro-diar-ee-med-enrol-tracking-immun-ipcw2.csv", stringsAsFactors = TRUE)
+dfull<- read.csv(paste0(dropboxDir, "Data/Cleaned/Audrie/washb-bangladesh-anthro-diar-ee-med-enrol-tracking-immun-ipcw2.csv"), stringsAsFactors = TRUE)
 
 #load blinded treatment data
-washb_bd_tr <- read.csv("~/Dropbox/WBB-EE-analysis/Data/Untouched/washb-bangladesh-tr.csv", stringsAsFactors = TRUE)
+washb_bd_tr <- read.csv(paste0(dropboxDir, "Data/Untouched/washb-bangladesh-tr.csv"), stringsAsFactors = TRUE)
 
 # merge treatment and enrollment data onto this shell of the full data
 dfull <- merge(dfull,washb_bd_tr,by=c("clusterid","block"),all.x=T,all.y=F)
@@ -1662,13 +1662,13 @@ ratio_th1_th17_t2_unadj_ipcw
 #---------------------------------------
 
 #load the immune lab data
-washb_bd_immun<- read.csv("~/Dropbox/WBB-EE-analysis/Data/Cleaned/Audrie/washb-bangladesh-plasma-lab-t2-t3-ipcw.csv", stringsAsFactors = TRUE)
+washb_bd_immun<- read.csv(paste0(dropboxDir, "Data/Cleaned/Audrie/washb-bangladesh-plasma-lab-t2-t3-ipcw.csv"), stringsAsFactors = TRUE)
 
 #load
-dfull<- read.csv("~/Dropbox/WBB-EE-analysis/Data/Cleaned/Audrie/washb-bangladesh-anthro-diar-ee-med-enrol-tracking-immun-ipcw2.csv", stringsAsFactors = TRUE)
+dfull<- read.csv(paste0(dropboxDir, "Data/Cleaned/Audrie/washb-bangladesh-anthro-diar-ee-med-enrol-tracking-immun-ipcw2.csv"), stringsAsFactors = TRUE)
 
 #load blinded treatment data
-washb_bd_tr <- read.csv("~/Dropbox/WBB-EE-analysis/Data/Untouched/washb-bangladesh-tr.csv", stringsAsFactors = TRUE)
+washb_bd_tr <- read.csv(paste0(dropboxDir, "Data/Untouched/washb-bangladesh-tr.csv"), stringsAsFactors = TRUE)
 
 # merge treatment and enrollment data onto this shell of the full data
 dfull <- merge(dfull,washb_bd_tr,by=c("clusterid","block"),all.x=T,all.y=F)
@@ -2231,13 +2231,13 @@ tnf_t3_unadj_ipcw
 #---------------------------------------
 
 #load the immune lab data
-washb_bd_immun<- read.csv("~/Dropbox/WBB-EE-analysis/Data/Cleaned/Audrie/washb-bangladesh-plasma-lab-t2-t3-ipcw.csv", stringsAsFactors = TRUE)
+washb_bd_immun<- read.csv(paste0(dropboxDir, "Data/Cleaned/Audrie/washb-bangladesh-plasma-lab-t2-t3-ipcw.csv"), stringsAsFactors = TRUE)
 
 #load
-dfull<- read.csv("~/Dropbox/WBB-EE-analysis/Data/Cleaned/Audrie/washb-bangladesh-anthro-diar-ee-med-enrol-tracking-immun-ipcw2.csv", stringsAsFactors = TRUE)
+dfull<- read.csv(paste0(dropboxDir, "Data/Cleaned/Audrie/washb-bangladesh-anthro-diar-ee-med-enrol-tracking-immun-ipcw2.csv"), stringsAsFactors = TRUE)
 
 #load blinded treatment data
-washb_bd_tr <- read.csv("~/Dropbox/WBB-EE-analysis/Data/Untouched/washb-bangladesh-tr.csv", stringsAsFactors = TRUE)
+washb_bd_tr <- read.csv(paste0(dropboxDir, "Data/Untouched/washb-bangladesh-tr.csv"), stringsAsFactors = TRUE)
 
 # merge treatment and enrollment data onto this shell of the full data
 dfull <- merge(dfull,washb_bd_tr,by=c("clusterid","block"),all.x=T,all.y=F)
@@ -3208,13 +3208,13 @@ ratio_th1_th17_t3_unadj_ipcw
 #---------------------------------------
 
 #load the immune lab data
-washb_bd_immun<- read.csv("~/Dropbox/WBB-EE-analysis/Data/Cleaned/Audrie/washb-bangladesh-plasma-lab-t2-t3-ipcw.csv", stringsAsFactors = TRUE)
+washb_bd_immun<- read.csv(paste0(dropboxDir, "Data/Cleaned/Audrie/washb-bangladesh-plasma-lab-t2-t3-ipcw.csv"), stringsAsFactors = TRUE)
 
 #load
-dfull<- read.csv("~/Dropbox/WBB-EE-analysis/Data/Cleaned/Audrie/washb-bangladesh-anthro-diar-ee-med-enrol-tracking-immun-ipcw2.csv", stringsAsFactors = TRUE)
+dfull<- read.csv(paste0(dropboxDir, "Data/Cleaned/Audrie/washb-bangladesh-anthro-diar-ee-med-enrol-tracking-immun-ipcw2.csv"), stringsAsFactors = TRUE)
 
 #load blinded treatment data
-washb_bd_tr <- read.csv("~/Dropbox/WBB-EE-analysis/Data/Untouched/washb-bangladesh-tr.csv", stringsAsFactors = TRUE)
+washb_bd_tr <- read.csv(paste0(dropboxDir, "Data/Untouched/washb-bangladesh-tr.csv"), stringsAsFactors = TRUE)
 
 # merge treatment and enrollment data onto this shell of the full data
 dfull <- merge(dfull,washb_bd_tr,by=c("clusterid","block"),all.x=T,all.y=F)
