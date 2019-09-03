@@ -128,7 +128,7 @@ t2_il12_subgroup_L<-list_immune$t2_ln_il12
 t2_il13_subgroup_L<-list_immune$t2_ln_il13
 t2_il17_subgroup_L<-list_immune$t2_ln_il17
 t2_il1_subgroup_L<-list_immune$t2_ln_il1
-t2_il2_subgroup_L<-list_immune$t2_ln_il21
+t2_il2_subgroup_L<-list_immune$t2_ln_il2
 t2_il21_subgroup_L<-list_immune$t2_ln_il21
 t2_il4_subgroup_L<-list_immune$t2_ln_il4
 t2_il5_subgroup_L<-list_immune$t2_ln_il5
