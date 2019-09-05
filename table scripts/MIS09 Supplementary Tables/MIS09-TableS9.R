@@ -1,0 +1,180 @@
+rm(list=ls())
+source(here::here("0-config.R"))
+
+source(here('audrie R scripts/immune/bangladesh-immune-ages-unadjusted-glm.R'))
+source(here('audrie R scripts/immune/bangladesh-immune-adj-age-sex.R'))
+source(here('audrie R scripts/immune/bangladesh-immune-adj.R'))
+load(here("audrie results/immune_ipcw.RData"))
+
+#works for confidence intervals except ipcw
+makecival<-function(var){
+  rounded<-round(var, 2)
+  paste(rounded[1], "(", rounded[2], ", ", rounded[3], ")", sep="")
+}
+
+makeipcw<-function(var){
+  rounded<-round(var, 2)
+  paste(rounded[1], "(", rounded[3], ", ", rounded[4], ")", sep="")
+}
+
+outcomes9<-c("Ln delta IL-1b/IL-10", "Control", "Nutrition + WSH", 
+           "Ln delta IL-6/IL-10", "Control", "Nutrition + WSH",
+           "Ln delta TNF-a/IL-10", "Control", "Nutrition + WSH",
+           "Ln delta IL-12/IL-10", "Control", "Nutrition + WSH",
+           "Ln delta IFN-g/IL-10", "Control", "Nutrition + WSH",
+           "Ln delta IL-4/IL-10", "Control", "Nutrition + WSH",
+           "Ln delta IL-5/IL-10", "Control", "Nutrition + WSH",
+           "Ln delta IL-13/IL-10", "Control", "Nutrition + WSH",
+           "Ln delta IL-17A/IL-10", "Control", "Nutrition + WSH",
+           "Ln delta IL-21/IL-10", "Control", "Nutrition + WSH",
+           "Ln delta IL-2/IL-10", "Control", "Nutrition + WSH",
+           "Ln delta GM-CSF/IL-10", "Control", "Nutrition + WSH",
+           "Ln delta IL-12/IL-4", "Control", "Nutrition + WSH",
+           "Ln delta IFN-g/IL-4", "Control", "Nutrition + WSH",
+           "Ln delta IL-12/IL-5", "Control", "Nutrition + WSH",
+           "Ln delta IFN-g/IL-5", "Control", "Nutrition + WSH",
+           "Ln delta IL-12/IL-13", "Control", "Nutrition + WSH",
+           "Ln delta IFN-g/IL-13", "Control", "Nutrition + WSH",
+           "Ln delta IL-12/IL-17A", "Control", "Nutrition + WSH",
+           "Ln delta IFN-g/IL-17A", "Control", "Nutrition + WSH",
+           "Ln delta IL-12/IL-21", "Control", "Nutrition + WSH",
+           "Ln delta IFN-g/IL-21", "Control", "Nutrition + WSH",
+           "Ln delta Pro-inflammatory cytokines*/IL-10", "Control", "Nutrition + WSH",
+           "Ln delta Th1**/IL-10", "Control", "Nutrition + WSH",
+           "Ln delta Th2***/IL-10", "Control", "Nutrition + WSH",
+           "Ln delta Th17****/IL-10", "Control", "Nutrition + WSH",
+           "Ln delta Th1**/Th2***", "Control", "Nutrition + WSH",
+           "Ln delta Th1**/Th17****", "Control", "Nutrition + WSH")
+
+Ns9<-c()
+
+means9<-c()
+
+sds9<-c()
+
+unadjs9<-c(" ", " ", makecival(d23_ratio_il1_il10_unadj_L),
+           " ", " ", makecival(d23_ratio_il6_il10_unadj_L),
+           " ", " ", makecival(d23_ratio_tnf_il10_unadj_L),
+           " ", " ", makecival(d23_ratio_il12_il10_unadj_L),
+           " ", " ", makecival(d23_ratio_ifn_il10_unadj_L),
+           " ", " ", makecival(d23_ratio_il4_il10_unadj_L), 
+           " ", " ", makecival(d23_ratio_il5_il10_unadj_L),
+           " ", " ", makecival(d23_ratio_il13_il10_unadj_L),
+           " ", " ", makecival(d23_ratio_il17_il10_unadj_L),
+           " ", " ", makecival(d23_ratio_il21_il10_unadj_L),
+           " ", " ", makecival(d23_ratio_il2_il10_unadj_L),
+           " ", " ", makecival(d23_ratio_gmc_il10_unadj_L),
+           " ", " ", makecival(d23_ratio_il12_il4_unadj_L),
+           " ", " ", makecival(d23_ratio_ifn_il4_unadj_L),
+           " ", " ", makecival(d23_ratio_il12_il5_unadj_L),
+           " ", " ", makecival(d23_ratio_ifn_il5_unadj_L),
+           " ", " ", makecival(d23_ratio_il12_il13_unadj_L),
+           " ", " ", makecival(d23_ratio_ifn_il13_unadj_L),
+           " ", " ", makecival(d23_ratio_il12_il17_unadj_L),
+           " ", " ", makecival(d23_ratio_ifn_il17_unadj_L),
+           " ", " ", makecival(d23_ratio_il12_il21_unadj_L),
+           " ", " ", makecival(d23_ratio_ifn_il21_unadj_L),
+           " ", " ", makecival(d23_ratio_pro_il10_unadj_L),
+           " ", " ", makecival(d23_ratio_th1_il10_unadj_L),
+           " ", " ", makecival(d23_ratio_th2_il10_unadj_L),
+           " ", " ", makecival(d23_ratio_th17_il10_unadj_L),
+           " ", " ", makecival(d23_ratio_th1_th2_unadj_L),
+           " ", " ", makecival(d23_ratio_th1_th17_unadj_L))
+
+agesexadjs9<-c(" ", " ", makecival(d23_ratio_il1_il10_adj_sex_age_L),
+               " ", " ", makecival(d23_ratio_il6_il10_adj_sex_age_L),
+               " ", " ", makecival(d23_ratio_tnf_il10_adj_sex_age_L),
+               " ", " ", makecival(d23_ratio_il12_il10_adj_sex_age_L),
+               " ", " ", makecival(d23_ratio_ifn_il10_adj_sex_age_L),
+               " ", " ", makecival(d23_ratio_il4_il10_adj_sex_age_L), 
+               " ", " ", makecival(d23_ratio_il5_il10_adj_sex_age_L),
+               " ", " ", makecival(d23_ratio_il13_il10_adj_sex_age_L),
+               " ", " ", makecival(d23_ratio_il17_il10_adj_sex_age_L),
+               " ", " ", makecival(d23_ratio_il21_il10_adj_sex_age_L),
+               " ", " ", makecival(d23_ratio_il2_il10_adj_sex_age_L),
+               " ", " ", makecival(d23_ratio_gmc_il10_adj_sex_age_L),
+               " ", " ", makecival(d23_ratio_il12_il4_adj_sex_age_L),
+               " ", " ", makecival(d23_ratio_ifn_il4_adj_sex_age_L),
+               " ", " ", makecival(d23_ratio_il12_il5_adj_sex_age_L),
+               " ", " ", makecival(d23_ratio_ifn_il5_adj_sex_age_L),
+               " ", " ", makecival(d23_ratio_il12_il13_adj_sex_age_L),
+               " ", " ", makecival(d23_ratio_ifn_il13_adj_sex_age_L),
+               " ", " ", makecival(d23_ratio_il12_il17_adj_sex_age_L),
+               " ", " ", makecival(d23_ratio_ifn_il17_adj_sex_age_L),
+               " ", " ", makecival(d23_ratio_il12_il21_adj_sex_age_L),
+               " ", " ", makecival(d23_ratio_ifn_il21_adj_sex_age_L),
+               " ", " ", makecival(d23_ratio_pro_il10_adj_sex_age_L),
+               " ", " ", makecival(d23_ratio_th1_il10_adj_sex_age_L),
+               " ", " ", makecival(d23_ratio_th2_il10_adj_sex_age_L),
+               " ", " ", makecival(d23_ratio_th17_il10_adj_sex_age_L),
+               " ", " ", makecival(d23_ratio_th1_th2_adj_sex_age_L),
+               " ", " ", makecival(d23_ratio_th1_th17_adj_sex_age_L))
+
+adjs9<-c(" ", " ", makecival(d23_ratio_il1_il10_adj_L),
+         " ", " ", makecival(d23_ratio_il6_il10_adj_L),
+         " ", " ", makecival(d23_ratio_tnf_il10_adj_L),
+         " ", " ", makecival(d23_ratio_il12_il10_adj_L),
+         " ", " ", makecival(d23_ratio_ifn_il10_adj_L),
+         " ", " ", makecival(d23_ratio_il4_il10_adj_L), 
+         " ", " ", makecival(d23_ratio_il5_il10_adj_L),
+         " ", " ", makecival(d23_ratio_il13_il10_adj_L),
+         " ", " ", makecival(d23_ratio_il17_il10_adj_L),
+         " ", " ", makecival(d23_ratio_il21_il10_adj_L),
+         " ", " ", makecival(d23_ratio_il2_il10_adj_L),
+         " ", " ", makecival(d23_ratio_gmc_il10_adj_L),
+         " ", " ", makecival(d23_ratio_il12_il4_adj_L),
+         " ", " ", makecival(d23_ratio_ifn_il4_adj_L),
+         " ", " ", makecival(d23_ratio_il12_il5_adj_L),
+         " ", " ", makecival(d23_ratio_ifn_il5_adj_L),
+         " ", " ", makecival(d23_ratio_il12_il13_adj_L),
+         " ", " ", makecival(d23_ratio_ifn_il13_adj_L),
+         " ", " ", makecival(d23_ratio_il12_il17_adj_L),
+         " ", " ", makecival(d23_ratio_ifn_il17_adj_L),
+         " ", " ", makecival(d23_ratio_il12_il21_adj_L),
+         " ", " ", makecival(d23_ratio_ifn_il21_adj_L),
+         " ", " ", makecival(d23_ratio_pro_il10_adj_L),
+         " ", " ", makecival(d23_ratio_th1_il10_adj_L),
+         " ", " ", makecival(d23_ratio_th2_il10_adj_L),
+         " ", " ", makecival(d23_ratio_th17_il10_adj_L),
+         " ", " ", makecival(d23_ratio_th1_th2_adj_L),
+         " ", " ", makecival(d23_ratio_th1_th17_adj_L))
+
+ipcws9<-c(" ", " ", makeipcw(d23_ratio_il1_il10_adj_ipcw_L$`unlist(d23_ratio_il1_il10_adj_ipcw$estimates$ATE)`),
+          " ", " ", makeipcw(d23_ratio_il6_il10_adj_ipcw_L$`unlist(d23_ratio_il6_il10_adj_ipcw$estimates$ATE)`),
+          " ", " ", makeipcw(d23_ratio_tnf_il10_adj_ipcw_L$`unlist(d23_ratio_tnf_il10_adj_ipcw$estimates$ATE)`),
+          " ", " ", makeipcw(d23_ratio_il12_il10_adj_ipcw_L$`unlist(d23_ratio_il12_il10_adj_ipcw$estimates$ATE)`),
+          " ", " ", makeipcw(d23_ratio_ifn_il10_adj_ipcw_L$`unlist(d23_ratio_ifn_il10_adj_ipcw$estimates$ATE)`),
+          " ", " ", makeipcw(d23_ratio_il4_il10_adj_ipcw_L$`unlist(d23_ratio_il4_il10_adj_ipcw$estimates$ATE)`), 
+          " ", " ", makeipcw(d23_ratio_il5_il10_adj_ipcw_L$`unlist(d23_ratio_il5_il10_adj_ipcw$estimates$ATE)`),
+          " ", " ", makeipcw(d23_ratio_il13_il10_adj_ipcw_L$`unlist(d23_ratio_il13_il10_adj_ipcw$estimates$ATE)`),
+          " ", " ", makeipcw(d23_ratio_il17_il10_adj_ipcw_L$`unlist(d23_ratio_il17_il10_adj_ipcw$estimates$ATE)`),
+          " ", " ", makeipcw(d23_ratio_il21_il10_adj_ipcw_L$`unlist(d23_ratio_il21_il10_adj_ipcw$estimates$ATE)`),
+          " ", " ", makeipcw(d23_ratio_il2_il10_adj_ipcw_L$`unlist(d23_ratio_il2_il10_adj_ipcw$estimates$ATE)`),
+          " ", " ", makeipcw(d23_ratio_gmc_il10_adj_ipcw_L$`unlist(d23_ratio_gmc_il10_adj_ipcw$estimates$ATE)`),
+          " ", " ", makeipcw(d23_ratio_il12_il4_adj_ipcw_L$`unlist(d23_ratio_il12_il4_adj_ipcw$estimates$ATE)`),
+          " ", " ", makeipcw(d23_ratio_ifn_il4_adj_ipcw_L$`unlist(d23_ratio_ifn_il4_adj_ipcw$estimates$ATE)`),
+          " ", " ", makeipcw(d23_ratio_il12_il5_adj_ipcw_L$`unlist(d23_ratio_il12_il5_adj_ipcw$estimates$ATE)`),
+          " ", " ", makeipcw(d23_ratio_ifn_il5_adj_ipcw_L$`unlist(d23_ratio_ifn_il5_adj_ipcw$estimates$ATE)`),
+          " ", " ", makeipcw(d23_ratio_il12_il13_adj_ipcw_L$`unlist(d23_ratio_il12_il13_adj_ipcw$estimates$ATE)`),
+          " ", " ", makeipcw(d23_ratio_ifn_il13_adj_ipcw_L$`unlist(d23_ratio_ifn_il13_adj_ipcw$estimates$ATE)`),
+          " ", " ", makeipcw(d23_ratio_il12_il17_adj_ipcw_L$`unlist(d23_ratio_il12_il17_adj_ipcw$estimates$ATE)`),
+          " ", " ", makeipcw(d23_ratio_ifn_il17_adj_ipcw_L$`unlist(d23_ratio_ifn_il17_adj_ipcw$estimates$ATE)`),
+          " ", " ", makeipcw(d23_ratio_il12_il21_adj_ipcw_L$`unlist(d23_ratio_il12_il21_adj_ipcw$estimates$ATE)`),
+          " ", " ", makeipcw(d23_ratio_ifn_il21_adj_ipcw_L$`unlist(d23_ratio_ifn_il21_adj_ipcw$estimates$ATE)`),
+          " ", " ", makeipcw(d23_ratio_pro_il10_adj_ipcw_L$`unlist(d23_ratio_pro_il10_adj_ipcw$estimates$ATE)`),
+          " ", " ", makeipcw(d23_ratio_th1_il10_adj_ipcw_L$`unlist(d23_ratio_th1_il10_adj_ipcw$estimates$ATE)`),
+          " ", " ", makeipcw(d23_ratio_th2_il10_adj_ipcw_L$`unlist(d23_ratio_th2_il10_adj_ipcw$estimates$ATE)`),
+          " ", " ", makeipcw(d23_ratio_th17_il10_adj_ipcw_L$`unlist(d23_ratio_th17_il10_adj_ipcw$estimates$ATE)`),
+          " ", " ", makeipcw(d23_ratio_th1_th2_adj_ipcw_L$`unlist(d23_ratio_th1_th2_adj_ipcw$estimates$ATE)`),
+          " ", " ", makeipcw(d23_ratio_th1_th17_adj_ipcw_L$`unlist(d23_ratio_th1_th17_adj_ipcw$estimates$ATE)`))
+
+tbls9<-data.table("Outcome, Arm" = outcomes9,
+                  "N" = Ns9, 
+                  "Mean" = means9,
+                  "SD" = sds9,
+                  "Unadjusted difference: Intervention vs. Control (95% CI)" = unadjs9,
+                  "Age- and sex- adjusted difference: Intervention vs. Control (95% CI)" = agesexadjs9,
+                  "Fully adjusted difference: Intervention vs. Control (95%)" = adjs9,
+                  "IPCW adjusted difference: Intervention vs. Control (95%)" = ipcws9)
+
+write.csv(tbls9, file=here('tables/miso9-supptable9.csv'))
