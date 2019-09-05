@@ -119,7 +119,7 @@ t2_il12_adj_sex_age_L<-list_immune$t2_ln_il12
 t2_il13_adj_sex_age_L<-list_immune$t2_ln_il13
 t2_il17_adj_sex_age_L<-list_immune$t2_ln_il17
 t2_il1_adj_sex_age_L<-list_immune$t2_ln_il1
-t2_il2_adj_sex_age_L<-list_immune$t2_ln_il21
+t2_il2_adj_sex_age_L<-list_immune$t2_ln_il2
 t2_il21_adj_sex_age_L<-list_immune$t2_ln_il21
 t2_il4_adj_sex_age_L<-list_immune$t2_ln_il4
 t2_il5_adj_sex_age_L<-list_immune$t2_ln_il5

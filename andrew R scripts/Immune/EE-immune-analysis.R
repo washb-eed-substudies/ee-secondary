@@ -212,19 +212,26 @@ res_unadj$Y <-colnames(Y)
 
 
 #Compare to Audrie's objects
-load(paste0(dropboxDir,"Results/Audrie/immune_unadj_glm.RData"))
+load(here("audrie results/immune_unadj_glm.RData"))
 
 
 #Function to load and compile Audrie's objects
-load_aud <- function(name.pattern, object_list){
+load_aud <- function(name.pattern, object_list, subgroup=F){
   print(object_list)
   df <- lapply(object_list, get)
   for(i in which(sapply(df, is.null))){
     print(object_list[i])
-    df[[i]] <- data.frame(RD=NA, ci.lb=NA, ci.ub=NA, SE=NA, z=NA, `P-value`=NA)
+    if(subgroup){
+      df[[i]] <- data.frame(subgroup=rep(NA,2), RD=rep(NA,2), ci.lb=rep(NA,2), ci.ub=rep(NA,2), SE=rep(NA,2), z=rep(NA,2), `P-value`=rep(NA,2))
+    }else{
+      df[[i]] <- data.frame(RD=NA, ci.lb=NA, ci.ub=NA, SE=NA, z=NA, `P-value`=NA)
+    }
   }
-  df <- data.frame(rbindlist(lapply(df, as.data.frame)),Y = gsub(name.pattern,"",object_list))
-  
+  if(subgroup){
+    df <- data.frame(rbindlist(lapply(df, as.data.frame), fill=TRUE),Y = rep(gsub(name.pattern,"",object_list), each=2))
+  }else{
+    df <- data.frame(rbindlist(lapply(df, as.data.frame), fill=TRUE),Y = gsub(name.pattern,"",object_list))
+  }
   return(df)
 }
 
@@ -239,7 +246,6 @@ dim(comp_unadj)
 
 comp_unadj$RD.x - comp_unadj$RD.y
 
-#t2_il2 is off, mean(Y$t2_il2, na.rm= T) matches both andrew and audrie's means, so is audrie's unadjusted object off?
 
 #------------------------------------------------------------------------------------------------
 # Age and sex adjusted GLMs
@@ -251,7 +257,7 @@ d$sex=relevel(d$sex,ref="0")
 #Age and sex adjusted glm models
 res_sex <- NULL
 for(i in 1:ncol(Y)){
-  if(i < 18){
+  if(grepl("t2_", colnames(Y)[i])){
     temp<-washb_glm(Y=(Y[,i]), tr=d$tr, W=cbind(d$sex, d$agem2), id=d$block, pair=NULL, family="gaussian", contrast= c("Control","Nutrition + WSH"), print=F)
   }else{
     temp<-washb_glm(Y=(Y[,i]), tr=d$tr, W=cbind(d$sex, d$agem3), id=d$block, pair=NULL, family="gaussian", contrast= c("Control","Nutrition + WSH"), print=F)
@@ -264,7 +270,7 @@ colnames(res_sex)<-c("RD","ci.l","ci.u", "Std. Error", "z value", "Pval")
 res_sex$Y <-colnames(Y)
 
 #Compare to Audrie's objects
-load(paste0(dropboxDir,"Results/Audrie/immune_adj_sex_age_glm.RData"))
+load(here("audrie results/immune_adj_sex_age_glm.RData"))
 
 aud_sex <- as.data.frame(rbindlist(lapply(lapply(ls(pattern="_adj_sex_age_L"), get), as.data.frame)))
 aud_sex$Y = gsub("_adj_sex_age_L","",ls(pattern="_adj_sex_age_L"))
@@ -276,7 +282,6 @@ dim(comp_sex)
 
 comp_sex$RD.x - comp_sex$RD.y
 
-#t2_il2 is off here too
 
 #------------------
 #Adjusted GLM
@@ -534,42 +539,40 @@ dm <- d
 save(res_adj, W, W2, W3, dm, comp_adj, Y, file = here("replication objects/andrew_immune_W.rdata"))
 
 
-set.seed(12345)
-washb_glm(Y=(Y[,1]), tr=d$tr, W=W2, id=d$block, pair=NULL, family="gaussian", contrast= c("Control","Nutrition + WSH"), print=F)$TR
-set.seed(12345)
-washb_glm(Y=d$igf_t2, tr=d$tr, W=W2, id=d$block, pair=NULL, family="gaussian", contrast= c("Control","Nutrition + WSH"), print=F)$TR
-
-
  
-# ##############################################
-# #Run GLMs for the sex-stratified subgroup analysis
-# ##############################################
-# 
-# #sex stratified glm models
-# res_sub <- NULL
-# for(i in 1:ncol(Y)){
-#   temp<-washb_glm(Y=(Y[,i]), tr=d$tr, W=data.frame(sex=d$sex), V="sex", id=d$block, pair=NULL, family="gaussian", contrast= c("Control","Nutrition + WSH"), print=F)
-#   res_sub<-rbind(res_sub, temp$lincom)
-# }
-# res_sub <- as.data.frame(res_sub)
-# 
-# colnames(res_sub)<-c("sex","RD","ci.l","ci.u", "Std. Error", "z value", "Pval")
-# res_sub$Y <-rep(colnames(Y), each=2)
-# res_sub <- res_sub %>% mutate(subgroup = case_when(sex==1 ~ "male", sex==0 ~ "female", TRUE~""), subgroup=factor(subgroup))
-# 
-# load(paste0(dropboxDir,"Results/Audrie/immune_subgroup.RData"))
-# aud_sub <- as.data.frame(rbindlist(lapply(lapply(ls(pattern="_subgroup_L"), get), as.data.frame)))
-# aud_sub$Y = gsub("_subgroup_L","",ls(pattern="_subgroup_L"))
-# 
-# dim(res_sub)
-# dim(aud_sub)
-# comp_sub <- full_join(res_sub, aud_sub, by=c("Y","subgroup"))
-# dim(comp_sub)
-# 
-# comp_sub$RD.x - comp_sub$RD.y
-# 
-# il6_t3_subgroup_L
-# 
+##############################################
+#Run GLMs for the sex-stratified subgroup analysis
+##############################################
+
+#sex stratified glm models
+res_sub <- NULL
+for(i in 1:ncol(Y)){
+  temp<-washb_glm(Y=(Y[,i]), tr=d$tr, W=data.frame(sex=d$sex), V="sex", id=d$block, pair=NULL, family="gaussian", contrast= c("Control","Nutrition + WSH"), print=F)
+  res_sub<-rbind(res_sub, temp$lincom)
+}
+res_sub <- as.data.frame(res_sub)
+
+colnames(res_sub)<-c("sex","RD","ci.l","ci.u", "Std. Error", "z value", "Pval")
+res_sub$Y <-rep(colnames(Y), each=2)
+res_sub <- res_sub %>% mutate(subgroup = case_when(sex==1 ~ "male", sex==0 ~ "female", TRUE~""), subgroup=factor(subgroup))
+
+#Compare to Audrie's objects
+load(paste0(dropboxDir,"Results/Audrie/immune_subgroup.RData"))
+name.pattern="_subgroup_L"
+object_list=ls(pattern=name.pattern)
+aud_sub <- load_aud(name.pattern, object_list, subgroup = T)
+
+dim(res_sub)
+dim(aud_sub)
+comp_sub <- full_join(res_sub, aud_sub, by=c("Y","subgroup"))
+dim(comp_sub)
+
+comp_sub <- filter(comp_sub, !is.na(RD.x))
+
+comp_sub$RD.x - comp_sub$RD.y
+
+il6_t3_subgroup_L
+
 # ##############################################
 # #Plot results
 # ##############################################

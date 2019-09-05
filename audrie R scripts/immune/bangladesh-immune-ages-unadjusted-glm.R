@@ -2324,7 +2324,7 @@ t2_il12_unadj_L<-list_immune$t2_ln_il12
 t2_il13_unadj_L<-list_immune$t2_ln_il13
 t2_il17_unadj_L<-list_immune$t2_ln_il17
 t2_il1_unadj_L<-list_immune$t2_ln_il1
-t2_il2_unadj_L<-list_immune$t2_ln_il21
+t2_il2_unadj_L<-list_immune$t2_ln_il2
 t2_il21_unadj_L<-list_immune$t2_ln_il21
 t2_il4_unadj_L<-list_immune$t2_ln_il4
 t2_il5_unadj_L<-list_immune$t2_ln_il5
