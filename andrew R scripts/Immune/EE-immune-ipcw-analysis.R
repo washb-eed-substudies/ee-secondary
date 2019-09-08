@@ -12,83 +12,24 @@
 
 ###Load in data
 rm(list=ls())
-library(foreign)
-library(tidyverse)
-library(washb)
+source(here::here("0-config.R"))
 
 
 
-setwd("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Data/Untouched/")
-load("washb-bangladesh-tr.Rdata")
-d$clusterid<-as.numeric(d$clusterid)
-treatment<-d
-# levels(treatment$tr)
-# treatment$tr <- factor(treatment$tr,levels=c("Control","WSH","Nutrition","Nutrition + WSH"))
-# levels(treatment$tr)
+#Load in immune analysis dataset
+load(paste0(dropboxDir,"Data/Cleaned/Andrew/BD-EE-immune.Rdata"))
+
+
+#Keep only Immune outcomes, drop the covariates
+
+
+
 #Load in enrollment data for adjusted analysis
 setwd("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Data/Temp/")
-enrol<-read.csv("washb-bangladesh-enrol+animals.csv",stringsAsFactors = TRUE)
-
-
-setwd("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Data/Cleaned/Andrew")
-stool<-read.csv("BD-EE-stool.csv")
-ipcw<-read.csv("BD-EE-ipcw.csv", stringsAsFactors = T) %>% select(-c(tr,block))
+enrol<-read.csv("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Data/Temp/washb-bangladesh-enrol+animals.csv",stringsAsFactors = TRUE)
 
 
 
-#Load in lab outcomes
-setwd("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Data/Cleaned/Andrew")
-outcomes<-read.dta("BD-EE-stool-outcomes-Stata12.dta")
-
-#divide the reg value by 1000 to convert it to ug/ml 
-outcomes$t2_reg<-outcomes$t2_reg/1000
-
-#divide all the aat values by 1000000 to convert it to mg/g
-outcomes$t1_aat<-outcomes$t1_aat/1000000
-outcomes$t2_aat<-outcomes$t2_aat/1000000
-outcomes$t3_aat<-outcomes$t3_aat/1000000
-
-#Rename outcomes:
-outcomes <- outcomes %>%
-  rename(aat1=t1_aat,
-         aat2=t2_aat,
-         aat3=t3_aat,
-         mpo1=t1_mpo,
-         mpo2=t2_mpo,
-         mpo3=t3_mpo,
-         neo1=t1_neo,
-         neo2=t2_neo,
-         neo3=t3_neo,
-         reg1b2=t2_reg)
-
-
-dim(stool)
-dim(outcomes)
-outcomes$childid<-as.numeric(outcomes$childid)
-stool<-left_join(stool,outcomes, by="childid")
-dim(stool)
-
-
-
-
-#Merge in stool outcomes
-stool_outcomes<-subset(stool, select=c(dataid,childNo, 
-                                       staffid1, staffid2, staffid3, 
-                                       month1, month2, month3, 
-                                       aged1, aged2,aged3,
-                                       aat1,aat2,aat3,
-                                       mpo1,mpo2,mpo3,
-                                       neo1,neo2,neo3,reg1b2))
-dim(stool_outcomes)
-d<-merge(ipcw, stool_outcomes, by=c("dataid", "childNo"), all.x=T, all.y=F)
-dim(d)
-
-
-#Merge treatment information 
-dim(d)
-d<-left_join(d,treatment, by="clusterid")
-dim(d)
-table(d$tr)
 
 
 

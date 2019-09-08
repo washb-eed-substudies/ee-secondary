@@ -79,15 +79,22 @@ dim(d)
 # d$agem3[d$childid==433011] <- d$agemth_bt3[d$childid==433011]
 
 #TEMP - need to make my child ages match Audrie's
+summary(d$agem2 - d$agemth_bt2)
+summary(d$agem3 - d$agemth_bt3)
+table(is.na(d$agem2))
+table(is.na(d$agemth_bt2))
 d$agem2 <- d$agemth_bt2
 d$agem3 <- d$agemth_bt3
 
+summary(d$aged2 - d$ageday_bt2)
+summary(d$aged3 - d$ageday_bt3)
 d$aged2 <- d$ageday_bt2
 d$aged3 <- d$ageday_bt3
 
 d$month2 <- d$month_t2
 d$month3 <- d$month_t3
-
+summary(d$month2 - d$month_t2)
+summary(d$month3 - d$month_t3)
 
 #Save data.frame
 save(d, file = c(paste0(dropboxDir,"Data/Cleaned/Andrew/BD-EE-immune.Rdata")))

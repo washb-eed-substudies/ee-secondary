@@ -60,9 +60,15 @@ d <- d %>% arrange(Y) %>%
     A=="TS_t3" ~ "T/S at year 2")) 
   
 
+#Seperate out head circumference outcome
+dHCZ <- d[grepl("HCZ", d$Ylab),]
+d <- d[!grepl("HCZ", d$Ylab),]
+d <- droplevels(d)
 
 
 tmle_plot_fun <- function(d, hypo, title, ylabel="", yrange=c(-0.5, 0.5)){
+  
+  if(length(hypo)==1){
   df <- d[d$hypothesis==hypo,]
   
   p <- ggplot(df, aes(x=level, y=ATE)) + 
@@ -78,9 +84,43 @@ tmle_plot_fun <- function(d, hypo, title, ylabel="", yrange=c(-0.5, 0.5)){
     theme_ki() +
     theme(plot.title = element_text(hjust = 0),
           panel.spacing = unit(0, "lines"))
+  }else{
+    pd <- position_dodge(0.4)
+    
+    df <- d[d$hypothesis %in% hypo,]
+    
+    df$anthro <- toupper(str_split(df$Y, "_", simplify = TRUE)[,1])
+    df$Time <- (str_split(df$Y, "_", simplify = TRUE)[,2])
+    df$Time[df$Time=="t2"] <- "Year 1"
+    df$Time[df$Time=="t3"] <- "Year 2"
+    df$Time[grepl("Q1",df$level)] <- "Year 2"
+    
+    df$CI1[is.na(df$CI1)] <- 0
+    df$CI2[is.na(df$CI2)] <- 0
+    
+    p <- ggplot(df, aes(x=level)) + 
+      geom_pointrange(aes(y=ATE, ymin=CI1, ymax=CI2, color=anthro, group=Time, shape=Time),
+                      position = position_dodge(width = 0.4),
+                      size = 1) +
+      facet_grid(~anthro) +
+      labs(y = ylabel, x =  df$Alab[1]) +
+      geom_hline(yintercept = 0) +
+      coord_cartesian(ylim=yrange) +
+      scale_shape_manual(values=c(16,21)) +
+      scale_colour_manual(values=tableau10[c(1:4,1:4,1:4,5:7)], drop=FALSE) + 
+      ggtitle(title) +
+      theme_ki() +
+      theme(plot.title = element_text(hjust = 0),
+            panel.spacing = unit(0, "lines"),
+            legend.position = "right")+
+      guides(color = FALSE)
+    p
+    
+  }
   
   return(p)  
 }
+
 
 
 # Grouping hypotheses 1,2,3 into 1 figure labeled 
@@ -108,30 +148,100 @@ pH7 <- tmle_plot_fun(d, 7, c(-0.03, 0.03), title="", ylabel="Difference in\nvelo
 pH8 <- tmle_plot_fun(d, 8, title="", ylabel="Difference in\nchange in Z-score")
 
 
+# p1 <- plot_grid(pH1,
+#                pH2,
+#                pH3,
+#                ncol=1,
+#                labels = c("","",""),
+#                rel_heights = c(1, 1, 1))
+# p2 <- plot_grid(pH4,
+#                pH6,
+#                pH8,
+#                pH7,
+#                ncol=1,
+#                labels = c("","","",""),
+#                rel_heights = c(1, 1, 1, 1))
+
+p2 <- tmle_plot_fun(d, hypo=c(4,6), title="", ylabel="Z-score difference")
 
 
-
-
-p1 <- plot_grid(pH1,
-               pH2,
-               pH3,
-               ncol=1,
-               labels = c("","",""),
-               rel_heights = c(1, 1, 1))
-p2 <- plot_grid(pH4,
-               pH6,
-               pH8,
-               pH7,
-               ncol=1,
-               labels = c("","","",""),
-               rel_heights = c(1, 1, 1, 1))
-
-
-
-ggsave(p1, file = here("figures/telo-growth-quartiles-differences_1.png"), height=9, width=14)
-ggsave(p2, file = here("figures/telo-growth-quartiles-differences_2.png"), height=12, width=14)
+ggsave(pH1, file = here("figures/telo-growth-quartiles-differences_1.png"), height=3, width=14)
+ggsave(p2, file = here("figures/telo-growth-quartiles-differences_2.png"), height=3, width=14)
 ggsave(pH5, file = here("figures/telo-growth-quartiles-differences_3.png"), height=3, width=14)
 
+#Supplimentary figures
+
+# Z-velocity
+ggsave(pH8, file = here("figures/telo-growth-quartiles-differences_supp1.png"), height=3, width=14)
+ggsave(pH3, file = here("figures/telo-growth-quartiles-differences_supp2.png"), height=3, width=14)
+
+# Raw anthro velocity
+pS3 <- plot_grid(
+  pH7,
+  pH2,
+  ncol=1,
+  labels = c("",""),
+  rel_heights = c(1, 1))
+ggsave(pS3, file = here("figures/telo-growth-quartiles-differences_supp3.png"), height=6, width=14)
 
 
+#Head circumference
+unique(dHCZ$Alab)
+p1 <- ggplot(dHCZ[dHCZ$Alab=="T/S at year 1",], aes(x=level, y=ATE)) + 
+  geom_point(aes(color=Ylab), size = 3) +
+  geom_linerange(aes(ymin=CI1, ymax=CI2, color=Ylab),
+                 alpha=0.5, size = 1) +
+  facet_wrap(~Ylab) +
+  labs(y = "Adjusted difference", x = "Quartile of T/S at year 1") +
+  geom_hline(yintercept = 0) +
+  #coord_cartesian(ylim=yrange) +
+  scale_colour_manual(values=rep(tableau10[4],20), drop=FALSE) + 
+  ylab("Adjusted difference") +
+  theme_ki() +
+  theme(plot.title = element_text(hjust = 0),
+        panel.spacing = unit(0, "lines"))
+
+p2 <- ggplot(dHCZ[dHCZ$Alab=="Change in T/S",], aes(x=level, y=ATE)) + 
+  geom_point(aes(color=Ylab), size = 3) +
+  geom_linerange(aes(ymin=CI1, ymax=CI2, color=Ylab),
+                 alpha=0.5, size = 1) +
+  facet_wrap(~Ylab) +
+  labs(y = "Adjusted difference", x = "Quartile of change in T/S") +
+  geom_hline(yintercept = 0) +
+  #coord_cartesian(ylim=yrange) +
+  scale_colour_manual(values=rep(tableau10[4],20), drop=FALSE) + 
+  ylab("Adjusted difference") +
+  theme_ki() +
+  theme(plot.title = element_text(hjust = 0),
+        panel.spacing = unit(0, "lines"))
+
+p3 <- ggplot(dHCZ[dHCZ$Alab=="T/S at year 2",], aes(x=level, y=ATE)) + 
+  geom_point(aes(color=Ylab), size = 3) +
+  geom_linerange(aes(ymin=CI1, ymax=CI2, color=Ylab),
+                 alpha=0.5, size = 1) +
+  facet_wrap(~Ylab) +
+  labs(y = "Adjusted difference", x = "Quartile of T/S at year 2") +
+  geom_hline(yintercept = 0) +
+  #coord_cartesian(ylim=yrange) +
+  scale_colour_manual(values=rep(tableau10[4],20), drop=FALSE) + 
+  ylab("Adjusted difference") +
+  theme_ki() +
+  theme(plot.title = element_text(hjust = 0),
+        panel.spacing = unit(0, "lines"))
+
+pLower <- plot_grid(
+  p2,
+  p3,
+  ncol=2,
+  labels = c("",""),
+  rel_widths = c(2, 1))
+
+p <- plot_grid(
+  p1,
+  pLower,
+  ncol=1,
+  labels = c("",""),
+  rel_heights = c(1, 1))
+
+ggsave(p, file = here("figures/telo-growth-quartiles-differences_supp4.png"), height=6, width=14)
 
