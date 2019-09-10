@@ -646,6 +646,174 @@ d23_ln_igf_N<-lab %>%
 
 d23_ln_igf_N
 
+d23_ratio_il1_il10_N<-lab %>%
+  subset(d23_ratio_il1_il10!="NA") %>%
+  summarize(d23_ratio_il1_il10_N_overall=n(), mean=mean(d23_ratio_il1_il10, na.rm = T),  sd=sd(d23_ratio_il1_il10, na.rm = T))
+
+d23_ratio_il1_il10_N
+
+d23_ratio_il6_il10_N<-lab %>%
+  subset(d23_ratio_il6_il10!="NA") %>%
+  summarize(d23_ratio_il6_il10_N_overall=n(), mean=mean(d23_ratio_il6_il10, na.rm = T),  sd=sd(d23_ratio_il6_il10, na.rm = T))
+
+d23_ratio_il6_il10_N
+
+d23_ratio_tnf_il10_N<-lab %>%
+  subset(d23_ratio_tnf_il10!="NA") %>%
+  summarize(d23_ratio_tnf_il10_N_overall=n(), mean=mean(d23_ratio_tnf_il10, na.rm = T),  sd=sd(d23_ratio_tnf_il10, na.rm = T))
+
+d23_ratio_tnf_il10_N
+
+d23_ratio_il12_il10_N<-lab %>%
+  subset(d23_ratio_il12_il10!="NA") %>%
+  summarize(d23_ratio_il12_il10_N_overall=n(), mean=mean(d23_ratio_il12_il10, na.rm = T),  sd=sd(d23_ratio_il12_il10, na.rm = T))
+
+d23_ratio_il12_il10_N
+
+d23_ratio_ifn_il10_N<-lab %>%
+  subset(d23_ratio_ifn_il10!="NA") %>%
+  summarize(d23_ratio_ifn_il10_N_overall=n(), mean=mean(d23_ratio_ifn_il10, na.rm = T),  sd=sd(d23_ratio_ifn_il10, na.rm = T))
+
+d23_ratio_ifn_il10_N
+
+d23_ratio_il4_il10_N<-lab %>%
+  subset(d23_ratio_il4_il10!="NA") %>%
+  summarize(d23_ratio_il4_il10_N_overall=n(), mean=mean(d23_ratio_il4_il10, na.rm = T),  sd=sd(d23_ratio_il4_il10, na.rm = T))
+
+d23_ratio_il4_il10_N
+
+d23_ratio_il5_il10_N<-lab %>%
+  subset(d23_ratio_il5_il10!="NA") %>%
+  summarize(d23_ratio_il5_il10_N_overall=n(), mean=mean(d23_ratio_il5_il10, na.rm = T),  sd=sd(d23_ratio_il5_il10, na.rm = T))
+
+d23_ratio_il5_il10_N
+
+d23_ratio_il13_il10_N<-lab %>%
+  subset(d23_ratio_il13_il10!="NA") %>%
+  summarize(d23_ratio_il13_il10_N_overall=n(), mean=mean(d23_ratio_il13_il10, na.rm = T),  sd=sd(d23_ratio_il13_il10, na.rm = T))
+
+d23_ratio_il13_il10_N
+
+d23_ratio_il17_il10_N<-lab %>%
+  subset(d23_ratio_il17_il10!="NA") %>%
+  summarize(d23_ratio_il17_il10_N_overall=n(), mean=mean(d23_ratio_il17_il10, na.rm = T),  sd=sd(d23_ratio_il17_il10, na.rm = T))
+
+d23_ratio_il17_il10_N
+
+d23_ratio_il21_il10_N<-lab %>%
+  subset(d23_ratio_il21_il10!="NA") %>%
+  summarize(d23_ratio_il21_il10_N_overall=n(), mean=mean(d23_ratio_il21_il10, na.rm = T),  sd=sd(d23_ratio_il21_il10, na.rm = T))
+
+d23_ratio_il21_il10_N
+
+d23_ratio_il2_il10_N<-lab %>%
+  subset(d23_ratio_il2_il10!="NA") %>%
+  summarize(d23_ratio_il2_il10_N_overall=n(), mean=mean(d23_ratio_il2_il10, na.rm = T),  sd=sd(d23_ratio_il2_il10, na.rm = T))
+
+d23_ratio_il2_il10_N
+
+d23_ratio_gmc_il10_N<-lab %>%
+  subset(d23_ratio_gmc_il10!="NA") %>%
+  summarize(d23_ratio_gmc_il10_N_overall=n(), mean=mean(d23_ratio_gmc_il10, na.rm = T),  sd=sd(d23_ratio_il1_il10, na.rm = T))
+
+d23_ratio_gmc_il10_N
+
+d23_ratio_il12_il4_N<-lab %>%
+  subset(d23_ratio_il12_il4!="NA") %>%
+  summarize(d23_ratio_il12_il4_N_overall=n(), mean=mean(d23_ratio_il12_il4, na.rm = T),  sd=sd(d23_ratio_il12_il4, na.rm = T))
+
+d23_ratio_il12_il4_N
+
+d23_ratio_ifn_il4_N<-lab %>%
+  subset(d23_ratio_ifn_il4!="NA") %>%
+  summarize(d23_ratio_ifn_il4_N_overall=n(), mean=mean(d23_ratio_ifn_il4, na.rm = T),  sd=sd(d23_ratio_ifn_il4, na.rm = T))
+
+d23_ratio_ifn_il4_N
+
+d23_ratio_il12_il5_N<-lab %>%
+  subset(d23_ratio_il12_il5!="NA") %>%
+  summarize(d23_ratio_il12_il5_N_overall=n(), mean=mean(d23_ratio_il12_il5, na.rm = T),  sd=sd(d23_ratio_il12_il5, na.rm = T))
+
+d23_ratio_il12_il5_N
+
+d23_ratio_ifn_il5_N<-lab %>%
+  subset(d23_ratio_ifn_il5!="NA") %>%
+  summarize(d23_ratio_ifn_il5_N_overall=n(), mean=mean(d23_ratio_ifn_il5, na.rm = T),  sd=sd(d23_ratio_ifn_il5, na.rm = T))
+
+d23_ratio_ifn_il5_N
+
+d23_ratio_il12_il13_N<-lab %>%
+  subset(d23_ratio_il12_il13!="NA") %>%
+  summarize(d23_ratio_il12_il13_N_overall=n(), mean=mean(d23_ratio_il12_il13, na.rm = T),  sd=sd(d23_ratio_il12_il13, na.rm = T))
+
+d23_ratio_il12_il13_N
+
+d23_ratio_ifn_il13_N<-lab %>%
+  subset(d23_ratio_ifn_il13!="NA") %>%
+  summarize(d23_ratio_ifn_il13_N_overall=n(), mean=mean(d23_ratio_ifn_il13, na.rm = T),  sd=sd(d23_ratio_ifn_il13, na.rm = T))
+
+d23_ratio_ifn_il13_N
+
+d23_ratio_il12_il17_N<-lab %>%
+  subset(d23_ratio_il12_il17!="NA") %>%
+  summarize(d23_ratio_il12_il17_N_overall=n(), mean=mean(d23_ratio_il12_il17, na.rm = T),  sd=sd(d23_ratio_il12_il17, na.rm = T))
+
+d23_ratio_il12_il17_N
+
+d23_ratio_ifn_il17_N<-lab %>%
+  subset(d23_ratio_ifn_il17!="NA") %>%
+  summarize(d23_ratio_ifn_il17_N_overall=n(), mean=mean(d23_ratio_ifn_il17, na.rm = T),  sd=sd(d23_ratio_ifn_il17, na.rm = T))
+
+d23_ratio_ifn_il17_N
+
+d23_ratio_il12_il21_N<-lab %>%
+  subset(d23_ratio_il12_il21!="NA") %>%
+  summarize(d23_ratio_il12_il21_N_overall=n(), mean=mean(d23_ratio_il12_il21, na.rm = T),  sd=sd(d23_ratio_il12_il21, na.rm = T))
+
+d23_ratio_il12_il21_N
+
+d23_ratio_ifn_il21_N<-lab %>%
+  subset(d23_ratio_ifn_il21!="NA") %>%
+  summarize(d23_ratio_ifn_il21_N_overall=n(), mean=mean(d23_ratio_ifn_il21, na.rm = T),  sd=sd(d23_ratio_ifn_il21, na.rm = T))
+
+d23_ratio_ifn_il21_N
+
+d23_ratio_pro_il10_N<-lab %>%
+  subset(d23_ratio_pro_il10!="NA") %>%
+  summarize(d23_ratio_pro_il10_N_overall=n(), mean=mean(d23_ratio_pro_il10, na.rm = T),  sd=sd(d23_ratio_pro_il10, na.rm = T))
+
+d23_ratio_pro_il10_N
+
+d23_ratio_th1_il10_N<-lab %>%
+  subset(d23_ratio_th1_il10!="NA") %>%
+  summarize(d23_ratio_th1_il10_N_overall=n(), mean=mean(d23_ratio_th1_il10, na.rm = T),  sd=sd(d23_ratio_th1_il10, na.rm = T))
+
+d23_ratio_th1_il10_N
+
+d23_ratio_th2_il10_N<-lab %>%
+  subset(d23_ratio_th2_il10!="NA") %>%
+  summarize(d23_ratio_th2_il10_N_overall=n(), mean=mean(d23_ratio_th2_il10, na.rm = T),  sd=sd(d23_ratio_th2_il10, na.rm = T))
+
+d23_ratio_th2_il10_N
+
+d23_ratio_th17_il10_N<-lab %>%
+  subset(d23_ratio_th17_il10!="NA") %>%
+  summarize(d23_ratio_th17_il10_N_overall=n(), mean=mean(d23_ratio_th17_il10, na.rm = T),  sd=sd(d23_ratio_th17_il10, na.rm = T))
+
+d23_ratio_th17_il10_N
+
+d23_ratio_th1_th2_N<-lab %>%
+  subset(d23_ratio_th1_th2!="NA") %>%
+  summarize(d23_ratio_th1_th2_N_overall=n(), mean=mean(d23_ratio_th1_th2, na.rm = T),  sd=sd(d23_ratio_th1_th2, na.rm = T))
+
+d23_ratio_th1_th2_N
+
+d23_ratio_th1_th17_N<-lab %>%
+  subset(d23_ratio_th1_th17!="NA") %>%
+  summarize(d23_ratio_th1_th17_N_overall=n(), mean=mean(d23_ratio_th1_th17, na.rm = T),  sd=sd(d23_ratio_th1_th17, na.rm = T))
+
+d23_ratio_th1_th17_N
+
 #calculate N's and mean of biomarkers at t2 by sex
 
 igf_t2_N_sex<-lab %>%
@@ -2102,6 +2270,201 @@ d23_ln_igf_N_tr<-lab %>%
 
 d23_ln_igf_N_tr  
 
+d23_ratio_il1_il10_N_tr<-lab %>%
+  subset(d23_ratio_il1_il10!="NA") %>%
+  group_by (tr) %>%
+  summarize(d23_ratio_il1_il10_N_tr=n(), mean=mean(d23_ratio_il1_il10, na.rm = T),  sd=sd(d23_ratio_il1_il10, na.rm = T))
+
+d23_ratio_il1_il10_N_tr
+
+d23_ratio_il6_il10_N_tr<-lab %>%
+  subset(d23_ratio_il6_il10!="NA") %>%
+  group_by (tr) %>%
+  summarize(d23_ratio_il6_il10_N_tr=n(), mean=mean(d23_ratio_il6_il10, na.rm = T),  sd=sd(d23_ratio_il6_il10, na.rm = T))
+
+d23_ratio_il6_il10_N_tr
+
+d23_ratio_tnf_il10_N_tr<-lab %>%
+  subset(d23_ratio_tnf_il10!="NA") %>%
+  group_by (tr) %>%
+  summarize(d23_ratio_tnf_il10_N_tr=n(), mean=mean(d23_ratio_tnf_il10, na.rm = T),  sd=sd(d23_ratio_tnf_il10, na.rm = T))
+
+d23_ratio_tnf_il10_N_tr
+
+d23_ratio_il12_il10_N_tr<-lab %>%
+  subset(d23_ratio_il12_il10!="NA") %>%
+  group_by (tr) %>%
+  summarize(d23_ratio_il12_il10_N_tr=n(), mean=mean(d23_ratio_il12_il10, na.rm = T),  sd=sd(d23_ratio_il12_il10, na.rm = T))
+
+d23_ratio_il12_il10_N_tr
+
+d23_ratio_ifn_il10_N_tr<-lab %>%
+  subset(d23_ratio_ifn_il10!="NA") %>%
+  group_by (tr) %>%
+  summarize(d23_ratio_ifn_il10_N_tr=n(), mean=mean(d23_ratio_ifn_il10, na.rm = T),  sd=sd(d23_ratio_ifn_il10, na.rm = T))
+
+d23_ratio_ifn_il10_N_tr
+
+d23_ratio_il4_il10_N_tr<-lab %>%
+  subset(d23_ratio_il4_il10!="NA") %>%
+  group_by (tr) %>%
+  summarize(d23_ratio_il4_il10_N_tr=n(), mean=mean(d23_ratio_il4_il10, na.rm = T),  sd=sd(d23_ratio_il4_il10, na.rm = T))
+
+d23_ratio_il4_il10_N_tr
+
+d23_ratio_il5_il10_N_tr<-lab %>%
+  subset(d23_ratio_il5_il10!="NA") %>%
+  group_by (tr) %>%
+  summarize(d23_ratio_il5_il10_N_tr=n(), mean=mean(d23_ratio_il5_il10, na.rm = T),  sd=sd(d23_ratio_il5_il10, na.rm = T))
+
+d23_ratio_il5_il10_N_tr
+
+d23_ratio_il13_il10_N_tr<-lab %>%
+  subset(d23_ratio_il13_il10!="NA") %>%
+  group_by (tr) %>%
+  summarize(d23_ratio_il13_il10_N_tr=n(), mean=mean(d23_ratio_il13_il10, na.rm = T),  sd=sd(d23_ratio_il13_il10, na.rm = T))
+
+d23_ratio_il13_il10_N_tr
+
+d23_ratio_il17_il10_N_tr<-lab %>%
+  subset(d23_ratio_il17_il10!="NA") %>%
+  group_by (tr) %>%
+  summarize(d23_ratio_il17_il10_N_tr=n(), mean=mean(d23_ratio_il17_il10, na.rm = T),  sd=sd(d23_ratio_il17_il10, na.rm = T))
+
+d23_ratio_il17_il10_N_tr
+
+d23_ratio_il21_il10_N_tr<-lab %>%
+  subset(d23_ratio_il21_il10!="NA") %>%
+  group_by (tr) %>%
+  summarize(d23_ratio_il21_il10_N_tr=n(), mean=mean(d23_ratio_il21_il10, na.rm = T),  sd=sd(d23_ratio_il21_il10, na.rm = T))
+
+d23_ratio_il21_il10_N_tr
+
+d23_ratio_il2_il10_N_tr<-lab %>%
+  subset(d23_ratio_il2_il10!="NA") %>%
+  group_by (tr) %>%
+  summarize(d23_ratio_il2_il10_N_tr=n(), mean=mean(d23_ratio_il2_il10, na.rm = T),  sd=sd(d23_ratio_il2_il10, na.rm = T))
+
+d23_ratio_il2_il10_N_tr
+
+d23_ratio_gmc_il10_N_tr<-lab %>%
+  subset(d23_ratio_gmc_il10!="NA") %>%
+  group_by (tr) %>%
+  summarize(d23_ratio_gmc_il10_N_tr=n(), mean=mean(d23_ratio_gmc_il10, na.rm = T),  sd=sd(d23_ratio_il1_il10, na.rm = T))
+
+d23_ratio_gmc_il10_N_tr
+
+d23_ratio_il12_il4_N_tr<-lab %>%
+  subset(d23_ratio_il12_il4!="NA") %>%
+  group_by (tr) %>%
+  summarize(d23_ratio_il12_il4_N_tr=n(), mean=mean(d23_ratio_il12_il4, na.rm = T),  sd=sd(d23_ratio_il12_il4, na.rm = T))
+
+d23_ratio_il12_il4_N_tr
+
+d23_ratio_ifn_il4_N_tr<-lab %>%
+  subset(d23_ratio_ifn_il4!="NA") %>%
+  group_by (tr) %>%
+  summarize(d23_ratio_ifn_il4_N_tr=n(), mean=mean(d23_ratio_ifn_il4, na.rm = T),  sd=sd(d23_ratio_ifn_il4, na.rm = T))
+
+d23_ratio_ifn_il4_N_tr
+
+d23_ratio_il12_il5_N_tr<-lab %>%
+  subset(d23_ratio_il12_il5!="NA") %>%
+  group_by (tr) %>%
+  summarize(d23_ratio_il12_il5_N_tr=n(), mean=mean(d23_ratio_il12_il5, na.rm = T),  sd=sd(d23_ratio_il12_il5, na.rm = T))
+
+d23_ratio_il12_il5_N_tr
+
+d23_ratio_ifn_il5_N_tr<-lab %>%
+  subset(d23_ratio_ifn_il5!="NA") %>%
+  group_by (tr) %>%
+  summarize(d23_ratio_ifn_il5_N_tr=n(), mean=mean(d23_ratio_ifn_il5, na.rm = T),  sd=sd(d23_ratio_ifn_il5, na.rm = T))
+
+d23_ratio_ifn_il5_N_tr
+
+d23_ratio_il12_il13_N_tr<-lab %>%
+  subset(d23_ratio_il12_il13!="NA") %>%
+  group_by (tr) %>%
+  summarize(d23_ratio_il12_il13_N_tr=n(), mean=mean(d23_ratio_il12_il13, na.rm = T),  sd=sd(d23_ratio_il12_il13, na.rm = T))
+
+d23_ratio_il12_il13_N_tr
+
+d23_ratio_ifn_il13_N_tr<-lab %>%
+  subset(d23_ratio_ifn_il13!="NA") %>%
+  group_by (tr) %>%
+  summarize(d23_ratio_ifn_il13_N_tr=n(), mean=mean(d23_ratio_ifn_il13, na.rm = T),  sd=sd(d23_ratio_ifn_il13, na.rm = T))
+
+d23_ratio_ifn_il13_N_tr
+
+d23_ratio_il12_il17_N_tr<-lab %>%
+  subset(d23_ratio_il12_il17!="NA") %>%
+  group_by (tr) %>%
+  summarize(d23_ratio_il12_il17_N_tr=n(), mean=mean(d23_ratio_il12_il17, na.rm = T),  sd=sd(d23_ratio_il12_il17, na.rm = T))
+
+d23_ratio_il12_il17_N_tr
+
+d23_ratio_ifn_il17_N_tr<-lab %>%
+  subset(d23_ratio_ifn_il17!="NA") %>%
+  group_by (tr) %>%
+  summarize(d23_ratio_ifn_il17_N_tr=n(), mean=mean(d23_ratio_ifn_il17, na.rm = T),  sd=sd(d23_ratio_ifn_il17, na.rm = T))
+
+d23_ratio_ifn_il17_N_tr
+
+d23_ratio_il12_il21_N_tr<-lab %>%
+  subset(d23_ratio_il12_il21!="NA") %>%
+  group_by (tr) %>%
+  summarize(d23_ratio_il12_il21_N_tr=n(), mean=mean(d23_ratio_il12_il21, na.rm = T),  sd=sd(d23_ratio_il12_il21, na.rm = T))
+
+d23_ratio_il12_il21_N_tr
+
+d23_ratio_ifn_il21_N_tr<-lab %>%
+  subset(d23_ratio_ifn_il21!="NA") %>%
+  group_by (tr) %>%
+  summarize(d23_ratio_ifn_il21_N_tr=n(), mean=mean(d23_ratio_ifn_il21, na.rm = T),  sd=sd(d23_ratio_ifn_il21, na.rm = T))
+
+d23_ratio_ifn_il21_N_tr
+
+d23_ratio_pro_il10_N_tr<-lab %>%
+  subset(d23_ratio_pro_il10!="NA") %>%
+  group_by (tr) %>%
+  summarize(d23_ratio_pro_il10_N_tr=n(), mean=mean(d23_ratio_pro_il10, na.rm = T),  sd=sd(d23_ratio_pro_il10, na.rm = T))
+
+d23_ratio_pro_il10_N_tr
+
+d23_ratio_th1_il10_N_tr<-lab %>%
+  subset(d23_ratio_th1_il10!="NA") %>%
+  group_by (tr) %>%
+  summarize(d23_ratio_th1_il10_N_tr=n(), mean=mean(d23_ratio_th1_il10, na.rm = T),  sd=sd(d23_ratio_th1_il10, na.rm = T))
+
+d23_ratio_th1_il10_N_tr
+
+d23_ratio_th2_il10_N_tr<-lab %>%
+  subset(d23_ratio_th2_il10!="NA") %>%
+  group_by (tr) %>%
+  summarize(d23_ratio_th2_il10_N_tr=n(), mean=mean(d23_ratio_th2_il10, na.rm = T),  sd=sd(d23_ratio_th2_il10, na.rm = T))
+
+d23_ratio_th2_il10_N_tr
+
+d23_ratio_th17_il10_N_tr<-lab %>%
+  subset(d23_ratio_th17_il10!="NA") %>%
+  group_by (tr) %>%
+  summarize(d23_ratio_th17_il10_N_tr=n(), mean=mean(d23_ratio_th17_il10, na.rm = T),  sd=sd(d23_ratio_th17_il10, na.rm = T))
+
+d23_ratio_th17_il10_N_tr
+
+d23_ratio_th1_th2_N_tr<-lab %>%
+  subset(d23_ratio_th1_th2!="NA") %>%
+  group_by (tr) %>%
+  summarize(d23_ratio_th1_th2_N_tr=n(), mean=mean(d23_ratio_th1_th2, na.rm = T),  sd=sd(d23_ratio_th1_th2, na.rm = T))
+
+d23_ratio_th1_th2_N_tr
+
+d23_ratio_th1_th17_N_tr<-lab %>%
+  subset(d23_ratio_th1_th17!="NA") %>%
+  group_by (tr) %>%
+  summarize(d23_ratio_th1_th17_N_tr=n(), mean=mean(d23_ratio_th1_th17, na.rm = T),  sd=sd(d23_ratio_th1_th17, na.rm = T))
+
+d23_ratio_th1_th17_N_tr
 
 #calculate absolute means for d23 by arm
 abs_d23_il1_N_tr<-absmean(lab$d23_ln_il1)
