@@ -14,61 +14,53 @@
 rm(list=ls())
 source(here::here("0-config.R"))
 
+#load full treatments
+load("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Data/Untouched/washb-bangladesh-blind-tr.Rdata")
+blind_tr$clusterid<-as.numeric(blind_tr$clusterid)
+treatment<-blind_tr
 
+#Load EED 
+ipcw <- read.csv("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Data/Cleaned/Andrew/BD-EE-ipcw.csv", stringsAsFactors = T) %>% select(-c(tr,block))
+ipcw <- left_join(ipcw, treatment, by=c("clusterid"))
 
 #Load in immune analysis dataset
 load(paste0(dropboxDir,"Data/Cleaned/Andrew/BD-EE-immune.Rdata"))
 
 
-#Keep only Immune outcomes, drop the covariates
+#Keep only immune outcomes and time-varying covariates, drop the baseline covariates
+colnames(d)
+d <- d %>% 
+  subset(., select=c(
+    childid, dataid, childNo, tr, agemth_bt2, agemth_bt3, ageday_bt2, ageday_bt3, month2, month3,
+    igf_t2,          igf_t3,          crp_t2,         
+    agp_t2,          gmcsf_t2,        ifng_t2,         il10_t2,         il12_t2,        
+    il13_t2,         il17_t2,         il1_t2,          il2_t2,          il21_t2,        
+    il4_t2,          il5_t2,          il6_t2,          tnfa_t2,         gmcsf_t3,       
+    ifng_t3,         il10_t3,         il12_t3,         il13_t3,         il17_t3,        
+    il1_t3,          il2_t3,          il21_t3,         il4_t3,          il5_t3,         
+    il6_t3,          tnfa_t3
+  ))
+
+
+#Add in time varying variables above, and impute median where missing
 
 
 
-#Load in enrollment data for adjusted analysis
-setwd("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Data/Temp/")
-enrol<-read.csv("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Data/Temp/washb-bangladesh-enrol+animals.csv",stringsAsFactors = TRUE)
 
+d <- left_join(ipcw, d, by = c("dataid","tr"))
 
-
-
-
-
-
-#Subset to EED arms
-d<-subset(d, tr=="Control" | tr=="WSH" | tr=="Nutrition" | tr=="Nutrition + WSH")
-
+#Subset to immune analysis arms
+d <- subset(d, tr=="Control" | tr=="Nutrition + WSH")
+d$tr <- factor(d$tr)
 
 #Impute time varying covariates
 
-#set staffid and month to missing if missing stool samples
-no_outcome <- is.na(d$aat1) & is.na(d$aat2) & is.na(d$aat3) & is.na(d$reg1b2) & 
-                is.na(d$mpo1) & is.na(d$mpo2) & is.na(d$mpo3) & 
-                is.na(d$neo1) & is.na(d$neo2) & is.na(d$neo3)
-d$staffid1[no_outcome & !is.na(d$staffid1)] <- NA
-d$staffid2[no_outcome & !is.na(d$staffid2)] <- NA 
-d$staffid3[no_outcome & !is.na(d$staffid3)] <- NA 
-d$month1[no_outcome & !is.na(d$month1)] <- NA
-d$month2[no_outcome & !is.na(d$month2)] <- NA 
-d$month3[no_outcome & !is.na(d$month3)] <- NA 
-d$aged1[no_outcome & !is.na(d$aged1)] <- NA
-d$aged2[no_outcome & !is.na(d$aged2)] <- NA 
-d$aged3[no_outcome & !is.na(d$aged3)] <- NA 
-
 
 #calculate overall median:
-month1_median <-    median(d$month1, na.rm = T)
 month2_median <-    median(d$month2, na.rm = T)
 month3_median <-    median(d$month3, na.rm = T)
 
 #use clusterid to impute median month where possible
-table(d$month1)
-table(is.na(d$month1))
-d$month1[is.na(d$month1)] <-  ave(d$month1, d$clusterid, FUN=function(x) median(x, na.rm = T))[is.na(d$month1)] 
-d$month1 <- ceiling(d$month1)
-table(d$month1)
-table(d$month1[d$tr=="Control"])
-
-
 d$month2[is.na(d$month2)] <-  ave(d$month2, d$clusterid, FUN=function(x) median(x, na.rm = T))[is.na(d$month2)] 
 d$month2 <- ceiling(d$month2)
 
@@ -77,26 +69,24 @@ d$month3 <- ceiling(d$month3)
 
 
 #impute month with overall median for those observations not in a cluster measured in the EED subsample
-d$month1[is.na(d$month1)] <-  7
 d$month2[is.na(d$month2)] <-  8
 d$month3[is.na(d$month3)] <-  6
 
 
-d <- d %>% mutate(monsoon1 = ifelse(month1 > 4 & month1 < 11, "1", "0"),
+d <- d %>% mutate(
                   monsoon2 = ifelse(month2 > 4 & month2 < 11, "1", "0"),
                   monsoon3 = ifelse(month3 > 4 & month3 < 11, "1", "0"),
-                  monsoon1 = ifelse(is.na(month1),"missing", monsoon1),
                   monsoon2 = ifelse(is.na(month2),"missing", monsoon2),
                   monsoon3 = ifelse(is.na(month3),"missing", monsoon3),
-                  monsoon1 = factor(monsoon1),
                   monsoon2 = factor(monsoon2),
                   monsoon3 = factor(monsoon3))
 
 
 #impute child age with overall median
-d$aged1[is.na(d$aged1)] <- 84
-d$aged2[is.na(d$aged2)] <- 428
-d$aged3[is.na(d$aged3)] <- 857
+median(d$ageday_bt2, na.rm=T)
+median(d$ageday_bt3, na.rm=T)
+d$ageday_bt2[is.na(d$ageday_bt2)] <- 441
+d$ageday_bt3[is.na(d$ageday_bt3)] <- 862
 
 
 #Clean covariates for adjusted analysis
@@ -237,99 +227,69 @@ W<- subset(d, select=Wvars)
 
 
 #Add in time-varying covariates
-Wvars1<-c("aged1", "monsoon1") 
 Wvars2<-c("aged2", "monsoon2") 
 Wvars3<-c("aged3", "monsoon3") 
-W1<- cbind(W, subset(d, select=Wvars1))
 W2<- cbind(W, subset(d, select=Wvars2))
 W3<- cbind(W, subset(d, select=Wvars3))
 
 #Replace missingness in time varying covariates as a new level
-W1$monsoon1[is.na(W1$monsoon1)]<-"missing"
 W2$monsoon2[is.na(W2$monsoon2)]<-"missing"
 W3$monsoon3[is.na(W3$monsoon3)]<-"missing"
 
 
-
-
-
 #Create indicators for missingness
-d$aat1.miss<-ifelse(is.na(d$aat1),0,1)
-d$aat2.miss<-ifelse(is.na(d$aat2),0,1)
-d$aat3.miss<-ifelse(is.na(d$aat3),0,1)
+outcomes <- c("igf_t2",          "igf_t3",          "crp_t2",         
+              "agp_t2",          "gmcsf_t2",        "ifng_t2",         "il10_t2",         "il12_t2",        
+              "il13_t2",         "il17_t2",         "il1_t2",          "il2_t2",          "il21_t2",        
+              "il4_t2",          "il5_t2",          "il6_t2",          "tnfa_t2",         "gmcsf_t3",       
+              "ifng_t3",         "il10_t3",         "il12_t3",         "il13_t3",         "il17_t3",        
+              "il1_t3",          "il2_t3",          "il21_t3",         "il4_t3",          "il5_t3",         
+              "il6_t3",          "tnfa_t3")
 
-d$mpo1.miss<-ifelse(is.na(d$mpo1),0,1)
-d$mpo2.miss<-ifelse(is.na(d$mpo2),0,1)
-d$mpo3.miss<-ifelse(is.na(d$mpo3),0,1)
-
-d$neo1.miss<-ifelse(is.na(d$neo1),0,1)
-d$neo2.miss<-ifelse(is.na(d$neo2),0,1)
-d$neo3.miss<-ifelse(is.na(d$neo3),0,1)
-
-d$reg1b2.miss<-ifelse(is.na(d$reg1b2),0,1)
-
-
-table(d$aat1.miss)
-table(d$aat2.miss)
-table(d$aat3.miss)
-
-table(d$mpo1.miss)
-table(d$mpo2.miss)
-table(d$mpo3.miss)
-
-table(d$neo1.miss)
-table(d$neo2.miss)
-table(d$neo3.miss)
-
-table(d$reg1b2.miss)
-
-table(d$aat1.miss)
-table(d$aat2.miss)
-table(d$aat3.miss)
-
-
-d$aat3Delta.test <- log(d$aat3)
-d$aat3Delta.test[d$aat3.miss==0] <- 99
-
-
-# set missing outcomes to an arbitrary, non-missing value. In this case use 9
-d$aat1Delta <- d$aat1
-d$aat1Delta[d$aat1.miss==0] <- exp(9)
-
-d$aat2Delta <- d$aat2
-d$aat2Delta[d$aat2.miss==0] <- exp(9)
-
-d$aat3Delta <- d$aat3
-d$aat3Delta[d$aat3.miss==0] <- exp(9)
-
-d$mpo1Delta <- d$mpo1
-d$mpo1Delta[d$mpo1.miss==0] <- exp(9)
-
-d$mpo2Delta <- d$mpo2
-d$mpo2Delta[d$mpo2.miss==0] <- exp(9)
-
-d$mpo3Delta <- d$mpo3
-d$mpo3Delta[d$mpo3.miss==0] <- exp(9)
-
-d$neo1Delta <- d$neo1
-d$neo1Delta[d$neo1.miss==0] <- exp(9)
-
-d$neo2Delta <- d$neo2
-d$neo2Delta[d$neo2.miss==0] <- exp(9)
-
-d$neo3Delta <- d$neo3
-d$neo3Delta[d$neo3.miss==0] <- exp(9)
-
-d$reg1b2Delta <- d$reg1b2
-d$reg1b2Delta[d$reg1b2.miss==0] <- exp(9)
-
-
+missingness_list <- list()
+for(i in 1:length(outcomes)){
+  missingness_list[[i]] <- ifelse(is.na(d[,outcomes[i]]),0,1)
+  d[is.na(d[,outcomes[i]]),outcomes[i]] <- 9
+  names(missingness_list)[i] <- paste0(outcomes[i],".miss")
+}
+miss <- bind_rows(missingness_list)
+d <- cbind(d, miss)
 
 
 #Order for replication:
 d<-d[order(d$block,d$clusterid,d$dataid),]
   
 #Run the adjusted ipcw analysis
+
+#Fully adjusted glm models
+res_adj <- NULL
+for(i in 1:ncol(Y)){
+  if(grepl("t2_", colnames(Y)[i])){
+    temp<-washb_glm(Y=(Y[,i]), tr=d$tr, W=W2, id=d$block, pair=NULL, family="gaussian", contrast= c("Control","Nutrition + WSH"), print=F)
+  }else{
+    temp<-washb_glm(Y=(Y[,i]), tr=d$tr, W=W3, id=d$block, pair=NULL, family="gaussian", contrast= c("Control","Nutrition + WSH"), print=F)
+  }
+  res_adj<-rbind(res_adj, as.numeric(temp$TR))
+}
+res_adj <- as.data.frame(res_adj)
+
+colnames(res_adj)<-c("RD","ci.l","ci.u", "Std. Error", "z value", "Pval")
+res_adj$Y <-colnames(Y)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 #dataframe of stool biomarkers:

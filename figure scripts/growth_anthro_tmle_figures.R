@@ -55,10 +55,26 @@ d <- d %>% arrange(Y) %>%
     Y=="hcz_t3" ~ "HCZ at year 2"),
   Ylab = factor(Ylab, levels=unique(Ylab)),
   Alab = case_when(
-    A=="delta_TS" ~ "Change in T/S",
-    A=="TS_t2" ~ "T/S at year 1",
-    A=="TS_t3" ~ "T/S at year 2")) 
+    A=="delta_TS" ~ "Change in telomere length between Years 1 and 2 (T/S ratio)",
+    A=="TS_t2" ~ "Telomere length at Year 1 (T/S ratio)",
+    A=="TS_t3" ~ "Telomere length at Year 2 (T/S ratio)"),
+  anthro = case_when(
+    grepl("laz",Y) ~ "LAZ",
+    grepl("waz",Y) ~ "WAZ",
+    grepl("wlz",Y) ~ "WLZ",
+    grepl("hcz",Y) ~ "HCZ",
+    grepl("len",Y) ~ "LEN",
+    grepl("wei",Y) ~ "WEIGHT",
+    grepl("hc_",Y) ~ "HCIR"
+  ),
+  anthro=factor(anthro,
+                levels = c("LAZ","WAZ","WLZ","HCZ",
+                           "LEN","WEIGHT","HCIR"))) %>%
+  arrange(anthro) %>%
+  mutate(Ylab = factor(Ylab, levels=unique(Ylab)))
   
+
+
 
 #Seperate out head circumference outcome
 dHCZ <- d[grepl("HCZ", d$Ylab),]
@@ -66,20 +82,29 @@ d <- d[!grepl("HCZ", d$Ylab),]
 d <- droplevels(d)
 
 
-tmle_plot_fun <- function(d, hypo, title, ylabel="", yrange=c(-0.5, 0.5)){
+tmle_plot_fun <- function(d, hypo, title, ylabel="", yrange=NULL, cols=tableau10[c(1,3,2)]){
   
   if(length(hypo)==1){
   df <- d[d$hypothesis==hypo,]
+  
+  if(is.null(yrange)){
+    yrange = c(min(df$CI1, na.rm=T)-0.05, max(df$CI2, na.rm=T)+0.05)
+  }
+
+  #add ref label
+  df$ref <-"ref."
+  df$ref[!grepl("Q1",df$level)] <- NA
   
   p <- ggplot(df, aes(x=level, y=ATE)) + 
     geom_point(aes(color=Ylab), size = 3) +
     geom_linerange(aes(ymin=CI1, ymax=CI2, color=Ylab),
                    alpha=0.5, size = 1) +
+    geom_text(aes(label=ref), position = position_nudge(y = (abs(yrange[1])+abs(yrange[2]))/10)) +
     facet_grid(~Ylab) +
     labs(y = ylabel, x =  df$Alab[1]) +
     geom_hline(yintercept = 0) +
     coord_cartesian(ylim=yrange) +
-    scale_colour_manual(values=tableau10[c(1:4,1:4,1:4,5:7)], drop=FALSE) + 
+    scale_colour_manual(values=cols) + 
     ggtitle(title) +
     theme_ki() +
     theme(plot.title = element_text(hjust = 0),
@@ -89,7 +114,10 @@ tmle_plot_fun <- function(d, hypo, title, ylabel="", yrange=c(-0.5, 0.5)){
     
     df <- d[d$hypothesis %in% hypo,]
     
-    df$anthro <- toupper(str_split(df$Y, "_", simplify = TRUE)[,1])
+    if(is.null(yrange)){
+      yrange = c(min(df$CI1, na.rm=T)-0.05, max(df$CI2, na.rm=T)+0.05)
+    }
+    
     df$Time <- (str_split(df$Y, "_", simplify = TRUE)[,2])
     df$Time[df$Time=="t2"] <- "Year 1"
     df$Time[df$Time=="t3"] <- "Year 2"
@@ -98,16 +126,21 @@ tmle_plot_fun <- function(d, hypo, title, ylabel="", yrange=c(-0.5, 0.5)){
     df$CI1[is.na(df$CI1)] <- 0
     df$CI2[is.na(df$CI2)] <- 0
     
-    p <- ggplot(df, aes(x=level)) + 
-      geom_pointrange(aes(y=ATE, ymin=CI1, ymax=CI2, color=anthro, group=Time, shape=Time),
+    #add ref label
+    df$ref <-"ref."
+    df$ref[!grepl("Q1",df$level)] <- NA
+    
+    p <- ggplot(df, aes(x=level, y=ATE)) + 
+      geom_pointrange(aes(ymin=CI1, ymax=CI2, color=anthro, group=Time, shape=Time),
                       position = position_dodge(width = 0.4),
                       size = 1) +
+      geom_text(aes(label=ref), position = position_nudge(y = (abs(yrange[1])+abs(yrange[2]))/10)) +
       facet_grid(~anthro) +
       labs(y = ylabel, x =  df$Alab[1]) +
       geom_hline(yintercept = 0) +
       coord_cartesian(ylim=yrange) +
       scale_shape_manual(values=c(16,21)) +
-      scale_colour_manual(values=tableau10[c(1:4,1:4,1:4,5:7)], drop=FALSE) + 
+      scale_colour_manual(values=cols) + 
       ggtitle(title) +
       theme_ki() +
       theme(plot.title = element_text(hjust = 0),
@@ -122,29 +155,13 @@ tmle_plot_fun <- function(d, hypo, title, ylabel="", yrange=c(-0.5, 0.5)){
 }
 
 
-
-# Grouping hypotheses 1,2,3 into 1 figure labeled 
-#"Adjusted differences between quartiles of change in telomere length between Years 1 and 2 for each growth outcome."
-# 
-# Grouping hypotheses 4,6,7,8 into 1 figure labeled 
-#"Adjusted differences between quartiles of telomere length at Year 1 for each growth outcome"
-# 
-# Grouping hypothesis 5 into its own figure labeled 
-#"Adjusted differences between quartiles of telomere length at Year 2 for each growth outcome"
-# 
-# That way, we could get rid of the hypotheses labels entirely and replace each with a figure heading instead. 
-#I like that each growth outcome is a different color. Also, need to change WLZ to WLZ to make it consistent across the figure.
-# 
-
-
-
 pH1 <- tmle_plot_fun(d, 1, title="", ylabel="Difference in\nchange in Z-score")
-pH2 <- tmle_plot_fun(d, 2, c(-0.05, 0.03), title="", ylabel="Difference in\nvelocity in cm or kg")
+pH2 <- tmle_plot_fun(d, 2, yrange=c(-0.065, 0.03), title="", cols=tableau10[c(5:7)],  ylabel="Difference in\nvelocity in cm or kg")
 pH3 <- tmle_plot_fun(d, 3, title="", ylabel="Z-score difference")
-pH4 <- tmle_plot_fun(d, 4, title="", ylabel="Z-score difference")
+#pH4 <- tmle_plot_fun(d, 4, title="", ylabel="Z-score difference")
 pH5 <- tmle_plot_fun(d, 5, title="", ylabel="Z-score difference")
-pH6 <- tmle_plot_fun(d, 6, title="", ylabel="Z-score difference")
-pH7 <- tmle_plot_fun(d, 7, c(-0.03, 0.03), title="", ylabel="Difference in\nvelocity in cm or kg")
+#pH6 <- tmle_plot_fun(d, 6, title="", ylabel="Z-score difference")
+pH7 <- tmle_plot_fun(d, 7, yrange=c(-0.03, 0.03), title="", cols=tableau10[c(5:7)], ylabel="Difference in\nvelocity in cm or kg")
 pH8 <- tmle_plot_fun(d, 8, title="", ylabel="Difference in\nchange in Z-score")
 
 
@@ -165,29 +182,27 @@ pH8 <- tmle_plot_fun(d, 8, title="", ylabel="Difference in\nchange in Z-score")
 p2 <- tmle_plot_fun(d, hypo=c(4,6), title="", ylabel="Z-score difference")
 
 
-ggsave(pH1, file = here("figures/telo-growth-quartiles-differences_1.png"), height=3, width=14)
-ggsave(p2, file = here("figures/telo-growth-quartiles-differences_2.png"), height=3, width=14)
-ggsave(pH5, file = here("figures/telo-growth-quartiles-differences_3.png"), height=3, width=14)
+ggsave(p2, file = here("figures/telo-growth-quartiles-differences_1.png"), height=3, width=14)
+ggsave(pH5, file = here("figures/telo-growth-quartiles-differences_2.png"), height=3, width=14)
+ggsave(pH2, file = here("figures/telo-growth-quartiles-differences_3.png"), height=3, width=14)
 
 #Supplimentary figures
 
+ggsave(pH1, file = here("figures/telo-growth-quartiles-differences_supp1.png"), height=3, width=14)
+
+
 # Z-velocity
-ggsave(pH8, file = here("figures/telo-growth-quartiles-differences_supp1.png"), height=3, width=14)
-ggsave(pH3, file = here("figures/telo-growth-quartiles-differences_supp2.png"), height=3, width=14)
+ggsave(pH8, file = here("figures/telo-growth-quartiles-differences_supp2.png"), height=3, width=14)
+ggsave(pH3, file = here("figures/telo-growth-quartiles-differences_supp3.png"), height=3, width=14)
 
 # Raw anthro velocity
-pS3 <- plot_grid(
-  pH7,
-  pH2,
-  ncol=1,
-  labels = c("",""),
-  rel_heights = c(1, 1))
-ggsave(pS3, file = here("figures/telo-growth-quartiles-differences_supp3.png"), height=6, width=14)
+
+ggsave(pH7, file = here("figures/telo-growth-quartiles-differences_supp4.png"), height=3, width=14)
 
 
 #Head circumference
 unique(dHCZ$Alab)
-p1 <- ggplot(dHCZ[dHCZ$Alab=="T/S at year 1",], aes(x=level, y=ATE)) + 
+p1 <- ggplot(dHCZ[dHCZ$Alab=="Telomere length at Year 1 (T/S ratio)",], aes(x=level, y=ATE)) + 
   geom_point(aes(color=Ylab), size = 3) +
   geom_linerange(aes(ymin=CI1, ymax=CI2, color=Ylab),
                  alpha=0.5, size = 1) +
@@ -201,7 +216,7 @@ p1 <- ggplot(dHCZ[dHCZ$Alab=="T/S at year 1",], aes(x=level, y=ATE)) +
   theme(plot.title = element_text(hjust = 0),
         panel.spacing = unit(0, "lines"))
 
-p2 <- ggplot(dHCZ[dHCZ$Alab=="Change in T/S",], aes(x=level, y=ATE)) + 
+p2 <- ggplot(dHCZ[dHCZ$Alab=="Change in telomere length between Years 1 and 2 (T/S ratio)",], aes(x=level, y=ATE)) + 
   geom_point(aes(color=Ylab), size = 3) +
   geom_linerange(aes(ymin=CI1, ymax=CI2, color=Ylab),
                  alpha=0.5, size = 1) +
@@ -215,7 +230,7 @@ p2 <- ggplot(dHCZ[dHCZ$Alab=="Change in T/S",], aes(x=level, y=ATE)) +
   theme(plot.title = element_text(hjust = 0),
         panel.spacing = unit(0, "lines"))
 
-p3 <- ggplot(dHCZ[dHCZ$Alab=="T/S at year 2",], aes(x=level, y=ATE)) + 
+p3 <- ggplot(dHCZ[dHCZ$Alab=="Telomere length at Year 2 (T/S ratio)",], aes(x=level, y=ATE)) + 
   geom_point(aes(color=Ylab), size = 3) +
   geom_linerange(aes(ymin=CI1, ymax=CI2, color=Ylab),
                  alpha=0.5, size = 1) +
