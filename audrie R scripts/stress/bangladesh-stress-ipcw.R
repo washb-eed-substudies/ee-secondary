@@ -5073,7 +5073,7 @@ save(igf_t2_adj_ipcw_L,
   il6_t2_adj_ipcw_L,
   tnf_t2_adj_ipcw_L,
   
-  igf_t3_adj_ipcw_L,
+  #igf_t3_adj_ipcw_L,
   gmc_t3_adj_ipcw_L,
   ifn_t3_adj_ipcw_L,
   il10_t3_adj_ipcw_L,
