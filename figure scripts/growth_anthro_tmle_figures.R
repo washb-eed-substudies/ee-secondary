@@ -200,14 +200,21 @@ ggsave(pH3, file = here("figures/telo-growth-quartiles-differences_supp3.png"), 
 ggsave(pH7, file = here("figures/telo-growth-quartiles-differences_supp4.png"), height=3, width=14)
 
 
-#Head circumference
+#Head circumference plots
 unique(dHCZ$Alab)
+yrange = c(min(dHCZ$CI1, na.rm=T)-0.05, max(dHCZ$CI2, na.rm=T)+0.05)
+
+#add ref label
+dHCZ$ref <-"ref."
+dHCZ$ref[!grepl("Q1",dHCZ$level)] <- NA
+
 p1 <- ggplot(dHCZ[dHCZ$Alab=="Telomere length at Year 1 (T/S ratio)",], aes(x=level, y=ATE)) + 
   geom_point(aes(color=Ylab), size = 3) +
   geom_linerange(aes(ymin=CI1, ymax=CI2, color=Ylab),
                  alpha=0.5, size = 1) +
   facet_wrap(~Ylab) +
   labs(y = "Adjusted difference", x = "Quartile of T/S at year 1") +
+  geom_text(aes(label=ref), position = position_nudge(y = (abs(yrange[1])+abs(yrange[2]))/10)) +
   geom_hline(yintercept = 0) +
   #coord_cartesian(ylim=yrange) +
   scale_colour_manual(values=rep(tableau10[4],20), drop=FALSE) + 
@@ -222,6 +229,7 @@ p2 <- ggplot(dHCZ[dHCZ$Alab=="Change in telomere length between Years 1 and 2 (T
                  alpha=0.5, size = 1) +
   facet_wrap(~Ylab) +
   labs(y = "Adjusted difference", x = "Quartile of change in T/S") +
+  geom_text(aes(label=ref), position = position_nudge(y = (abs(yrange[1])+abs(yrange[2]))/10)) +
   geom_hline(yintercept = 0) +
   #coord_cartesian(ylim=yrange) +
   scale_colour_manual(values=rep(tableau10[4],20), drop=FALSE) + 
@@ -236,6 +244,7 @@ p3 <- ggplot(dHCZ[dHCZ$Alab=="Telomere length at Year 2 (T/S ratio)",], aes(x=le
                  alpha=0.5, size = 1) +
   facet_wrap(~Ylab) +
   labs(y = "Adjusted difference", x = "Quartile of T/S at year 2") +
+  geom_text(aes(label=ref), position = position_nudge(y = (abs(yrange[1])+abs(yrange[2]))/10)) +
   geom_hline(yintercept = 0) +
   #coord_cartesian(ylim=yrange) +
   scale_colour_manual(values=rep(tableau10[4],20), drop=FALSE) + 
@@ -258,5 +267,5 @@ p <- plot_grid(
   labels = c("",""),
   rel_heights = c(1, 1))
 
-ggsave(p, file = here("figures/telo-growth-quartiles-differences_supp4.png"), height=6, width=14)
+ggsave(p, file = here("figures/telo-growth-quartiles-differences_supp5.png"), height=6, width=14)
 

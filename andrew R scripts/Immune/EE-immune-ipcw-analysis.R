@@ -42,10 +42,6 @@ d <- d %>%
   ))
 
 
-#Add in time varying variables above, and impute median where missing
-
-
-
 
 d <- left_join(ipcw, d, by = c("dataid","tr"))
 
@@ -126,13 +122,9 @@ d$birthord<-factor(d$birthord)
 table(d$birthord)
 table(W$birthord)
 
-d %>% group_by(birthord) %>% summarise(mean=mean(log(aat3), na.rm=T))
-
 d$asset_clock[is.na(d$asset_clock)]<-"99"
 d$asset_clock<-factor(d$asset_clock)
 
-#Order data to replicate SL
-d <- d[order(d$dataid,d$childNo, d$svy),]
 
 #Re-subset W so new missing categories are included
 W<- subset(d, select=Wvars)
@@ -227,161 +219,126 @@ W<- subset(d, select=Wvars)
 
 
 #Add in time-varying covariates
-Wvars2<-c("aged2", "monsoon2") 
-Wvars3<-c("aged3", "monsoon3") 
+Wvars2<-c("ageday_bt2", "monsoon2") 
+Wvars3<-c("ageday_bt3", "monsoon3") 
 W2<- cbind(W, subset(d, select=Wvars2))
 W3<- cbind(W, subset(d, select=Wvars3))
 
 #Replace missingness in time varying covariates as a new level
+W2$monsoon2 <- as.character(W2$monsoon2)
+W3$monsoon3 <- as.character(W3$monsoon3)
 W2$monsoon2[is.na(W2$monsoon2)]<-"missing"
 W3$monsoon3[is.na(W3$monsoon3)]<-"missing"
-
+W2$monsoon2 <- factor(W2$monsoon2)
+W3$monsoon3 <- factor(W3$monsoon3)
 
 #Create indicators for missingness
-outcomes <- c("igf_t2",          "igf_t3",          "crp_t2",         
-              "agp_t2",          "gmcsf_t2",        "ifng_t2",         "il10_t2",         "il12_t2",        
-              "il13_t2",         "il17_t2",         "il1_t2",          "il2_t2",          "il21_t2",        
-              "il4_t2",          "il5_t2",          "il6_t2",          "tnfa_t2",         "gmcsf_t3",       
-              "ifng_t3",         "il10_t3",         "il12_t3",         "il13_t3",         "il17_t3",        
-              "il1_t3",          "il2_t3",          "il21_t3",         "il4_t3",          "il5_t3",         
-              "il6_t3",          "tnfa_t3")
+
+#Update names to match Audrie
+colnames(d) <- gsub("gmcsf","gmc",colnames(d))
+colnames(d) <- gsub("tnfa","tnf",colnames(d))
+colnames(d) <- gsub("ifng","ifn",colnames(d))
+
+#Subset outcomes
+# Y<-d %>% rename(t2_igf=igf_t2,          t3_igf=igf_t3,          t2_crp=crp_t2,          t2_agp=agp_t2,          t2_gmc=gmc_t2,       
+#                 t2_ifn=ifn_t2,         t2_il10=il10_t2,         t2_il12=il12_t2,         t2_il13=il13_t2,         t2_il17=il17_t2,        
+#                 t2_il1=il1_t2,          t2_il2=il2_t2,          t2_il21=il21_t2,         t2_il4=il4_t2,          t2_il5=il5_t2,         
+#                 t2_il6=il6_t2,          t2_tnf=tnf_t2,         t3_gmc=gmc_t3,        t3_ifn=ifn_t3,         t3_il10=il10_t3,        
+#                 t3_il12=il12_t3,         t3_il13=il13_t3,         t3_il17=il17_t3,         t3_il1=il1_t3,          t3_il2=il2_t3,         
+#                 t3_il21=il21_t3,         t3_il4=il4_t3,          t3_il5=il5_t3,          t3_il6=il6_t3,          t3_tnf=tnf_t3) %>%
+#   select(t2_igf,          t3_igf,          t2_crp,          t2_agp,          t2_gmc,       
+#          t2_ifn,         t2_il10,         t2_il12,         t2_il13,         t2_il17,        
+#          t2_il1,          t2_il2,          t2_il21,         t2_il4,          t2_il5,         
+#          t2_il6,          t2_tnf,         t3_gmc,        t3_ifn,         t3_il10,        
+#          t3_il12,         t3_il13,         t3_il17,         t3_il1,          t3_il2,         
+#          t3_il21,         t3_il4,          t3_il5,          t3_il6,          t3_tnf)
+Y<-d %>% select(igf_t2,          igf_t3,          crp_t2,          agp_t2,          gmc_t2,       
+                ifn_t2,         il10_t2,         il12_t2,         il13_t2,         il17_t2,        
+                il1_t2,          il2_t2,          il21_t2,         il4_t2,          il5_t2,         
+                il6_t2,          tnf_t2,         gmc_t3,        ifn_t3,         il10_t3,        
+                il12_t3,         il13_t3,         il17_t3,         il1_t3,          il2_t3,         
+                il21_t3,         il4_t3,          il5_t3,          il6_t3,          tnf_t3) 
+
 
 missingness_list <- list()
-for(i in 1:length(outcomes)){
-  missingness_list[[i]] <- ifelse(is.na(d[,outcomes[i]]),0,1)
-  d[is.na(d[,outcomes[i]]),outcomes[i]] <- 9
-  names(missingness_list)[i] <- paste0(outcomes[i],".miss")
+for(i in 1:ncol(Y)){
+  missingness_list[[i]] <- ifelse(is.na(Y[,i]),0,1)
+  Y[is.na(Y[,i]),i] <- 9
+  names(missingness_list)[i] <- paste0(colnames(Y)[i],".miss")
 }
-miss <- bind_rows(missingness_list)
+miss <- as.data.frame(bind_rows(missingness_list))
 d <- cbind(d, miss)
 
 
 #Order for replication:
 d<-d[order(d$block,d$clusterid,d$dataid),]
+
+
+
+
   
 #Run the adjusted ipcw analysis
 
+
 #Fully adjusted glm models
-res_adj <- NULL
+res_ipcw <- NULL
 for(i in 1:ncol(Y)){
   if(grepl("t2_", colnames(Y)[i])){
-    temp<-washb_glm(Y=(Y[,i]), tr=d$tr, W=W2, id=d$block, pair=NULL, family="gaussian", contrast= c("Control","Nutrition + WSH"), print=F)
+    temp<-washb_tmle(Y=(Y[,i]), Delta=miss[,i], tr=d$tr, W=W2, id=d$block, pair=NULL, family="gaussian", contrast= c("Control","Nutrition + WSH"), Q.SL.library = c("SL.glm"), seed=12345, print=F)
   }else{
-    temp<-washb_glm(Y=(Y[,i]), tr=d$tr, W=W3, id=d$block, pair=NULL, family="gaussian", contrast= c("Control","Nutrition + WSH"), print=F)
+    temp<-washb_tmle(Y=(Y[,i]), Delta=miss[,i], tr=d$tr, W=W3, id=d$block, pair=NULL, family="gaussian", contrast= c("Control","Nutrition + WSH"), Q.SL.library = c("SL.glm"), seed=12345, print=F)
   }
-  res_adj<-rbind(res_adj, as.numeric(temp$TR))
+  res_ipcw<-rbind(res_ipcw, as.numeric((t(unlist(temp$estimates$ATE)))))
 }
-res_adj <- as.data.frame(res_adj)
+res_ipcw <- as.data.frame(res_ipcw)
 
-colnames(res_adj)<-c("RD","ci.l","ci.u", "Std. Error", "z value", "Pval")
-res_adj$Y <-colnames(Y)
-
-
+colnames(res_ipcw)<-c("RD","var.psi","ci.l","ci.u", "Pval")
+res_ipcw$Y <-colnames(Y)
 
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-#dataframe of stool biomarkers:
-Y<-d %>% select(neo1Delta,mpo1Delta,aat1Delta,neo2Delta,mpo2Delta,aat2Delta,reg1b2Delta,neo3Delta,mpo3Delta,aat3Delta)
-
-#dataframe of stool missingness:
-miss<-d %>% select(neo1.miss,mpo1.miss,aat1.miss,neo2.miss,mpo2.miss,aat2.miss,reg1b2.miss,neo3.miss,mpo3.miss,aat3.miss)
-
-
-#Set contrasts:
-contrasts <- list(c("Control","WSH"), c("Control","Nutrition"), c("Control","Nutrition + WSH"), c("WSH","Nutrition + WSH"), c("Nutrition","Nutrition + WSH"))
-
-
-
-
-#Create empty matrix to hold the glm results:
-
-
-res_adj<-list(neo_t1_adj=matrix(0,5,5), mpo_t1_adj=matrix(0,5,5), aat_t1_adj=matrix(0,5,5), 
-                neo_t2_adj=matrix(0,5,5), mpo_t2_adj=matrix(0,5,5), aat_t2_adj=matrix(0,5,5),  reg1b_t2_adj=matrix(0,5,5),
-                neo_t3_adj=matrix(0,5,5), mpo_t3_adj=matrix(0,5,5), aat_t3_adj=matrix(0,5,5))
-
-Wlist <- list(W1,W1,W1,W2,W2,W2,W2,W3,W3,W3)
-
-
- i<-6
- j <- 3
-mean(log(Y[d$tr=="Control",i]), na.rm=T)
-sum(miss[d$tr=="Control",i], na.rm=T)
-mean(log(Y[d$tr=="WSH",i]), na.rm=T)
-sum(miss[d$tr=="WSH",i], na.rm=T)
-temp<-washb_tmle(Y=log(Y[,i]), Delta=miss[,i], tr=d$tr, W=Wlist[[i]], id=d$block, pair=NULL, family="gaussian", contrast= contrasts[[j]], Q.SL.library = c("SL.glm"), seed=12345, print=T)
-
-
-d %>% group_by(tr) %>% summarize(aat2=mean(log(aat2Delta), na.rm=T))
-
-
-temp<-washb_tmle(Y=log(Y[,i]), Delta=miss[,i], tr=d$tr,
-                 W=select(Wlist[[i]], -contains("month")), 
-                 id=d$block, pair=NULL, family="gaussian", contrast= contrasts[[j]], Q.SL.library = c("SL.glm"), seed=12345, print=T)
-
-
-
-# d <- d[(d$tr=="Control" | d$tr=="Nutrition + WSH") & !is.na(d$tr),]
-# summary(d$aged1)
-
-
-for(i in 1:10){
-  for(j in 1:5){
-    #note the log transformation of the outcome prior to running GLM model:
-    temp<-washb_tmle(Y=log(Y[,i]), Delta=miss[,i], tr=d$tr, W=Wlist[[i]], id=d$block, pair=NULL, family="gaussian", contrast= contrasts[[j]], Q.SL.library = c("SL.glm"), seed=12345, print=T)
-    cat(i," : ",j, "\n")
-    res_adj[[i]][j,]<-(t(unlist(temp$estimates$ATE)))
-    colnames(res_adj[[i]])<-c("psi","var.psi","ci.l","ci.u", "Pval")
-    rownames(res_adj[[i]])<-c(c("Control v WSH", "Control v Nutrition", "Control v Nutrition + WSH", "WSH v Nutrition + WSH", "Nutrition v Nutrition + WSH"))
+#Compare to Audrie's objects
+#Function to load and compile Audrie's objects
+load_aud <- function(name.pattern, object_list, subgroup=F){
+  print(object_list)
+  df <- lapply(object_list, get)
+  for(i in which(sapply(df, is.null))){
+    print(object_list[i])
+    if(subgroup){
+      df[[i]] <- data.frame(subgroup=rep(NA,2), RD=rep(NA,2), ci.lb=rep(NA,2), ci.ub=rep(NA,2), SE=rep(NA,2), z=rep(NA,2), `P-value`=rep(NA,2))
+    }else{
+      df[[i]] <- data.frame(RD=NA, ci.lb=NA, ci.ub=NA, SE=NA, z=NA, `P-value`=NA)
+    }
   }
+  if(subgroup){
+    df <- data.frame(rbindlist(lapply(df, as.data.frame), fill=TRUE),Y = rep(gsub(name.pattern,"",object_list), each=2))
+  }else{
+    df <- data.frame(rbindlist(lapply(lapply(df, t), as.data.frame), fill=TRUE),Y = gsub(name.pattern,"",object_list))
+  }
+  return(df)
 }
+load(paste0(dropboxDir,"Results/Audrie/immune_ipcw.RData"))
+name.pattern="_adj_ipcw_L"
+object_list=ls(pattern=name.pattern)
+aud_ipcw <- load_aud(name.pattern, object_list)
 
 
-
-#Extract estimates
-neo_t1_adj_ipcw_M<-res_adj[[1]]
-neo_t2_adj_ipcw_M<-res_adj[[4]]
-neo_t3_adj_ipcw_M<-res_adj[[8]]
-
-mpo_t1_adj_ipcw_M<-res_adj[[2]]
-mpo_t2_adj_ipcw_M<-res_adj[[5]]
-mpo_t3_adj_ipcw_M<-res_adj[[9]]
-
-aat_t1_adj_ipcw_M<-res_adj[[3]]
-aat_t2_adj_ipcw_M<-res_adj[[6]]
-aat_t3_adj_ipcw_M<-res_adj[[10]]
-
-reg_t2_adj_ipcw_M<-res_adj[[7]]
+dim(res_ipcw)
+dim(aud_ipcw)
+comp_ipcw <- full_join(res_ipcw, aud_ipcw, by="Y")
+dim(comp_ipcw)
+comp_ipcw$RD - comp_ipcw$psi
+comp_ipcw$Pval - comp_ipcw$pvalue
 
 
 
 
-setwd("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Results/Andrew/")
-save(
-aat_t1_adj_ipcw_M,
-aat_t2_adj_ipcw_M,
-aat_t3_adj_ipcw_M,
-mpo_t1_adj_ipcw_M,
-mpo_t2_adj_ipcw_M,
-mpo_t3_adj_ipcw_M,
-neo_t1_adj_ipcw_M,
-neo_t2_adj_ipcw_M,
 
-neo_t3_adj_ipcw_M,
-reg_t2_adj_ipcw_M, 
-file="stool_ipcw_res.Rdata")
+
+
 
 
 
