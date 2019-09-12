@@ -17,11 +17,13 @@ source(here::here("0-config.R"))
 #load full treatments
 load("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Data/Untouched/washb-bangladesh-blind-tr.Rdata")
 blind_tr$clusterid<-as.numeric(blind_tr$clusterid)
-treatment<-blind_tr
+
+treatment <- read.csv(paste0(dropboxDir,"Data/Untouched/washb-BD-telo-blind-tr.csv"))
+treatment$clusterid <- as.numeric(treatment$clusterid)
 
 #Load EED 
 ipcw <- read.csv("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Data/Cleaned/Andrew/BD-EE-ipcw.csv", stringsAsFactors = T) %>% select(-c(tr,block))
-ipcw <- left_join(ipcw, treatment, by=c("clusterid"))
+#ipcw <- left_join(ipcw, treatment, by=c("clusterid"))
 
 #Load in immune analysis dataset
 load(paste0(dropboxDir,"Data/Cleaned/Andrew/BD-EE-immune.Rdata"))
@@ -31,7 +33,8 @@ load(paste0(dropboxDir,"Data/Cleaned/Andrew/BD-EE-immune.Rdata"))
 colnames(d)
 d <- d %>% 
   subset(., select=c(
-    childid, dataid, childNo, tr, agemth_bt2, agemth_bt3, ageday_bt2, ageday_bt3, month2, month3,
+    childid, dataid, childNo, clusterid,
+    agemth_bt2, agemth_bt3, ageday_bt2, ageday_bt3, month2, month3,
     igf_t2,          igf_t3,          crp_t2,         
     agp_t2,          gmcsf_t2,        ifng_t2,         il10_t2,         il12_t2,        
     il13_t2,         il17_t2,         il1_t2,          il2_t2,          il21_t2,        
@@ -41,13 +44,23 @@ d <- d %>%
     il6_t3,          tnfa_t3
   ))
 
+dim(d)
+dim(ipcw)
+d <- merge(ipcw, d, by = c("dataid","childid","clusterid"), all.x = T, all.y = T)
+dim(d)
 
-
-d <- left_join(ipcw, d, by = c("dataid","tr"))
+#Merge in treatments
+d <- left_join(d, treatment, by = c("clusterid"))
+table(is.na(d$tr))
 
 #Subset to immune analysis arms
 d <- subset(d, tr=="Control" | tr=="Nutrition + WSH")
 d$tr <- factor(d$tr)
+table(d$tr)
+
+#Drop ID missing from Audrie
+#d<-d[d$dataid!=72003,]
+
 
 #Impute time varying covariates
 
@@ -334,6 +347,7 @@ comp_ipcw$RD - comp_ipcw$psi
 comp_ipcw$Pval - comp_ipcw$pvalue
 
 
+save(d, res_ipcw, comp_ipcw, Y, miss, W2, W3, file = here("replication objects/andrew_immune_ipcw_W.rdata"))
 
 
 

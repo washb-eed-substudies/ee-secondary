@@ -56,7 +56,9 @@ washb_bd_immun<- read.csv("washb-bangladesh-plasma-lab-t2-t3-ipcw.csv", stringsA
 dfull<- read.csv("washb-bangladesh-anthro-diar-ee-med-enrol-tracking-immun-ipcw2.csv", stringsAsFactors = TRUE)
 
 #load blinded treatment data
-washb_bd_tr <- read.csv(paste0(dropboxDir, "Data/Untouched/washb-bangladesh-tr.csv"), stringsAsFactors = TRUE)
+#washb_bd_tr <- read.csv(paste0(dropboxDir, "Data/Untouched/washb-bangladesh-tr.csv"), stringsAsFactors = TRUE)
+washb_bd_tr <- read.csv(paste0(dropboxDir,"Data/Untouched/washb-BD-telo-blind-tr.csv"))
+washb_bd_tr$clusterid <- as.numeric(washb_bd_tr$clusterid)
 
 # merge treatment and enrollment data onto this shell of the full data
 dfull <- merge(dfull,washb_bd_tr,by=c("clusterid","block"),all.x=T,all.y=F)
@@ -66,7 +68,7 @@ dfull <- merge(dfull,washb_bd_tr,by=c("clusterid","block"),all.x=T,all.y=F)
 dfull$tr <- factor(dfull$tr,levels=c("Control","Nutrition + WSH"))
 
 # now merge the observed plasma outcomes onto this full dataset
-idfull <- merge(dfull,washb_bd_immun,by=c("dataid","clusterid","childno"),all.x=T,all.y=F)
+idfull <- merge(dfull,washb_bd_immun,by=c("dataid","clusterid","childno"),all.x=T,all.y=T)
 
 
 # sort the data for perfect replication with andrew on the V-fold cross-validation
@@ -141,6 +143,14 @@ W$asset_mobile<-as.factor(W$asset_mobile)
 W$n_cattle<-as.numeric(W$n_cattle)
 W$n_goat<-as.numeric(W$n_goat)
 W$n_chicken<-as.numeric(W$n_chicken)
+
+
+#Save intermediate R objects for replication comparison
+da <- idfull
+wa <- W
+save(da, wa, file = here("replication objects/audrie_immune_ipcw_W.rdata"))
+
+
 
 ############################
 # IGF Control vs N+WSH @T2
@@ -778,6 +788,8 @@ W$asset_mobile<-as.factor(W$asset_mobile)
 W$n_cattle<-as.numeric(W$n_cattle)
 W$n_goat<-as.numeric(W$n_goat)
 W$n_chicken<-as.numeric(W$n_chicken)
+
+
 
 ############################
 # Ratio GMC:IL10 Control vs N+WSH @T2
@@ -4611,6 +4623,9 @@ d23_ratio_th1_th17_adj_ipcw<-as.data.frame(unlist(d23_ratio_th1_th17_adj_ipcw$es
 
 d23_ratio_th1_th17_adj_ipcw
 d23_ratio_th1_th17_unadj_ipcw
+
+
+
 
 #Display results
 
