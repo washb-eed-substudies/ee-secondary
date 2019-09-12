@@ -39,6 +39,6 @@ ipcws5<-c(" ", " ", maketblvalue(ratio_il1_il10_t2_adj_ipcw_L$`unlist(ratio_il1_
           " ", " ", maketblvalue(ratio_th1_th17_t2_adj_ipcw_L$`unlist(ratio_th1_th17_t2_adj_ipcw$estimates$ATE)`))
 
 tbls5<-cbind(tbl3, ipcws5)
-names(tbls5)[9]<-"IPCW adjusted difference: Intervention vs. Control (95% CI)"
+names(tbls5)[8]<-"IPCW adjusted difference: Intervention vs. Control (95% CI)"
 
 write.csv(tbls5, file=here('tables/miso9-supptable5.csv'))
