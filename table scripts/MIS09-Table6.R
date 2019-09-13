@@ -184,3 +184,4 @@ tbl6 <- data.table(
 
 write.csv(tbl6, file=here('tables/miso9-table6.csv'))
 
+ 
