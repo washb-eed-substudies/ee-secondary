@@ -2466,21 +2466,25 @@ d23_ratio_th1_th17_N_tr<-lab %>%
 
 d23_ratio_th1_th17_N_tr
 
+dat<-read.csv(paste0(dropboxDir, "Data/Cleaned/Audrie/bangladesh-dm-ee-plasma-lab.csv"))
+dat<-cbind(dat, lab$tr)
+names(dat)[ncol(dat)]="tr"
+
 #calculate absolute means for d23 by arm
-abs_d23_il1_N_tr<-absmean(lab$d23_ln_il1)
-abs_d23_il6_N_tr<-absmean(lab$d23_ln_il6)
-abs_d23_tnf_N_tr<-absmean(lab$d23_ln_tnf)
-abs_d23_il12_N_tr<-absmean(lab$d23_ln_il12)
-abs_d23_ifn_N_tr<-absmean(lab$d23_ln_ifn)
-abs_d23_il4_N_tr<-absmean(lab$d23_ln_il4)
-abs_d23_il5_N_tr<-absmean(lab$d23_ln_il5)
-abs_d23_il13_N_tr<-absmean(lab$d23_ln_il13)
-abs_d23_il17_N_tr<-absmean(lab$d23_ln_il17)
-abs_d23_il21_N_tr<-absmean(lab$d23_ln_il21)
-abs_d23_il10_N_tr<-absmean(lab$d23_ln_il10)
-abs_d23_il2_N_tr<-absmean(lab$d23_ln_il2)
-abs_d23_gmc_N_tr<-absmean(lab$d23_ln_gmc)
-abs_d23_igf_N_tr<-absmean(lab$d23_ln_igf)
+abs_d23_il1_N_tr<-absmean(dat$d23_il1)
+abs_d23_il6_N_tr<-absmean(dat$d23_il6)
+abs_d23_tnf_N_tr<-absmean(dat$d23_tnf)
+abs_d23_il12_N_tr<-absmean(dat$d23_il12)
+abs_d23_ifn_N_tr<-absmean(dat$d23_ifn)
+abs_d23_il4_N_tr<-absmean(dat$d23_il4)
+abs_d23_il5_N_tr<-absmean(dat$d23_il5)
+abs_d23_il13_N_tr<-absmean(dat$d23_il13)
+abs_d23_il17_N_tr<-absmean(dat$d23_il17)
+abs_d23_il21_N_tr<-absmean(dat$d23_il21)
+abs_d23_il10_N_tr<-absmean(dat$d23_il10)
+abs_d23_il2_N_tr<-absmean(dat$d23_il2)
+abs_d23_gmc_N_tr<-absmean(dat$d23_gmc)
+abs_d23_igf_N_tr<-absmean(dat$d23_igf)
 
 
 #display
