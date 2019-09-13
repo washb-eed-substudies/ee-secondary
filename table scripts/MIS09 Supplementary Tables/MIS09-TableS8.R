@@ -29,3 +29,4 @@ tbls8<-cbind(tbl6, ipcws8)
 names(tbls8)[8]<-"IPCW adjusted difference: Intervention vs. Control (95% CI)"
 
 write.csv(tbls8, file=here('tables/miso9-supptable8.csv'))
+ 
