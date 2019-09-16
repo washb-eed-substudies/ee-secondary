@@ -1,10 +1,7 @@
 rm(list=ls())
 source(here::here("0-config.R"))
 
-source(here('audrie R scripts/immune/bangladesh-immune-adj-age-sex.R'))
-source(here('audrie R scripts/immune/bangladesh-immune-subgroup.R'))
 source(here('audrie R scripts/immune/bangladesh-immune-ages-unadjusted-glm.R'))
-source(here('audrie R scripts/immune/bangladesh-immune-adj.R'))
 
 #calculating overall N by arm
 Nctrl<-length(ages$tr[ages$tr=="Control"])
@@ -72,11 +69,11 @@ foodsecure<-c(fsctrln, fsctrlperc, fswshn, fswshperc)
 #function combines n and percent or mean and sd for vectors created from npercfunc or meansdfunc
 #num is 1 if ctrl group, 3 if wsh
 charobject<-function(variable, num) {
-  paste(variable[num], "(", variable[num+1], ")", sep="")
+  paste(variable[num], " (", variable[num+1], ")", sep="")
 }
 
 charobjectperc<-function(variable, num) {
-  paste(variable[num], "(", variable[num+1], "%)", sep="")
+  paste(variable[num], " (", variable[num+1], "%)", sep="")
 }
 
 ctrl<-c(" ", charobject(momage, 1),charobject(momeduy, 1), " ", charobject(dadeduy, 1), charobjectperc(dadagri, 1),
@@ -117,4 +114,3 @@ tbl1 <- data.table(
 )
 
 write.csv(tbl1, file=here('tables/miso9-table1.csv'))
-
