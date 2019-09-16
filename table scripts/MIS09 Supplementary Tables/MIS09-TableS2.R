@@ -107,11 +107,11 @@ lfoodsecure<-c(lfsn, lfsperc)
 #function combines n and percent or mean and sd for vectors created from npercfunc or meansdfunc
 #num is 1 if ctrl group, 3 if wsh
 charobject<-function(variable, num) {
-  paste(variable[num], "(", variable[num+1], ")", sep="")
+  paste(variable[num], " (", variable[num+1], ")", sep="")
 }
 
 charobjectperc<-function(variable, num) {
-  paste(variable[num], "(", variable[num+1], "%)", sep="")
+  paste(variable[num], " (", variable[num+1], "%)", sep="")
 }
 
 includedcol<-c(" ", charobject(imomage, 1),charobject(imomeduy, 1), " ", charobject(idadeduy, 1), charobjectperc(idadagri, 1),
@@ -151,5 +151,7 @@ tbls2 <- data.table(
   "Lost to follow-up at Year 2 (N=96)" = lostcol
 )
 
-write.csv(tbl1, file=here('tables/miso9-supptable2.csv'))
+write.csv(tbls2, file=here('tables/miso9-immune-supptable2.csv'))
+print(xtable(tbls2), type="html", file=here("tables/miso9-immune-supptable2.html"))
+
 
