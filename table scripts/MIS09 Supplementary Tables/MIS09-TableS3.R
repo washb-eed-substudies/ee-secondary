@@ -1,11 +1,12 @@
 rm(list=ls())
+library("xtable")
 source(here::here("0-config.R"))
 
-source(here('audrie R scripts/immune/bangladesh-immune-adj-age-sex.R'))
+source(here('audrie R scripts/immune/bangladesh-immune-ages-unadjusted-glm.R'))
 
 writeqntle<-function(vector) {
   quantiles<-round(quantile(vector, na.rm=TRUE), 2)
-  paste(quantiles[3], "(", quantiles[2], ", ", quantiles[4], ")", sep="")
+  paste(quantiles[3], " (", quantiles[2], ", ", quantiles[4], ")", sep="")
 }
 
 outcome<-c("Outcome", "IL-1b (pg/ml)", "Il-6 (pg/ml)", "TNF-a (pg/ml)", "CRP (mg/L)", "IL-12 (pg/ml)",
@@ -24,4 +25,6 @@ tbls3<-data.table(" "=outcome,
                   "Child Age 14 Months"=t2,
                   "Child Age 28 Months"=t3)
 
-write.csv(tbls3, file=here('tables/miso9-supptable3.csv'))
+write.csv(tbls3, file=here('tables/miso9-immune-supptable3.csv'))
+print(xtable(tbls3), type="html", file=here("tables/miso9-immune-supptable3.html"))
+
