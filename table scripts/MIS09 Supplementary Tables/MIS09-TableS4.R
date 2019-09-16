@@ -7,7 +7,7 @@ load(here("audrie results/immune_ipcw.RData"))
 
 maketblvalue<-function(ipcwadjvar){
   rounded<-round(ipcwadjvar, 2)
-  paste(rounded[1], "(", rounded[3], ", ", rounded[4], ")", sep="")
+  paste(rounded[1], " (", rounded[3], ", ", rounded[4], ")", sep="")
 }
 
 ipcws4<-c(" ", " ", maketblvalue(il12_t2_adj_ipcw_L$`unlist(il12_t2_adj_ipcw$estimates$ATE)`),
