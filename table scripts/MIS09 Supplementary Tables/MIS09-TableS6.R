@@ -1,12 +1,13 @@
 rm(list=ls())
+library("xtable")
 source(here::here("0-config.R"))
-source(here('table scripts/MIS09-Table4.R'))
+source(here('table scripts/MIS09-immune-Table4.R'))
 
 load(here("audrie results/immune_ipcw.RData"))
 
 maketblvalue<-function(ipcwadjvar){
   rounded<-round(ipcwadjvar, 2)
-  paste(rounded[1], "(", rounded[3], ", ", rounded[4], ")", sep="")
+  paste(rounded[1], " (", rounded[3], ", ", rounded[4], ")", sep="")
 }
 
 ipcws6<-c(" ", " ", maketblvalue(il1_t3_adj_ipcw_L$`unlist(il1_t3_adj_ipcw$estimates$ATE)`),
@@ -27,4 +28,5 @@ ipcws6<-c(" ", " ", maketblvalue(il1_t3_adj_ipcw_L$`unlist(il1_t3_adj_ipcw$estim
 tbls6<-cbind(tbl4, ipcws6)
 names(tbls6)[9]<-"IPCW adjusted difference: Intervention vs. Control (95% CI)"
 
-write.csv(tbls6, file=here('tables/miso9-supptable6.csv'))
+write.csv(tbls6, file=here('tables/miso9-immune-supptable6.csv'))
+print(xtable(tbls6), type="html", file=here("tables/miso9-immune-supptable6.html"))
