@@ -1,4 +1,5 @@
 rm(list=ls())
+library("xtable")
 source(here::here("0-config.R"))
 
 source(here('audrie R scripts/immune/bangladesh-immune-ages-unadjusted-glm.R'))
@@ -15,12 +16,12 @@ meansd<-function(var){
 #works for confidence intervals except ipcw
 makecival<-function(var){
   rounded<-round(var, 2)
-  paste(rounded[1], "(", rounded[2], ", ", rounded[3], ")", sep="")
+  paste(rounded[1], " (", rounded[2], ", ", rounded[3], ")", sep="")
 }
 
 makeipcw<-function(var){
   rounded<-round(var, 2)
-  paste(rounded[1], "(", rounded[3], ", ", rounded[4], ")", sep="")
+  paste(rounded[1], " (", rounded[3], ", ", rounded[4], ")", sep="")
 }
 
 outcomes9<-c("Ln delta IL-1b/IL-10", "Control", "Nutrition + WSH", 
@@ -265,5 +266,6 @@ tbls9<-data.table("Outcome, Arm" = outcomes9,
                   "Fully adjusted difference: Intervention vs. Control (95%)" = adjs9,
                   "IPCW adjusted difference: Intervention vs. Control (95%)" = ipcws9)
 
-write.csv(tbls9, file=here('tables/miso9-supptable9.csv'))
+write.csv(tbls9, file=here('tables/miso9-immune-supptable9.csv'))
+print(xtable(tbls9), type="html", file=here("tables/miso9-immune-supptable9.html"))
 
