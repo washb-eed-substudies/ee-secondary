@@ -1,5 +1,5 @@
 rm(list=ls())
-library("x")
+library("xtable")
 source(here::here("0-config.R"))
 
 source(here('audrie R scripts/immune/bangladesh-immune-ages-unadjusted-glm.R'))

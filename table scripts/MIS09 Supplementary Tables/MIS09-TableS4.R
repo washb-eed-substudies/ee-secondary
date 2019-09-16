@@ -1,6 +1,7 @@
 rm(list=ls())
+library("xtable")
 source(here::here("0-config.R"))
-source(here('table scripts/MIS09-Table2.R'))
+source(here('table scripts/MIS09-immune-Table2.R'))
 
 load(here("audrie results/immune_ipcw.RData"))
 
@@ -29,4 +30,6 @@ ipcws4<-c(" ", " ", maketblvalue(il12_t2_adj_ipcw_L$`unlist(il12_t2_adj_ipcw$est
 tbls4<-cbind(tbl2, ipcws4)
 names(tbls4)[9]<-"IPCW adjusted difference: Intervention vs. Control (95% CI)"
 
-write.csv(tbls4, file=here('tables/miso9-supptable4.csv'))
+write.csv(tbls4, file=here('tables/miso9-immune-supptable4.csv'))
+print(xtable(tbls4), type="html", file=here("tables/miso9-immune-supptable4.html"))
+
