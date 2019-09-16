@@ -1,4 +1,5 @@
 rm(list=ls())
+library("xtable")
 source(here::here("0-config.R"))
 
 source(here('audrie R scripts/immune/bangladesh-immune-ages-unadjusted-glm.R'))
@@ -113,4 +114,7 @@ tbl1 <- data.table(
   "N + WSH (N=404)" = wsh
 )
 
-write.csv(tbl1, file=here('tables/miso9-table1.csv'))
+write.csv(tbl1, file=here('tables/miso9-immune-table1.csv'))
+
+print(xtable(tbl1), type="html", file=here("tables/miso9-immune-table1.html"))
+
