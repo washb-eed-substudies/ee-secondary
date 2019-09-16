@@ -42,20 +42,23 @@ d <- rbind(
   data.frame("RD"=NA, "ci.lb"=NA, "ci.ub"=NA, "SE"=NA, "z"=NA, "P-value"=NA, name = "Alpha-1-acid glycoprotein (g/L)", age=28)
 )
 
+d<-cbind(d, tr="Control vs Nutrition + Water + Sanitation + Handwashing")
+
 d$age <- as.factor(d$age)
 
 immune_plot_fun <- function(d, name){
   df <- d[d$name==name,]
   
-  p <- ggplot(df, (aes(x=age, y=RD, group=1))) + 
+  p <- ggplot(df, (aes(x=age, y=RD, group=1, fill=tr))) + 
     geom_point(size=3, col="blue") +
     geom_errorbar(aes(ymin=ci.lb, ymax=ci.ub), col="blue",
                    alpha=0.5, width = 0.3, size = 1.5) +
     geom_line(alpha = 0.3, col="blue") +
-    labs(y = " ", x =  " ", title=name) +
+    labs(y = " ", x =  " ", title=name, fill=" ") +
     coord_cartesian(ylim=c(df$`ci.lb`[1]-0.3, df$`ci.ub`[1]+0.3)) +
     theme(axis.text.x=element_blank(),
           axis.ticks.x=element_blank(),
+          legend.position = "bottom",
           plot.title = element_text(hjust = 0.5, face = "plain", size=9),
           panel.spacing = unit(0, "lines"))
   
@@ -65,14 +68,15 @@ immune_plot_fun <- function(d, name){
 immune_plot_fun_wlabels <- function(d, name){
   df <- d[d$name==name,]
   
-  p <- ggplot(df, (aes(x=age, y=RD, group=1))) + 
+  p <- ggplot(df, (aes(x=age, y=RD, group=1, fill=tr))) + 
     geom_point(size=3, col="blue") +
     geom_errorbar(aes(ymin=ci.lb, ymax=ci.ub), col="blue",
                   alpha=0.5, width = 0.3, size = 1.5) +
     geom_line(alpha = 0.3, col="blue") +
-    labs(y = " ", x =  "Child age, months", title=name) +
+    labs(y = " ", x =  "Child age, months", title=name, fill=" ") +
     coord_cartesian(ylim=c(df$`ci.lb`[1]-0.3, df$`ci.ub`[1]+0.3)) +
     theme(axis.ticks.x=element_blank(),
+          legend.position = "bottom",
           plot.title = element_text(hjust = 0.5, face = "plain", size=9),
           panel.spacing = unit(0, "lines"))
   
@@ -101,7 +105,7 @@ agp<-immune_plot_fun_wlabels(d, "Alpha-1-acid glycoprotein (g/L)")
 
 
 p1 <- ggarrange(gmc, ifn, il10, il12, il13, il17, il1, il2, il21, il4, il5, il6, tnf, igf, crp, agp,
-                ncol=4, nrow=4)
+                ncol=4, nrow=4, common.legend = TRUE, legend="bottom")
 
 
 
