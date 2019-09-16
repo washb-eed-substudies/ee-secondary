@@ -1,4 +1,5 @@
 rm(list=ls())
+library("xtable")
 source(here::here("0-config.R"))
 
 source(here('audrie R scripts/immune/bangladesh-immune-ages-unadjusted-glm.R'))
@@ -309,5 +310,7 @@ tbl5 <- data.table(
   "Fully adjusted difference: Intervention vs. Control (95% CI)" = adjtbl5
 )
 
-write.csv(tbl5, file=here('tables/miso9-table5.csv'))
+write.csv(tbl5, file=here('tables/miso9-immune-table5.csv'))
+
+print(xtable(tbl5), type="html", file=here("tables/miso9-immune-table5.html"))
 
