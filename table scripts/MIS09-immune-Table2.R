@@ -104,22 +104,22 @@ t2_il5_unadj_L <- round(t2_il5_unadj_L, 2)
 t2_il6_unadj_L <- round(t2_il6_unadj_L, 2)
 t2_tnf_unadj_L <- round(t2_tnf_unadj_L, 2)
 
-unadjtbl2 <- c(" ", " ", paste(t2_il1_unadj_L[1], "(", t2_il1_unadj_L[2], ", ", t2_il1_unadj_L[3], ")", sep=""),
-               " ", " ", paste(t2_il6_unadj_L[1], "(", t2_il6_unadj_L[2], ", ", t2_il6_unadj_L[3], ")", sep=""),
-               " ", " ", paste(t2_tnf_unadj_L[1], "(", t2_tnf_unadj_L[2], ", ", t2_tnf_unadj_L[3], ")", sep=""),
-               " ", " ", paste(t2_crp_unadj_L[1], "(", t2_crp_unadj_L[2], ", ", t2_crp_unadj_L[3], ")", sep=""),
-               " ", " ", paste(t2_il12_unadj_L[1], "(", t2_il12_unadj_L[2], ", ", t2_il12_unadj_L[3], ")", sep=""),
-               " ", " ", paste(t2_ifn_unadj_L[1], "(", t2_ifn_unadj_L[2], ", ", t2_ifn_unadj_L[3], ")", sep=""),
-               " ", " ", paste(t2_il4_unadj_L[1], "(", t2_il4_unadj_L[2], ", ", t2_il4_unadj_L[3], ")", sep=""),
-               " ", " ", paste(t2_il5_unadj_L[1], "(", t2_il5_unadj_L[2], ", ", t2_il5_unadj_L[3], ")", sep=""),
-               " ", " ", paste(t2_il13_unadj_L[1], "(", t2_il13_unadj_L[2], ", ", t2_il13_unadj_L[3], ")", sep=""),
-               " ", " ", paste(t2_il17_unadj_L[1], "(", t2_il17_unadj_L[2], ", ", t2_il17_unadj_L[3], ")", sep=""),
-               " ", " ", paste(t2_il21_unadj_L[1], "(", t2_il21_unadj_L[2], ", ", t2_il21_unadj_L[3], ")", sep=""),
-               " ", " ", paste(t2_il10_unadj_L[1], "(", t2_il10_unadj_L[2], ", ", t2_il10_unadj_L[3], ")", sep=""),
-               " ", " ", paste(t2_il2_unadj_L[1], "(", t2_il2_unadj_L[2], ", ", t2_il2_unadj_L[3], ")", sep=""),
-               " ", " ", paste(t2_gmc_unadj_L[1], "(", t2_gmc_unadj_L[2], ", ", t2_gmc_unadj_L[3], ")", sep=""),
-               " ", " ", paste(t2_agp_unadj_L[1], "(", t2_agp_unadj_L[2], ", ", t2_agp_unadj_L[3], ")", sep=""),
-               " ", " ", paste(t2_igf_unadj_L[1], "(", t2_igf_unadj_L[2], ", ", t2_igf_unadj_L[3], ")", sep="")) 
+unadjtbl2 <- c(" ", " ", paste(t2_il1_unadj_L[1], " (", t2_il1_unadj_L[2], ", ", t2_il1_unadj_L[3], ")", sep=""),
+               " ", " ", paste(t2_il6_unadj_L[1], " (", t2_il6_unadj_L[2], ", ", t2_il6_unadj_L[3], ")", sep=""),
+               " ", " ", paste(t2_tnf_unadj_L[1], " (", t2_tnf_unadj_L[2], ", ", t2_tnf_unadj_L[3], ")", sep=""),
+               " ", " ", paste(t2_crp_unadj_L[1], " (", t2_crp_unadj_L[2], ", ", t2_crp_unadj_L[3], ")", sep=""),
+               " ", " ", paste(t2_il12_unadj_L[1], " (", t2_il12_unadj_L[2], ", ", t2_il12_unadj_L[3], ")", sep=""),
+               " ", " ", paste(t2_ifn_unadj_L[1], " (", t2_ifn_unadj_L[2], ", ", t2_ifn_unadj_L[3], ")", sep=""),
+               " ", " ", paste(t2_il4_unadj_L[1], " (", t2_il4_unadj_L[2], ", ", t2_il4_unadj_L[3], ")", sep=""),
+               " ", " ", paste(t2_il5_unadj_L[1], " (", t2_il5_unadj_L[2], ", ", t2_il5_unadj_L[3], ")", sep=""),
+               " ", " ", paste(t2_il13_unadj_L[1], " (", t2_il13_unadj_L[2], ", ", t2_il13_unadj_L[3], ")", sep=""),
+               " ", " ", paste(t2_il17_unadj_L[1], " (", t2_il17_unadj_L[2], ", ", t2_il17_unadj_L[3], ")", sep=""),
+               " ", " ", paste(t2_il21_unadj_L[1], " (", t2_il21_unadj_L[2], ", ", t2_il21_unadj_L[3], ")", sep=""),
+               " ", " ", paste(t2_il10_unadj_L[1], " (", t2_il10_unadj_L[2], ", ", t2_il10_unadj_L[3], ")", sep=""),
+               " ", " ", paste(t2_il2_unadj_L[1], " (", t2_il2_unadj_L[2], ", ", t2_il2_unadj_L[3], ")", sep=""),
+               " ", " ", paste(t2_gmc_unadj_L[1], " (", t2_gmc_unadj_L[2], ", ", t2_gmc_unadj_L[3], ")", sep=""),
+               " ", " ", paste(t2_agp_unadj_L[1], " (", t2_agp_unadj_L[2], ", ", t2_agp_unadj_L[3], ")", sep=""),
+               " ", " ", paste(t2_igf_unadj_L[1], " (", t2_igf_unadj_L[2], ", ", t2_igf_unadj_L[3], ")", sep="")) 
 
 source(here('audrie R scripts/immune/bangladesh-immune-adj-age-sex.R'))
 
@@ -140,22 +140,22 @@ t2_il5_adj_sex_age_L <- round(t2_il5_adj_sex_age_L, 2)
 t2_il6_adj_sex_age_L <- round(t2_il6_adj_sex_age_L, 2)
 t2_tnf_adj_sex_age_L <- round(t2_tnf_adj_sex_age_L, 2)
 
-asadjtbl2 <- c(" ", " ", paste(t2_il1_adj_sex_age_L[1], "(", t2_il1_adj_sex_age_L[2], ", ", t2_il1_adj_sex_age_L[3], ")", sep=""),
-               " ", " ", paste(t2_il6_adj_sex_age_L[1], "(", t2_il6_adj_sex_age_L[2], ", ", t2_il6_adj_sex_age_L[3], ")", sep=""),
-               " ", " ", paste(t2_tnf_adj_sex_age_L[1], "(", t2_tnf_adj_sex_age_L[2], ", ", t2_tnf_adj_sex_age_L[3], ")", sep=""),
-               " ", " ", paste(t2_crp_adj_sex_age_L[1], "(", t2_crp_adj_sex_age_L[2], ", ", t2_crp_adj_sex_age_L[3], ")", sep=""),
-               " ", " ", paste(t2_il12_adj_sex_age_L[1], "(", t2_il12_adj_sex_age_L[2], ", ", t2_il12_adj_sex_age_L[3], ")", sep=""),
-               " ", " ", paste(t2_ifn_adj_sex_age_L[1], "(", t2_ifn_adj_sex_age_L[2], ", ", t2_ifn_adj_sex_age_L[3], ")", sep=""),
-               " ", " ", paste(t2_il4_adj_sex_age_L[1], "(", t2_il4_adj_sex_age_L[2], ", ", t2_il4_adj_sex_age_L[3], ")", sep=""),
-               " ", " ", paste(t2_il5_adj_sex_age_L[1], "(", t2_il5_adj_sex_age_L[2], ", ", t2_il5_adj_sex_age_L[3], ")", sep=""),
-               " ", " ", paste(t2_il13_adj_sex_age_L[1], "(", t2_il13_adj_sex_age_L[2], ", ", t2_il13_adj_sex_age_L[3], ")", sep=""),
-               " ", " ", paste(t2_il17_adj_sex_age_L[1], "(", t2_il17_adj_sex_age_L[2], ", ", t2_il17_adj_sex_age_L[3], ")", sep=""),
-               " ", " ", paste(t2_il21_adj_sex_age_L[1], "(", t2_il21_adj_sex_age_L[2], ", ", t2_il21_adj_sex_age_L[3], ")", sep=""),
-               " ", " ", paste(t2_il10_adj_sex_age_L[1], "(", t2_il10_adj_sex_age_L[2], ", ", t2_il10_adj_sex_age_L[3], ")", sep=""),
-               " ", " ", paste(t2_il2_adj_sex_age_L[1], "(", t2_il2_adj_sex_age_L[2], ", ", t2_il2_adj_sex_age_L[3], ")", sep=""),
-               " ", " ", paste(t2_gmc_adj_sex_age_L[1], "(", t2_gmc_adj_sex_age_L[2], ", ", t2_gmc_adj_sex_age_L[3], ")", sep=""),
-               " ", " ", paste(t2_agp_adj_sex_age_L[1], "(", t2_agp_adj_sex_age_L[2], ", ", t2_agp_adj_sex_age_L[3], ")", sep=""),
-               " ", " ", paste(t2_igf_adj_sex_age_L[1], "(", t2_igf_adj_sex_age_L[2], ", ", t2_igf_adj_sex_age_L[3], ")", sep=""))  
+asadjtbl2 <- c(" ", " ", paste(t2_il1_adj_sex_age_L[1], " (", t2_il1_adj_sex_age_L[2], ", ", t2_il1_adj_sex_age_L[3], ")", sep=""),
+               " ", " ", paste(t2_il6_adj_sex_age_L[1], " (", t2_il6_adj_sex_age_L[2], ", ", t2_il6_adj_sex_age_L[3], ")", sep=""),
+               " ", " ", paste(t2_tnf_adj_sex_age_L[1], " (", t2_tnf_adj_sex_age_L[2], ", ", t2_tnf_adj_sex_age_L[3], ")", sep=""),
+               " ", " ", paste(t2_crp_adj_sex_age_L[1], " (", t2_crp_adj_sex_age_L[2], ", ", t2_crp_adj_sex_age_L[3], ")", sep=""),
+               " ", " ", paste(t2_il12_adj_sex_age_L[1], " (", t2_il12_adj_sex_age_L[2], ", ", t2_il12_adj_sex_age_L[3], ")", sep=""),
+               " ", " ", paste(t2_ifn_adj_sex_age_L[1], " (", t2_ifn_adj_sex_age_L[2], ", ", t2_ifn_adj_sex_age_L[3], ")", sep=""),
+               " ", " ", paste(t2_il4_adj_sex_age_L[1], " (", t2_il4_adj_sex_age_L[2], ", ", t2_il4_adj_sex_age_L[3], ")", sep=""),
+               " ", " ", paste(t2_il5_adj_sex_age_L[1], " (", t2_il5_adj_sex_age_L[2], ", ", t2_il5_adj_sex_age_L[3], ")", sep=""),
+               " ", " ", paste(t2_il13_adj_sex_age_L[1], " (", t2_il13_adj_sex_age_L[2], ", ", t2_il13_adj_sex_age_L[3], ")", sep=""),
+               " ", " ", paste(t2_il17_adj_sex_age_L[1], " (", t2_il17_adj_sex_age_L[2], ", ", t2_il17_adj_sex_age_L[3], ")", sep=""),
+               " ", " ", paste(t2_il21_adj_sex_age_L[1], " (", t2_il21_adj_sex_age_L[2], ", ", t2_il21_adj_sex_age_L[3], ")", sep=""),
+               " ", " ", paste(t2_il10_adj_sex_age_L[1], " (", t2_il10_adj_sex_age_L[2], ", ", t2_il10_adj_sex_age_L[3], ")", sep=""),
+               " ", " ", paste(t2_il2_adj_sex_age_L[1], " (", t2_il2_adj_sex_age_L[2], ", ", t2_il2_adj_sex_age_L[3], ")", sep=""),
+               " ", " ", paste(t2_gmc_adj_sex_age_L[1], " (", t2_gmc_adj_sex_age_L[2], ", ", t2_gmc_adj_sex_age_L[3], ")", sep=""),
+               " ", " ", paste(t2_agp_adj_sex_age_L[1], " (", t2_agp_adj_sex_age_L[2], ", ", t2_agp_adj_sex_age_L[3], ")", sep=""),
+               " ", " ", paste(t2_igf_adj_sex_age_L[1], " (", t2_igf_adj_sex_age_L[2], ", ", t2_igf_adj_sex_age_L[3], ")", sep=""))  
 
 source(here('audrie R scripts/immune/bangladesh-immune-adj.R'))
 
@@ -176,22 +176,22 @@ t2_il5_adj_L <- round(t2_il5_adj_L, 2)
 t2_il6_adj_L <- round(t2_il6_adj_L, 2)
 t2_tnf_adj_L <- round(t2_tnf_adj_L, 2)
 
-adjtbl2 <- c(" ", " ", paste(t2_il1_adj_L[1], "(", t2_il1_adj_L[2], ", ", t2_il1_adj_L[3], ")", sep=""),
-             " ", " ", paste(t2_il6_adj_L[1], "(", t2_il6_adj_L[2], ", ", t2_il6_adj_L[3], ")", sep=""),
-             " ", " ", paste(t2_tnf_adj_L[1], "(", t2_tnf_adj_L[2], ", ", t2_tnf_adj_L[3], ")", sep=""),
-             " ", " ", paste(t2_crp_adj_L[1], "(", t2_crp_adj_L[2], ", ", t2_crp_adj_L[3], ")", sep=""),
-             " ", " ", paste(t2_il12_adj_L[1], "(", t2_il12_adj_L[2], ", ", t2_il12_adj_L[3], ")", sep=""),
-             " ", " ", paste(t2_ifn_adj_L[1], "(", t2_ifn_adj_L[2], ", ", t2_ifn_adj_L[3], ")", sep=""),
-             " ", " ", paste(t2_il4_adj_L[1], "(", t2_il4_adj_L[2], ", ", t2_il4_adj_L[3], ")", sep=""),
-             " ", " ", paste(t2_il5_adj_L[1], "(", t2_il5_adj_L[2], ", ", t2_il5_adj_L[3], ")", sep=""),
-             " ", " ", paste(t2_il13_adj_L[1], "(", t2_il13_adj_L[2], ", ", t2_il13_adj_L[3], ")", sep=""),
-             " ", " ", paste(t2_il17_adj_L[1], "(", t2_il17_adj_L[2], ", ", t2_il17_adj_L[3], ")", sep=""),
-             " ", " ", paste(t2_il21_adj_L[1], "(", t2_il21_adj_L[2], ", ", t2_il21_adj_L[3], ")", sep=""),
-             " ", " ", paste(t2_il10_adj_L[1], "(", t2_il10_adj_L[2], ", ", t2_il10_adj_L[3], ")", sep=""),
-             " ", " ", paste(t2_il2_adj_L[1], "(", t2_il2_adj_L[2], ", ", t2_il2_adj_L[3], ")", sep=""),
-             " ", " ", paste(t2_gmc_adj_L[1], "(", t2_gmc_adj_L[2], ", ", t2_gmc_adj_L[3], ")", sep=""),
-             " ", " ", paste(t2_agp_adj_L[1], "(", t2_agp_adj_L[2], ", ", t2_agp_adj_L[3], ")", sep=""),
-             " ", " ", paste(t2_igf_adj_L[1], "(", t2_igf_adj_L[2], ", ", t2_igf_adj_L[3], ")", sep="")) 
+adjtbl2 <- c(" ", " ", paste(t2_il1_adj_L[1], " (", t2_il1_adj_L[2], ", ", t2_il1_adj_L[3], ")", sep=""),
+             " ", " ", paste(t2_il6_adj_L[1], " (", t2_il6_adj_L[2], ", ", t2_il6_adj_L[3], ")", sep=""),
+             " ", " ", paste(t2_tnf_adj_L[1], " (", t2_tnf_adj_L[2], ", ", t2_tnf_adj_L[3], ")", sep=""),
+             " ", " ", paste(t2_crp_adj_L[1], " (", t2_crp_adj_L[2], ", ", t2_crp_adj_L[3], ")", sep=""),
+             " ", " ", paste(t2_il12_adj_L[1], " (", t2_il12_adj_L[2], ", ", t2_il12_adj_L[3], ")", sep=""),
+             " ", " ", paste(t2_ifn_adj_L[1], " (", t2_ifn_adj_L[2], ", ", t2_ifn_adj_L[3], ")", sep=""),
+             " ", " ", paste(t2_il4_adj_L[1], " (", t2_il4_adj_L[2], ", ", t2_il4_adj_L[3], ")", sep=""),
+             " ", " ", paste(t2_il5_adj_L[1], " (", t2_il5_adj_L[2], ", ", t2_il5_adj_L[3], ")", sep=""),
+             " ", " ", paste(t2_il13_adj_L[1], " (", t2_il13_adj_L[2], ", ", t2_il13_adj_L[3], ")", sep=""),
+             " ", " ", paste(t2_il17_adj_L[1], " (", t2_il17_adj_L[2], ", ", t2_il17_adj_L[3], ")", sep=""),
+             " ", " ", paste(t2_il21_adj_L[1], " (", t2_il21_adj_L[2], ", ", t2_il21_adj_L[3], ")", sep=""),
+             " ", " ", paste(t2_il10_adj_L[1], " (", t2_il10_adj_L[2], ", ", t2_il10_adj_L[3], ")", sep=""),
+             " ", " ", paste(t2_il2_adj_L[1], " (", t2_il2_adj_L[2], ", ", t2_il2_adj_L[3], ")", sep=""),
+             " ", " ", paste(t2_gmc_adj_L[1], " (", t2_gmc_adj_L[2], ", ", t2_gmc_adj_L[3], ")", sep=""),
+             " ", " ", paste(t2_agp_adj_L[1], " (", t2_agp_adj_L[2], ", ", t2_agp_adj_L[3], ")", sep=""),
+             " ", " ", paste(t2_igf_adj_L[1], " (", t2_igf_adj_L[2], ", ", t2_igf_adj_L[3], ")", sep="")) 
 
 # Table 2: Effect of intervention on individual immune status and growth factor measurements at age 14 months
 tbl2 <- data.table(
