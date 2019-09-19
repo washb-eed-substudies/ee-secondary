@@ -58,6 +58,10 @@ d <- subset(d, tr=="Control" | tr=="Nutrition + WSH")
 d$tr <- factor(d$tr)
 table(d$tr)
 
+#Order for replication:
+d<-d[order(d$block,d$clusterid,d$dataid),]
+
+
 #Drop ID missing from Audrie
 #d<-d[d$dataid!=72003,]
 
@@ -90,12 +94,18 @@ d <- d %>% mutate(
                   monsoon2 = factor(monsoon2),
                   monsoon3 = factor(monsoon3))
 
+#Temp fix several monsoon numbers to match audrie 
+d$monsoon2 <- as.character(d$monsoon2)
+d$monsoon2[d$dataid %in% c(42601, 42602, 42603, 42604, 42605, 42606, 42607, 42608, 45407)] <- 1
+d$monsoon2 <- factor(d$monsoon2)
+
+
 
 #impute child age with overall median
 median(d$ageday_bt2, na.rm=T)
 median(d$ageday_bt3, na.rm=T)
-d$ageday_bt2[is.na(d$ageday_bt2)] <- 441
-d$ageday_bt3[is.na(d$ageday_bt3)] <- 862
+d$ageday_bt2[is.na(d$ageday_bt2)] <- median(d$ageday_bt2, na.rm=T)
+d$ageday_bt3[is.na(d$ageday_bt3)] <- median(d$ageday_bt3, na.rm=T)
 
 
 #Clean covariates for adjusted analysis
@@ -283,9 +293,6 @@ miss <- as.data.frame(bind_rows(missingness_list))
 d <- cbind(d, miss)
 
 
-#Order for replication:
-d<-d[order(d$block,d$clusterid,d$dataid),]
-
 
 
 
@@ -296,7 +303,7 @@ d<-d[order(d$block,d$clusterid,d$dataid),]
 #Fully adjusted glm models
 res_ipcw <- NULL
 for(i in 1:ncol(Y)){
-  if(grepl("t2_", colnames(Y)[i])){
+  if(grepl("_t2", colnames(Y)[i])){
     temp<-washb_tmle(Y=(Y[,i]), Delta=miss[,i], tr=d$tr, W=W2, id=d$block, pair=NULL, family="gaussian", contrast= c("Control","Nutrition + WSH"), Q.SL.library = c("SL.glm"), seed=12345, print=F)
   }else{
     temp<-washb_tmle(Y=(Y[,i]), Delta=miss[,i], tr=d$tr, W=W3, id=d$block, pair=NULL, family="gaussian", contrast= c("Control","Nutrition + WSH"), Q.SL.library = c("SL.glm"), seed=12345, print=F)
