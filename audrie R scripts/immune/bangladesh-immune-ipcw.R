@@ -61,8 +61,8 @@ dfull$block[dfull$childid=="61031" & !is.na(dfull$childid)] <- 8
 
 
 #load blinded treatment data
-#washb_bd_tr <- read.csv(paste0(dropboxDir, "Data/Untouched/washb-bangladesh-tr.csv"), stringsAsFactors = TRUE)
-washb_bd_tr <- read.csv(paste0(dropboxDir,"Data/Untouched/washb-BD-telo-blind-tr.csv"))
+#washb_bd_tr <- read.csv(paste0(dropboxDir, "Data/Untouched/Real/washb-bangladesh-tr.csv"), stringsAsFactors = TRUE)
+washb_bd_tr <- read.csv(paste0(dropboxDir,"Data/Untouched/Real/washb-bangladesh-tr.csv"))
 washb_bd_tr$clusterid <- as.numeric(washb_bd_tr$clusterid)
 
 # merge treatment and enrollment data onto this shell of the full data
