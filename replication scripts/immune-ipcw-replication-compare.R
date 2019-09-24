@@ -34,9 +34,11 @@ d$childno[d$childid==61031] <- 1
 df <- merge(d, da, by=c("dataid", "childno"), all.x=T, all.y=T)
 table(df$ageday_bt2.x!=df$ageday_bt2.y)
 table(df$monsoon2!=df$monsoon_bt2)
+table(df$monsoon3!=df$monsoon_bt3)
 
 df[is.na(df$monsoon2) | is.na(df$monsoon_bt2),]
 
+df[is.na(df$monsoon3) | is.na(df$monsoon_bt3),]
 
 
 df$ageday_bt2.x[df$ageday_bt2.x!=df$ageday_bt2.y]

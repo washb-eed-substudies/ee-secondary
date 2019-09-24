@@ -14,12 +14,13 @@
 rm(list=ls())
 source(here::here("0-config.R"))
 
-#load full treatments
-load("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Data/Untouched/washb-bangladesh-blind-tr.Rdata")
-blind_tr$clusterid<-as.numeric(blind_tr$clusterid)
+# #load full treatments
+load("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Data/Untouched/washb-bangladesh-tr (real).Rdata")
+treatment <- d
+treatment$clusterid<-as.numeric(treatment$clusterid)
 
-treatment <- read.csv(paste0(dropboxDir,"Data/Untouched/washb-BD-telo-blind-tr.csv"))
-treatment$clusterid <- as.numeric(treatment$clusterid)
+# treatment <- read.csv(paste0(dropboxDir,"Data/Untouched/washb-BD-telo-blind-tr.csv"))
+# treatment$clusterid <- as.numeric(treatment$clusterid)
 
 #Load EED 
 ipcw <- read.csv("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Data/Cleaned/Andrew/BD-EE-ipcw.csv", stringsAsFactors = T) %>% select(-c(tr,block))
@@ -340,7 +341,8 @@ load_aud <- function(name.pattern, object_list, subgroup=F){
   }
   return(df)
 }
-load(paste0(dropboxDir,"Results/Audrie/immune_ipcw.RData"))
+load(here("audrie results/immune_ipcw.RData"))
+
 name.pattern="_adj_ipcw_L"
 object_list=ls(pattern=name.pattern)
 aud_ipcw <- load_aud(name.pattern, object_list)

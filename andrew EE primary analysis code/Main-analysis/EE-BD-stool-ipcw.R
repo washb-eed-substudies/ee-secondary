@@ -10,18 +10,24 @@
 # outcomes of stool-based biomarkers
 #---------------------------------------
 
-###Load in data
+#--------------------------------------------------------------------
+### Prelude
+#--------------------------------------------------------------------
+
 rm(list=ls())
 library(foreign)
 library(tidyverse)
 library(washb)
 
-
+#--------------------------------------------------------------------
+### Load in and merge datasets
+#--------------------------------------------------------------------
 
 setwd("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Data/Untouched/")
-load("washb-bangladesh-tr.Rdata")
+load("washb-bangladesh-tr (real).Rdata")
 d$clusterid<-as.numeric(d$clusterid)
 treatment<-d
+
 
 #Load in enrollment data for adjusted analysis
 setwd("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Data/Temp/")
@@ -95,7 +101,9 @@ table(d$tr)
 d<-subset(d, tr=="Control" | tr=="WSH" | tr=="Nutrition" | tr=="Nutrition + WSH")
 
 
+#--------------------------------------------------------------------
 #Impute time varying covariates
+#--------------------------------------------------------------------
 
 #set staffid and month to missing if missing stool samples
 no_outcome <- is.na(d$aat1) & is.na(d$aat2) & is.na(d$aat3) & is.na(d$reg1b2) & 
@@ -156,7 +164,14 @@ d$aged2[is.na(d$aged2)] <- 428
 d$aged3[is.na(d$aged3)] <- 857
 
 
+#--------------------------------------------------------------------
 #Clean covariates for adjusted analysis
+#--------------------------------------------------------------------
+
+#Order data for easier replication
+d <- d[order(d$dataid,d$childNo, d$svy),]
+
+
 #Set birthorder to 1, >=2, or missing
 class(d$birthord)
 d$birthord[d$birthord>1]<-"2+"
@@ -193,13 +208,9 @@ d$birthord<-factor(d$birthord)
 table(d$birthord)
 table(W$birthord)
 
-d %>% group_by(birthord) %>% summarise(mean=mean(log(aat3), na.rm=T))
-
 d$asset_clock[is.na(d$asset_clock)]<-"99"
 d$asset_clock<-factor(d$asset_clock)
 
-#Order data to replicate SL
-d <- d[order(d$dataid,d$childNo, d$svy),]
 
 #Re-subset W so new missing categories are included
 W<- subset(d, select=Wvars)
@@ -309,6 +320,9 @@ W3$monsoon3[is.na(W3$monsoon3)]<-"missing"
 
 
 
+#--------------------------------------------------------------------
+# Set up ipcw analysis
+#--------------------------------------------------------------------
 
 #Create indicators for missingness
 d$aat1.miss<-ifelse(is.na(d$aat1),0,1)
@@ -383,10 +397,9 @@ d$reg1b2Delta[d$reg1b2.miss==0] <- exp(9)
 
 
 
-#Order for replication:
-d<-d[order(d$block,d$clusterid,d$dataid),]
-  
+#--------------------------------------------------------------------
 #Run the adjusted ipcw analysis
+#--------------------------------------------------------------------
 
 
 #dataframe of stool biomarkers:
@@ -400,38 +413,12 @@ miss<-d %>% select(neo1.miss,mpo1.miss,aat1.miss,neo2.miss,mpo2.miss,aat2.miss,r
 contrasts <- list(c("Control","WSH"), c("Control","Nutrition"), c("Control","Nutrition + WSH"), c("WSH","Nutrition + WSH"), c("Nutrition","Nutrition + WSH"))
 
 
-
-
 #Create empty matrix to hold the glm results:
-
-
 res_adj<-list(neo_t1_adj=matrix(0,5,5), mpo_t1_adj=matrix(0,5,5), aat_t1_adj=matrix(0,5,5), 
                 neo_t2_adj=matrix(0,5,5), mpo_t2_adj=matrix(0,5,5), aat_t2_adj=matrix(0,5,5),  reg1b_t2_adj=matrix(0,5,5),
                 neo_t3_adj=matrix(0,5,5), mpo_t3_adj=matrix(0,5,5), aat_t3_adj=matrix(0,5,5))
 
 Wlist <- list(W1,W1,W1,W2,W2,W2,W2,W3,W3,W3)
-
-
- i<-6
- j <- 3
-mean(log(Y[d$tr=="Control",i]), na.rm=T)
-sum(miss[d$tr=="Control",i], na.rm=T)
-mean(log(Y[d$tr=="WSH",i]), na.rm=T)
-sum(miss[d$tr=="WSH",i], na.rm=T)
-temp<-washb_tmle(Y=log(Y[,i]), Delta=miss[,i], tr=d$tr, W=Wlist[[i]], id=d$block, pair=NULL, family="gaussian", contrast= contrasts[[j]], Q.SL.library = c("SL.glm"), seed=12345, print=T)
-
-
-d %>% group_by(tr) %>% summarize(aat2=mean(log(aat2Delta), na.rm=T))
-
-
-temp<-washb_tmle(Y=log(Y[,i]), Delta=miss[,i], tr=d$tr,
-                 W=select(Wlist[[i]], -contains("month")), 
-                 id=d$block, pair=NULL, family="gaussian", contrast= contrasts[[j]], Q.SL.library = c("SL.glm"), seed=12345, print=T)
-
-
-
-# d <- d[(d$tr=="Control" | d$tr=="Nutrition + WSH") & !is.na(d$tr),]
-# summary(d$aged1)
 
 
 for(i in 1:10){
