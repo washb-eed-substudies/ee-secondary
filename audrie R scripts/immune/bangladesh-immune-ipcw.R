@@ -17,7 +17,7 @@
 #---------------------------------------
 
 #Clear out R environment (remove and loaded data)
-#rm(list=ls())
+rm(list=ls())
 
 
 ######################
@@ -55,21 +55,29 @@ washb_bd_immun<- read.csv("washb-bangladesh-plasma-lab-t2-t3-ipcw.csv", stringsA
 #load
 dfull<- read.csv("washb-bangladesh-anthro-diar-ee-med-enrol-tracking-immun-ipcw2.csv", stringsAsFactors = TRUE)
 
+#Manually set  clusterid and block for childid 61031 so treatments can merge
+dfull$clusterid[dfull$childid=="61031" & !is.na(dfull$childid)] <- 61
+dfull$block[dfull$childid=="61031" & !is.na(dfull$childid)] <- 8
+
+
 #load blinded treatment data
-#washb_bd_tr <- read.csv(paste0(dropboxDir, "Data/Untouched/washb-bangladesh-tr.csv"), stringsAsFactors = TRUE)
-washb_bd_tr <- read.csv(paste0(dropboxDir,"Data/Untouched/washb-BD-telo-blind-tr.csv"))
+#washb_bd_tr <- read.csv(paste0(dropboxDir, "Data/Untouched/Real/washb-bangladesh-tr.csv"), stringsAsFactors = TRUE)
+washb_bd_tr <- read.csv(paste0(dropboxDir,"Data/Untouched/Real/washb-bangladesh-tr.csv"))
 washb_bd_tr$clusterid <- as.numeric(washb_bd_tr$clusterid)
 
 # merge treatment and enrollment data onto this shell of the full data
-dfull <- merge(dfull,washb_bd_tr,by=c("clusterid","block"),all.x=T,all.y=F)
-
+dim(dfull)
+dim(washb_bd_tr)
+dfull <- merge(dfull,washb_bd_tr,by=c("clusterid","block"),all.x=T,all.y=T)
+table(is.na(dfull$tr))
 
 # re-order the treatment factor for convenience, dropping the arms not included in immune
 dfull$tr <- factor(dfull$tr,levels=c("Control","Nutrition + WSH"))
 
 # now merge the observed plasma outcomes onto this full dataset
-idfull <- merge(dfull,washb_bd_immun,by=c("dataid","clusterid","childno"),all.x=T,all.y=T)
-
+#idfull <- merge(dfull,washb_bd_immun,by=c("childid","dataid","clusterid","childno"),all.x=T,all.y=T)
+washb_bd_immun <- subset(washb_bd_immun, select = -c(dataid, childno))
+idfull <- merge(dfull,washb_bd_immun,by=c("childid"), all.x=T, all.y=T)
 
 # sort the data for perfect replication with andrew on the V-fold cross-validation
 idfull <- idfull[order(idfull$block,idfull$clusterid,idfull$dataid),]

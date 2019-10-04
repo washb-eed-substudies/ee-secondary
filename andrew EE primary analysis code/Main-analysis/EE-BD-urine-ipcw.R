@@ -9,54 +9,54 @@
 # outcomes of urine-based biomarkers
 #---------------------------------------
 
-###Load in data
+#--------------------------------------------------------------------
+### Preamble
+#--------------------------------------------------------------------
+
 rm(list=ls())
-try(detach(package:plyr))
 library(foreign)
 library(dplyr)
 library(washb)
 
-
+#--------------------------------------------------------------------
+###Load in and merge datasets
+#--------------------------------------------------------------------
 
 setwd("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Data/Untouched/")
-load("washb-bangladesh-tr.Rdata")
+load("washb-bangladesh-tr (real).Rdata")
 d$clusterid<-as.numeric(d$clusterid)
 dim(d)
 treatment<-d
+
 
 #Load in enrollment data for adjusted analysis
 setwd("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Data/Temp/")
 enrol<-read.csv("washb-bangladesh-enrol+animals.csv",stringsAsFactors = TRUE)
 dim(enrol)
 
-#Load in urine survey and ipcw datasets
+#Load in ipcw dataset
 setwd("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Data/Cleaned/Andrew")
-urine<-read.csv("BD-EE-urine.csv")
 ipcw<-read.csv("BD-EE-ipcw.csv", stringsAsFactors = T) %>% select(-c(tr,block))
 
 #Load in L/M outcomes
 setwd("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Data/Cleaned/Andrew")
 outcomes<-read.dta("washb-BD-EE-urine-outcomes-stata12.dta")
 outcomes$childid<-as.numeric(outcomes$childid)
-load("urine_volume.Rdata")
 
 #Load in urine survey data
 setwd("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Data/Cleaned/Andrew/")
 urine<-read.csv("BD-EE-urine.csv")
 dim(urine)
 
-#Drop and merge fixed urine volumes
+#Drop urine volumes in urine dataset and merge fixed urine volumes
+load("urine_volume.Rdata")
 urine<-urine %>% subset(select=-c(urineVol_t1,urineVol_t2,urineVol_t3))
 urine<-merge(urine, urineVol, by=c("dataid", "childNo"))
-
-
 
 dim(urine)
 dim(outcomes)
 urine<-left_join(urine,outcomes, by="childid")
 dim(urine)
-
-
 
 
 
@@ -88,8 +88,10 @@ d<-subset(d, tr=="Control" | tr=="WSH" | tr=="Nutrition" | tr=="Nutrition + WSH"
 dim(d)
 
 
-
+#--------------------------------------------------------------------
 #Impute time varying covariates
+#--------------------------------------------------------------------
+
 
 #calculate overall median:
 month1_median1 <-    median(d$month1, na.rm = T)
@@ -115,13 +117,14 @@ d$month3 <- ceiling(d$month3)
 d$month1[is.na(d$month1)] <-  month1_median1
 d$month2[is.na(d$month2)] <-  month1_median2
 d$month3[is.na(d$month3)] <-  month1_median3
-table(d$month1)
-
 
 table(d$month1)
 table(d$month2)
 table(d$month3)
 
+
+
+#Calculate indicator for monsoon season for each follow-up time
 d <- d %>% mutate(monsoon1 = ifelse(month1 > 4 & month1 < 11, "1", "0"),
                   monsoon2 = ifelse(month2 > 4 & month2 < 11, "1", "0"),
                   monsoon3 = ifelse(month3 > 4 & month3 < 11, "1", "0"),
@@ -139,15 +142,20 @@ table(d$monsoon2, d$tr)
 table(d$monsoon3, d$tr)
 
 
-#impute child age with overall median
+#impute missing child age with overall median
 d$aged1[is.na(d$aged1)] <- 84
 d$aged2[is.na(d$aged2)] <- 428
 d$aged3[is.na(d$aged3)] <- 857
 
 
 
-
+#--------------------------------------------------------------------
 #Clean covariates for adjusted analysis
+#--------------------------------------------------------------------
+
+#Order data for easier replication
+d <- d[order(d$dataid,d$childNo, d$svy),]
+
 #Set birthorder to 1, >=2, or missing
 class(d$birthord)
 d$birthord[d$birthord>1]<-"2+"
@@ -182,14 +190,12 @@ for(i in 1:ncol(W)){
 #Replace missingness for factors with new level
 #in main dataset 
 d$sex<-as.factor(d$sex)
-#d$birthord[is.na(d$birthord)]<-"99"
 d$birthord<-factor(d$birthord)
 
 d$asset_clock[is.na(d$asset_clock)]<-"99"
 d$asset_clock<-factor(d$asset_clock)
 
-#Order data to replicate SL
-d <- d[order(d$dataid,d$childNo, d$svy),]
+
 
 #Re-subset W so new missing categories are included
 W<- subset(d, select=Wvars)
@@ -293,9 +299,13 @@ W3<- cbind(W, subset(d, select=Wvars3))
 
 
 
-#------------------
-#Generate LM ratio
-#------------------
+
+
+
+
+#--------------------------------------------------------------------
+# Generate LM ratio
+#--------------------------------------------------------------------
 
 #Destring urine and LM volume
 d$urineVol_t1<-as.numeric(d$urineVol_t1)
@@ -357,9 +367,16 @@ d$mann.rec.MMOL_t2<-(d$Mann2/1000)*(1/182.172)
 d$mann.rec.MMOL_t3<-(d$Mann3/1000)*(1/182.172)
 mean(d$lact.rec.MMOL_t1, na.rm=T)
 
-############################
-#Calculate outcomes:
-############################
+
+
+
+
+
+
+
+#--------------------------------------------------------------------
+# Calculate outcomes:
+#--------------------------------------------------------------------
 
 d$Lact1<-d$Lact1*(1/342.296)
 d$Lact2<-d$Lact2*(1/342.296)
@@ -381,12 +398,14 @@ mean(log(d$Mann3), na.rm=T)
 
 
 
-############################
+
+
+
+
+
+#--------------------------------------------------------------------
 #Set up ipcw analysis
-############################
-
-
-
+#--------------------------------------------------------------------
 
 #Create indicators for missingness
 d$Lact1.miss<-ifelse(is.na(d$Lact1),0,1)
@@ -420,10 +439,7 @@ table(d$Lact2.miss)
 table(d$Lact3.miss)
 
 
-mean(d$Lact1.miss, na.rm=T)
-
-
-# set missing outcomes to an arbitrary, non-missing value. In this case use 9
+# set missing outcomes to an arbitrary, non-missing value. In this case use 9 (after transformation)
 d$Lact1Delta <- d$Lact1
 d$Lact1Delta[d$Lact1.miss==0] <- exp(9)
 
@@ -451,14 +467,11 @@ d$LM2Delta[d$LM2.miss==0] <- exp(9)
 d$LM3Delta <- d$LM3
 d$LM3Delta[d$LM3.miss==0] <- exp(9)
 
-mean(log(d$Lact1Delta), na.rm=T)
 
 
-
-#Order for replication:
-d<-d[order(d$block,d$clusterid,d$dataid),]
-  
-#Run the unadjusted ipcw analysis
+#--------------------------------------------------------------------
+#Run the ipcw analysis
+#--------------------------------------------------------------------
 
 #dataframes of urine biomarkers and missingness:
 Y<-d %>% select(Lact1Delta,Mann1Delta,LM1Delta,
@@ -472,45 +485,6 @@ miss<-d %>% select(Lact1.miss,Mann1.miss,LM1.miss,
 contrasts <- list(c("Control","WSH"), c("Control","Nutrition"), c("Control","Nutrition + WSH"), c("WSH","Nutrition + WSH"), c("Nutrition","Nutrition + WSH"))
 
 
-#Create empty matrix to hold the glm results:
-lact_t1_unadj<-mann_t1_unadj<-lm_t1_unadj<-matrix(0, nrow=5, ncol=5)
-lact_t2_unadj<-mann_t2_unadj<-lm_t2_unadj<-matrix(0, nrow=5, ncol=5)
-lact_t3_unadj<-mann_t3_unadj<-lm_t3_unadj<-matrix(0, nrow=5, ncol=5)
-
-res_unadj<-list(lact_t1_unadj=lact_t1_unadj, mann_t1_unadj=mann_t1_unadj, lm_t1_unadj=lm_t1_unadj, 
-                lact_t2_unadj=lact_t2_unadj, mann_t2_unadj=mann_t2_unadj, lm_t2_unadj=lm_t2_unadj, 
-                lact_t3_unadj=lact_t3_unadj, mann_t3_unadj=mann_t3_unadj, lm_t3_unadj=lm_t3_unadj)
-
-
-
-# # #Unadjusted glm models
-for(i in 1:ncol(Y)){
-  for(j in 1:5){
-    #note the log transformation of the outcome prior to running GLM model:
-    temp<-washb_tmle(Y=log(Y[,i]), Delta=miss[,i], tr=d$tr, W=NULL, id=d$block, pair=NULL, family="gaussian", contrast= contrasts[[j]], Q.SL.library = c("SL.glm"), seed=12345, print=T)
-    cat(i," : ",j, "\n")
-    res_unadj[[i]][j,]<-(t(unlist(temp$estimates$ATE)))
-    colnames(res_unadj[[i]])<-c("psi","var.psi","ci.l","ci.u", "Pval")
-    rownames(res_unadj[[i]])<-c(c("Control v WSH", "Control v Nutrition", "Control v Nutrition + WSH", "WSH v Nutrition + WSH", "Nutrition v Nutrition + WSH"))
-  }
-}
-
-
-
-#Extract estimates
-l1_unadj_ipcw_M<-res_unadj[[1]]
-l2_unadj_ipcw_M<-res_unadj[[4]]
-l3_unadj_ipcw_M<-res_unadj[[7]]
-
-m1_unadj_ipcw_M<-res_unadj[[2]]
-m2_unadj_ipcw_M<-res_unadj[[5]]
-m3_unadj_ipcw_M<-res_unadj[[8]]
-
-lmr1_unadj_ipcw_M<-res_unadj[[3]]
-lmr2_unadj_ipcw_M<-res_unadj[[6]]
-lmr3_unadj_ipcw_M<-res_unadj[[9]]
-
-
 
 #Run the adjusted ipcw analysis
 res_adj<-list(lact_t1_adj=matrix(0,5,5), mann_t1_adj=matrix(0,5,5), lm_t1_adj=matrix(0,5,5), 
@@ -519,20 +493,6 @@ res_adj<-list(lact_t1_adj=matrix(0,5,5), mann_t1_adj=matrix(0,5,5), lm_t1_adj=ma
 
  Wlist <- list(W1,W1,W1,W2,W2,W2,W3,W3,W3)
 
-# i<-7
-# j <- 4
-# 
-# #here we do adjusted
-# W=Wlist[[i]]
-# # W <- W[(d$tr=="Control" | d$tr=="Nutrition + WSH") & !is.na(d$tr),]
-# # table(W$staffid1)
-# 
-# mean(log(Y[d$tr=="Control",i]), na.rm=T)
-# mean(miss[d$tr=="Control",i], na.rm=T)
-# mean(log(Y[d$tr=="WSH",i]), na.rm=T)
-# mean(miss[d$tr=="WSH",i], na.rm=T)
-# temp<-washb_tmle(Y=log(Y[,i]), Delta=miss[,i], tr=d$tr, W=Wlist[[i]], id=d$block, pair=NULL, family="gaussian", contrast= contrasts[[j]], Q.SL.library = c("SL.glm"), seed=12345, print=T)
-# 
 
 for(i in 1:ncol(Y)){
   for(j in 1:5){
@@ -563,31 +523,26 @@ lmr3_adj_ipcw_M<-res_adj[[9]]
 
 
 setwd("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Results/Andrew/")
-save(l1_unadj_ipcw_M,
-l2_unadj_ipcw_M,
-l3_unadj_ipcw_M,
-m1_unadj_ipcw_M,
-m2_unadj_ipcw_M,
-m3_unadj_ipcw_M,
-lmr1_unadj_ipcw_M,
-lmr2_unadj_ipcw_M,
-lmr3_unadj_ipcw_M,
-l1_adj_ipcw_M,
-l2_adj_ipcw_M,
-l3_adj_ipcw_M,
-m1_adj_ipcw_M,
-m2_adj_ipcw_M,
-m3_adj_ipcw_M,
-lmr1_adj_ipcw_M,
-lmr2_adj_ipcw_M,
-lmr3_adj_ipcw_M,
-file="urine_ipcw_res.Rdata")
+save(
+  l1_adj_ipcw_M,
+  l2_adj_ipcw_M,
+  l3_adj_ipcw_M,
+  m1_adj_ipcw_M,
+  m2_adj_ipcw_M,
+  m3_adj_ipcw_M,
+  lmr1_adj_ipcw_M,
+  lmr2_adj_ipcw_M,
+  lmr3_adj_ipcw_M,
+  file="urine_ipcw_res.Rdata")
 
 
-#--------------------------------
+
+
+
+#--------------------------------------------------------------------
 # Percent L and M recovery
 # (for supplimentary table)
-#--------------------------------
+#--------------------------------------------------------------------
 
 #Create indicators for missingness
 d$perl1.miss<-ifelse(is.na(d$per.lact.rec_t1),0,1)
@@ -663,25 +618,5 @@ save(perl1_adj_ipcw_M,
      file="C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Results/Andrew/pre_recovery_ipcw_res_M.Rdata"
      )
 
-
-
-
-lrec1_adj_ipcw_M<-res_per[[1]]
-lrec2_adj_ipcw_M<-res_per[[3]]
-lrec3_adj_ipcw_M<-res_per[[5]]
-
-mrec1_adj_ipcw_M<-res_per[[2]]
-mrec2_adj_ipcw_M<-res_per[[4]]
-mrec3_adj_ipcw_M<-res_per[[6]]
-
-
-save(lrec1_adj_ipcw_M,
-     lrec2_adj_ipcw_M,
-     lrec3_adj_ipcw_M,
-     mrec1_adj_ipcw_M,
-     mrec2_adj_ipcw_M,
-     mrec3_adj_ipcw_M,
-     file="C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Results/Andrew/pre_recovery_ipcw_res2_M.Rdata"
-     )
 
 

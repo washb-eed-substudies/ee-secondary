@@ -20,10 +20,6 @@ fulld <- read.csv(paste0(dropboxDir,"Data/Cleaned/Andrew/EE-BD_fulldata.csv"))
 colnames(fulld)
 
 
-# fulld$n_chickens[fulld$childid=="52061"]
-# 52061  76011 124071 133041 147011 207081 406071
-
-#Subset to needed variables
 
 #Merge in immune outcomes
 dim(imm)
@@ -31,18 +27,23 @@ dim(fulld)
 d <- left_join(imm, fulld, by="childid")
 dim(d)
 
-#Drop real treatment arm
-d <- subset(d, select = -c(tr))
-
 #Drop unneeded variables
 d <- subset(d, select = -c(ur_agem1, ur_agem2, ur_agem3, st_agem1, st_agem2, st_agem3))
 
-#Merge in blinded treatment
-blind_tr <- read.csv(paste0(dropboxDir,"Data/Untouched/washb-BD-telo-blind-tr.csv"))
-blind_tr$clusterid <- as.numeric(blind_tr$clusterid)
-d <- left_join(d, blind_tr, by=c("block", "clusterid"))
-dim(d)
+#Drop real treatment arm
+# d <- subset(d, select = -c(tr))
+# 
+# #Merge in blinded treatment
+# blind_tr <- read.csv(paste0(dropboxDir,"Data/Untouched/washb-BD-telo-blind-tr.csv"))
+# blind_tr$clusterid <- as.numeric(blind_tr$clusterid)
+# d <- left_join(d, blind_tr, by=c("block", "clusterid"))
+# dim(d)
 table(d$tr)
+
+#Drop observation from one child erroneously sampled from Nutrition arm
+d <- d %>% filter(tr != "Nutrition")
+d <- droplevels(d)
+
 
 #Load and merge in ages and dates at blood collection from 
 ages <- read.csv(paste0(dropboxDir,"Data/Cleaned/Andrew/BD-EE-telo.csv"))
@@ -63,22 +64,7 @@ dim(da)
 d <- full_join(d, da, by="childid")
 dim(d)
 
-#Note: Audrie's ages have 1 less decimal place
-# d$agem2 <- round(d$agem2, 5)
-# d$agem3 <- round(d$agem3, 5)
-
-# d$childid[which(is.na(d$agem2) & !is.na(d$agemth_bt2))]
-# d$childid[which(d$agem2 != d$agemth_bt2)]
-# 
-# data.frame(d$agem2, d$agemth_bt2)
-# 
-# #Add ages for 2 IDs
-# d$agem2[d$childid==30061] <- d$agemth_bt2[d$childid==30061]
-# d$agem3[d$childid==30061] <- d$agemth_bt3[d$childid==30061]
-# d$agem2[d$childid==433011] <- d$agemth_bt2[d$childid==433011]
-# d$agem3[d$childid==433011] <- d$agemth_bt3[d$childid==433011]
-
-#TEMP - need to make my child ages match Audrie's
+#TEMP - need to make my child ages match Audrie's for one missing child
 summary(d$agem2 - d$agemth_bt2)
 summary(d$agem3 - d$agemth_bt3)
 table(is.na(d$agem2))
@@ -99,24 +85,8 @@ summary(d$month3 - d$month_t3)
 #Save data.frame
 save(d, file = c(paste0(dropboxDir,"Data/Cleaned/Andrew/BD-EE-immune.Rdata")))
 
-
-#Compare ages between Andrew and Audrie
-df2 <- d %>% select(childid, agem2, agemth_bt2, agem3, agemth_bt3)
-head(df2)
-
-df2[df2$childid=="439021",]
-
-#Note: Audrie's ages have 1 less decimal place
-# df2$agem2 <- round(df2$agem2, 5)
-# df2$agem3 <- round(df2$agem3, 5)
-# table(df2$agem2==df2$agemth_bt2)
-# table(df2$agem3==df2$agemth_bt3)
-# 
-# df3 <- df2[df2$agem2!=df2$agemth_bt2 | df2$agem3!=df2$agemth_bt3,]
-# df3
-
 #load in names of Audrie's objects
-nm <- list.files(path=paste0(dropboxDir,"Results/Audrie/"))
+nm <- list.files(path=here("Results/Audrie/"))
 nm
 
 
@@ -139,7 +109,7 @@ age_t3_blood_M <- rbind(age3_overall, age3_tr)
 
 
 #Compare to Audrie's
-load(paste0(dropboxDir,"Results/Audrie/immune-age-stats.RData"))
+load(here("audrie results/immune-age-stats.RData"))
 age_t2_blood_L[,-1] - age_t2_blood_M[,-1]
 age_t3_blood_L[,-1] - age_t3_blood_M[,-1]
 
@@ -150,6 +120,7 @@ age_t3_blood_L[,-1] - age_t3_blood_M[,-1]
 # N's and means
 #------------------------------------------------------------------------------------------------
 
+#Set outcomes
 outcomes <- c("igf_t2",          "igf_t3",          "crp_t2",         
   "agp_t2",          "gmcsf_t2",        "ifng_t2",         "il10_t2",         "il12_t2",        
   "il13_t2",         "il17_t2",         "il1_t2",          "il2_t2",          "il21_t2",        
@@ -166,7 +137,7 @@ mean_sd <- data.frame(Y=gsub("_mean","",mean_sd[1:n,1]), mean=mean_sd[1:n,2], sd
 
 #Compare to Audrie's
 
-load(paste0(dropboxDir,"Results/Audrie/immune_N_means.RData"))
+load(here("audrie results/immune_N_means.RData"))
 ls()
 
 aud_N <- as.data.frame(rbindlist(lapply(ls(pattern="_N_L"), get)))
@@ -191,20 +162,183 @@ colnames(d) <- gsub("tnfa","tnf",colnames(d))
 colnames(d) <- gsub("ifng","ifn",colnames(d))
 
 
-#dataframe of urine biomarkers:
-colnames(d)
-Y<-d %>% rename(t2_igf=igf_t2,          t3_igf=igf_t3,          t2_crp=crp_t2,          t2_agp=agp_t2,          t2_gmc=gmc_t2,       
+#Generate ratio outcomes
+# [1] "d23_ln_gmc_unadj_L"          "d23_ln_ifn_unadj_L"          "d23_ln_igf_unadj_L"         
+# [4] "d23_ln_il1_unadj_L"          "d23_ln_il10_unadj_L"         "d23_ln_il12_unadj_L"        
+# [7] "d23_ln_il13_unadj_L"         "d23_ln_il17_unadj_L"         "d23_ln_il2_unadj_L"         
+# [10] "d23_ln_il21_unadj_L"         "d23_ln_il4_unadj_L"          "d23_ln_il5_unadj_L"         
+# [13] "d23_ln_il6_unadj_L"          "d23_ln_tnf_unadj_L"          "d23_ratio_gmc_il10_unadj_L" 
+# [16] "d23_ratio_ifn_il10_unadj_L"  "d23_ratio_ifn_il13_unadj_L"  "d23_ratio_ifn_il17_unadj_L" 
+# [19] "d23_ratio_ifn_il21_unadj_L"  "d23_ratio_ifn_il4_unadj_L"   "d23_ratio_ifn_il5_unadj_L"  
+# [22] "d23_ratio_il1_il10_unadj_L"  "d23_ratio_il12_il10_unadj_L" "d23_ratio_il12_il13_unadj_L"
+# [25] "d23_ratio_il12_il17_unadj_L" "d23_ratio_il12_il21_unadj_L" "d23_ratio_il12_il4_unadj_L" 
+# [28] "d23_ratio_il12_il5_unadj_L"  "d23_ratio_il13_il10_unadj_L" "d23_ratio_il17_il10_unadj_L"
+# [31] "d23_ratio_il2_il10_unadj_L"  "d23_ratio_il21_il10_unadj_L" "d23_ratio_il4_il10_unadj_L" 
+# [34] "d23_ratio_il5_il10_unadj_L"  "d23_ratio_il6_il10_unadj_L"  "d23_ratio_pro_il10_unadj_L" 
+# [37] "d23_ratio_th1_il10_unadj_L"  "d23_ratio_th1_th17_unadj_L"  "d23_ratio_th1_th2_unadj_L"  
+# [40] "d23_ratio_th17_il10_unadj_L" "d23_ratio_th2_il10_unadj_L"  "d23_ratio_tnf_il10_unadj_L" 
+# 
+#             
+# [58] "t2_ratio_gmc_il10_unadj_L"   "t2_ratio_ifn_il10_unadj_L"   "t2_ratio_ifn_il13_unadj_L"  
+# [61] "t2_ratio_ifn_il17_unadj_L"   "t2_ratio_ifn_il21_unadj_L"   "t2_ratio_ifn_il4_unadj_L"   
+# [64] "t2_ratio_ifn_il5_unadj_L"    "t2_ratio_il1_il10_unadj_L"   "t2_ratio_il12_il10_unadj_L" 
+# [67] "t2_ratio_il12_il13_unadj_L"  "t2_ratio_il12_il17_unadj_L"  "t2_ratio_il12_il21_unadj_L" 
+# [70] "t2_ratio_il12_il4_unadj_L"   "t2_ratio_il12_il5_unadj_L"   "t2_ratio_il13_il10_unadj_L" 
+# [73] "t2_ratio_il17_il10_unadj_L"  "t2_ratio_il2_il10_unadj_L"   "t2_ratio_il21_il10_unadj_L" 
+# [76] "t2_ratio_il4_il10_unadj_L"   "t2_ratio_il5_il10_unadj_L"   "t2_ratio_il6_il10_unadj_L"  
+# [79] "t2_ratio_pro_il10_unadj_L"   "t2_ratio_th1_il10_unadj_L"   "t2_ratio_th1_th17_unadj_L"  
+# [82] "t2_ratio_th1_th2_unadj_L"    "t2_ratio_th17_il10_unadj_L"  "t2_ratio_th2_il10_unadj_L"  
+# 
+#            
+# [100] "t3_ratio_gmc_il10_unadj_L"   "t3_ratio_ifn_il10_unadj_L"   "t3_ratio_ifn_il13_unadj_L"  
+# [103] "t3_ratio_ifn_il17_unadj_L"   "t3_ratio_ifn_il21_unadj_L"   "t3_ratio_ifn_il4_unadj_L"   
+# [106] "t3_ratio_ifn_il5_unadj_L"    "t3_ratio_il1_il10_unadj_L"   "t3_ratio_il12_il10_unadj_L" 
+# [109] "t3_ratio_il12_il13_unadj_L"  "t3_ratio_il12_il17_unadj_L"  "t3_ratio_il12_il21_unadj_L" 
+# [112] "t3_ratio_il12_il4_unadj_L"   "t3_ratio_il12_il5_unadj_L"   "t3_ratio_il13_il10_unadj_L" 
+# [115] "t3_ratio_il17_il10_unadj_L"  "t3_ratio_il2_il10_unadj_L"   "t3_ratio_il21_il10_unadj_L" 
+# [118] "t3_ratio_il4_il10_unadj_L"   "t3_ratio_il5_il10_unadj_L"   "t3_ratio_il6_il10_unadj_L"  
+# [121] "t3_ratio_pro_il10_unadj_L"   "t3_ratio_th1_il10_unadj_L"   "t3_ratio_th1_th17_unadj_L"  
+# [124] "t3_ratio_th1_th2_unadj_L"    "t3_ratio_th17_il10_unadj_L"  "t3_ratio_th2_il10_unadj_L"  
+# [127] "t3_ratio_tnf_il10_unadj_L"   "t3_tnf_unadj_L"  
+
+d <- d %>% rename(t2_igf=igf_t2,          t3_igf=igf_t3,          t2_crp=crp_t2,          t2_agp=agp_t2,          t2_gmc=gmc_t2,       
                 t2_ifn=ifn_t2,         t2_il10=il10_t2,         t2_il12=il12_t2,         t2_il13=il13_t2,         t2_il17=il17_t2,        
                 t2_il1=il1_t2,          t2_il2=il2_t2,          t2_il21=il21_t2,         t2_il4=il4_t2,          t2_il5=il5_t2,         
                 t2_il6=il6_t2,          t2_tnf=tnf_t2,         t3_gmc=gmc_t3,        t3_ifn=ifn_t3,         t3_il10=il10_t3,        
                 t3_il12=il12_t3,         t3_il13=il13_t3,         t3_il17=il17_t3,         t3_il1=il1_t3,          t3_il2=il2_t3,         
                 t3_il21=il21_t3,         t3_il4=il4_t3,          t3_il5=il5_t3,          t3_il6=il6_t3,          t3_tnf=tnf_t3) %>%
-  select(t2_igf,          t3_igf,          t2_crp,          t2_agp,          t2_gmc,       
+           mutate(
+                t2_ratio_gmc_il10   =   t2_gmc/t2_il10,   
+                t2_ratio_ifn_il10   =   t2_ifn/t2_il10,   
+                t2_ratio_ifn_il13  =   t2_ifn/t2_il13,  
+                t2_ratio_ifn_il17   =   t2_ifn/t2_il17,   
+                t2_ratio_ifn_il21   =   t2_ifn/t2_il21,   
+                t2_ratio_ifn_il4  =   t2_ifn/t2_il4,  
+                t2_ratio_ifn_il5   =   t2_ifn/t2_il5,   
+                t2_ratio_il1_il10   =   t2_il1/t2_il10,   
+                t2_ratio_il12_il10 =   t2_il12/t2_il10, 
+                t2_ratio_il12_il13  =   t2_il12/t2_il13,  
+                t2_ratio_il12_il17  =   t2_il12/t2_il17,  
+                t2_ratio_il12_il21 =   t2_il12/t2_il21, 
+                t2_ratio_il12_il4   =   t2_il12/t2_il4,   
+                t2_ratio_il12_il5   =   t2_il12/t2_il5,   
+                t2_ratio_il13_il10 =   t2_il13/t2_il10, 
+                t2_ratio_il17_il10  =   t2_il17/t2_il10,  
+                t2_ratio_il2_il10   =   t2_il2/t2_il10,   
+                t2_ratio_il21_il10 =   t2_il21/t2_il10, 
+                t2_ratio_il4_il10   =   t2_il4/t2_il10,   
+                t2_ratio_il5_il10   =   t2_il5/t2_il10,   
+                t2_ratio_il6_il10  =   t2_il6/t2_il10,  
+                #t2_ratio_pro_il10   =   t2_pro/t2_il10,   
+                # t2_ratio_th1_il10   =   t2_th1/t2_il10,   
+                # t2_ratio_th1_th17  =   t2_th1/t2_th17,  
+                # t2_ratio_th1_th2   =   t2_th1/t2_th2,   
+                # t2_ratio_th17_il10  =   t2_th17/t2_il10,  
+                # t2_ratio_th2_il10  =   t2_th2/t2_il10,  
+                # t2_ratio_tnf_il10 =   t2_tnf/t2_il10,
+                
+                t3_ratio_gmc_il10   =   t3_gmc/t3_il10,   
+                t3_ratio_ifn_il10   =   t3_ifn/t3_il10,   
+                t3_ratio_ifn_il13  =   t3_ifn/t3_il13,  
+                t3_ratio_ifn_il17   =   t3_ifn/t3_il17,   
+                t3_ratio_ifn_il21   =   t3_ifn/t3_il21,   
+                t3_ratio_ifn_il4  =   t3_ifn/t3_il4,  
+                t3_ratio_ifn_il5   =   t3_ifn/t3_il5,   
+                t3_ratio_il1_il10   =   t3_il1/t3_il10,   
+                t3_ratio_il12_il10 =   t3_il12/t3_il10, 
+                t3_ratio_il12_il13  =   t3_il12/t3_il13,  
+                t3_ratio_il12_il17  =   t3_il12/t3_il17,  
+                t3_ratio_il12_il21 =   t3_il12/t3_il21, 
+                t3_ratio_il12_il4   =   t3_il12/t3_il4,   
+                t3_ratio_il12_il5   =   t3_il12/t3_il5,   
+                t3_ratio_il13_il10 =   t3_il13/t3_il10, 
+                t3_ratio_il17_il10  =   t3_il17/t3_il10,  
+                t3_ratio_il2_il10   =   t3_il2/t3_il10,   
+                t3_ratio_il21_il10 =   t3_il21/t3_il10, 
+                t3_ratio_il4_il10   =   t3_il4/t3_il10,   
+                t3_ratio_il5_il10   =   t3_il5/t3_il10,   
+                t3_ratio_il6_il10  =   t3_il6/t3_il10#,  
+                #t3_ratio_pro_il10   =   t3_pro/t3_il10,   
+                # t3_ratio_th1_il10   =   t3_th1/t3_il10,   
+                # t3_ratio_th1_th17  =   t3_th1/t3_th17,  
+                # t3_ratio_th1_th2   =   t3_th1/t3_th2,   
+                # t3_ratio_th17_il10  =   t3_th17/t3_il10,  
+                # t3_ratio_th2_il10  =   t3_th2/t3_il10,  
+                # t3_ratio_tnf_il10 =   t3_tnf/t3_il10
+                )
+
+
+
+#dataframe of urine biomarkers:
+colnames(d)
+Y<-d %>% select(t2_igf,          t3_igf,          t2_crp,          t2_agp,          t2_gmc,       
          t2_ifn,         t2_il10,         t2_il12,         t2_il13,         t2_il17,        
          t2_il1,          t2_il2,          t2_il21,         t2_il4,          t2_il5,         
          t2_il6,          t2_tnf,         t3_gmc,        t3_ifn,         t3_il10,        
          t3_il12,         t3_il13,         t3_il17,         t3_il1,          t3_il2,         
-         t3_il21,         t3_il4,          t3_il5,          t3_il6,          t3_tnf)
+         t3_il21,         t3_il4,          t3_il5,          t3_il6,          t3_tnf ,
+         t2_ratio_gmc_il10,
+         t2_ratio_ifn_il10,
+         t2_ratio_ifn_il13,
+         t2_ratio_ifn_il17,
+         t2_ratio_ifn_il21,
+         t2_ratio_ifn_il4,
+         t2_ratio_ifn_il5,
+         t2_ratio_il1_il10,
+         t2_ratio_il12_il10,
+         t2_ratio_il12_il13,
+         t2_ratio_il12_il17,
+         t2_ratio_il12_il21,
+         t2_ratio_il12_il4,
+         t2_ratio_il12_il5,
+         t2_ratio_il13_il10,
+         t2_ratio_il17_il10,
+         t2_ratio_il2_il10,
+         t2_ratio_il21_il10,
+         t2_ratio_il4_il10,
+         t2_ratio_il5_il10,
+         t2_ratio_il6_il10,
+         # t2_ratio_pro_il10,
+         # t2_ratio_th1_il10,
+         # t2_ratio_th1_th17,
+         # t2_ratio_th1_th2,
+         # t2_ratio_th17_il10,
+         # t2_ratio_th2_il10,
+         # t2_ratio_tnf_il10,
+         
+         t3_ratio_gmc_il10,
+         t3_ratio_ifn_il10,
+         t3_ratio_ifn_il13,
+         t3_ratio_ifn_il17,
+         t3_ratio_ifn_il21,
+         t3_ratio_ifn_il4,
+         t3_ratio_ifn_il5,
+         t3_ratio_il1_il10,
+         t3_ratio_il12_il10,
+         t3_ratio_il12_il13,
+         t3_ratio_il12_il17,
+         t3_ratio_il12_il21,
+         t3_ratio_il12_il4,
+         t3_ratio_il12_il5,
+         t3_ratio_il13_il10,
+         t3_ratio_il17_il10,
+         t3_ratio_il2_il10,
+         t3_ratio_il21_il10,
+         t3_ratio_il4_il10,
+         t3_ratio_il5_il10,
+         t3_ratio_il6_il10#,
+         # t3_ratio_pro_il10,
+         # t3_ratio_th1_il10,
+         # t3_ratio_th1_th17,
+         # t3_ratio_th1_th2,
+         # t3_ratio_th17_il10,
+         # t3_ratio_th2_il10,
+         # t3_ratio_tnf_il10
+         )
+
+#Replace inf with NA
+Y <- do.call(data.frame,lapply(Y, function(x) replace(x, is.infinite(x),NA)))
+
 
 #Unadjusted glm models
 res_unadj <- NULL
@@ -496,21 +630,75 @@ for(i in 1:ncol(W3)){
 ##############################################
 
 
-# for(i in 1:ncol(Y)){
-#   Y[is.nan(Y[,i]) | is.infinite(Y[,i]),i] <- NA
-# }
-Y<-d %>% rename(t2_igf=igf_t2,          t3_igf=igf_t3,          t2_crp=crp_t2,          t2_agp=agp_t2,          t2_gmc=gmc_t2,       
-                t2_ifn=ifn_t2,         t2_il10=il10_t2,         t2_il12=il12_t2,         t2_il13=il13_t2,         t2_il17=il17_t2,        
-                t2_il1=il1_t2,          t2_il2=il2_t2,          t2_il21=il21_t2,         t2_il4=il4_t2,          t2_il5=il5_t2,         
-                t2_il6=il6_t2,          t2_tnf=tnf_t2,         t3_gmc=gmc_t3,        t3_ifn=ifn_t3,         t3_il10=il10_t3,        
-                t3_il12=il12_t3,         t3_il13=il13_t3,         t3_il17=il17_t3,         t3_il1=il1_t3,          t3_il2=il2_t3,         
-                t3_il21=il21_t3,         t3_il4=il4_t3,          t3_il5=il5_t3,          t3_il6=il6_t3,          t3_tnf=tnf_t3) %>%
-  select(t2_igf,          t3_igf,          t2_crp,          t2_agp,          t2_gmc,       
-         t2_ifn,         t2_il10,         t2_il12,         t2_il13,         t2_il17,        
-         t2_il1,          t2_il2,          t2_il21,         t2_il4,          t2_il5,         
-         t2_il6,          t2_tnf,         t3_gmc,        t3_ifn,         t3_il10,        
-         t3_il12,         t3_il13,         t3_il17,         t3_il1,          t3_il2,         
-         t3_il21,         t3_il4,          t3_il5,          t3_il6,          t3_tnf)
+#dataframe of urine biomarkers:
+colnames(d)
+Y<-d %>% select(t2_igf,          t3_igf,          t2_crp,          t2_agp,          t2_gmc,       
+                t2_ifn,         t2_il10,         t2_il12,         t2_il13,         t2_il17,        
+                t2_il1,          t2_il2,          t2_il21,         t2_il4,          t2_il5,         
+                t2_il6,          t2_tnf,         t3_gmc,        t3_ifn,         t3_il10,        
+                t3_il12,         t3_il13,         t3_il17,         t3_il1,          t3_il2,         
+                t3_il21,         t3_il4,          t3_il5,          t3_il6,          t3_tnf ,
+                t2_ratio_gmc_il10,
+                t2_ratio_ifn_il10,
+                t2_ratio_ifn_il13,
+                t2_ratio_ifn_il17,
+                t2_ratio_ifn_il21,
+                t2_ratio_ifn_il4,
+                t2_ratio_ifn_il5,
+                t2_ratio_il1_il10,
+                t2_ratio_il12_il10,
+                t2_ratio_il12_il13,
+                t2_ratio_il12_il17,
+                t2_ratio_il12_il21,
+                t2_ratio_il12_il4,
+                t2_ratio_il12_il5,
+                t2_ratio_il13_il10,
+                t2_ratio_il17_il10,
+                t2_ratio_il2_il10,
+                t2_ratio_il21_il10,
+                t2_ratio_il4_il10,
+                t2_ratio_il5_il10,
+                t2_ratio_il6_il10,
+                # t2_ratio_pro_il10,
+                # t2_ratio_th1_il10,
+                # t2_ratio_th1_th17,
+                # t2_ratio_th1_th2,
+                # t2_ratio_th17_il10,
+                # t2_ratio_th2_il10,
+                # t2_ratio_tnf_il10,
+                
+                t3_ratio_gmc_il10,
+                t3_ratio_ifn_il10,
+                t3_ratio_ifn_il13,
+                t3_ratio_ifn_il17,
+                t3_ratio_ifn_il21,
+                t3_ratio_ifn_il4,
+                t3_ratio_ifn_il5,
+                t3_ratio_il1_il10,
+                t3_ratio_il12_il10,
+                t3_ratio_il12_il13,
+                t3_ratio_il12_il17,
+                t3_ratio_il12_il21,
+                t3_ratio_il12_il4,
+                t3_ratio_il12_il5,
+                t3_ratio_il13_il10,
+                t3_ratio_il17_il10,
+                t3_ratio_il2_il10,
+                t3_ratio_il21_il10,
+                t3_ratio_il4_il10,
+                t3_ratio_il5_il10,
+                t3_ratio_il6_il10#,
+                # t3_ratio_pro_il10,
+                # t3_ratio_th1_il10,
+                # t3_ratio_th1_th17,
+                # t3_ratio_th1_th2,
+                # t3_ratio_th17_il10,
+                # t3_ratio_th2_il10,
+                # t3_ratio_tnf_il10
+)
+
+#Replace inf with NA
+Y <- do.call(data.frame,lapply(Y, function(x) replace(x, is.infinite(x),NA)))
 
 #Fully adjusted glm models
 res_adj <- NULL
@@ -528,7 +716,7 @@ colnames(res_adj)<-c("RD","ci.l","ci.u", "Std. Error", "z value", "Pval")
 res_adj$Y <-colnames(Y)
 
 #Compare to Audrie's objects
-load(paste0(dropboxDir,"Results/Audrie/immune_adj_glm.RData"))
+load(here("audrie results/immune_adj_glm.RData"))
 name.pattern="_adj_L"
 object_list=ls(pattern=name.pattern)
 aud_adj <- load_aud(name.pattern, object_list)
@@ -564,7 +752,8 @@ res_sub$Y <-rep(colnames(Y), each=2)
 res_sub <- res_sub %>% mutate(subgroup = case_when(sex==1 ~ "male", sex==0 ~ "female", TRUE~""), subgroup=factor(subgroup))
 
 #Compare to Audrie's objects
-load(paste0(dropboxDir,"Results/Audrie/immune_subgroup.RData"))
+load(here("audrie results/immune_subgroup.RData"))
+
 name.pattern="_subgroup_L"
 object_list=ls(pattern=name.pattern)
 aud_sub <- load_aud(name.pattern, object_list, subgroup = T)
