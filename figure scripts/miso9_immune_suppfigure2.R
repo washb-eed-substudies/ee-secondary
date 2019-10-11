@@ -55,7 +55,7 @@ immune_plot_fun <- function(d, name){
                    alpha=0.5, width = 0.3, size = 1.5) +
     geom_line(alpha = 0.3, col="blue") +
     labs(y = " ", x =  " ", title=name, fill=" ") +
-    coord_cartesian(ylim=c(df$`ci.lb`[1]-0.3, df$`ci.ub`[1]+0.3)) +
+    coord_cartesian(ylim=c(min(df$`ci.lb`[1], df$`ci.lb`[2], na.rm=TRUE)-0.2, max(df$`ci.ub`[1], df$`ci.ub`[2], na.rm=TRUE)+0.2)) +
     theme(axis.text.x=element_blank(),
           axis.ticks.x=element_blank(),
           legend.position = "bottom",
@@ -74,7 +74,7 @@ immune_plot_fun_wlabels <- function(d, name){
                   alpha=0.5, width = 0.3, size = 1.5) +
     geom_line(alpha = 0.3, col="blue") +
     labs(y = " ", x =  "Child age, months", title=name, fill=" ") +
-    coord_cartesian(ylim=c(df$`ci.lb`[1]-0.3, df$`ci.ub`[1]+0.3)) +
+    coord_cartesian(ylim=c(min(df$`ci.lb`[1], df$`ci.lb`[2], na.rm=TRUE)-0.2, max(df$`ci.ub`[1], df$`ci.ub`[2], na.rm=TRUE)+0.2)) +
     theme(axis.ticks.x=element_blank(),
           legend.position = "bottom",
           plot.title = element_text(hjust = 0.5, face = "plain", size=9),

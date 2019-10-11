@@ -1305,3 +1305,4 @@ tbl6 <- data.table(
 
 write.csv(tbl6, file=here('tables/miso9-immune-table6.csv'))
 print(xtable(tbl6), type="html", file=here("tables/miso9-immune-table6.html"))
+
