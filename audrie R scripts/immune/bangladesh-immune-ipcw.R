@@ -3233,8 +3233,10 @@ washb_bd_immun<- read.csv(paste0(dropboxDir, "Data/Cleaned/Audrie/washb-banglade
 #load
 dfull<- read.csv(paste0(dropboxDir, "Data/Cleaned/Audrie/washb-bangladesh-anthro-diar-ee-med-enrol-tracking-immun-ipcw2.csv"), stringsAsFactors = TRUE)
 
-#load blinded treatment data
-washb_bd_tr <- read.csv(paste0(dropboxDir, "Data/Untouched/washb-bangladesh-tr.csv"), stringsAsFactors = TRUE)
+#load unblinded treatment data
+washb_bd_tr <- read.csv(paste0(dropboxDir,"Data/Untouched/Real/washb-bangladesh-tr.csv"))
+table(washb_bd_tr$tr)
+
 
 # merge treatment and enrollment data onto this shell of the full data
 dfull <- merge(dfull,washb_bd_tr,by=c("clusterid","block"),all.x=T,all.y=F)
