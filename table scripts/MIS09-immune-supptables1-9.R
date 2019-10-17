@@ -278,7 +278,7 @@ ipcws5<-c(" ", " ", maketblvalue(ratio_il1_il10_t2_adj_ipcw_L$`unlist(ratio_il1_
           " ", " ", maketblvalue(ratio_th1_th17_t2_adj_ipcw_L$`unlist(ratio_th1_th17_t2_adj_ipcw$estimates$ATE)`))
 
 tbls5<-cbind(tbl3, ipcws5)
-names(tbls5)[8]<-"IPCW adjusted difference: Intervention vs. Control (95% CI)"
+names(tbls5)[9]<-"IPCW adjusted difference: Intervention vs. Control (95% CI)"
 
 write.csv(tbls5, file=here('tables/miso9-immune-supptable5.csv'))
 print(xtable(tbls5), type="html", file=here("tables/miso9-immune-supptable5.html"))
@@ -340,7 +340,7 @@ ipcws7<-c(" ", " ", maketblvalue(ratio_il1_il10_t3_adj_ipcw_L$`unlist(ratio_il1_
           " ", " ", maketblvalue(ratio_th1_th17_t3_adj_ipcw_L$`unlist(ratio_th1_th17_t3_adj_ipcw$estimates$ATE)`))
 
 tbls7<-cbind(tbl5, ipcws7)
-names(tbls7)[8]<-"IPCW adjusted difference: Intervention vs. Control (95% CI)"
+names(tbls7)[9]<-"IPCW adjusted difference: Intervention vs. Control (95% CI)"
 
 write.csv(tbls7, file=here('tables/miso9-immune-supptable7.csv'))
 print(xtable(tbls7), type="html", file=here("tables/miso9-immune-supptable7.html"))

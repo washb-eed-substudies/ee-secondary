@@ -6,7 +6,7 @@ source(here('audrie R scripts/immune/bangladesh-immune-ages-unadjusted-glm.R'))
 source(here('audrie R scripts/immune/bangladesh-immune-adj-age-sex.R'))
 source(here('audrie R scripts/immune/bangladesh-immune-adj.R'))
 
-#### TABLE 1####
+#### TABLE 1 ####
 
 #calculating overall N by arm
 Nctrl<-length(ages$tr[ages$tr=="Control"])
@@ -386,6 +386,35 @@ Ntbl3 <- c(" ", as.character(t2_ratio_il1_il10_N_tr$t2_ratio_il1_il10_N_tr[1]), 
            " ", as.character(t2_ratio_th1_th2_N_tr$t2_ratio_th1_th2_N_tr[1]), as.character(t2_ratio_th1_th2_N_tr$t2_ratio_th1_th2_N_tr[2]),  
            " ", as.character(t2_ratio_th1_th17_N_tr$t2_ratio_th1_th17_N_tr[1]), as.character(t2_ratio_th1_th17_N_tr$t2_ratio_th1_th17_N_tr[2]))
 
+absmeantbl3 <- c(" ", as.character(round(abs_t2_ratio_il1_il10_N_tr$mean[1], 2)), as.character(round(abs_t2_ratio_il1_il10_N_tr$mean[2], 2)), 
+                 " ", as.character(round(abs_t2_ratio_il6_il10_N_tr$mean[1], 2)), as.character(round(abs_t2_ratio_il6_il10_N_tr$mean[2], 2)),  
+                 " ", as.character(round(abs_t2_ratio_tnf_il10_N_tr$mean[1], 2)), as.character(round(abs_t2_ratio_tnf_il10_N_tr$mean[2], 2)), 
+                 " ", as.character(round(abs_t2_ratio_il12_il10_N_tr$mean[1], 2)), as.character(round(abs_t2_ratio_il12_il10_N_tr$mean[2], 2)), 
+                 " ", as.character(round(abs_t2_ratio_ifn_il10_N_tr$mean[1], 2)), as.character(round(abs_t2_ratio_ifn_il10_N_tr$mean[2], 2)), 
+                 " ", as.character(round(abs_t2_ratio_il4_il10_N_tr$mean[1], 2)), as.character(round(abs_t2_ratio_il4_il10_N_tr$mean[2], 2)), 
+                 " ", as.character(round(abs_t2_ratio_il5_il10_N_tr$mean[1], 2)), as.character(round(abs_t2_ratio_il5_il10_N_tr$mean[2], 2)),  
+                 " ", as.character(round(abs_t2_ratio_il13_il10_N_tr$mean[1], 2)), as.character(round(abs_t2_ratio_il13_il10_N_tr$mean[2], 2)),    
+                 " ", as.character(round(abs_t2_ratio_il17_il10_N_tr$mean[1], 2)), as.character(round(abs_t2_ratio_il17_il10_N_tr$mean[2], 2)),  
+                 " ", as.character(round(abs_t2_ratio_il21_il10_N_tr$mean[1], 2)), as.character(round(abs_t2_ratio_il21_il10_N_tr$mean[2], 2)),  
+                 " ", as.character(round(abs_t2_ratio_il2_il10_N_tr$mean[1], 2)), as.character(round(abs_t2_ratio_il2_il10_N_tr$mean[2], 2)),  
+                 " ", as.character(round(abs_t2_ratio_gmc_il10_N_tr$mean[1], 2)), as.character(round(abs_t2_ratio_gmc_il10_N_tr$mean[2], 2)),  
+                 " ", as.character(round(abs_t2_ratio_il12_il4_N_tr$mean[1], 2)), as.character(round(abs_t2_ratio_il12_il4_N_tr$mean[2], 2)),  
+                 " ", as.character(round(abs_t2_ratio_ifn_il4_N_tr$mean[1], 2)), as.character(round(abs_t2_ratio_ifn_il4_N_tr$mean[2], 2)),  
+                 " ", as.character(round(abs_t2_ratio_il12_il5_N_tr$mean[1], 2)), as.character(round(abs_t2_ratio_il12_il5_N_tr$mean[2], 2)),  
+                 " ", as.character(round(abs_t2_ratio_ifn_il5_N_tr$mean[1], 2)), as.character(round(abs_t2_ratio_ifn_il5_N_tr$mean[2], 2)), 
+                 " ", as.character(round(abs_t2_ratio_il12_il13_N_tr$mean[1], 2)), as.character(round(abs_t2_ratio_il12_il13_N_tr$mean[2], 2)), 
+                 " ", as.character(round(abs_t2_ratio_ifn_il13_N_tr$mean[1], 2)), as.character(round(abs_t2_ratio_ifn_il13_N_tr$mean[2], 2)), 
+                 " ", as.character(round(abs_t2_ratio_il12_il17_N_tr$mean[1], 2)), as.character(round(abs_t2_ratio_il12_il17_N_tr$mean[2], 2)),  
+                 " ", as.character(round(abs_t2_ratio_ifn_il17_N_tr$mean[1], 2)), as.character(round(abs_t2_ratio_ifn_il17_N_tr$mean[2], 2)),  
+                 " ", as.character(round(abs_t2_ratio_il12_il21_N_tr$mean[1], 2)), as.character(round(abs_t2_ratio_il12_il21_N_tr$mean[2], 2)), 
+                 " ", as.character(round(abs_t2_ratio_ifn_il21_N_tr$mean[1], 2)), as.character(round(abs_t2_ratio_ifn_il21_N_tr$mean[2], 2)),
+                 " ", as.character(round(abs_t2_ratio_pro_il10_N_tr$mean[1], 2)), as.character(round(abs_t2_ratio_pro_il10_N_tr$mean[2], 2)),  
+                 " ", as.character(round(abs_t2_ratio_th1_il10_N_tr$mean[1], 2)), as.character(round(abs_t2_ratio_th1_il10_N_tr$mean[2], 2)),  
+                 " ", as.character(round(abs_t2_ratio_th2_il10_N_tr$mean[1], 2)), as.character(round(abs_t2_ratio_th2_il10_N_tr$mean[2], 2)),    
+                 " ", as.character(round(abs_t2_ratio_th17_il10_N_tr$mean[1], 2)), as.character(round(abs_t2_ratio_th17_il10_N_tr$mean[2], 2)), 
+                 " ", as.character(round(abs_t2_ratio_th1_th2_N_tr$mean[1], 2)), as.character(round(abs_t2_ratio_th1_th2_N_tr$mean[2], 2)),  
+                 " ", as.character(round(abs_t2_ratio_th1_th17_N_tr$mean[1], 2)),  as.character(round(abs_t2_ratio_th1_th17_N_tr$mean[2], 2)))
+
 meantbl3 <- c(" ", as.character(round(t2_ratio_il1_il10_N_tr$mean[1], 2)), as.character(round(t2_ratio_il1_il10_N_tr$mean[2], 2)), 
               " ", as.character(round(t2_ratio_il6_il10_N_tr$mean[1], 2)), as.character(round(t2_ratio_il6_il10_N_tr$mean[2], 2)),  
               " ", as.character(round(t2_ratio_tnf_il10_N_tr$mean[1], 2)), as.character(round(t2_ratio_tnf_il10_N_tr$mean[2], 2)), 
@@ -622,6 +651,7 @@ adjtbl3 <- c(" ", " ", paste(t2_ratio_il1_il10_adj_L[1], " (", t2_ratio_il1_il10
 tbl3 <- data.table(
   "Outcome, Arm" = outcometbl3,
   "N" = Ntbl3, 
+  "Absolute Mean" = absmeantbl3,
   "Mean" = meantbl3, 
   "SD" = sdtbl3,
   "Unadjusted difference: Intervention vs. Control (95% CI)" = unadjtbl3,
@@ -876,6 +906,35 @@ Ntbl5 <- c(" ", as.character(t3_ratio_il1_il10_N_tr$t3_ratio_il1_il10_N_tr[1]), 
            " ", as.character(t3_ratio_th1_th17_N_tr$t3_ratio_th1_th17_N_tr[1]), as.character(t3_ratio_th1_th17_N_tr$t3_ratio_th1_th17_N_tr[2])
 )
 
+absmeantbl5 <- c(" ", as.character(round(abs_t3_ratio_il1_il10_N_tr$mean[1], 2)), as.character(round(abs_t3_ratio_il1_il10_N_tr$mean[2], 2)), 
+                 " ", as.character(round(abs_t3_ratio_il6_il10_N_tr$mean[1], 2)), as.character(round(abs_t3_ratio_il6_il10_N_tr$mean[2], 2)), 
+                 " ", as.character(round(abs_t3_ratio_tnf_il10_N_tr$mean[1], 2)), as.character(round(abs_t3_ratio_tnf_il10_N_tr$mean[2], 2)),
+                 " ", as.character(round(abs_t3_ratio_il12_il10_N_tr$mean[1], 2)), as.character(round(abs_t3_ratio_il12_il10_N_tr$mean[2], 2)),
+                 " ", as.character(round(abs_t3_ratio_ifn_il10_N_tr$mean[1], 2)), as.character(round(abs_t3_ratio_ifn_il10_N_tr$mean[2], 2)),
+                 " ", as.character(round(abs_t3_ratio_il4_il10_N_tr$mean[1], 2)), as.character(round(abs_t3_ratio_il4_il10_N_tr$mean[2], 2)),
+                 " ", as.character(round(abs_t3_ratio_il5_il10_N_tr$mean[1], 2)), as.character(round(abs_t3_ratio_il5_il10_N_tr$mean[2], 2)),
+                 " ", as.character(round(abs_t3_ratio_il13_il10_N_tr$mean[1], 2)), as.character(round(abs_t3_ratio_il13_il10_N_tr$mean[2], 2)),
+                 " ", as.character(round(abs_t3_ratio_il17_il10_N_tr$mean[1], 2)), as.character(round(abs_t3_ratio_il17_il10_N_tr$mean[2], 2)),
+                 " ", as.character(round(abs_t3_ratio_il21_il10_N_tr$mean[1], 2)), as.character(round(abs_t3_ratio_il21_il10_N_tr$mean[2], 2)),
+                 " ", as.character(round(abs_t3_ratio_il2_il10_N_tr$mean[1], 2)), as.character(round(abs_t3_ratio_il2_il10_N_tr$mean[2], 2)),
+                 " ", as.character(round(abs_t3_ratio_gmc_il10_N_tr$mean[1], 2)), as.character(round(abs_t3_ratio_gmc_il10_N_tr$mean[2], 2)),
+                 " ", as.character(round(abs_t3_ratio_il12_il4_N_tr$mean[1], 2)), as.character(round(abs_t3_ratio_il12_il4_N_tr$mean[2], 2)),
+                 " ", as.character(round(abs_t3_ratio_ifn_il4_N_tr$mean[1], 2)), as.character(round(abs_t3_ratio_ifn_il4_N_tr$mean[2], 2)),
+                 " ", as.character(round(abs_t3_ratio_il12_il5_N_tr$mean[1], 2)), as.character(round(abs_t3_ratio_il12_il5_N_tr$mean[2], 2)),
+                 " ", as.character(round(abs_t3_ratio_ifn_il5_N_tr$mean[1], 2)), as.character(round(abs_t3_ratio_ifn_il5_N_tr$mean[2], 2)),
+                 " ", as.character(round(abs_t3_ratio_il12_il13_N_tr$mean[1], 2)), as.character(round(abs_t3_ratio_il12_il13_N_tr$mean[2], 2)),
+                 " ", as.character(round(abs_t3_ratio_ifn_il13_N_tr$mean[1], 2)), as.character(round(abs_t3_ratio_ifn_il13_N_tr$mean[2], 2)),
+                 " ", as.character(round(abs_t3_ratio_il12_il17_N_tr$mean[1], 2)), as.character(round(abs_t3_ratio_il12_il17_N_tr$mean[2], 2)),
+                 " ", as.character(round(abs_t3_ratio_ifn_il17_N_tr$mean[1], 2)), as.character(round(abs_t3_ratio_ifn_il17_N_tr$mean[2], 2)),
+                 " ", as.character(round(abs_t3_ratio_il12_il21_N_tr$mean[1], 2)), as.character(round(abs_t3_ratio_il12_il21_N_tr$mean[2], 2)),
+                 " ", as.character(round(abs_t3_ratio_ifn_il21_N_tr$mean[1], 2)), as.character(round(abs_t3_ratio_ifn_il21_N_tr$mean[2], 2)),
+                 " ", as.character(round(abs_t3_ratio_pro_il10_N_tr$mean[1], 2)), as.character(round(abs_t3_ratio_pro_il10_N_tr$mean[2], 2)),
+                 " ", as.character(round(abs_t3_ratio_th1_il10_N_tr$mean[1], 2)), as.character(round(abs_t3_ratio_th1_il10_N_tr$mean[2], 2)),
+                 " ", as.character(round(abs_t3_ratio_th2_il10_N_tr$mean[1], 2)), as.character(round(abs_t3_ratio_th2_il10_N_tr$mean[2], 2)),
+                 " ", as.character(round(abs_t3_ratio_th17_il10_N_tr$mean[1], 2)), as.character(round(abs_t3_ratio_th17_il10_N_tr$mean[2], 2)),
+                 " ", as.character(round(abs_t3_ratio_th1_th2_N_tr$mean[1], 2)), as.character(round(abs_t3_ratio_th1_th2_N_tr$mean[2], 2)),
+                 " ", as.character(round(abs_t3_ratio_th1_th17_N_tr$mean[1], 2)), as.character(round(abs_t3_ratio_th1_th17_N_tr$mean[2], 2)))
+
 meantbl5 <- c(" ", as.character(round(t3_ratio_il1_il10_N_tr$mean[1], 2)), as.character(round(t3_ratio_il1_il10_N_tr$mean[2], 2)), 
               " ", as.character(round(t3_ratio_il6_il10_N_tr$mean[1], 2)), as.character(round(t3_ratio_il6_il10_N_tr$mean[2], 2)), 
               " ", as.character(round(t3_ratio_tnf_il10_N_tr$mean[1], 2)), as.character(round(t3_ratio_tnf_il10_N_tr$mean[2], 2)),
@@ -1114,6 +1173,7 @@ adjtbl5 <- c(" ", " ", paste(t3_ratio_il1_il10_adj_L[1], " (", t3_ratio_il1_il10
 tbl5 <- data.table(
   "Outcome, Arm" = outcometbl5,
   "N" = Ntbl5, 
+  "Absolute Mean" = absmeantbl5,
   "Mean" = meantbl5, 
   "SD" = sdtbl5,
   "Unadjusted difference: Intervention vs. Control (95% CI)" = unadjtbl5,
