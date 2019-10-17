@@ -408,12 +408,12 @@ absmeantbl3 <- c(" ", as.character(round(abs_t2_ratio_il1_il10_N_tr$mean[1], 2))
                  " ", as.character(round(abs_t2_ratio_ifn_il17_N_tr$mean[1], 2)), as.character(round(abs_t2_ratio_ifn_il17_N_tr$mean[2], 2)),  
                  " ", as.character(round(abs_t2_ratio_il12_il21_N_tr$mean[1], 2)), as.character(round(abs_t2_ratio_il12_il21_N_tr$mean[2], 2)), 
                  " ", as.character(round(abs_t2_ratio_ifn_il21_N_tr$mean[1], 2)), as.character(round(abs_t2_ratio_ifn_il21_N_tr$mean[2], 2)),
-                 " ", as.character(round(abs_t2_ratio_pro_il10_N_tr$mean[1], 2)), as.character(round(abs_t2_ratio_pro_il10_N_tr$mean[2], 2)),  
-                 " ", as.character(round(abs_t2_ratio_th1_il10_N_tr$mean[1], 2)), as.character(round(abs_t2_ratio_th1_il10_N_tr$mean[2], 2)),  
-                 " ", as.character(round(abs_t2_ratio_th2_il10_N_tr$mean[1], 2)), as.character(round(abs_t2_ratio_th2_il10_N_tr$mean[2], 2)),    
-                 " ", as.character(round(abs_t2_ratio_th17_il10_N_tr$mean[1], 2)), as.character(round(abs_t2_ratio_th17_il10_N_tr$mean[2], 2)), 
-                 " ", as.character(round(abs_t2_ratio_th1_th2_N_tr$mean[1], 2)), as.character(round(abs_t2_ratio_th1_th2_N_tr$mean[2], 2)),  
-                 " ", as.character(round(abs_t2_ratio_th1_th17_N_tr$mean[1], 2)),  as.character(round(abs_t2_ratio_th1_th17_N_tr$mean[2], 2)))
+                 " ", " ", " ",  
+                 " ", " ", " ",  
+                 " ", " ", " ",    
+                 " ", " ", " ", 
+                 " ", " ", " ",  
+                 " ", " ", " ")
 
 meantbl3 <- c(" ", as.character(round(t2_ratio_il1_il10_N_tr$mean[1], 2)), as.character(round(t2_ratio_il1_il10_N_tr$mean[2], 2)), 
               " ", as.character(round(t2_ratio_il6_il10_N_tr$mean[1], 2)), as.character(round(t2_ratio_il6_il10_N_tr$mean[2], 2)),  
@@ -928,12 +928,12 @@ absmeantbl5 <- c(" ", as.character(round(abs_t3_ratio_il1_il10_N_tr$mean[1], 2))
                  " ", as.character(round(abs_t3_ratio_ifn_il17_N_tr$mean[1], 2)), as.character(round(abs_t3_ratio_ifn_il17_N_tr$mean[2], 2)),
                  " ", as.character(round(abs_t3_ratio_il12_il21_N_tr$mean[1], 2)), as.character(round(abs_t3_ratio_il12_il21_N_tr$mean[2], 2)),
                  " ", as.character(round(abs_t3_ratio_ifn_il21_N_tr$mean[1], 2)), as.character(round(abs_t3_ratio_ifn_il21_N_tr$mean[2], 2)),
-                 " ", as.character(round(abs_t3_ratio_pro_il10_N_tr$mean[1], 2)), as.character(round(abs_t3_ratio_pro_il10_N_tr$mean[2], 2)),
-                 " ", as.character(round(abs_t3_ratio_th1_il10_N_tr$mean[1], 2)), as.character(round(abs_t3_ratio_th1_il10_N_tr$mean[2], 2)),
-                 " ", as.character(round(abs_t3_ratio_th2_il10_N_tr$mean[1], 2)), as.character(round(abs_t3_ratio_th2_il10_N_tr$mean[2], 2)),
-                 " ", as.character(round(abs_t3_ratio_th17_il10_N_tr$mean[1], 2)), as.character(round(abs_t3_ratio_th17_il10_N_tr$mean[2], 2)),
-                 " ", as.character(round(abs_t3_ratio_th1_th2_N_tr$mean[1], 2)), as.character(round(abs_t3_ratio_th1_th2_N_tr$mean[2], 2)),
-                 " ", as.character(round(abs_t3_ratio_th1_th17_N_tr$mean[1], 2)), as.character(round(abs_t3_ratio_th1_th17_N_tr$mean[2], 2)))
+                 " ", " ", " ",
+                 " ", " ", " ",
+                 " ", " ", " ",
+                 " ", " ", " ",
+                 " ", " ", " ",
+                 " ", " ", " ")
 
 meantbl5 <- c(" ", as.character(round(t3_ratio_il1_il10_N_tr$mean[1], 2)), as.character(round(t3_ratio_il1_il10_N_tr$mean[2], 2)), 
               " ", as.character(round(t3_ratio_il6_il10_N_tr$mean[1], 2)), as.character(round(t3_ratio_il6_il10_N_tr$mean[2], 2)), 
