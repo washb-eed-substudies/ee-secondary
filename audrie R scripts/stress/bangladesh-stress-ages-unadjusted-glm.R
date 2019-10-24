@@ -26,7 +26,6 @@ rm(list=ls())
 
 source(here::here("0-config.R"))
 
-
 library(washb)
 library(arm)
 library(lme4)
@@ -43,90 +42,139 @@ setwd(paste0(dropboxDir,"Data/Cleaned/Audrie/")) #Set working directory
 
 #Load in enrollment data,blinded tr data, stool data for adjusted analysis. Use read.dta() to read the .dta files, or read.csv() to 
 #read .csv files. Use stringAsFactors=TRUE so that any character-based variable will be read in as a factor.
-lab<-read.csv("bangladesh-dm-ee-anthro-diar-ee-med-plasma-blind-tr-enrol-covariates-lab.csv", stringsAsFactors = TRUE)
+lab<-readRDS(here("replication objects/simulated_stress_dataset.rds"))
 table(lab$tr) #crosstab of numbers in each treatment
 
 
-# re-order the treatment factor for convenience, dropping the arms not included in immune
+# re-order the treatment factor for convenience, dropping the arms not included in stress
 lab$tr <- factor(lab$tr,levels=c("Control","Nutrition + WSH"))
 
-#calculate overall N's and means at t2
-igf_t2_N<-lab %>%
-  subset(t2_ln_igf!="NA") %>%
-  summarize(t2_ln_igf_N_overall=n(), mean=mean(t2_ln_igf, na.rm = T),  sd=sd(t2_ln_igf, na.rm = T))
+# functions for overall N and mean, N and mean by sex, N and mean by arm
+overall <- function(var) {
+  lab %>%
+    subset(lab[[var]]!="NA") %>%
+    summarize(overall=n(), mean=mean(lab[[var]], na.rm = T),  sd=sd(lab[[var]], na.rm = T))
+}
 
-igf_t2_N
+groupsex<-function(var){
+  tbl<-data.frame(variable=var, sex=lab$sex)
+  female<-tbl%>%subset(sex==0)
+  male<-tbl%>%subset(sex==1)
+  data.frame(sex=c("female", "male"), 
+             n=c(nrow(female), nrow(male)),
+             mean=c(mean(female$variable, na.rm=TRUE), mean(male$variable, na.rm=TRUE)),
+             sd=c(sd(female$variable, na.rm=TRUE), sd(male$variable, na.rm=TRUE)))
+}
 
-
-#calculate N's and mean of biomarkers at t2 by sex
-
-igf_t2_N_sex<-lab %>%
-  subset(t2_ln_igf!="NA") %>%
-  group_by (sex) %>%
-  summarize(t2_ln_igf_N_sex=n(), mean=mean(t2_ln_igf, na.rm = T),  sd=sd(t2_ln_igf, na.rm = T))
-
-igf_t2_N_sex
-
-
-  
-#calculate N's and mean of immune biomarkers t2 by arm
-
-
-igf_t2_N_tr<-lab %>%
-  subset(t2_ln_igf!="NA") %>%
-  group_by (tr) %>%
-  summarize(t2_ln_igf_N_tr=n(), mean=mean(t2_ln_igf, na.rm = T),  sd=sd(t2_ln_igf, na.rm = T))
-
-igf_t2_N_tr
-
-
-
-#calculate absolute mean of biomarkers at t2 by arm
-absmean<-function(a){
-  tbl<-data.frame(var=a, tr=lab$tr)
+grouptr<-function(var){
+  tbl<-data.frame(variable=var, tr=lab$tr)
   ctrl<-tbl%>%subset(tr=="Control")
   wsh<-tbl%>%subset(tr=="Nutrition + WSH")
   data.frame(tr=c("Control", "Nutrition+WSH"), 
+             n=c(nrow(ctrl), nrow(wsh)),
              mean=c(mean(ctrl$var, na.rm=TRUE), mean(wsh$var, na.rm=TRUE)),
              sd=c(sd(ctrl$var, na.rm=TRUE), sd(wsh$var, na.rm=TRUE)))
 }
 
+#calculate overall N's and means at t2 & t3
+t2_ipf2a3_N<-overall("t2_ipf2a3")
+t2_23dinor_N<-overall("t2_23dinor")
+t2_ipf2a6_N<-overall("t2_ipf2a6")
+t2_812iso_N<-overall("t2_812iso")
+t3_pre_saa_N<-overall("t3_pre_saa")
+t3_pre_cort_N<-overall("t3_pre_cort")
+t3_post_saa_N<-overall("t3_post_saa")
+t3_post_cort_N<-overall("t3_post_cort")
+t3_sys_N<-overall("t3_sys")
+t3_dia_N<-overall("t3_dia")
+t3_heart_N<-overall("t3_heart")
+t3_nr3c1_N<-overall("t3_nr3c1")
+t3_cpg12_N<-overall("t3_cpg12")
 
-abs_igf_t2_N_tr<-absmean(lab$igf_t2)
+
+#calculate N's and mean of biomarkers at t2 & t3 by sex
+t2_ipf2a3_N_sex<-groupsex(lab$"t2_ipf2a3")
+t2_23dinor_N_sex<-groupsex(lab$"t2_23dinor")
+t2_ipf2a6_N_sex<-groupsex(lab$"t2_ipf2a6")
+t2_812iso_N_sex<-groupsex(lab$"t2_812iso")
+t3_pre_saa_N_sex<-groupsex(lab$"t3_pre_saa")
+t3_pre_cort_N_sex<-groupsex(lab$"t3_pre_cort")
+t3_post_saa_N_sex<-groupsex(lab$"t3_post_saa")
+t3_post_cort_sex<-groupsex(lab$"t3_post_cort")
+t3_sys_N_sex<-groupsex(lab$"t3_sys")
+t3_dia_N_sex<-groupsex(lab$"t3_dia")
+t3_heart_N_sex<-groupsex(lab$"t3_heart")
+t3_nr3c1_N_sex<-groupsex(lab$"t3_nr3c1")
+t3_cpg12_N_sex<-groupsex(lab$"t3_cpg12")
 
 
-#calculate absolute means of biomarkers at t3 by arm
-
-abs_igf_t3_N_tr<-absmean(lab$igf_t3)
-
-#calculate N's and mean of biomarkers at t3 by arm
-igf_t3_N_tr<-lab %>%
-  subset(t3_ln_igf!="NA") %>%
-  group_by (tr) %>%
-  summarize(t3_ln_igf_N_tr=n(), mean=mean(t3_ln_igf, na.rm = T),  sd=sd(t3_ln_igf, na.rm = T))
-
-igf_t3_N_tr
+#calculate N's and mean of stress biomarkers t2 and t3 by arm
+t2_ipf2a3_N_tr<-grouptr(lab$"t2_ipf2a3")
+t2_23dinor_N_tr<-grouptr(lab$"t2_23dinor")
+t2_ipf2a6_N_tr<-grouptr(lab$"t2_ipf2a6")
+t2_812iso_N_tr<-grouptr(lab$"t2_812iso")
+t3_pre_saa_N_tr<-grouptr(lab$"t3_pre_saa")
+t3_pre_cort_N_tr<-grouptr(lab$"t3_pre_cort")
+t3_post_saa_N_tr<-grouptr(lab$"t3_post_saa")
+t3_post_cort_tr<-grouptr(lab$"t3_post_cort")
+t3_sys_N_tr<-grouptr(lab$"t3_sys")
+t3_dia_N_tr<-grouptr(lab$"t3_dia")
+t3_heart_N_tr<-grouptr(lab$"t3_heart")
+t3_nr3c1_N_tr<-grouptr(lab$"t3_nr3c1")
+t3_cpg12_N_tr<-grouptr(lab$"t3_cpg12")
 
 
 #display
+t2_ipf2a3_N
+t2_23dinor_N
+t2_ipf2a6_N
+t2_812iso_N
+t3_pre_saa_N
+t3_pre_cort_N
+t3_post_saa_N
+t3_post_cort_N
+t3_sys_N
+t3_dia_N
+t3_heart_N
+t3_nr3c1_N
+t3_cpg12_N
 
-igf_t2_N
-igf_t3_N
 
 #rename to distinguish mine for R compare
-
-
-igf_t2_N_L<-igf_t2_N
-igf_t3_N_L<-igf_t3_N
-
+t2_ipf2a3_N_L<-t2_ipf2a3_N
+t2_23dinor_N_L<-t2_23dinor_N
+t2_ipf2a6_N_L<-t2_ipf2a6_N
+t2_812iso_N_L<-t2_812iso_N
+t3_pre_saa_N_L<-t3_pre_saa_N
+t3_pre_cort_N_L<-t3_pre_cort_N
+t3_post_saa_N_L<-t3_post_saa_N
+t3_post_cort_N_L<-t3_post_cort_N
+t3_sys_N_L<-t3_sys_N
+t3_dia_N_L<-t3_dia_N
+t3_heart_N_L<-t3_heart_N
+t3_nr3c1_N_L<-t3_nr3c1_N
+t3_cpg12_N_L<-t3_cpg12_N
 
 
 #save as Rdata file
 
-save(igf_t2_N_L, igf_t3_N_L, crp_t2_N_L, agp_t2_N_L, gmc_t2_N_L, ifn_t2_N_L, il10_t2_N_L, il12_t2_N_L, il13_t2_N_L, il17_t2_N_L, il1_t2_N_L, il2_t2_N_L, il21_t2_N_L, il4_t2_N_L, il5_t2_N_L, il6_t2_N_L, tnf_t2_N_L, gmc_t3_N_L, ifn_t3_N_L, il10_t3_N_L, il12_t3_N_L, il13_t3_N_L, il17_t3_N_L, il1_t3_N_L, il2_t3_N_L, il21_t3_N_L, il4_t3_N_L, il5_t3_N_L, il6_t3_N_L, tnf_t3_N_L, file=here("audrie results/immune_N_means.RData")) #Save as R objects for the compare
+save(t2_ipf2a3_N_L,
+     t2_23dinor_N_L,
+     t2_ipf2a6_N_L,
+     t2_812iso_N_L,
+     t3_pre_saa_N_L,
+     t3_pre_cort_N_L,
+     t3_post_saa_N_L,
+     t3_post_cort_N_L,
+     t3_sys_N_L,
+     t3_dia_N_L,
+     t3_heart_N_L,
+     t3_nr3c1_N_L,
+     t3_cpg12_N_L,
+     file=here("audrie results/stress_N_means.RData")) #Save as R objects for the compare
 
 
-ages<-read.csv("bangladesh-dm-ee-anthro-diar-ee-med-plasma-blind-tr-enrol-covariates-lab.csv", stringsAsFactors = TRUE)
+ages<-readRDS(here("replication objects/simulated_stress_dataset.rds"))
 
 # re-order the treatment factor for convenience, dropping the arms not included in EE
 ages$tr <- factor(ages$tr,levels=c("Control","Nutrition + WSH"))
@@ -154,9 +202,9 @@ ages_bt2_N_tr
 age_bt2_N_total <-rbind2(ages_bt2_N, ages_bt2_N_tr)
 age_t2_blood_L<-age_bt2_N_total[c(7, 1, 2, 3, 4, 5, 6)]
 
-ages<-read.csv("bangladesh-dm-ee-anthro-diar-ee-med-plasma-blind-tr-enrol-covariates-lab.csv", stringsAsFactors = TRUE)
+ages<-readRDS(here("replication objects/simulated_stress_dataset.rds"))
 
-# re-order the treatment factor for convenience, dropping the arms not included in immune
+# re-order the treatment factor for convenience, dropping the arms not included in stress
 ages$tr <- factor(ages$tr,levels=c("Control", "Nutrition + WSH"))
 
 #calculate N and mean of ages @ t3 overall
@@ -186,11 +234,7 @@ age_bt3_N_total
 age_t3_blood_L<-age_bt3_N_total[c(7, 1, 2, 3, 4, 5, 6)]
 
 
-
-
-
 #display
-
 age_t2_blood_L
 age_t3_blood_L
 
@@ -200,21 +244,20 @@ save(age_t2_blood_L, age_t3_blood_L, file=here("audrie results/stress-age-stats.
 
 
 
-                           
+
 #glm t2 undjusted
 
 #Load in enrollment data,blinded tr data, stool data for adjusted analysis. Use read.dta() to read the .dta files, or read.csv() to 
 #read .csv files. Use stringAsFactors=TRUE so that any character-based variable will be read in as a factor.
-d<-read.csv("bangladesh-dm-ee-anthro-diar-ee-med-plasma-blind-tr-enrol-covariates-lab.csv", stringsAsFactors = TRUE)
+d<-readRDS(here("replication objects/simulated_stress_dataset.rds"))
 table(d$tr) #crosstab of numbers in each treatment
-
 
 # re-order the treatment factor for convenience, dropping the arms not included in stress
 d$tr <- factor(d$tr,levels=c("Control","Nutrition + WSH"))
 
-
 # subset to columns needed for unadjusted 
-df = d[,c("block", "tr","[insert list of stress variables here]")]
+df = d[,c("block", "tr","t2_ipf2a3", "t2_23dinor", "t2_ipf2a6", "t2_812iso", "t3_pre_saa", "t3_pre_cort",
+          "t3_post_saa", "t3_post_cort", "t3_sys", "t3_dia", "t3_heart", "t3_nr3c1", "t3_cpg12")]
 df$block=as.factor(df$block)
 
 # Set up the WASHB function
@@ -237,20 +280,20 @@ washb_function <- function(df,x) {
 
 
 #grab the variables with prefix 't2_' from the data frame and then apply the washb_function
-list_immune <- lapply(names(d)[grep('t2_', names(d))],  function(x) washb_function(d,x))
+list_stress <- lapply(names(d)[grep('t2_', names(d))],  function(x) washb_function(d,x))
 
-list_immune
+list_stress
 
 #put names of each of the variables into the matrix
-names(list_immune) <- names(d)[grep('t2_', names(d))]
+names(list_stress) <- names(d)[grep('t2_', names(d))]
 
 #resulting matrix
-list_immune
+list_stress
 
 
 #to save each matrix separately for comparing with Andrew. 
 
-t2_igf_unadj_L<-list_immune$t2_ln_igf
+t2_igf_unadj_L<-list_stress$t2_ln_igf
 
 
 
@@ -292,19 +335,19 @@ washb_function <- function(df,x) {
 
 
 #grab the variables with prefix 't3_' from the data frame and then apply the washb_function
-list_immune <- lapply(names(d)[grep('t3_', names(d))],  function(x) washb_function(d,x))
+list_stress <- lapply(names(d)[grep('t3_', names(d))],  function(x) washb_function(d,x))
 
-list_immune
+list_stress
 
 #put names of each of the variables into the matrix
-names(list_immune) <- names(d)[grep('t3_', names(d))]
+names(list_stress) <- names(d)[grep('t3_', names(d))]
 
 #resulting matrix
-list_immune
+list_stress
 
 #to save each matrix separately for comparing with Andrew. 
 
-t3_igf_unadj_L<-list_immune$t3_ln_igf
+t3_igf_unadj_L<-list_stress$t3_ln_igf
 
 
 
