@@ -280,7 +280,7 @@ outcomes12<-c("Outcome", "Ln ΔIL-1β (pg/ml)", "Ln ΔIl-6 (pg/ml)", "Ln ΔTNF-�
               "Ln ΔIL-21 (pg/ml)", "Ln ΔIL-10 (pg/ml)", "Ln ΔIL-2 (pg/ml)", "Ln ΔGMCSF (pg/ml)", "Ln ΔIGF-1 (μg/L)",
               "Ln ΔIL-1β/IL-10", "Ln ΔIL-6/IL-10", "Ln ΔTNF-α/IL-10", "Ln ΔIL-12/IL-10", "Ln ΔIFN-γ/IL-10",
               "Ln ΔIL-4/IL-10", "Ln ΔIL-5/IL-10", "Ln ΔIL-13/IL-10", "Ln ΔIL-17A/IL-10", "Ln ΔIL-21/IL-10",
-              "Ln ΔIL-2/IL-10", "Ln ΔGM-CSF/IL-10", "Ln ΔIL-12/IL-4", "Ln ΔIFN-γ/IL-4", "Ln ΔIL-12/IL-5", "Ln ΔIFN-Î³/IL-5",
+              "Ln ΔIL-2/IL-10", "Ln ΔGM-CSF/IL-10", "Ln ΔIL-12/IL-4", "Ln ΔIFN-γ/IL-4", "Ln ΔIL-12/IL-5", "Ln ΔIFN-γ/IL-5",
               "Ln ΔIL-12/IL-13", "Ln ΔIFN-γ/IL-13", "Ln ΔIL-12/IL-17A", "Ln ΔIFN-γ/IL-17A", "Ln ΔIL-12/IL-21", "Ln ΔIFN-γ/IL-21",
               "Ln ΔPro-inflammatory cytokines*/IL-10", "Ln ΔTh1**/IL-10", "Ln ΔTh2***/IL-10", "Ln ΔTh17****/IL-10",
               "Ln ΔTh1**/Th2***", "Ln ΔTh1**/Th17****")
