@@ -65,7 +65,7 @@ outcomes <- c("t2_ipf2a3","t2_23dinor","t2_ipf2a6",
              "t3_nr3c1","t3_cpg12")
 
 
-mean_sd <- d %>% select(outcomes) %>% summarise_all(funs(mean, sd), na.rm=T) %>% gather()
+mean_sd <- d %>% select(outcomes) %>% summarise_all(tibble::lst(mean, sd), na.rm=T) %>% gather()
 n <-nrow(mean_sd)/2
 #split mean and SD into different columns
 mean_sd <- data.frame(Y=gsub("_mean","",mean_sd[1:n,1]), mean=mean_sd[1:n,2], sd=mean_sd[(n+1):(2*n),2]) 
