@@ -9,7 +9,7 @@
 # compare.R script
 # 
 # input: 
-# bangladesh-dm-ee-anthro-diar-ee-med-plasma-blind-tr-enrol-covariates-lab.csv (from 3-bangladesh-dm-immun-plasma-immun-3.do)
+# replication objects/simulated_stress_dataset.rds
 #
 # output: 
 # stress_N_means.RData (N's and means of stress data)
@@ -280,7 +280,7 @@ washb_function <- function(df,x) {
 
 
 #grab the variables with prefix 't2_' from the data frame and then apply the washb_function
-list_stress <- lapply(names(d)[grep('t2_', names(d))],  function(x) washb_function(d,x))
+list_stress <- lapply(names(df)[grep('t2_', names(df))],  function(x) washb_function(df,x))
 
 list_stress
 
