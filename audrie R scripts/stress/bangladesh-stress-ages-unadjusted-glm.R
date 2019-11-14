@@ -271,29 +271,24 @@ washb_function <- function(df,x) {
   
   temp <- washb_tmle(Y=df[,x], tr=df$tr, pair=NULL, W=NULL, id=df$block, family="gaussian",contrast = c("Control","Nutrition + WSH"),
                      Q.SL.library=SL.library,g.SL.library=SL.library, pval=0.2, seed=12345, print=TRUE)
-  temp_metric <-as.matrix(temp$TR)
+  temp_metric <-t(as.matrix(unlist(temp$estimates$ATE)))
   rownames(temp_metric) <- c("Nutrition + WSH v C")
-  colnames(temp_metric) <-c("RD","ci.lb","ci.ub","SE","z","P-value")
   return(temp_metric)
 }
-
 
 
 #grab the variables with prefix 't2_' from the data frame and then apply the washb_function
 list_stress <- lapply(names(df)[grep('t2_', names(df))],  function(x) washb_function(df,x))
 
-list_stress
-
 #put names of each of the variables into the matrix
-names(list_stress) <- names(d)[grep('t2_', names(d))]
+names(list_stress) <- names(d)[grep('t2_', names(df))]
 
-#resulting matrix
-list_stress
+#Compile into data.frame for easier comparison in replication
+unadj_stress_t2 <- t(bind_rows(list_stress))
+colnames(unadj_stress_t2) <-c("RD","var","ci.lb","ci.ub","P-value")
 
-
-#to save each matrix separately for comparing with Andrew. 
-
-t2_igf_unadj_L<-list_stress$t2_ln_igf
+#view results file
+unadj_stress_t2
 
 
 
@@ -321,51 +316,28 @@ df$block=as.factor(df$block)
 
 #trlist=c("Nutrition + WSH")
 
-SL.library=c("SL.mean","SL.glm","SL.bayesglm","SL.gam","SL.glmnet")
-
-washb_function <- function(df,x) {
-  
-  temp <- washb_tmle(Y=df[,x], tr=df$tr, pair=NULL, W=NULL, id=df$block, family="gaussian",contrast = c("Control","Nutrition + WSH"),
-                     Q.SL.library=SL.library,g.SL.library=SL.library, pval=0.2, seed=12345, print=TRUE)
-  temp_metric <-as.matrix(temp$TR)
-  rownames(temp_metric) <- c("Nutrition + WSH v C")
-  colnames(temp_metric) <-c("RD","ci.lb","ci.ub","SE","z","P-value")
-  return(temp_metric)
-}
 
 
 #grab the variables with prefix 't3_' from the data frame and then apply the washb_function
-list_stress <- lapply(names(d)[grep('t3_', names(d))],  function(x) washb_function(d,x))
-
-list_stress
+list_stress <- lapply(names(df)[grep('t3_', names(df))],  function(x) washb_function(df,x))
 
 #put names of each of the variables into the matrix
-names(list_stress) <- names(d)[grep('t3_', names(d))]
+names(list_stress) <- names(df)[grep('t3_', names(df))]
 
-#resulting matrix
-list_stress
+#Compile into data.frame for easier comparison in replication
+unadj_stress_t3 <- t(bind_rows(list_stress))
+colnames(unadj_stress_t3) <-c("RD","var","ci.lb","ci.ub","P-value")
 
-#to save each matrix separately for comparing with Andrew. 
-
-t3_igf_unadj_L<-list_stress$t3_ln_igf
-
-
-
-
-#Display results
-
-
-t2_igf_unadj_L 
-
-t3_igf_unadj_L
+#view results file
+unadj_stress_t3
 
 
 
 
-
-save (t2_igf_unadj_L, 
+#Save results files
+save(unadj_stress_t2, 
      
-      t3_igf_unadj_L,
+      unadj_stress_t3,
       
       
       file=here("audrie results/stress_unadj_glm.RData"))
