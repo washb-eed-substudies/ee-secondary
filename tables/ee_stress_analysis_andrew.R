@@ -99,12 +99,12 @@ Y<-d %>% select(outcomes)
 #Unadjusted glm models
 res_unadj <- NULL
 for(i in 1:ncol(Y)){
-  temp<-washb_glm(Y=(Y[,i]), tr=d$tr, W=NULL, id=d$block, pair=NULL, family="gaussian", contrast= c("Control","Nutrition + WSH"), print=F)
-  res_unadj<-rbind(res_unadj, as.numeric(temp$TR))
+  temp<-washb_tmle(Y=(Y[,i]), tr=d$tr, W=NULL, id=d$block, pair=NULL, family="gaussian", contrast= c("Control","Nutrition + WSH"), print=F)
+  res_unadj<-rbind(res_unadj, unlist(temp$estimates$ATE))
 }
 res_unadj <- as.data.frame(res_unadj)
 
-colnames(res_unadj)<-c("Mean difference","ci.l","ci.u", "Std. Error", "z value", "Pval")
+colnames(res_unadj)<-c("Mean difference","var","ci.l","ci.u", "Pval")
 res_unadj$Y <-colnames(Y)
 
 
@@ -155,16 +155,19 @@ d$sex=relevel(d$sex,ref="0")
 res_sex <- NULL
 for(i in 1:ncol(Y)){
   if(grepl("t2_", colnames(Y)[i])){
-    temp<-washb_glm(Y=(Y[,i]), tr=d$tr, W=cbind(d$sex, d$agem2), id=d$block, pair=NULL, family="gaussian", contrast= c("Control","Nutrition + WSH"), print=F)
+    temp<-washb_tmle(Y=(Y[,i]), tr=d$tr, W=data.frame(sex=d$sex, agem2=d$agem2), id=d$block, pair=NULL, family="gaussian", contrast= c("Control","Nutrition + WSH"), print=F)
   }else{
-    temp<-washb_glm(Y=(Y[,i]), tr=d$tr, W=cbind(d$sex, d$agem3), id=d$block, pair=NULL, family="gaussian", contrast= c("Control","Nutrition + WSH"), print=F)
+    temp<-washb_tmle(Y=(Y[,i]), tr=d$tr, W=data.frame(sex=d$sex, agem2=d$agem2), id=d$block, pair=NULL, family="gaussian", contrast= c("Control","Nutrition + WSH"), print=F)
   }
-  res_sex<-rbind(res_sex, as.numeric(temp$TR))
+  res_sex<-rbind(res_sex, unlist(temp$estimates$ATE))
 }
 res_sex <- as.data.frame(res_sex)
 
-colnames(res_sex)<-c("RD","ci.l","ci.u", "Std. Error", "z value", "Pval")
+colnames(res_sex)<-c("Mean difference","var","ci.l","ci.u", "Pval")
 res_sex$Y <-colnames(Y)
+
+
+
 
 # #Compare to Audrie's objects
 # load(here("audrie results/immune_adj_sex_age_glm.RData"))
@@ -341,16 +344,20 @@ Y<-d %>% select(outcomes)
 res_adj <- NULL
 for(i in 1:ncol(Y)){
   if(grepl("t2_", colnames(Y)[i])){
-    temp<-washb_glm(Y=(Y[,i]), tr=d$tr, W=W2, id=d$block, pair=NULL, family="gaussian", contrast= c("Control","Nutrition + WSH"), print=F)
+    temp<-washb_tmle(Y=(Y[,i]), tr=d$tr, W=W2, id=d$block, pair=NULL, family="gaussian", contrast= c("Control","Nutrition + WSH"), print=F)
   }else{
-    temp<-washb_glm(Y=(Y[,i]), tr=d$tr, W=W3, id=d$block, pair=NULL, family="gaussian", contrast= c("Control","Nutrition + WSH"), print=F)
+    temp<-washb_tmle(Y=(Y[,i]), tr=d$tr, W=W3, id=d$block, pair=NULL, family="gaussian", contrast= c("Control","Nutrition + WSH"), print=F)
   }
-  res_adj<-rbind(res_adj, as.numeric(temp$TR))
+  res_adj<-rbind(res_adj, unlist(temp$estimates$ATE))
 }
 res_adj <- as.data.frame(res_adj)
 
-colnames(res_adj)<-c("RD","ci.l","ci.u", "Std. Error", "z value", "Pval")
+colnames(res_adj)<-c("Mean difference","var","ci.l","ci.u", "Pval")
 res_adj$Y <-colnames(Y)
+
+
+
+
 
 # #Compare to Audrie's objects
 # load(here("audrie results/immune_adj_glm.RData"))
