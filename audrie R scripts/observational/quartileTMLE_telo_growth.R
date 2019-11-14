@@ -549,6 +549,8 @@ h4adj.res <- tmle_quart(dat=d,
                            SLlibrary="SL.gam")
 h4adj.res
 
+
+
 #Hypothesis 5
 #Telomere length measured at Year 2 is associated with concurrent child LAZ, WAZ, WLZ, and head circumference-for-age Z score at Year 2.
 #Exposure: Quartiles of telomere lengths at Year 2
@@ -771,6 +773,342 @@ h6adj.res <- tmle_quart(dat=d,
                         SLlibrary="SL.gam")
 
 h6adj.res
+
+
+#Hypothesis 6b
+#Child LAZ, WAZ, WLZ, and HCZ measured at Year 1 is associated with subsequent child telomere length at Year 2.
+#Exposure: Quartiles of LAZ, WAZ, WLZ, and head circumference-for-age Z score at Year 1
+#Outcome: Child telomere lengths at Year 2
+
+
+#unadjusted
+#Null data.frame
+h6bunadj.res = NULL
+
+h6bunadj.res <- tmle_quart(dat=d, 
+                          Y="TS_t3", 
+                          W=NULL, 
+                          A="laz_t2", 
+                          id="block",
+                          Alevels=c("Q1","Q2","Q3","Q4"),
+                          outputdf = h6bunadj.res,
+                          family="gaussian", 
+                          SLlibrary="SL.gam")
+
+h6bunadj.res <- tmle_quart(dat=d, 
+                          Y="TS_t3", 
+                          W=NULL, 
+                          A="waz_t2", 
+                          id="block",
+                          Alevels=c("Q1","Q2","Q3","Q4"),
+                          outputdf = h6bunadj.res,
+                          family="gaussian", 
+                          SLlibrary="SL.gam")
+
+h6bunadj.res <- tmle_quart(dat=d, 
+                          Y="TS_t3", 
+                          W=NULL, 
+                          A="whz_t2", 
+                          id="block",
+                          Alevels=c("Q1","Q2","Q3","Q4"),
+                          outputdf = h6bunadj.res,
+                          family="gaussian", 
+                          SLlibrary="SL.gam")
+
+h6bunadj.res <- tmle_quart(dat=d, 
+                          Y="TS_t3", 
+                          W=NULL, 
+                          A="hcz_t2", 
+                          id="block",
+                          Alevels=c("Q1","Q2","Q3","Q4"),
+                          outputdf = h6bunadj.res,
+                          family="gaussian", 
+                          SLlibrary="SL.gam")
+
+h6bunadj.res
+
+#adjusted
+
+#null dataframe
+h6badj.res = NULL 
+
+Wvars<-c("sex","birthord", "momage", "momheight","momedu", 
+         "hfiacat", "Nlt18", "Ncomp", "watmin", 
+         "floor", "walls", "elec", "asset_wardrobe", "asset_table", "asset_chair", "asset_clock", "asset_khat", 
+         "asset_chouki", "asset_radio", "asset_tv", "asset_refrig",
+         "asset_bike", "asset_moto", "asset_sewmach", "asset_mobile", 
+         "n_cattle", "n_goat", "n_chicken", "monsoon_ht2", "monsoon_ht3", "ageday_ht2", 
+         "ageday_ht3", "tr", "cesd_sum_t2", "cesd_sum_ee_t3", "pss_sum_mom_t3", "diar7d_t2", "diar7d_t3", 
+         "life_viol_any_t3")
+
+#add "lenhei_med_t1", "weight_med_t1" to covariate list?
+
+h6badj.res <- tmle_quart(dat=d, 
+                        Y="TS_t3", 
+                        W=Wvars, 
+                        A="laz_t2", 
+                        id="block",
+                        Alevels=c("Q1","Q2","Q3","Q4"),
+                        outputdf = h6badj.res,
+                        family="gaussian", 
+                        SLlibrary="SL.gam")
+
+h6badj.res <- tmle_quart(dat=d, 
+                        Y="TS_t3", 
+                        W=Wvars, 
+                        A="waz_t2", 
+                        id="block",
+                        Alevels=c("Q1","Q2","Q3","Q4"),
+                        outputdf = h6badj.res,
+                        family="gaussian", 
+                        SLlibrary="SL.gam")
+
+h6badj.res <- tmle_quart(dat=d, 
+                        Y="TS_t3", 
+                        W=Wvars, 
+                        A="whz_t2", 
+                        id="block",
+                        Alevels=c("Q1","Q2","Q3","Q4"),
+                        outputdf = h6badj.res,
+                        family="gaussian", 
+                        SLlibrary="SL.gam")
+
+h6badj.res <- tmle_quart(dat=d, 
+                        Y="TS_t3", 
+                        W=Wvars, 
+                        A="hcz_t2", 
+                        id="block",
+                        Alevels=c("Q1","Q2","Q3","Q4"),
+                        outputdf = h6badj.res,
+                        family="gaussian", 
+                        SLlibrary="SL.gam")
+
+h6badj.res
+
+
+#Hypothesis 6c
+#Child LAZ, WAZ, WLZ, and head circumference-for-age Z score measured at Month 3 are associated with subsequent telomere lengths at Year 1.
+#Exposure: Quartiles of LAZ, WAZ, WLZ, and head circumference-for-age Z score at Month 3
+#Outcome: Child telomere lengths at Year 1
+
+
+#unadjusted
+#Null data.frame
+h6cunadj.res = NULL
+
+h6cunadj.res <- tmle_quart(dat=d, 
+                           Y="TS_t2", 
+                           W=NULL, 
+                           A="laz_t1", 
+                           id="block",
+                           Alevels=c("Q1","Q2","Q3","Q4"),
+                           outputdf = h6cunadj.res,
+                           family="gaussian", 
+                           SLlibrary="SL.gam")
+
+h6cunadj.res <- tmle_quart(dat=d, 
+                           Y="TS_t2", 
+                           W=NULL, 
+                           A="waz_t1", 
+                           id="block",
+                           Alevels=c("Q1","Q2","Q3","Q4"),
+                           outputdf = h6cunadj.res,
+                           family="gaussian", 
+                           SLlibrary="SL.gam")
+
+h6cunadj.res <- tmle_quart(dat=d, 
+                           Y="TS_t2", 
+                           W=NULL, 
+                           A="whz_t1", 
+                           id="block",
+                           Alevels=c("Q1","Q2","Q3","Q4"),
+                           outputdf = h6cunadj.res,
+                           family="gaussian", 
+                           SLlibrary="SL.gam")
+
+h6cunadj.res <- tmle_quart(dat=d, 
+                           Y="TS_t2", 
+                           W=NULL, 
+                           A="hcz_t1", 
+                           id="block",
+                           Alevels=c("Q1","Q2","Q3","Q4"),
+                           outputdf = h6cunadj.res,
+                           family="gaussian", 
+                           SLlibrary="SL.gam")
+
+h6cunadj.res
+
+#adjusted
+
+#null dataframe
+h6cadj.res = NULL 
+
+Wvars<-c("sex","birthord", "momage", "momheight","momedu", 
+         "hfiacat", "Nlt18", "Ncomp", "watmin", 
+         "floor", "walls", "elec", "asset_wardrobe", "asset_table", "asset_chair", "asset_clock", "asset_khat", 
+         "asset_chouki", "asset_radio", "asset_tv", "asset_refrig",
+         "asset_bike", "asset_moto", "asset_sewmach", "asset_mobile", 
+         "n_cattle", "n_goat", "n_chicken", "monsoon_ht2", "ageday_ht2", "tr", "cesd_sum_t2", "diar7d_t2", "life_viol_any_t3")
+
+#need to add monsoon_ht1? ageday_ht1?
+
+h6cadj.res <- tmle_quart(dat=d, 
+                         Y="TS_t2", 
+                         W=Wvars, 
+                         A="laz_t1", 
+                         id="block",
+                         Alevels=c("Q1","Q2","Q3","Q4"),
+                         outputdf = h6cadj.res,
+                         family="gaussian", 
+                         SLlibrary="SL.gam")
+
+h6cadj.res <- tmle_quart(dat=d, 
+                         Y="TS_t2", 
+                         W=Wvars, 
+                         A="waz_t1", 
+                         id="block",
+                         Alevels=c("Q1","Q2","Q3","Q4"),
+                         outputdf = h6cadj.res,
+                         family="gaussian", 
+                         SLlibrary="SL.gam")
+
+h6cadj.res <- tmle_quart(dat=d, 
+                         Y="TS_t2", 
+                         W=Wvars, 
+                         A="whz_t1", 
+                         id="block",
+                         Alevels=c("Q1","Q2","Q3","Q4"),
+                         outputdf = h6cadj.res,
+                         family="gaussian", 
+                         SLlibrary="SL.gam")
+
+h6cadj.res <- tmle_quart(dat=d, 
+                         Y="TS_t2", 
+                         W=Wvars, 
+                         A="hcz_t1", 
+                         id="block",
+                         Alevels=c("Q1","Q2","Q3","Q4"),
+                         outputdf = h6cadj.res,
+                         family="gaussian", 
+                         SLlibrary="SL.gam")
+
+h6cadj.res
+
+
+
+
+#Hypothesis 6d
+#Child LAZ, WAZ, WLZ, and HCZ measured at Month 3 is associated with subsequent child telomere length at Year 2.
+#Exposure: Quartiles of LAZ, WAZ, WLZ, and head circumference-for-age Z score at Month 3
+#Outcome: Child telomere lengths at Year 2
+
+
+#unadjusted
+#Null data.frame
+h6dunadj.res = NULL
+
+h6dunadj.res <- tmle_quart(dat=d, 
+                           Y="TS_t3", 
+                           W=NULL, 
+                           A="laz_t1", 
+                           id="block",
+                           Alevels=c("Q1","Q2","Q3","Q4"),
+                           outputdf = h6dunadj.res,
+                           family="gaussian", 
+                           SLlibrary="SL.gam")
+
+h6dunadj.res <- tmle_quart(dat=d, 
+                           Y="TS_t3", 
+                           W=NULL, 
+                           A="waz_t1", 
+                           id="block",
+                           Alevels=c("Q1","Q2","Q3","Q4"),
+                           outputdf = h6dunadj.res,
+                           family="gaussian", 
+                           SLlibrary="SL.gam")
+
+h6dunadj.res <- tmle_quart(dat=d, 
+                           Y="TS_t3", 
+                           W=NULL, 
+                           A="whz_t1", 
+                           id="block",
+                           Alevels=c("Q1","Q2","Q3","Q4"),
+                           outputdf = h6dunadj.res,
+                           family="gaussian", 
+                           SLlibrary="SL.gam")
+
+h6dunadj.res <- tmle_quart(dat=d, 
+                           Y="TS_t3", 
+                           W=NULL, 
+                           A="hcz_t1", 
+                           id="block",
+                           Alevels=c("Q1","Q2","Q3","Q4"),
+                           outputdf = h6dunadj.res,
+                           family="gaussian", 
+                           SLlibrary="SL.gam")
+
+h6dunadj.res
+
+#adjusted
+
+#null dataframe
+h6dadj.res = NULL 
+
+Wvars<-c("sex","birthord", "momage", "momheight","momedu", 
+         "hfiacat", "Nlt18", "Ncomp", "watmin", 
+         "floor", "walls", "elec", "asset_wardrobe", "asset_table", "asset_chair", "asset_clock", "asset_khat", 
+         "asset_chouki", "asset_radio", "asset_tv", "asset_refrig",
+         "asset_bike", "asset_moto", "asset_sewmach", "asset_mobile", 
+         "n_cattle", "n_goat", "n_chicken", "monsoon_ht2", "monsoon_ht3", "ageday_ht2", 
+         "ageday_ht3", "tr", "cesd_sum_t2", "cesd_sum_ee_t3", "pss_sum_mom_t3", "diar7d_t2", "diar7d_t3", 
+         "life_viol_any_t3")
+
+
+h6dadj.res <- tmle_quart(dat=d, 
+                         Y="TS_t3", 
+                         W=Wvars, 
+                         A="laz_t1", 
+                         id="block",
+                         Alevels=c("Q1","Q2","Q3","Q4"),
+                         outputdf = h6dadj.res,
+                         family="gaussian", 
+                         SLlibrary="SL.gam")
+
+h6dadj.res <- tmle_quart(dat=d, 
+                         Y="TS_t3", 
+                         W=Wvars, 
+                         A="waz_t1", 
+                         id="block",
+                         Alevels=c("Q1","Q2","Q3","Q4"),
+                         outputdf = h6dadj.res,
+                         family="gaussian", 
+                         SLlibrary="SL.gam")
+
+h6dadj.res <- tmle_quart(dat=d, 
+                         Y="TS_t3", 
+                         W=Wvars, 
+                         A="whz_t1", 
+                         id="block",
+                         Alevels=c("Q1","Q2","Q3","Q4"),
+                         outputdf = h6dadj.res,
+                         family="gaussian", 
+                         SLlibrary="SL.gam")
+
+h6dadj.res <- tmle_quart(dat=d, 
+                         Y="TS_t3", 
+                         W=Wvars, 
+                         A="hcz_t1", 
+                         id="block",
+                         Alevels=c("Q1","Q2","Q3","Q4"),
+                         outputdf = h6dadj.res,
+                         family="gaussian", 
+                         SLlibrary="SL.gam")
+
+h6dadj.res
+
+
+
+
 
 #Hypothesis 7
 #Telomere length measured at Year 1 is associated with child growth velocity (kg/month or cm/month) between the Year 1 and Year 2 visits.
