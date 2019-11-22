@@ -49,9 +49,9 @@ age_t3_blood_M <- rbind(age3_overall, age3_tr)
 
 
 # #Compare to Audrie's
-# load(here("audrie results/immune-age-stats.RData"))
-# age_t2_blood_L[,-1] - age_t2_blood_M[,-1]
-# age_t3_blood_L[,-1] - age_t3_blood_M[,-1]
+load(here("audrie results/stress-age-stats.RData"))
+age_t2_blood_L[,-1] - age_t2_blood_M[,-1]
+age_t3_blood_L[,-1] - age_t3_blood_M[,-1]
 
 
 
@@ -71,23 +71,23 @@ n <-nrow(mean_sd)/2
 mean_sd <- data.frame(Y=gsub("_mean","",mean_sd[1:n,1]), mean=mean_sd[1:n,2], sd=mean_sd[(n+1):(2*n),2]) 
 
 #Compare to Audrie's
-# load(here("audrie results/immune_N_means.RData"))
-# ls()
+ load(here("audrie results/stress_N_means.RData"))
+ ls()
 # 
-# aud_N <- as.data.frame(rbindlist(lapply(ls(pattern="_N_L"), get)))
-# aud_N$Y = gsub("_N_L","",ls(pattern="_N_L"))
+ aud_N <- as.data.frame(rbindlist(lapply(ls(pattern="_N_L"), get)))
+ aud_N$Y = gsub("_N_L","",ls(pattern="_N_L"))
 # 
 # #merge and compare
-# N_comp <- merge(aud_N, mean_sd, by="Y")
-# dim(N_comp)
-# N_comp$mean.diff <- N_comp$mean.x - N_comp$mean.y
-# N_comp$sd.diff <- N_comp$sd.x - N_comp$sd.y
-# max(N_comp$mean.diff)
-# max(N_comp$sd.diff)
+ N_comp <- merge(aud_N, mean_sd, by="Y")
+ dim(N_comp)
+ N_comp$mean.diff <- N_comp$mean.x - N_comp$mean.y
+ N_comp$sd.diff <- N_comp$sd.x - N_comp$sd.y
+ max(N_comp$mean.diff)
+ max(N_comp$sd.diff)
 
 
 #------------------------------------------------------------------------------------------------
-# Unadjusted GLMs
+# Unadjusted tmle
 #------------------------------------------------------------------------------------------------
 
 
@@ -109,39 +109,20 @@ res_unadj$Y <-colnames(Y)
 
 
 # #Compare to Audrie's objects
-# load(here("audrie results/immune_unadj_glm.RData"))
+load(here("audrie results/stress_unadj_glm.RData"))
+
+name.pattern="unadj_"
+object_list=ls(pattern=name.pattern)
+aud_unadj <- rbind(get(object_list[1]), get(object_list[2]))
+names(aud_unadj)[names(aud_unadj) == 'var'] <- "Y"
+
 # 
+dim(res_unadj)
+dim(aud_unadj)
+comp_unadj <- full_join(res_unadj, aud_unadj, by="Y")
+dim(comp_unadj)
 # 
-# #Function to load and compile Audrie's objects
-# load_aud <- function(name.pattern, object_list, subgroup=F){
-#   print(object_list)
-#   df <- lapply(object_list, get)
-#   for(i in which(sapply(df, is.null))){
-#     print(object_list[i])
-#     if(subgroup){
-#       df[[i]] <- data.frame(subgroup=rep(NA,2), RD=rep(NA,2), ci.lb=rep(NA,2), ci.ub=rep(NA,2), SE=rep(NA,2), z=rep(NA,2), `P-value`=rep(NA,2))
-#     }else{
-#       df[[i]] <- data.frame(RD=NA, ci.lb=NA, ci.ub=NA, SE=NA, z=NA, `P-value`=NA)
-#     }
-#   }
-#   if(subgroup){
-#     df <- data.frame(rbindlist(lapply(df, as.data.frame), fill=TRUE),Y = rep(gsub(name.pattern,"",object_list), each=2))
-#   }else{
-#     df <- data.frame(rbindlist(lapply(df, as.data.frame), fill=TRUE),Y = gsub(name.pattern,"",object_list))
-#   }
-#   return(df)
-# }
-# 
-# name.pattern="_unadj_L"
-# object_list=ls(pattern=name.pattern)
-# aud_unadj <- load_aud(name.pattern, object_list)
-# 
-# dim(res_unadj)
-# dim(aud_unadj)
-# comp_unadj <- full_join(res_unadj, aud_unadj, by="Y")
-# dim(comp_unadj)
-# 
-# comp_unadj$RD.x - comp_unadj$RD.y
+comp_unadj$RD.x - comp_unadj$RD.y
 
 
 #------------------------------------------------------------------------------------------------
