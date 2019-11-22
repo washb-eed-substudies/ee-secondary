@@ -281,7 +281,7 @@ washb_function <- function(df,x) {
 list_stress <- lapply(names(df)[grep('t2_', names(df))],  function(x) washb_function(df,x))
 
 #put names of each of the variables into the matrix
-names(list_stress) <- names(d)[grep('t2_', names(df))]
+names(list_stress) <- names(df)[grep('t2_', names(df))]
 
 #Compile into data.frame for easier comparison in replication
 unadj_stress_t2 <- t(bind_rows(list_stress))
