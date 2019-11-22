@@ -286,6 +286,8 @@ names(list_stress) <- names(df)[grep('t2_', names(df))]
 #Compile into data.frame for easier comparison in replication
 unadj_stress_t2 <- t(bind_rows(list_stress))
 colnames(unadj_stress_t2) <-c("RD","var","ci.lb","ci.ub","P-value")
+unadj_stress_t2 <- as.data.frame(unadj_stress_t2)
+unadj_stress_t2$var <- c("t2_ipf2a3", "t2_23dinor", "t2_ipf2a6", "t2_812iso")
 
 #view results file
 unadj_stress_t2
@@ -328,6 +330,8 @@ names(list_stress) <- names(df)[grep('t3_', names(df))]
 #Compile into data.frame for easier comparison in replication
 unadj_stress_t3 <- t(bind_rows(list_stress))
 colnames(unadj_stress_t3) <-c("RD","var","ci.lb","ci.ub","P-value")
+unadj_stress_t3 <- as.data.frame(unadj_stress_t3)
+unadj_stress_t3$var <- c("t3_pre_saa", "t3_pre_cort", "t3_post_saa", "t3_post_cort", "t3_sys", "t3_dia", "t3_heart", "t3_nr3c1", "t3_cpg12")
 
 #view results file
 unadj_stress_t3
