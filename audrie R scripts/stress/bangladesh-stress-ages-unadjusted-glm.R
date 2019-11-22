@@ -245,7 +245,7 @@ save(age_t2_blood_L, age_t3_blood_L, file=here("audrie results/stress-age-stats.
 
 
 
-#glm t2 undjusted
+#tmle t2 undjusted
 
 #Load in enrollment data,blinded tr data, stool data for adjusted analysis. Use read.dta() to read the .dta files, or read.csv() to 
 #read .csv files. Use stringAsFactors=TRUE so that any character-based variable will be read in as a factor.
@@ -293,7 +293,7 @@ unadj_stress_t2
 
 
 
-#glm t3 undjusted
+#tmlet3 undjusted
 
 
 
@@ -308,7 +308,8 @@ d$tr <- factor(d$tr,levels=c("Control","Nutrition + WSH"))
 
 
 # subset to columns needed for unadjusted 
-df = d[,c("block", "tr","[insert list of stress variables here]")]
+df = d[,c("block", "tr", "t2_ipf2a3", "t2_23dinor", "t2_ipf2a6", "t2_812iso", "t3_pre_saa", "t3_pre_cort",
+          "t3_post_saa", "t3_post_cort", "t3_sys", "t3_dia", "t3_heart", "t3_nr3c1", "t3_cpg12")]
 df$block=as.factor(df$block)
 
 # Set up the WASHB function
