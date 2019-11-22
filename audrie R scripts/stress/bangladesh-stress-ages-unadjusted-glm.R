@@ -181,7 +181,7 @@ ages$tr <- factor(ages$tr,levels=c("Control","Nutrition + WSH"))
 
 #calculate N and mean of ages @ t2 overall
 ages_bt2_N<-ages %>%
-  summarize(agemth_bt2_N=n(), mean=mean(agemth_bt2, na.rm = T), median=median(agemth_bt2, na.rm =T), sd=sd(agemth_bt2, na.rm = T), female=sum(sex=="female"), male=sum(sex=="male"))
+  summarize(agemth_bt2_N=n(), mean=mean(agemth_bt2, na.rm = T), median=median(agemth_bt2, na.rm =T), sd=sd(agemth_bt2, na.rm = T), female=sum(sex==0), male=sum(sex==1))
 
 
 #add column to R obj ages_bt2_N
@@ -193,7 +193,7 @@ ages_bt2_N
 #calculate N and mean of ages @ t2 by arm
 ages_bt2_N_tr<-ages %>%
   group_by (tr) %>%
-  summarize(agemth_bt2_N=n(), mean=mean(agemth_bt2, na.rm = T), median=median(agemth_bt2, na.rm =T), sd=sd(agemth_bt2, na.rm = T), female=sum(sex=="female"), male=sum(sex=="male"))
+  summarize(agemth_bt2_N=n(), mean=mean(agemth_bt2, na.rm = T), median=median(agemth_bt2, na.rm =T), sd=sd(agemth_bt2, na.rm = T), female=sum(sex==0), male=sum(sex==1))
 
 #display 
 ages_bt2_N_tr
@@ -209,7 +209,7 @@ ages$tr <- factor(ages$tr,levels=c("Control", "Nutrition + WSH"))
 
 #calculate N and mean of ages @ t3 overall
 ages_bt3_N<-ages %>%
-  summarize(agemth_bt3_N=n(), mean=mean(agemth_bt3, na.rm = T), median=median(agemth_bt3, na.rm =T), sd=sd(agemth_bt3, na.rm = T), female=sum(sex=="female"), male=sum(sex=="male"))
+  summarize(agemth_bt3_N=n(), mean=mean(agemth_bt3, na.rm = T), median=median(agemth_bt3, na.rm =T), sd=sd(agemth_bt3, na.rm = T), female=sum(sex==0), male=sum(sex==1))
 
 
 #add column to R obj ages_bt3_N
@@ -221,7 +221,7 @@ ages_bt3_N
 #calculate N and mean of ages @ t3 by arm
 ages_bt3_N_tr<-ages %>%
   group_by (tr) %>%
-  summarize(agemth_bt3_N=n(), mean=mean(agemth_bt3, na.rm = T), median=median(agemth_bt3, na.rm =T), sd=sd(agemth_bt3, na.rm = T), female=sum(sex=="female"), male=sum(sex=="male"))
+  summarize(agemth_bt3_N=n(), mean=mean(agemth_bt3, na.rm = T), median=median(agemth_bt3, na.rm =T), sd=sd(agemth_bt3, na.rm = T), female=sum(sex==0), male=sum(sex==1))
 
 #display 
 ages_bt3_N_tr
