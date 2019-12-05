@@ -11,7 +11,7 @@
 #---------------------------------------
 # 
 #	input files:
-#	bangladesh-dm-ee-anthro-diar-ee-med-plasma-blind-tr-enrol-covariates-lab.csv (from 3-bangladesh-dm-immun-plasma-immun-3.do)
+# replication objects/simulated_stress_dataset.rds
 #
 #
 # output files:
@@ -35,7 +35,7 @@ setwd(paste0(dropboxDir,"Data/Cleaned/Audrie/")) #Set working directory
 # the baseline covariate dataset
 #---------------------------------------
 
-d <- read.csv("bangladesh-dm-ee-anthro-diar-ee-med-plasma-blind-tr-enrol-covariates-lab.csv",colClasses=c("dataid"="character"))
+d <- readRDS(here("replication objects/simulated_stress_dataset.rds"))
 
 #---------------------------------------
 # subset to the relevant measurement
@@ -51,7 +51,8 @@ d$tr <- factor(d$tr,levels=c("Control","Nutrition + WSH"))
 
 
 # subset to columns needed for unadjusted 
-df = d[,c("block", "tr","[insert list of stress variables here]")]
+df = d[,c("block", "tr", "t2_ipf2a3", "t2_23dinor", "t2_ipf2a6", "t2_812iso", "t3_pre_saa", "t3_pre_cort",
+          "t3_post_saa", "t3_post_cort", "t3_sys", "t3_dia", "t3_heart", "t3_nr3c1", "t3_cpg12")]
 df$block=as.factor(df$block)
 
 # Set up the WASHB function
@@ -104,28 +105,34 @@ W$sex<-as.factor(W$sex)
 # Set up the WASHB function
 washb_function <- function(df,x) {
   
-  temp <- washb_tmle(Y=df[,x], tr=df$tr, pair=NULL, W=W, id=df$block, contrast = c("Control","Nutrition + WSH"), family="gaussian", 
+  temp <- washb_tmle(Y=df[,x], tr=d$tr, pair=NULL, W=W, id=df$block, contrast= c("Control","Nutrition + WSH"), family="gaussian",
                      Q.SL.library=SL.library,g.SL.library=SL.library, pval=0.2, seed=12345, print=TRUE)
-  temp_metric <-as.matrix(temp$TR)
+  temp_metric <-t(as.matrix(unlist(temp$estimates$ATE)))
   rownames(temp_metric) <- c("Nutrition + WSH v C")
-  colnames(temp_metric) <-c("RD","ci.lb","ci.ub","SE","z","P-value")
   return(temp_metric)
+  
+  #temp <- washb_tmle(Y=df[,x], tr=df$tr, pair=NULL, W=W, id=df$block, contrast = c("Control","Nutrition + WSH"), family="gaussian", 
+   #                  Q.SL.library=SL.library,g.SL.library=SL.library, pval=0.2, seed=12345, print=TRUE)
+  #temp_metric <-as.matrix(temp$TR)
+  #rownames(temp_metric) <- c("Nutrition + WSH v C")
+  #colnames(temp_metric) <-c("RD","ci.lb","ci.ub","SE","z","P-value")
+  #return(temp_metric)
 }
 
 #grab the variables with prefix 't2_' from the data frame and then apply the washb_function
-list_immune <- lapply(names(d)[grep('t2_', names(d))],  function(x) washb_function(d,x))
+list_stress <- lapply(names(d)[grep('t2_', names(d))],  function(x) washb_function(d,x))
 
-list_immune
+list_stress
 
 #put names of each of the variables into the matrix
-names(list_immune) <- names(d)[grep('t2_', names(d))]
+names(list_stress) <- names(d)[grep('t2_', names(d))]
 
 #resulting matrix
-list_immune
+list_stress
 
 #to save each matrix separately for comparing with Andrew. 
 
-t2_igf_adj_sex_age_L<-list_immune$t2_ln_igf
+t2_igf_adj_sex_age_L<-list_stress$t2_ln_igf
 
 
 
@@ -137,7 +144,7 @@ t2_igf_adj_sex_age_L<-list_immune$t2_ln_igf
 # the baseline covariate dataset
 #---------------------------------------
 
-d <- read.csv("bangladesh-dm-ee-anthro-diar-ee-med-plasma-blind-tr-enrol-covariates-lab.csv",colClasses=c("dataid"="character"))
+d <- readRDS(here("replication objects/simulated_stress_dataset.rds"))
 
 #---------------------------------------
 # subset to the relevant measurement
@@ -211,18 +218,18 @@ washb_function <- function(df,x) {
 }
 
 #grab the variables with prefix 't3_' from the data frame and then apply the washb_function
-list_immune <- lapply(names(d)[grep('t3_', names(d))],  function(x) washb_function(d,x))
+list_stress <- lapply(names(d)[grep('t3_', names(d))],  function(x) washb_function(d,x))
 
-list_immune
+list_stress
 
 #put names of each of the variables into the matrix
-names(list_immune) <- names(d)[grep('t3_', names(d))]
+names(list_stress) <- names(d)[grep('t3_', names(d))]
 
 #resulting matrix
-list_immune
+list_stress
 
 #to save each matrix separately for comparing with Andrew. 
-t3_igf_adj_sex_age_L<-list_immune$t3_ln_igf
+t3_igf_adj_sex_age_L<-list_stress$t3_ln_igf
 
 
 #display results
