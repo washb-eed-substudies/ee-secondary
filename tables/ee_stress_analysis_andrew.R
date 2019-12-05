@@ -65,7 +65,7 @@ outcomes <- c("t2_ipf2a3","t2_23dinor","t2_ipf2a6",
              "t3_nr3c1","t3_cpg12")
 
 
-mean_sd <- d %>% select(outcomes) %>% summarise_all(tibble::lst(mean, sd), na.rm=T) %>% gather()
+mean_sd <- d %>% subset(., select=c(outcomes)) %>% summarise_all(tibble::lst(mean, sd), na.rm=T) %>% gather()
 n <-nrow(mean_sd)/2
 #split mean and SD into different columns
 mean_sd <- data.frame(Y=gsub("_mean","",mean_sd[1:n,1]), mean=mean_sd[1:n,2], sd=mean_sd[(n+1):(2*n),2]) 
@@ -93,7 +93,7 @@ mean_sd <- data.frame(Y=gsub("_mean","",mean_sd[1:n,1]), mean=mean_sd[1:n,2], sd
 
 #dataframe of stress outcomes:
 colnames(d)
-Y<-d %>% select(outcomes)
+Y<-d %>% subset(., select=c(outcomes))
 
 
 #Unadjusted glm models
@@ -122,7 +122,7 @@ dim(aud_unadj)
 comp_unadj <- full_join(res_unadj, aud_unadj, by="Y")
 dim(comp_unadj)
 # 
-comp_unadj$RD.x - comp_unadj$RD.y
+comp_unadj$`Mean difference` - comp_unadj$RD
 
 
 #------------------------------------------------------------------------------------------------
