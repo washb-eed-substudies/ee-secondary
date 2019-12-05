@@ -9,7 +9,7 @@
 
 #---------------------------------------
 # input files:
-#	bangladesh-dm-ee-anthro-diar-ee-med-plasma-blind-tr-enrol-covariates-lab.csv (from 3-bangladesh-dm-immun-plasma-immun-3.do)
+# replication objects/simulated_stress_dataset.rds
 #
 # output files:
 #	bangladesh-stress-adj.Rdata
@@ -35,7 +35,7 @@ setwd(paste0(dropboxDir,"Data/Cleaned/Audrie/")) #Set working directory
 # the baseline covariate dataset
 #---------------------------------------
 
-d <- read.csv("bangladesh-dm-ee-anthro-diar-ee-med-plasma-blind-tr-enrol-covariates-lab.csv",colClasses=c("dataid"="character"))
+d <- readRDS(here("replication objects/simulated_stress_dataset.rds"))
 
 
 #---------------------------------------
@@ -51,7 +51,8 @@ d$tr <- factor(d$tr,levels=c("Control","Nutrition + WSH"))
 
 
 # subset to columns needed for unadjusted 
-df = d[,c("block", "tr","[insert list of stress variables here]")]
+df = d[,c("block", "tr", "t2_ipf2a3", "t2_23dinor", "t2_ipf2a6", "t2_812iso", "t3_pre_saa", "t3_pre_cort",
+          "t3_post_saa", "t3_post_cort", "t3_sys", "t3_dia", "t3_heart", "t3_nr3c1", "t3_cpg12")]
 df$block=as.factor(df$block)
 
 # Set up the WASHB function
@@ -153,24 +154,30 @@ washb_function <- function(df,x) {
 #washb_function(d, "igf_t2")
 
 #grab the variables with prefix 't2_' from the data frame and then apply the washb_function
-list_immune <- lapply(names(d)[grep('t2_', names(d))],  function(x) washb_function(d,x))
+list_stress <- lapply(names(d)[grep('t2_', names(d))],  function(x) washb_function(d,x))
 
-list_immune
+list_stress
 
 #put names of each of the variables into the matrix
-names(list_immune) <- names(d)[grep('t2_', names(d))]
+names(list_stress) <- names(d)[grep('t2_', names(d))]
 
-#resulting matrix
-list_immune
+#Compile into data.frame for easier comparison in replication
+adj_stress_t2 <- t(bind_rows(list_stress))
+colnames(adj_stress_t2) <-c("RD","var","ci.lb","ci.ub","P-value")
+adj_stress_t2 <- as.data.frame(adj_stress_t2)
+adj_stress_t2$var <- c("t2_ipf2a3", "t2_23dinor", "t2_ipf2a6", "t2_812iso")
+
+#view results file
+adj_stress_t2
 
 #Save intermediate R objects for replication comparison
 da <- d
 wa <-W
-save(da, wa, list_immune, file = here("replication objects/audrie_immune_W.rdata"))
+save(da, wa, list_stress, file = here("replication objects/audrie_stress_W.rdata"))
 
 
 #to save each matrix separately for comparing with Andrew. 
-t2_igf_adj_L<-list_immune$t2_ln_igf
+t2_igf_adj_L<-list_stress$t2_ln_igf
 
 
 
@@ -195,7 +202,8 @@ d$tr <- factor(d$tr,levels=c("Control","Nutrition + WSH"))
 
 
 # subset to columns needed for unadjusted 
-df = d[,c("block", "tr","[insert list of stress variables here]")]
+df = d[,c("block", "tr", "t2_ipf2a3", "t2_23dinor", "t2_ipf2a6", "t2_812iso", "t3_pre_saa", "t3_pre_cort",
+          "t3_post_saa", "t3_post_cort", "t3_sys", "t3_dia", "t3_heart", "t3_nr3c1", "t3_cpg12")]
 df$block=as.factor(df$block)
 
 # Set up the WASHB function
@@ -285,7 +293,7 @@ W$n_chicken<-as.numeric(W$n_chicken)
 
 # Save t3 covariates
 Wa3 <- W
-save(Wa3, file=here("replication objects/andrew_immune_W3.rdata"))
+save(Wa3, file=here("replication objects/andrew_stress_W3.rdata"))
 
 
 # Set up the WASHB function
@@ -301,19 +309,28 @@ washb_function <- function(df,x) {
 
 
 #grab the variables with prefix 't3_' from the data frame and then apply the washb_function
-list_immune <- lapply(names(d)[grep('t3_', names(d))],  function(x) washb_function(d,x))
+list_stress <- lapply(names(d)[grep('t3_', names(d))],  function(x) washb_function(d,x))
 
-list_immune
+list_stress
 
 #put names of each of the variables into the matrix
-names(list_immune) <- names(d)[grep('t3_', names(d))]
+names(list_stress) <- names(d)[grep('t3_', names(d))]
+
+#Compile into data.frame for easier comparison in replication
+adj_stress_t3 <- t(bind_rows(list_stress))
+colnames(adj_stress_t3) <-c("RD","var","ci.lb","ci.ub","P-value")
+adj_stress_t3 <- as.data.frame(adj_stress_t3)
+adj_stress_t3$var <- c("t3_pre_saa", "t3_pre_cort", "t3_post_saa", "t3_post_cort", "t3_sys", "t3_dia", "t3_heart", "t3_nr3c1", "t3_cpg12")
+
+#view results file
+adj_stress_t3
 
 #resulting matrix
-list_immune
+list_stress
 
 
 #to save each matrix separately for comparing with Andrew. 
-t3_igf_adj_L<-list_immune$t3_ln_igf
+t3_igf_adj_L<-list_stress$t3_ln_igf
 
 
 
