@@ -1,28 +1,13 @@
 rm(list=ls())
 source(here::here("0-config.R"))
 
-
-
-# #load stress outcomes
-# str <- readRDS("~/ee-secondary/replication objects/real_stress_outcomes.rds")
-# str <- as.data.frame(str)
-# str$childid <- as.numeric(str$childid)
-# head(str)
-# 
-# #log transform outcomes
-# table(is.na(str[,-1]))
-# str[,-1] <- log(str[,-1])
-# table(is.na(str[,-1]))
-# 
-# fulld <- read.csv(paste0(dropboxDir,"Data/Cleaned/Andrew/EE-BD_fulldata.csv"))
-# colnames(fulld)
-# 
-# 
-# d <- left_join(imm, str, by="childid")
-
 #load the fake dataset
-d <- readRDS("~/ee-secondary/replication objects/simulated_stress_dataset.rds")
-head(d)
+# d <- readRDS("~/ee-secondary/replication objects/simulated_stress_dataset.rds")
+# head(d)
+
+# #load stress outcomes dataset
+d <- readRDS(paste0(dropboxDir,"Data/Cleaned/Andrew/clean_stress_dataset.RDS"))
+
 
 
 
@@ -35,23 +20,23 @@ head(d)
 #------------------------------------------------------------------------------------------------
 
 
-age2_overall <- d %>% filter(!is.na(agem2)) %>%
-  summarize(tr="Overall",N=n(), mean=mean(agem2), median=median(agem2), sd=sd(agem2), female=sum(sex==0), male=sum(sex))
-age2_tr <- d %>% group_by(tr) %>% filter(tr %in% c("Control","Nutrition + WSH")) %>% filter(!is.na(agem2)) %>%
-  summarize(N=n(), mean=mean(agem2), median=median(agem2), sd=sd(agem2), female=sum(sex==0), male=sum(sex))
-age_t2_blood_M <- rbind(age2_overall, age2_tr)
+age2_overall <- d %>% filter(!is.na(ur_aged2)) %>%
+  summarize(tr="Overall",N=n(), mean=mean(ur_aged2), median=median(ur_aged2), sd=sd(ur_aged2), female=sum(sex==0), male=sum(sex))
+ur_age2_tr <- d %>% group_by(tr) %>% filter(tr %in% c("Control","Nutrition + WSH")) %>% filter(!is.na(ur_aged2)) %>%
+  summarize(N=n(), mean=mean(ur_aged2), median=median(ur_aged2), sd=sd(ur_aged2), female=sum(sex==0), male=sum(sex))
+ur_age_t2_blood_M <- rbind(ur_age2_overall, ur_age2_tr)
 
-age3_overall <- d %>% filter(!is.na(agem3)) %>%
-  summarize(tr="Overall",N=n(), mean=mean(agem3), median=median(agem3), sd=sd(agem3), female=sum(sex==0), male=sum(sex))
-age3_tr <- d %>% group_by(tr) %>% filter(tr %in% c("Control","Nutrition + WSH")) %>% filter(!is.na(agem3)) %>%
-  summarize(N=n(), mean=mean(agem3), median=median(agem3), sd=sd(agem3), female=sum(sex==0), male=sum(sex))
-age_t3_blood_M <- rbind(age3_overall, age3_tr)
+ur_age3_overall <- d %>% filter(!is.na(ur_aged3)) %>%
+  summarize(tr="Overall",N=n(), mean=mean(ur_aged3), median=median(ur_aged3), sd=sd(ur_aged3), female=sum(sex==0), male=sum(sex))
+ur_age3_tr <- d %>% group_by(tr) %>% filter(tr %in% c("Control","Nutrition + WSH")) %>% filter(!is.na(ur_aged3)) %>%
+  summarize(N=n(), mean=mean(ur_aged3), median=median(ur_aged3), sd=sd(ur_aged3), female=sum(sex==0), male=sum(sex))
+ur_age_t3_blood_M <- rbind(ur_age3_overall, ur_age3_tr)
 
 
-# #Compare to Audrie's
-load(here("audrie results/stress-age-stats.RData"))
-age_t2_blood_L[,-1] - age_t2_blood_M[,-1]
-age_t3_blood_L[,-1] - age_t3_blood_M[,-1]
+# # #Compare to Audrie's
+# load(here("audrie results/stress-age-stats.RData"))
+# age_t2_blood_L[,-1] - age_t2_blood_M[,-1]
+# age_t3_blood_L[,-1] - age_t3_blood_M[,-1]
 
 
 
@@ -59,31 +44,31 @@ age_t3_blood_L[,-1] - age_t3_blood_M[,-1]
 # N's and means
 #------------------------------------------------------------------------------------------------
 
-#Set outcomes
-outcomes <- c("t2_ipf2a3","t2_23dinor","t2_ipf2a6",
-              "t2_812iso","t3_pre_saa","t3_pre_cort","t3_post_saa","t3_post_cort","t3_sys","t3_dia","t3_heart",
-             "t3_nr3c1","t3_cpg12")
 
+outcomes <- c("t2_f2_8ip","t2_f2_23d","t2_f2_VI", "t2_f2_12i",
+              "t3_map","t3_hr_mean",
+              "t3_saa_z01","t3_saa_z02","t3_cort_z01","t3_cort_z03",
+              "t3_gcr_mean","t3_gcr_cpg12","t3_saa_slope","t3_cort_slope","t3_residual_saa","t3_residual_cort")
 
 mean_sd <- d %>% subset(., select=c(outcomes)) %>% summarise_all(tibble::lst(mean, sd), na.rm=T) %>% gather()
 n <-nrow(mean_sd)/2
 #split mean and SD into different columns
 mean_sd <- data.frame(Y=gsub("_mean","",mean_sd[1:n,1]), mean=mean_sd[1:n,2], sd=mean_sd[(n+1):(2*n),2]) 
 
-#Compare to Audrie's
- load(here("audrie results/stress_N_means.RData"))
- ls()
-# 
- aud_N <- as.data.frame(rbindlist(lapply(ls(pattern="_N_L"), get)))
- aud_N$Y = gsub("_N_L","",ls(pattern="_N_L"))
-# 
-# #merge and compare
- N_comp <- merge(aud_N, mean_sd, by="Y")
- dim(N_comp)
- N_comp$mean.diff <- N_comp$mean.x - N_comp$mean.y
- N_comp$sd.diff <- N_comp$sd.x - N_comp$sd.y
- max(N_comp$mean.diff)
- max(N_comp$sd.diff)
+# #Compare to Audrie's
+#  load(here("audrie results/stress_N_means.RData"))
+#  ls()
+# # 
+#  aud_N <- as.data.frame(rbindlist(lapply(ls(pattern="_N_L"), get)))
+#  aud_N$Y = gsub("_N_L","",ls(pattern="_N_L"))
+# # 
+# # #merge and compare
+#  N_comp <- merge(aud_N, mean_sd, by="Y")
+#  dim(N_comp)
+#  N_comp$mean.diff <- N_comp$mean.x - N_comp$mean.y
+#  N_comp$sd.diff <- N_comp$sd.x - N_comp$sd.y
+#  max(N_comp$mean.diff)
+#  max(N_comp$sd.diff)
 
 
 #------------------------------------------------------------------------------------------------
@@ -108,21 +93,21 @@ colnames(res_unadj)<-c("Mean difference","var","ci.l","ci.u", "Pval")
 res_unadj$Y <-colnames(Y)
 
 
-# #Compare to Audrie's objects
-load(here("audrie results/stress_unadj_glm.RData"))
-
-name.pattern="unadj_"
-object_list=ls(pattern=name.pattern)
-aud_unadj <- rbind(get(object_list[1]), get(object_list[2]))
-names(aud_unadj)[names(aud_unadj) == 'var'] <- "Y"
-
+# # #Compare to Audrie's objects
+# load(here("audrie results/stress_unadj_glm.RData"))
 # 
-dim(res_unadj)
-dim(aud_unadj)
-comp_unadj <- full_join(res_unadj, aud_unadj, by="Y")
-dim(comp_unadj)
+# name.pattern="unadj_"
+# object_list=ls(pattern=name.pattern)
+# aud_unadj <- rbind(get(object_list[1]), get(object_list[2]))
+# names(aud_unadj)[names(aud_unadj) == 'var'] <- "Y"
 # 
-comp_unadj$`Mean difference` - comp_unadj$RD
+# # 
+# dim(res_unadj)
+# dim(aud_unadj)
+# comp_unadj <- full_join(res_unadj, aud_unadj, by="Y")
+# dim(comp_unadj)
+# # 
+# comp_unadj$`Mean difference` - comp_unadj$RD
 
 
 #------------------------------------------------------------------------------------------------
@@ -136,9 +121,9 @@ d$sex=relevel(d$sex,ref="0")
 res_sex <- NULL
 for(i in 1:ncol(Y)){
   if(grepl("t2_", colnames(Y)[i])){
-    temp<-washb_tmle(Y=(Y[,i]), tr=d$tr, W=data.frame(sex=d$sex, agem2=d$agem2), id=d$block, pair=NULL, family="gaussian", contrast= c("Control","Nutrition + WSH"), print=F)
+    temp<-washb_tmle(Y=(Y[,i]), tr=d$tr, W=data.frame(sex=d$sex, aged2=d$ur_aged2), id=d$block, pair=NULL, family="gaussian", contrast= c("Control","Nutrition + WSH"), print=F)
   }else{
-    temp<-washb_tmle(Y=(Y[,i]), tr=d$tr, W=data.frame(sex=d$sex, agem2=d$agem2), id=d$block, pair=NULL, family="gaussian", contrast= c("Control","Nutrition + WSH"), print=F)
+    temp<-washb_tmle(Y=(Y[,i]), tr=d$tr, W=data.frame(sex=d$sex, aged2=d$ur_aged2), id=d$block, pair=NULL, family="gaussian", contrast= c("Control","Nutrition + WSH"), print=F)
   }
   res_sex<-rbind(res_sex, unlist(temp$estimates$ATE))
 }
@@ -190,8 +175,8 @@ d <- d %>% mutate(monsoon2 = ifelse(month2 > 4 & month2 < 11, "1", "0"),
                   monsoon2 = factor(monsoon2),
                   monsoon3 = factor(monsoon3))
 
-Wvars2<-c("aged2", "monsoon2") 
-Wvars3<-c("aged3", "monsoon3") 
+Wvars2<-c("ur_aged2", "ur_monsoon2") 
+Wvars3<-c("ur_aged3", "ur_monsoon3") 
 
 
 #subset time-constant W adjustment set
@@ -207,7 +192,7 @@ for(i in 1:ncol(W)){
 #Replace missingness for factors with new level
 #in main dataset 
 
-
+d$asset_clock <- as.character(d$asset_clock)
 d$asset_clock[is.na(d$asset_clock)]<-99
 d$asset_clock<-factor(d$asset_clock)
 

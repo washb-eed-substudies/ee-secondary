@@ -16,9 +16,9 @@ head(d)
 d <- d %>% rename(t3_residual_saa_lm=t3_residual_saa,
                   t3_residual_cort_lm=t3_residual_cort)
 
-#One time seems off:
-#childid== 71061    t3_hr1 =120    t3_hr2 =119    t3_hr3 =114  
-#t3_z03_time == 01jan1960 00:00:00
+#One time should be NA not 0 :
+#childid== 71061 t3_z03_time == 01jan1960 00:00:00
+d$t3_z03_time[d$childid== 7106] <- NA
 
 #Aren't ssa and cortisol taken at diff times, so t3_z01_time should vary between the two?
 #should t3_z02_time be used when regressing on outcome t3_saa_z02?
@@ -31,13 +31,15 @@ d$sampletime <- hour(d$t3_z01_time)*60+minute(d$t3_z01_time)
 #Temporarily drop missing time
 d$sampletime[d$sampletime==0] <- NA
 
-#Examine regression predicted variables by time of day
-ggplot(d, aes(x=t3_residual_saa_lm)) + geom_density()
-ggplot(d, aes(x=t3_residual_cort_lm)) + geom_density()
+# #Examine regression predicted variables by time of day
+# ggplot(d, aes(x=t3_residual_saa_lm)) + geom_density()
+# ggplot(d, aes(x=t3_residual_cort_lm)) + geom_density()
+# 
+# #
+# ggplot(d, aes(x=sampletime, y=t3_residual_saa_lm)) + geom_point() + geom_smooth(method="lm")
+# ggplot(d, aes(x=sampletime, y=t3_residual_cort_lm)) + geom_point() + geom_smooth(method="lm")
 
-#
-ggplot(d, aes(x=sampletime, y=t3_residual_saa_lm)) + geom_point() + geom_smooth(method="lm")
-ggplot(d, aes(x=sampletime, y=t3_residual_cort_lm)) + geom_point() + geom_smooth(method="lm")
+
 
 
 #---------------------------------------------------------------------------------------------
@@ -81,11 +83,12 @@ sl <- make_learner(Lrnr_sl,
 
 #Set parameters
 outcome1 = "t3_saa_z02"
-covars1 = c("t3_saa_z01","sampletime")
+covars1 = c("t3_saa_z01","t3_saa_min_elaps","sampletime")
 outcome2 = "t3_cort_z03"
-covars2 = c("t3_cort_z01","sampletime")
+covars2 = c("t3_cort_z01","t3_cort_min_elaps","sampletime")
 id="childid"
   
+
   #Drop missingness
   node_list1 <- list(
     W=covars1,
@@ -183,11 +186,11 @@ id="childid"
   t3_residual_saa_sl <- y1-yhat_full1
   t3_residual_cort_sl <- y2-yhat_full2
   
-  #compare time of day to prediction
-  ggplot_dat1 <- data.frame(x=dat1$sampletime, y=yhat_full1)
-  ggplot_dat2 <- data.frame(x=dat2$sampletime, y=yhat_full2)
-  ggplot(ggplot_dat1, aes(x=x, y=y)) + geom_point() + geom_smooth() + xlab("Minute of day") + ylab("Predicted saa") 
-  ggplot(ggplot_dat2, aes(x=x, y=y)) + geom_point() + geom_smooth() + xlab("Minute of day") + ylab("Predicted cort") 
+  # #compare time of day to prediction
+  # ggplot_dat1 <- data.frame(x=dat1$sampletime, y=yhat_full1)
+  # ggplot_dat2 <- data.frame(x=dat2$sampletime, y=yhat_full2)
+  # ggplot(ggplot_dat1, aes(x=x, y=y)) + geom_point() + geom_smooth() + xlab("Minute of day") + ylab("Predicted saa") 
+  # ggplot(ggplot_dat2, aes(x=x, y=y)) + geom_point() + geom_smooth() + xlab("Minute of day") + ylab("Predicted cort") 
   
   
   #add in child ID to merge with primary data
@@ -197,15 +200,19 @@ id="childid"
   d <- left_join(d, sl_res1, by=c("childid"))
   d <- left_join(d, sl_res2, by=c("childid"))
   
-  #compare to lm residuals
-  ggplot(d, aes(x=sampletime, y=t3_residual_saa)) + geom_point() + geom_smooth(method="lm") 
-
-  #Examine regression predicted variables by time of day
-  ggplot(d, aes(x=t3_residual_saa_sl)) + geom_density()
-  ggplot(d, aes(x=t3_residual_cort_sl)) + geom_density()
+  # #compare to lm residuals
+  # ggplot(d, aes(x=sampletime, y=t3_residual_saa)) + geom_point() + geom_smooth(method="lm") 
+  # 
+  # #Examine regression predicted variables by time of day
+  # ggplot(d, aes(x=t3_residual_saa_sl)) + geom_density()
+  # ggplot(d, aes(x=t3_residual_cort_sl)) + geom_density()
+  # 
+  # #
+  # ggplot(d, aes(x=t3_residual_saa_lm, y=t3_residual_saa_sl)) + geom_point() + geom_smooth(method="lm")
+  # ggplot(d, aes(x=t3_residual_cort_lm, y=t3_residual_cort_sl)) + geom_point() + geom_smooth(method="lm")
   
-  #
-  ggplot(d, aes(x=t3_residual_saa_lm, y=t3_residual_saa_sl)) + geom_point() + geom_smooth(method="lm")
-  ggplot(d, aes(x=t3_residual_cort_lm, y=t3_residual_cort_sl)) + geom_point() + geom_smooth(method="lm")
   
   
+  #Drop LM residuals and save dataset
+  d <- d %>% subset(., select = -c(t3_residual_saa_lm, t3_residual_cort_lm)) %>% rename("t3_residual_saa"="t3_residual_saa_sl", "t3_residual_cort" = "t3_residual_cort_sl")
+  saveRDS(d, file=paste0(dropboxDir,"Data/Cleaned/Audrie/washb-bangladesh-dm-ee-vital-saa-cortisol-f2-gcr-residuals.RDS"))

@@ -37,12 +37,9 @@ set.seed(12345)
 ###Load in data
 ######################
 
-#Set working directory to load in blinded treatment assignment and enrolment information
-setwd(paste0(dropboxDir,"Data/Cleaned/Audrie/")) #Set working directory
-
 #Load in enrollment data,blinded tr data, stool data for adjusted analysis. Use read.dta() to read the .dta files, or read.csv() to 
 #read .csv files. Use stringAsFactors=TRUE so that any character-based variable will be read in as a factor.
-lab<-readRDS(here("replication objects/simulated_stress_dataset.rds"))
+lab<-readRDS(paste0(dropboxDir,"Data/Cleaned/Andrew/clean_stress_dataset.RDS"))
 table(lab$tr) #crosstab of numbers in each treatment
 
 
@@ -76,101 +73,125 @@ grouptr<-function(var){
              sd=c(sd(ctrl$var, na.rm=TRUE), sd(wsh$var, na.rm=TRUE)))
 }
 
+
+              "","","","","","")
+
+
 #calculate overall N's and means at t2 & t3
-t2_ipf2a3_N<-overall("t2_ipf2a3")
-t2_23dinor_N<-overall("t2_23dinor")
-t2_ipf2a6_N<-overall("t2_ipf2a6")
-t2_812iso_N<-overall("t2_812iso")
-t3_pre_saa_N<-overall("t3_pre_saa")
-t3_pre_cort_N<-overall("t3_pre_cort")
-t3_post_saa_N<-overall("t3_post_saa")
-t3_post_cort_N<-overall("t3_post_cort")
-t3_sys_N<-overall("t3_sys")
-t3_dia_N<-overall("t3_dia")
-t3_heart_N<-overall("t3_heart")
-t3_nr3c1_N<-overall("t3_nr3c1")
-t3_cpg12_N<-overall("t3_cpg12")
+t2_f2_8ip_N<-overall("t2_f2_8ip")
+t2_f2_23d_N<-overall("t2_f2_23d")
+t2_f2_VI_N<-overall("t2_f2_VI")
+t2_f2_12i_N<-overall("t2_f2_12i")
+t3_saa_z01_N<-overall("t3_saa_z01")
+t3_cort_z01_N<-overall("t3_cort_z01")
+t3_saa_z02_N<-overall("t3_saa_z02")
+t3_cort_z03_N<-overall("t3_cort_z03")
+t3_map_N<-overall("t3_map")
+t3_hr_mean_N<-overall("t3_hr_mean")
+t3_gcr_mean_N<-overall("t3_gcr_mean")
+t3_gcr_cpg12_N<-overall("t3_gcr_cpg12")
+
+t3_saa_slope_N<-overall("t3_saa_slope")
+t3_cort_slope_N<-overall("t3_cort_slope")
+t3_residual_saa_N<-overall("t3_residual_saa")
+t3_residual_cort_N<-overall("t3_residual_cort")
 
 
 #calculate N's and mean of biomarkers at t2 & t3 by sex
-t2_ipf2a3_N_sex<-groupsex(lab$"t2_ipf2a3")
-t2_23dinor_N_sex<-groupsex(lab$"t2_23dinor")
-t2_ipf2a6_N_sex<-groupsex(lab$"t2_ipf2a6")
-t2_812iso_N_sex<-groupsex(lab$"t2_812iso")
-t3_pre_saa_N_sex<-groupsex(lab$"t3_pre_saa")
-t3_pre_cort_N_sex<-groupsex(lab$"t3_pre_cort")
-t3_post_saa_N_sex<-groupsex(lab$"t3_post_saa")
-t3_post_cort_sex<-groupsex(lab$"t3_post_cort")
-t3_sys_N_sex<-groupsex(lab$"t3_sys")
+t2_f2_8ip_N_sex<-groupsex(lab$"t2_f2_8ip")
+t2_f2_23d_N_sex<-groupsex(lab$"t2_f2_23d")
+t2_f2_VI_N_sex<-groupsex(lab$"t2_f2_VI")
+t2_f2_12i_N_sex<-groupsex(lab$"t2_f2_12i")
+t3_saa_z01_N_sex<-groupsex(lab$"t3_saa_z01")
+t3_cort_z01_N_sex<-groupsex(lab$"t3_cort_z01")
+t3_saa_z02_N_sex<-groupsex(lab$"t3_saa_z02")
+t3_cort_z03_sex<-groupsex(lab$"t3_cort_z03")
+t3_map_N_sex<-groupsex(lab$"t3_map")
 t3_dia_N_sex<-groupsex(lab$"t3_dia")
-t3_heart_N_sex<-groupsex(lab$"t3_heart")
-t3_nr3c1_N_sex<-groupsex(lab$"t3_nr3c1")
-t3_cpg12_N_sex<-groupsex(lab$"t3_cpg12")
+t3_hr_mean_N_sex<-groupsex(lab$"t3_hr_mean")
+t3_gcr_mean_N_sex<-groupsex(lab$"t3_gcr_mean")
+t3_gcr_cpg12_N_sex<-groupsex(lab$"t3_gcr_cpg12")
+t3_saa_slope_N_sex<-groupsex("t3_saa_slope")
+t3_cort_slope_N_sex<-groupsex("t3_cort_slope")
+t3_residual_saa_N_sex<-groupsex("t3_residual_saa")
+t3_residual_cort_N_sex<-groupsex("t3_residual_cort")
 
 
 #calculate N's and mean of stress biomarkers t2 and t3 by arm
-t2_ipf2a3_N_tr<-grouptr(lab$"t2_ipf2a3")
-t2_23dinor_N_tr<-grouptr(lab$"t2_23dinor")
-t2_ipf2a6_N_tr<-grouptr(lab$"t2_ipf2a6")
-t2_812iso_N_tr<-grouptr(lab$"t2_812iso")
-t3_pre_saa_N_tr<-grouptr(lab$"t3_pre_saa")
-t3_pre_cort_N_tr<-grouptr(lab$"t3_pre_cort")
-t3_post_saa_N_tr<-grouptr(lab$"t3_post_saa")
-t3_post_cort_tr<-grouptr(lab$"t3_post_cort")
-t3_sys_N_tr<-grouptr(lab$"t3_sys")
+t2_f2_8ip_N_tr<-grouptr(lab$"t2_f2_8ip")
+t2_f2_23d_N_tr<-grouptr(lab$"t2_f2_23d")
+t2_f2_VI_N_tr<-grouptr(lab$"t2_f2_VI")
+t2_f2_12i_N_tr<-grouptr(lab$"t2_f2_12i")
+t3_saa_z01_N_tr<-grouptr(lab$"t3_saa_z01")
+t3_cort_z01_N_tr<-grouptr(lab$"t3_cort_z01")
+t3_saa_z02_N_tr<-grouptr(lab$"t3_saa_z02")
+t3_cort_z03_tr<-grouptr(lab$"t3_cort_z03")
+t3_map_N_tr<-grouptr(lab$"t3_map")
 t3_dia_N_tr<-grouptr(lab$"t3_dia")
-t3_heart_N_tr<-grouptr(lab$"t3_heart")
-t3_nr3c1_N_tr<-grouptr(lab$"t3_nr3c1")
-t3_cpg12_N_tr<-grouptr(lab$"t3_cpg12")
-
+t3_hr_mean_N_tr<-grouptr(lab$"t3_hr_mean")
+t3_gcr_mean_N_tr<-grouptr(lab$"t3_gcr_mean")
+t3_gcr_cpg12_N_tr<-grouptr(lab$"t3_gcr_cpg12")
+t3_saa_slope_N_tr<-grouptr("t3_saa_slope")
+t3_cort_slope_N_tr<-grouptr("t3_cort_slope")
+t3_residual_saa_N_tr<-grouptr("t3_residual_saa")
+t3_residual_cort_N_tr<-grouptr("t3_residual_cort")
 
 #display
-t2_ipf2a3_N
-t2_23dinor_N
-t2_ipf2a6_N
-t2_812iso_N
-t3_pre_saa_N
-t3_pre_cort_N
-t3_post_saa_N
-t3_post_cort_N
-t3_sys_N
+t2_f2_8ip_N
+t2_f2_23d_N
+t2_f2_VI_N
+t2_f2_12i_N
+t3_saa_z01_N
+t3_cort_z01_N
+t3_saa_z02_N
+t3_cort_z03_N
+t3_map_N
 t3_dia_N
-t3_heart_N
-t3_nr3c1_N
-t3_cpg12_N
+t3_hr_mean_N
+t3_gcr_mean_N
+t3_gcr_cpg12_N
 
 
 #rename to distinguish mine for R compare
-t2_ipf2a3_N_L<-t2_ipf2a3_N
-t2_23dinor_N_L<-t2_23dinor_N
-t2_ipf2a6_N_L<-t2_ipf2a6_N
-t2_812iso_N_L<-t2_812iso_N
-t3_pre_saa_N_L<-t3_pre_saa_N
-t3_pre_cort_N_L<-t3_pre_cort_N
-t3_post_saa_N_L<-t3_post_saa_N
-t3_post_cort_N_L<-t3_post_cort_N
-t3_sys_N_L<-t3_sys_N
+t2_f2_8ip_N_L<-t2_f2_8ip_N
+t2_f2_23d_N_L<-t2_f2_23d_N
+t2_f2_VI_N_L<-t2_f2_VI_N
+t2_f2_12i_N_L<-t2_f2_12i_N
+t3_saa_z01_N_L<-t3_saa_z01_N
+t3_cort_z01_N_L<-t3_cort_z01_N
+t3_saa_z02_N_L<-t3_saa_z02_N
+t3_cort_z03_N_L<-t3_cort_z03_N
+t3_map_N_L<-t3_map_N
 t3_dia_N_L<-t3_dia_N
-t3_heart_N_L<-t3_heart_N
-t3_nr3c1_N_L<-t3_nr3c1_N
-t3_cpg12_N_L<-t3_cpg12_N
+t3_hr_mean_N_L<-t3_hr_mean_N
+t3_gcr_mean_N_L<-t3_gcr_mean_N
+t3_gcr_cpg12_N_L<-t3_gcr_cpg12_N
+
+t3_saa_slope_N_L<-t3_saa_slope
+t3_cort_slope_N_L<-t3_cort_slope
+t3_residual_saa_N_L<-t3_residual_saa
+t3_residual_cort_N_L<-t3_residual_cort
 
 
 #save as Rdata file
 
-save(t2_ipf2a3_N_L,
-     t2_23dinor_N_L,
-     t2_ipf2a6_N_L,
-     t2_812iso_N_L,
-     t3_pre_saa_N_L,
-     t3_pre_cort_N_L,
-     t3_post_saa_N_L,
-     t3_post_cort_N_L,
-     t3_sys_N_L,
+save(t2_f2_8ip_N_L,
+     t2_f2_23d_N_L,
+     t2_f2_VI_N_L,
+     t2_f2_12i_N_L,
+     t3_saa_z01_N_L,
+     t3_cort_z01_N_L,
+     t3_saa_z02_N_L,
+     t3_cort_z03_N_L,
+     t3_map_N_L,
      t3_dia_N_L,
-     t3_heart_N_L,
-     t3_nr3c1_N_L,
-     t3_cpg12_N_L,
+     t3_hr_mean_N_L,
+     t3_gcr_mean_N_L,
+     t3_gcr_cpg12_N_L,
+     t3_saa_slope_N_L,
+     t3_cort_slope_N_L,
+     t3_residual_saa_N_L,
+     t3_residual_cort_N_L,
      file=here("audrie results/stress_N_means.RData")) #Save as R objects for the compare
 
 
@@ -256,8 +277,8 @@ table(d$tr) #crosstab of numbers in each treatment
 d$tr <- factor(d$tr,levels=c("Control","Nutrition + WSH"))
 
 # subset to columns needed for unadjusted 
-df = d[,c("block", "tr","t2_ipf2a3", "t2_23dinor", "t2_ipf2a6", "t2_812iso", "t3_pre_saa", "t3_pre_cort",
-          "t3_post_saa", "t3_post_cort", "t3_sys", "t3_dia", "t3_heart", "t3_nr3c1", "t3_cpg12")]
+df = d[,c("block", "tr","t2_f2_8ip", "t2_f2_23d", "t2_f2_VI", "t2_f2_12i", "t3_saa_z01", "t3_cort_z01",
+          "t3_saa_z02", "t3_cort_z03", "t3_map", "t3_dia", "t3_hr_mean", "t3_gcr_mean", "t3_gcr_cpg12")]
 df$block=as.factor(df$block)
 
 # Set up the WASHB function
@@ -287,7 +308,7 @@ names(list_stress) <- names(df)[grep('t2_', names(df))]
 unadj_stress_t2 <- t(bind_rows(list_stress))
 colnames(unadj_stress_t2) <-c("RD","var","ci.lb","ci.ub","P-value")
 unadj_stress_t2 <- as.data.frame(unadj_stress_t2)
-unadj_stress_t2$var <- c("t2_ipf2a3", "t2_23dinor", "t2_ipf2a6", "t2_812iso")
+unadj_stress_t2$var <- c("t2_f2_8ip", "t2_f2_23d", "t2_f2_VI", "t2_f2_12i")
 
 #view results file
 unadj_stress_t2
@@ -310,8 +331,8 @@ d$tr <- factor(d$tr,levels=c("Control","Nutrition + WSH"))
 
 
 # subset to columns needed for unadjusted 
-df = d[,c("block", "tr", "t2_ipf2a3", "t2_23dinor", "t2_ipf2a6", "t2_812iso", "t3_pre_saa", "t3_pre_cort",
-          "t3_post_saa", "t3_post_cort", "t3_sys", "t3_dia", "t3_heart", "t3_nr3c1", "t3_cpg12")]
+df = d[,c("block", "tr", "t2_f2_8ip", "t2_f2_23d", "t2_f2_VI", "t2_f2_12i", "t3_saa_z01", "t3_cort_z01",
+          "t3_saa_z02", "t3_cort_z03", "t3_map", "t3_dia", "t3_hr_mean", "t3_gcr_mean", "t3_gcr_cpg12")]
 df$block=as.factor(df$block)
 
 # Set up the WASHB function
@@ -331,7 +352,7 @@ names(list_stress) <- names(df)[grep('t3_', names(df))]
 unadj_stress_t3 <- t(bind_rows(list_stress))
 colnames(unadj_stress_t3) <-c("RD","var","ci.lb","ci.ub","P-value")
 unadj_stress_t3 <- as.data.frame(unadj_stress_t3)
-unadj_stress_t3$var <- c("t3_pre_saa", "t3_pre_cort", "t3_post_saa", "t3_post_cort", "t3_sys", "t3_dia", "t3_heart", "t3_nr3c1", "t3_cpg12")
+unadj_stress_t3$var <- c("t3_saa_z01", "t3_cort_z01", "t3_saa_z02", "t3_cort_z03", "t3_map", "t3_dia", "t3_hr_mean", "t3_gcr_mean", "t3_gcr_cpg12")
 
 #view results file
 unadj_stress_t3
