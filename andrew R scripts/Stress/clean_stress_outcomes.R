@@ -112,4 +112,46 @@ dim(d)
 df <- left_join(fulld, d, by="childid")
 dim(df)
 
-saveRDS(df, file=paste0(dropboxDir,"Data/Cleaned/Andrew/clean_stress_dataset.RDS"))
+
+#---------------------------------------------------------------------------------------------
+# (temporary) blind treatment assignment
+#---------------------------------------------------------------------------------------------
+df$tr[1:10]
+table(df$tr)
+set.seed(12345)
+df$tr <- sample(df$tr, nrow(df))
+df$tr[1:10]
+table(df$tr)
+
+#---------------------------------------------------------------------------------------------
+# save data
+#---------------------------------------------------------------------------------------------
+
+saveRDS(df, file=paste0(dropboxDir,"Data/Cleaned/Andrew/clean_stress_dataset_andrew.RDS"))
+
+
+#---------------------------------------------------------------------------------------------
+# merge Audrie's covariates to check replication
+#---------------------------------------------------------------------------------------------
+
+
+# dfull <- read.csv("bangladesh-dm-ee-anthro-diar-ee-med-plasma-blind-tr-enrol-covariates-lab.csv",colClasses=c("dataid"="character"))
+# 
+# dim(dfull)
+# dim(d)
+# df <- left_join(dfull, d, by="childid")
+# dim(df)
+# 
+# 
+# df$tr[1:10]
+# table(df$tr)
+# set.seed(12345)
+# df$tr <- sample(df$tr, nrow(df))
+# df$tr[1:10]
+# table(df$tr)
+# 
+# 
+# saveRDS(df, file=paste0(dropboxDir,"Data/Cleaned/Andrew/clean_stress_dataset_andrew.RDS"))
+
+
+

@@ -1,10 +1,10 @@
 
 #---------------------------------------
-# bangladesh-stress-ages-unadj-analysis.R
+# bangladesh-stress-ur_ages-unadj-analysis.R
 #
 # audrie lin (audrielin@berkeley.edu)
 #
-# EE in the WASH B package 
+# EE in the WASH B packur_age 
 # functions and saving output for the replication 
 # compare.R script
 # 
@@ -21,7 +21,7 @@ rm(list=ls())
 
 
 ######################
-###Load in packages
+###Load in packur_ages
 ######################
 
 source(here::here("0-config.R"))
@@ -44,7 +44,7 @@ table(lab$tr) #crosstab of numbers in each treatment
 
 
 # re-order the treatment factor for convenience, dropping the arms not included in stress
-lab$tr <- factor(lab$tr,levels=c("Control","Nutrition + WSH"))
+lab$tr <- factor(lab$tr,levels=c("Control","Nutrition","WSH" ,"Nutrition + WSH"))
 
 # functions for overall N and mean, N and mean by sex, N and mean by arm
 overall <- function(var) {
@@ -74,7 +74,6 @@ grouptr<-function(var){
 }
 
 
-              "","","","","","")
 
 
 #calculate overall N's and means at t2 & t3
@@ -90,7 +89,6 @@ t3_map_N<-overall("t3_map")
 t3_hr_mean_N<-overall("t3_hr_mean")
 t3_gcr_mean_N<-overall("t3_gcr_mean")
 t3_gcr_cpg12_N<-overall("t3_gcr_cpg12")
-
 t3_saa_slope_N<-overall("t3_saa_slope")
 t3_cort_slope_N<-overall("t3_cort_slope")
 t3_residual_saa_N<-overall("t3_residual_saa")
@@ -107,14 +105,13 @@ t3_cort_z01_N_sex<-groupsex(lab$"t3_cort_z01")
 t3_saa_z02_N_sex<-groupsex(lab$"t3_saa_z02")
 t3_cort_z03_sex<-groupsex(lab$"t3_cort_z03")
 t3_map_N_sex<-groupsex(lab$"t3_map")
-t3_dia_N_sex<-groupsex(lab$"t3_dia")
 t3_hr_mean_N_sex<-groupsex(lab$"t3_hr_mean")
 t3_gcr_mean_N_sex<-groupsex(lab$"t3_gcr_mean")
 t3_gcr_cpg12_N_sex<-groupsex(lab$"t3_gcr_cpg12")
-t3_saa_slope_N_sex<-groupsex("t3_saa_slope")
-t3_cort_slope_N_sex<-groupsex("t3_cort_slope")
-t3_residual_saa_N_sex<-groupsex("t3_residual_saa")
-t3_residual_cort_N_sex<-groupsex("t3_residual_cort")
+t3_saa_slope_N_sex<-groupsex(lab$"t3_saa_slope")
+t3_cort_slope_N_sex<-groupsex(lab$"t3_cort_slope")
+t3_residual_saa_N_sex<-groupsex(lab$"t3_residual_saa")
+t3_residual_cort_N_sex<-groupsex(lab$"t3_residual_cort")
 
 
 #calculate N's and mean of stress biomarkers t2 and t3 by arm
@@ -127,14 +124,13 @@ t3_cort_z01_N_tr<-grouptr(lab$"t3_cort_z01")
 t3_saa_z02_N_tr<-grouptr(lab$"t3_saa_z02")
 t3_cort_z03_tr<-grouptr(lab$"t3_cort_z03")
 t3_map_N_tr<-grouptr(lab$"t3_map")
-t3_dia_N_tr<-grouptr(lab$"t3_dia")
 t3_hr_mean_N_tr<-grouptr(lab$"t3_hr_mean")
 t3_gcr_mean_N_tr<-grouptr(lab$"t3_gcr_mean")
 t3_gcr_cpg12_N_tr<-grouptr(lab$"t3_gcr_cpg12")
-t3_saa_slope_N_tr<-grouptr("t3_saa_slope")
-t3_cort_slope_N_tr<-grouptr("t3_cort_slope")
-t3_residual_saa_N_tr<-grouptr("t3_residual_saa")
-t3_residual_cort_N_tr<-grouptr("t3_residual_cort")
+t3_saa_slope_N_tr<-grouptr(lab$"t3_saa_slope")
+t3_cort_slope_N_tr<-grouptr(lab$"t3_cort_slope")
+t3_residual_saa_N_tr<-grouptr(lab$"t3_residual_saa")
+t3_residual_cort_N_tr<-grouptr(lab$"t3_residual_cort")
 
 #display
 t2_f2_8ip_N
@@ -162,19 +158,16 @@ t3_cort_z01_N_L<-t3_cort_z01_N
 t3_saa_z02_N_L<-t3_saa_z02_N
 t3_cort_z03_N_L<-t3_cort_z03_N
 t3_map_N_L<-t3_map_N
-t3_dia_N_L<-t3_dia_N
 t3_hr_mean_N_L<-t3_hr_mean_N
 t3_gcr_mean_N_L<-t3_gcr_mean_N
 t3_gcr_cpg12_N_L<-t3_gcr_cpg12_N
-
-t3_saa_slope_N_L<-t3_saa_slope
-t3_cort_slope_N_L<-t3_cort_slope
-t3_residual_saa_N_L<-t3_residual_saa
-t3_residual_cort_N_L<-t3_residual_cort
+t3_saa_slope_N_L<-t3_saa_slope_N
+t3_cort_slope_N_L<-t3_cort_slope_N
+t3_residual_saa_N_L<-t3_residual_saa_N
+t3_residual_cort_N_L<-t3_residual_cort_N
 
 
 #save as Rdata file
-
 save(t2_f2_8ip_N_L,
      t2_f2_23d_N_L,
      t2_f2_VI_N_L,
@@ -184,7 +177,6 @@ save(t2_f2_8ip_N_L,
      t3_saa_z02_N_L,
      t3_cort_z03_N_L,
      t3_map_N_L,
-     t3_dia_N_L,
      t3_hr_mean_N_L,
      t3_gcr_mean_N_L,
      t3_gcr_cpg12_N_L,
@@ -192,100 +184,85 @@ save(t2_f2_8ip_N_L,
      t3_cort_slope_N_L,
      t3_residual_saa_N_L,
      t3_residual_cort_N_L,
-     file=here("audrie results/stress_N_means.RData")) #Save as R objects for the compare
+     file=here::here("audrie results/stress_N_means.RData")) #Save as R objects for the compare
 
 
-ages<-readRDS(here("replication objects/simulated_stress_dataset.rds"))
-
-# re-order the treatment factor for convenience, dropping the arms not included in EE
-ages$tr <- factor(ages$tr,levels=c("Control","Nutrition + WSH"))
-
-#calculate N and mean of ages @ t2 overall
-ages_bt2_N<-ages %>%
-  summarize(agemth_bt2_N=n(), mean=mean(agemth_bt2, na.rm = T), median=median(agemth_bt2, na.rm =T), sd=sd(agemth_bt2, na.rm = T), female=sum(sex==0), male=sum(sex==1))
+ur_ages<-lab %>% rename(ur_agemth_bt2=ur_agem2, ur_agemth_bt3=ur_agem3)
 
 
-#add column to R obj ages_bt2_N
-ages_bt2_N["tr"] <- "Overall" 
+#calculate N and mean of ur_ages @ t2 overall
+ur_ages_bt2_N<-ur_ages %>%
+  summarize(ur_agemth_bt2_N=n(), mean=mean(ur_agemth_bt2, na.rm = T), median=median(ur_agemth_bt2, na.rm =T), sd=sd(ur_agemth_bt2, na.rm = T), female=sum(sex==0), male=sum(sex==1))
+
+
+#add column to R obj ur_ages_bt2_N
+ur_ages_bt2_N["tr"] <- "Overall" 
 
 #display 
-ages_bt2_N
+ur_ages_bt2_N
 
-#calculate N and mean of ages @ t2 by arm
-ages_bt2_N_tr<-ages %>%
+#calculate N and mean of ur_ages @ t2 by arm
+ur_ages_bt2_N_tr<-ur_ages %>%
   group_by (tr) %>%
-  summarize(agemth_bt2_N=n(), mean=mean(agemth_bt2, na.rm = T), median=median(agemth_bt2, na.rm =T), sd=sd(agemth_bt2, na.rm = T), female=sum(sex==0), male=sum(sex==1))
+  summarize(ur_agemth_bt2_N=n(), mean=mean(ur_agemth_bt2, na.rm = T), median=median(ur_agemth_bt2, na.rm =T), sd=sd(ur_agemth_bt2, na.rm = T), female=sum(sex==0), male=sum(sex==1))
 
 #display 
-ages_bt2_N_tr
+ur_ages_bt2_N_tr
 
 #total <- rbind(data frameA, data frameB)
-age_bt2_N_total <-rbind2(ages_bt2_N, ages_bt2_N_tr)
-age_t2_blood_L<-age_bt2_N_total[c(7, 1, 2, 3, 4, 5, 6)]
-
-ages<-readRDS(here("replication objects/simulated_stress_dataset.rds"))
-
-# re-order the treatment factor for convenience, dropping the arms not included in stress
-ages$tr <- factor(ages$tr,levels=c("Control", "Nutrition + WSH"))
-
-#calculate N and mean of ages @ t3 overall
-ages_bt3_N<-ages %>%
-  summarize(agemth_bt3_N=n(), mean=mean(agemth_bt3, na.rm = T), median=median(agemth_bt3, na.rm =T), sd=sd(agemth_bt3, na.rm = T), female=sum(sex==0), male=sum(sex==1))
+ur_age_bt2_N_total <-rbind2(ur_ages_bt2_N, ur_ages_bt2_N_tr)
+stress_age_t2_L<-ur_age_bt2_N_total[c(7, 1, 2, 3, 4, 5, 6)]
 
 
-#add column to R obj ages_bt3_N
-ages_bt3_N["tr"] <- "Overall" 
+#calculate N and mean of ur_ages @ t3 overall
+ur_ages_bt3_N<-ur_ages %>%
+  summarize(ur_agemth_bt3_N=n(), mean=mean(ur_agemth_bt3, na.rm = T), median=median(ur_agemth_bt3, na.rm =T), sd=sd(ur_agemth_bt3, na.rm = T), female=sum(sex==0), male=sum(sex==1))
+
+
+#add column to R obj ur_ages_bt3_N
+ur_ages_bt3_N["tr"] <- "Overall" 
 
 #display 
-ages_bt3_N
+ur_ages_bt3_N
 
-#calculate N and mean of ages @ t3 by arm
-ages_bt3_N_tr<-ages %>%
+#calculate N and mean of ur_ages @ t3 by arm
+ur_ages_bt3_N_tr<-ur_ages %>%
   group_by (tr) %>%
-  summarize(agemth_bt3_N=n(), mean=mean(agemth_bt3, na.rm = T), median=median(agemth_bt3, na.rm =T), sd=sd(agemth_bt3, na.rm = T), female=sum(sex==0), male=sum(sex==1))
+  summarize(ur_agemth_bt3_N=n(), mean=mean(ur_agemth_bt3, na.rm = T), median=median(ur_agemth_bt3, na.rm =T), sd=sd(ur_agemth_bt3, na.rm = T), female=sum(sex==0), male=sum(sex==1))
 
 #display 
-ages_bt3_N_tr
+ur_ages_bt3_N_tr
 
 #total <- rbind(data frameA, data frameB)
-age_bt3_N_total <-rbind2(ages_bt3_N, ages_bt3_N_tr)
+ur_age_bt3_N_total <-rbind2(ur_ages_bt3_N, ur_ages_bt3_N_tr)
 
-age_bt3_N_total
+ur_age_bt3_N_total
 
-age_t3_blood_L<-age_bt3_N_total[c(7, 1, 2, 3, 4, 5, 6)]
+stress_age_t3_L<-ur_age_bt3_N_total[c(7, 1, 2, 3, 4, 5, 6)]
 
 
 #display
-age_t2_blood_L
-age_t3_blood_L
+stress_age_t2_L
+stress_age_t3_L
 
 
 #save R objects
-save(age_t2_blood_L, age_t3_blood_L, file=here("audrie results/stress-age-stats.RData"))
+save(stress_age_t2_L, stress_age_t3_L, file=here::here("audrie results/stress-age-stats.RData"))
 
 
 
 
 #tmle t2 undjusted
-
-#Load in enrollment data,blinded tr data, stool data for adjusted analysis. Use read.dta() to read the .dta files, or read.csv() to 
-#read .csv files. Use stringAsFactors=TRUE so that any character-based variable will be read in as a factor.
-d<-readRDS(here("replication objects/simulated_stress_dataset.rds"))
-table(d$tr) #crosstab of numbers in each treatment
-
-# re-order the treatment factor for convenience, dropping the arms not included in stress
-d$tr <- factor(d$tr,levels=c("Control","Nutrition + WSH"))
-
 # subset to columns needed for unadjusted 
-df = d[,c("block", "tr","t2_f2_8ip", "t2_f2_23d", "t2_f2_VI", "t2_f2_12i", "t3_saa_z01", "t3_cort_z01",
-          "t3_saa_z02", "t3_cort_z03", "t3_map", "t3_dia", "t3_hr_mean", "t3_gcr_mean", "t3_gcr_cpg12")]
+df = lab[,c("block", "tr","t2_f2_8ip", "t2_f2_23d", "t2_f2_VI", "t2_f2_12i", "t3_saa_z01", "t3_cort_z01",
+          "t3_saa_z02", "t3_cort_z03", "t3_map", "t3_hr_mean", "t3_gcr_mean", "t3_gcr_cpg12",
+          "t3_saa_slope","t3_cort_slope","t3_residual_saa","t3_residual_cort")]
 df$block=as.factor(df$block)
 
+
+
+
 # Set up the WASHB function
-# df=data frame
-
-#trlist=c("Nutrition + WSH")
-
 SL.library=c("SL.mean","SL.glm","SL.bayesglm","SL.gam","SL.glmnet")
 
 washb_function <- function(df,x) {
@@ -308,7 +285,7 @@ names(list_stress) <- names(df)[grep('t2_', names(df))]
 unadj_stress_t2 <- t(bind_rows(list_stress))
 colnames(unadj_stress_t2) <-c("RD","var","ci.lb","ci.ub","P-value")
 unadj_stress_t2 <- as.data.frame(unadj_stress_t2)
-unadj_stress_t2$var <- c("t2_f2_8ip", "t2_f2_23d", "t2_f2_VI", "t2_f2_12i")
+unadj_stress_t2$var <- names(df)[grep('t2_', names(df))]
 
 #view results file
 unadj_stress_t2
@@ -316,31 +293,7 @@ unadj_stress_t2
 
 
 
-#tmlet3 undjusted
-
-
-
-#Load in enrollment data,blinded tr data, stool data for adjusted analysis. Use read.dta() to read the .dta files, or read.csv() to 
-#read .csv files. Use stringAsFactors=TRUE so that any character-based variable will be read in as a factor.
-d<-read.csv("bangladesh-dm-ee-anthro-diar-ee-med-plasma-blind-tr-enrol-covariates-lab.csv", stringsAsFactors = TRUE)
-table(d$tr) #crosstab of numbers in each treatment
-
-
-# re-order the treatment factor for convenience, dropping the arms not included in stress
-d$tr <- factor(d$tr,levels=c("Control","Nutrition + WSH"))
-
-
-# subset to columns needed for unadjusted 
-df = d[,c("block", "tr", "t2_f2_8ip", "t2_f2_23d", "t2_f2_VI", "t2_f2_12i", "t3_saa_z01", "t3_cort_z01",
-          "t3_saa_z02", "t3_cort_z03", "t3_map", "t3_dia", "t3_hr_mean", "t3_gcr_mean", "t3_gcr_cpg12")]
-df$block=as.factor(df$block)
-
-# Set up the WASHB function
-# df=data frame
-
-#trlist=c("Nutrition + WSH")
-
-
+#tmle t3 undjusted
 
 #grab the variables with prefix 't3_' from the data frame and then apply the washb_function
 list_stress <- lapply(names(df)[grep('t3_', names(df))],  function(x) washb_function(df,x))
@@ -352,19 +305,15 @@ names(list_stress) <- names(df)[grep('t3_', names(df))]
 unadj_stress_t3 <- t(bind_rows(list_stress))
 colnames(unadj_stress_t3) <-c("RD","var","ci.lb","ci.ub","P-value")
 unadj_stress_t3 <- as.data.frame(unadj_stress_t3)
-unadj_stress_t3$var <- c("t3_saa_z01", "t3_cort_z01", "t3_saa_z02", "t3_cort_z03", "t3_map", "t3_dia", "t3_hr_mean", "t3_gcr_mean", "t3_gcr_cpg12")
-
+unadj_stress_t3$var <- names(df)[grep('t3_', names(df))]
 #view results file
 unadj_stress_t3
 
 
-
+saveRDS(df,here::here("replication objects/audrie_stress_object.RDS"))
 
 #Save results files
 save(unadj_stress_t2, 
-     
       unadj_stress_t3,
-      
-      
-      file=here("audrie results/stress_unadj_glm.RData"))
+      file=here::here("audrie results/stress_unadj_glm.RData"))
 
