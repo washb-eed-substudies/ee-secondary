@@ -2234,6 +2234,14 @@ save(
   h7eadj.res,
   h8unadj.res,
   h8adj.res,
+  h8bunadj.res,
+  h8badj.res,
+  h8cunadj.res,
+  h8cadj.res,
+  h8dunadj.res,
+  h8dadj.res,
+  h8eunadj.res,
+  h8eadj.res,
   file=here("/audrie results/telo_growth_results.Rdata")
 )
 
