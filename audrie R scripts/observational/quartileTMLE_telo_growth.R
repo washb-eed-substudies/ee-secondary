@@ -837,8 +837,8 @@ Wvars<-c("sex","birthord", "momage", "momheight","momedu",
          "floor", "walls", "elec", "asset_wardrobe", "asset_table", "asset_chair", "asset_clock", "asset_khat", 
          "asset_chouki", "asset_radio", "asset_tv", "asset_refrig",
          "asset_bike", "asset_moto", "asset_sewmach", "asset_mobile", 
-         "n_cattle", "n_goat", "n_chicken", "monsoon_ht2", "monsoon_ht3", "ageday_ht2",
-         "ageday_ht3", "tr", "cesd_sum_t2", "cesd_sum_ee_t3", "pss_sum_mom_t3", "diar7d_t2", "diar7d_t3", 
+         "n_cattle", "n_goat", "n_chicken", "monsoon_at2", "monsoon_at3", "ageday_at2",
+         "ageday_at3", "tr", "cesd_sum_t2", "cesd_sum_ee_t3", "pss_sum_mom_t3", "diar7d_t2", "diar7d_t3", 
          "life_viol_any_t3", "lenhei_med_t1", "weight_med_t1")
 
 
@@ -947,9 +947,8 @@ Wvars<-c("sex","birthord", "momage", "momheight","momedu",
          "floor", "walls", "elec", "asset_wardrobe", "asset_table", "asset_chair", "asset_clock", "asset_khat", 
          "asset_chouki", "asset_radio", "asset_tv", "asset_refrig",
          "asset_bike", "asset_moto", "asset_sewmach", "asset_mobile", 
-         "n_cattle", "n_goat", "n_chicken", "monsoon_ht2", "ageday_ht2", "tr", "cesd_sum_t2", "diar7d_t2", "life_viol_any_t3")
+         "n_cattle", "n_goat", "n_chicken", "monsoon_at1", "monsoon_at2", "ageday_at1", "ageday_at2", "tr", "cesd_sum_t2", "diar7d_t2")
 
-#need to add monsoon_ht1? ageday_ht1?
 
 h6cadj.res <- tmle_quart(dat=d, 
                          Y="TS_t2", 
@@ -1058,8 +1057,8 @@ Wvars<-c("sex","birthord", "momage", "momheight","momedu",
          "floor", "walls", "elec", "asset_wardrobe", "asset_table", "asset_chair", "asset_clock", "asset_khat", 
          "asset_chouki", "asset_radio", "asset_tv", "asset_refrig",
          "asset_bike", "asset_moto", "asset_sewmach", "asset_mobile", 
-         "n_cattle", "n_goat", "n_chicken", "monsoon_ht2", "monsoon_ht3", "ageday_ht2", 
-         "ageday_ht3", "tr", "cesd_sum_t2", "cesd_sum_ee_t3", "pss_sum_mom_t3", "diar7d_t2", "diar7d_t3", 
+         "n_cattle", "n_goat", "n_chicken", "monsoon_at1", "monsoon_at2", "monsoon_at3", "ageday_at1", "ageday_at2", 
+         "ageday_at3", "tr", "cesd_sum_t2", "cesd_sum_ee_t3", "pss_sum_mom_t3", "diar7d_t2", "diar7d_t3", 
          "life_viol_any_t3")
 
 
