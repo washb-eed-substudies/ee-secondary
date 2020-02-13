@@ -45,10 +45,9 @@ stress_plot_fun <- function(d, var){
     geom_point(size=3, col="blue") +
     geom_errorbar(aes(ymin=ci.l, ymax=ci.u), col="blue",
                   alpha=0.3, width = 0.3, size = 1.5) +
-    labs(y = " ", x = "Child age, months", title=df$name, fill=" ") +
+    labs(y = " ", x = "", title=df$name, fill=" ") +
     coord_cartesian(ylim=c(df$`ci.l`[1]-(0.5*abs(df$ci.l)), df$`ci.u`[1]+(0.5*abs(df$ci.l)))) +
-    theme(axis.text.x=element_blank(),
-          axis.ticks.x=element_blank(),
+    theme(axis.ticks.x=element_blank(),
           legend.position = "bottom",
           plot.title = element_text(hjust = 0.5, face = "plain", size=9),
           panel.spacing = unit(0, "lines")) 
