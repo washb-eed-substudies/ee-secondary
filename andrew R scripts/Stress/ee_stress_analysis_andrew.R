@@ -40,9 +40,14 @@ stress_age_t2_L[,-1] - stress_age_t2_M[,-1]
 stress_age_t3_L[,-1] - stress_age_t3_M[,-1]
 
 
+#------------------------------------------------------------------------------------------------
+# N's and absolute means
+#------------------------------------------------------------------------------------------------
+
+
 
 #------------------------------------------------------------------------------------------------
-# N's and means
+# N's and transformed means
 #------------------------------------------------------------------------------------------------
 
 
@@ -55,6 +60,15 @@ mean_sd <- d %>% subset(., select=c(outcomes)) %>% summarise_all(tibble::lst(mea
 n <-nrow(mean_sd)/2
 #split mean and SD into different columns
 mean_sd <- data.frame(Y=gsub("_mean","",mean_sd[1:n,1]), mean=mean_sd[1:n,2], sd=mean_sd[(n+1):(2*n),2]) 
+
+#Mean and SD by treatment arm
+mean_sd_tr <- d %>% subset(., select=c("tr",outcomes)) %>% group_by(tr) %>% summarise_all(tibble::lst(mean, sd), na.rm=T) %>% gather()
+mean_sd_tr <- d %>% group_by(tr) %>% subset(., select=c("tr",outcomes))%>% summarise_all(tibble::lst(mean, sd), na.rm=T) %>% gather(., key=tr)
+
+n <-nrow(mean_sd)/2
+#split mean and SD into different columns
+mean_sd <- data.frame(Y=gsub("_mean","",mean_sd[1:n,1]), mean=mean_sd[1:n,2], sd=mean_sd[(n+1):(2*n),2]) 
+
 
 # #Compare to Audrie's
  load(here::here("audrie results/stress_N_means.RData"))
