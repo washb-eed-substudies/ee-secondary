@@ -31,7 +31,7 @@
 rm(list=ls())
 source(here::here("0-config.R"))
 
-source(here("audrie R scripts/observational/0-base-quartileTMLE_functions.R"))
+source(here::here("audrie R scripts/observational/0-base-quartileTMLE_functions.R"))
 
 
 
@@ -130,6 +130,8 @@ h1unadj.res <- tmle_quart(dat=d,
                           outputdf = h1unadj.res,
                           family="gaussian", 
                           SLlibrary="SL.gam")
+
+h1unadj.res$ATE - h1unadj.res_test$ATE
 
 h1unadj.res <- tmle_quart(dat=d, 
                           Y="delta_waz_t2_t3", 
@@ -2242,7 +2244,7 @@ save(
   h8dadj.res,
   h8eunadj.res,
   h8eadj.res,
-  file=here("/audrie results/telo_growth_results.Rdata")
+  file=here::here("/audrie results/telo_growth_results.Rdata")
 )
 
 
@@ -2287,7 +2289,7 @@ save(
   h8_delta_waz_v_ts_t2gam.res,
   h8_delta_whz_v_ts_t2gam.res, 
   h8_delta_hcz_v_ts_t2gam.res, 
-  file=here("/audrie results/telo_growth_spline_fits.Rdata"))
+  file=here::here("/audrie results/telo_growth_spline_fits.Rdata"))
   
 
 

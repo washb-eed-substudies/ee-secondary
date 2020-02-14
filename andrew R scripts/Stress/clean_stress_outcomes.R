@@ -52,6 +52,16 @@ ggsave(p, file = here::here("figures/stress/raw_outcome_distributions.png"), hei
 #---------------------------------------------------------------------------------------------
 d <- d %>% 
   mutate(
+    t3_saa_z01_raw=t3_saa_z01, 
+    t3_saa_z02_raw=t3_saa_z02, 
+    t3_cort_z01_raw=t3_cort_z01, 
+    t3_cort_z03_raw=t3_cort_z03, 
+    t2_f2_8ip_raw=t2_f2_8ip, 
+    t2_f2_23d_raw=t2_f2_23d, 
+    t2_f2_VI_raw=t2_f2_VI,
+    t2_f2_12i_raw=t2_f2_12i, 
+    t3_gcr_mean_raw=t3_gcr_mean, 
+    t3_gcr_cpg12_raw=t3_gcr_cpg12,
     t3_saa_z01=log(t3_saa_z01), 
     t3_saa_z02=log(t3_saa_z02), 
     t3_cort_z01=log(t3_cort_z01), 
