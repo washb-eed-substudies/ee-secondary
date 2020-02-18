@@ -2204,10 +2204,10 @@ h6c_ts_t2_vs_hcz_t1gam.res <- GAM_simulCI(Y=d$TS_t2, X=d$hcz_t1, W = NULL)
 
 
 #Hypothesis 6d
-h6c_ts_t3_vs_laz_t1gam.res <- GAM_simulCI(Y=d$TS_t3, X=d$laz_t1, W = NULL)
-h6c_ts_t3_vs_waz_t1gam.res <- GAM_simulCI(Y=d$TS_t3, X=d$waz_t1, W = NULL)
-h6c_ts_t3_vs_whz_t1gam.res <- GAM_simulCI(Y=d$TS_t3, X=d$whz_t1, W = NULL)
-h6c_ts_t3_vs_hcz_t1gam.res <- GAM_simulCI(Y=d$TS_t3, X=d$hcz_t1, W = NULL)
+h6d_ts_t3_vs_laz_t1gam.res <- GAM_simulCI(Y=d$TS_t3, X=d$laz_t1, W = NULL)
+h6d_ts_t3_vs_waz_t1gam.res <- GAM_simulCI(Y=d$TS_t3, X=d$waz_t1, W = NULL)
+h6d_ts_t3_vs_whz_t1gam.res <- GAM_simulCI(Y=d$TS_t3, X=d$whz_t1, W = NULL)
+h6d_ts_t3_vs_hcz_t1gam.res <- GAM_simulCI(Y=d$TS_t3, X=d$hcz_t1, W = NULL)
 
 #Hypothesis 7
 h7_len_veloc_vs_ts_t2gam.res <- GAM_simulCI(Y=d$len_velocity_t2_t3, X=d$TS_t2, W = NULL)
@@ -2355,10 +2355,10 @@ save(
   h6c_ts_t2_vs_whz_t1gam.res,
   h6c_ts_t2_vs_hcz_t1gam.res,
   #Hypothesis 6d
-  h6c_ts_t3_vs_laz_t1gam.res,
-  h6c_ts_t3_vs_waz_t1gam.res,
-  h6c_ts_t3_vs_whz_t1gam.res,
-  h6c_ts_t3_vs_hcz_t1gam.res,
+  h6d_ts_t3_vs_laz_t1gam.res,
+  h6d_ts_t3_vs_waz_t1gam.res,
+  h6d_ts_t3_vs_whz_t1gam.res,
+  h6d_ts_t3_vs_hcz_t1gam.res,
   #Hypothesis 7
   h7_len_veloc_vs_ts_t2gam.res, 
   h7_wei_veloc_vs_ts_t2gam.res, 
