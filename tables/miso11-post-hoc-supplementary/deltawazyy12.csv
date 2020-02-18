@@ -1,0 +1,4 @@
+"Outcome","N","Q1 Mean","Q2 Mean","Q3 Mean","Q4 Mean","Change in WAZ between Year 1 to Year 2, Q1 vs. Q2"," "," "," ","Change in WAZ between Year 1 to Year 2, Q1 vs. Q3"," "," "," ","Change in WAZ between Year 1 to Year 2, Q1 vs. Q4"," "," "," "
+" "," "," "," "," "," ","Unadjusted"," ","Fully adjusted"," ","Unadjusted"," ","Fully adjusted"," ","Unadjusted"," ","Fully adjusted"," "
+" "," "," "," "," "," ","Coefficient (95% CI)","P-value","Coefficient (95% CI)","P-value","Coefficient (95% CI)","P-value","Coefficient (95% CI)","P-value","Coefficient (95% CI)","P-value","Coefficient (95% CI)","P-value"
+"T/S Ratio Year 2"," ","1.44","1.47","1.44","1.43","0.03 (-0.02, 0.09)","0.22","0.03 (-0.02, 0.08)","0.21","0 (-0.05, 0.05)","0.93","0 (-0.05, 0.05)","0.99","0 (-0.06, 0.05)","0.88","0.01 (-0.05, 0.06)","0.77"

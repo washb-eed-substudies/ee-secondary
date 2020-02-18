@@ -1,0 +1,5 @@
+"Outcome","N","Q1 Mean","Q2 Mean","Q3 Mean","Q4 Mean","Length velocity (cm/month) Month 3 to Year 1, Q1 vs. Q2"," "," "," ","Length velocity (cm/month) Month 3 to Year 1, Q1 vs. Q3"," "," "," ","Length velocity (cm/month) Month 3 to Year 1, Q1 vs. Q4"," "," "," "
+" "," "," "," "," "," ","Unadjusted"," ","Fully adjusted"," ","Unadjusted"," ","Fully adjusted"," ","Unadjusted"," ","Fully adjusted"," "
+" "," "," "," "," "," ","Coefficient (95% CI)","P-value","Coefficient (95% CI)","P-value","Coefficient (95% CI)","P-value","Coefficient (95% CI)","P-value","Coefficient (95% CI)","P-value","Coefficient (95% CI)","P-value"
+"T/S Ratio Year 1"," ","1.44","1.42","1.47","1.42","-0.02 (-0.08, 0.05)","0.62","-0.04 (-0.11, 0.02)","0.21","0.03 (-0.04, 0.1)","0.41","0.04 (-0.05, 0.12)","0.39","-0.02 (-0.09, 0.04)","0.52","-0.01 (-0.09, 0.07)","0.83"
+"T/S Ratio Year 2"," ","1.43","1.48","1.46","1.41","0.05 (-0.02, 0.12)","0.15","0.09 (0.02, 0.15)","0.02","0.03 (-0.04, 0.1)","0.39","0.13 (0.04, 0.21)","0","-0.02 (-0.09, 0.05)","0.6","0.03 (-0.11, 0.18)","0.65"
