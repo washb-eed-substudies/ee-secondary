@@ -163,13 +163,13 @@ saveRDS(d, here::here("replication objects/andrew_stress_object.RDS"))
 d$sex<-as.factor(d$sex)
 d$sex=relevel(d$sex,ref="0")
 
-#Age and sex adjusted glm models
+#Age and sex adjusted glm models - set pval to .99 to avoid prescreening
 res_sex <- NULL
 for(i in outcomes){
   if(grepl("t2_", outcomes[i])){
-    temp<-washb_tmle(Y=(d[,i]), tr=d$tr, W=data.frame(sex=d$sex, agem2=d$ur_agem2), id=d$block, pair=NULL, family="gaussian", contrast= c("Control","Nutrition + WSH"), print=F)
+    temp<-washb_tmle(Y=(d[,i]), tr=d$tr, W=data.frame(sex=d$sex, agem2=d$ur_agem2), id=d$block, pair=NULL, family="gaussian", contrast= c("Control","Nutrition + WSH"), print=F, pval = 1)
   }else{
-    temp<-washb_tmle(Y=(d[,i]), tr=d$tr, W=data.frame(sex=d$sex, agem2=d$ur_agem2), id=d$block, pair=NULL, family="gaussian", contrast= c("Control","Nutrition + WSH"), print=F)
+    temp<-washb_tmle(Y=(d[,i]), tr=d$tr, W=data.frame(sex=d$sex, agem2=d$ur_agem2), id=d$block, pair=NULL, family="gaussian", contrast= c("Control","Nutrition + WSH"), print=F, pval = 1)
   }
   res_sex<-rbind(res_sex, unlist(temp$estimates$ATE))
 }
@@ -214,15 +214,11 @@ Wvars<-c('sex', 'birthord',
 
 
 #Add in time varying covariates:
-d <- d %>% mutate(monsoon2 = ifelse(month2 > 4 & month2 < 11, "1", "0"),
-                  monsoon3 = ifelse(month3 > 4 & month3 < 11, "1", "0"),
-                  monsoon2 = ifelse(is.na(month2),"missing", monsoon2),
-                  monsoon3 = ifelse(is.na(month3),"missing", monsoon3),
-                  monsoon2 = factor(monsoon2),
-                  monsoon3 = factor(monsoon3))
-
 Wvars2<-c("ur_agem2", "ur_monsoon2") 
-Wvars3<-c("ur_agem3", "ur_monsoon3") 
+Wvars3_vital<-c("vital_aged3", "monsoon3_vital") 
+Wvars3_salimetrics<-c("salimetrics_aged3", "monsoon3_salimetrics") 
+Wvars3_oragene<-c("oragene_aged3", "monsoon3_oragene") 
+
 
 
 #subset time-constant W adjustment set
@@ -335,8 +331,9 @@ W<- subset(d, select=Wvars)
 
 #Add in time-varying covariates
 W2<- cbind(W, subset(d, select=Wvars2))
-W3<- cbind(W, subset(d, select=Wvars3))
-
+W3_vital<- cbind(W, subset(d, select=Wvars3_vital))
+W3_salimetrics<- cbind(W, subset(d, select=Wvars3_salimetrics))
+W3_oragene<- cbind(W, subset(d, select=Wvars3_oragene))
 
 
 
@@ -349,14 +346,24 @@ W3<- cbind(W, subset(d, select=Wvars3))
 #Fully adjusted glm models
 res_adj <- NULL
 for(i in outcomes){
-  if(grepl("t2_", outcomes[i])){
+  if(grepl("t2_", i)){
     temp<-washb_tmle(Y=(d[,i]), tr=d$tr, W=W2, id=d$block, pair=NULL, family="gaussian", contrast= c("Control","Nutrition + WSH"), print=F, seed=12345)
   }else{
-    temp<-washb_tmle(Y=(d[,i]), tr=d$tr, W=W3, id=d$block, pair=NULL, family="gaussian", contrast= c("Control","Nutrition + WSH"), print=F, seed=12345)
+    if(i %in% c("t3_map","t3_hr_mean" )){
+      temp<-washb_tmle(Y=(d[,i]), tr=d$tr, W=W3_vital, id=d$block, pair=NULL, family="gaussian", contrast= c("Control","Nutrition + WSH"), print=F, seed=12345)
+    }
+    if(i %in% c("t3_saa_z01","t3_saa_z02","t3_cort_z01","t3_cort_z03","t3_saa_slope","t3_cort_slope","t3_residual_saa",  "t3_residual_cort")){
+      temp<-washb_tmle(Y=(d[,i]), tr=d$tr, W=W3_salimetrics, id=d$block, pair=NULL, family="gaussian", contrast= c("Control","Nutrition + WSH"), print=F, seed=12345)
+    }
+    if(i %in% c("t3_gcr_mean", "t3_gcr_cpg12")){
+      temp<-washb_tmle(Y=(d[,i]), tr=d$tr, W=W3_oragene, id=d$block, pair=NULL, family="gaussian", contrast= c("Control","Nutrition + WSH"), print=F, seed=12345)
+    }
   }
   res_adj<-rbind(res_adj, unlist(temp$estimates$ATE))
 }
 res_adj <- as.data.frame(res_adj)
+
+          
 
 colnames(res_adj)<-c("Mean difference","var","ci.l","ci.u", "Pval")
 res_adj$Y <- outcomes
@@ -381,8 +388,7 @@ res_adj$Y <- outcomes
 
 #Save intermediate R objects for replication comparison
 dm <- d
-save(res_adj, W, W2, W3, dm,  file = here("replication objects/lisa_stress_W.rdata"))
-
+save(res_adj, W, W2, W3_vital, W3_salimetrics, W3_oragene, dm,  file = here("replication objects/lisa_stress_W.rdata"))
 
 
 ##############################################

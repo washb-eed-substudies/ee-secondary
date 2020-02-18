@@ -1,6 +1,6 @@
 
 
-#d <- readRDS(paste0(dropboxDir,"Data/Cleaned/Andrew/clean_stress_dataset.RDS"))
+d <- readRDS(paste0(dropboxDir,"Data/Cleaned/Andrew/clean_stress_dataset.RDS"))
 da <- readRDS(here::here("replication objects/audrie_stress_object.RDS"))
 dm <- readRDS(here::here("replication objects/andrew_stress_object.RDS"))
 

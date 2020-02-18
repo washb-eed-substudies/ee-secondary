@@ -106,7 +106,7 @@ W$sex<-as.factor(W$sex)
 washb_function <- function(df,x) {
   
   temp <- washb_tmle(Y=df[,x], tr=d$tr, pair=NULL, W=W, id=df$block, contrast= c("Control","Nutrition + WSH"), family="gaussian",
-                     Q.SL.library=SL.library,g.SL.library=SL.library, pval=0.2, seed=12345, print=TRUE)
+                     Q.SL.library=SL.library,g.SL.library=SL.library, pval=1, seed=12345, print=TRUE)
   temp_metric <-t(as.matrix(unlist(temp$estimates$ATE)))
   rownames(temp_metric) <- c("Nutrition + WSH v C")
   return(temp_metric)
@@ -210,7 +210,7 @@ W$sex<-as.factor(W$sex)
 washb_function <- function(df,x) {
   
   temp <- washb_tmle(Y=df[,x], tr=df$tr, pair=NULL, W=W, id=df$block, contrast = c("Control","Nutrition + WSH"), family="gaussian", 
-                     Q.SL.library=SL.library,g.SL.library=SL.library, pval=0.2, seed=12345, print=TRUE)
+                     Q.SL.library=SL.library,g.SL.library=SL.library, pval=0.2, seed=12345, print=TRUE, pval = 0.99)
   temp_metric <-as.matrix(temp$TR)
   rownames(temp_metric) <- c("Nutrition + WSH v C")
   colnames(temp_metric) <-c("RD","ci.lb","ci.ub","SE","z","P-value")
