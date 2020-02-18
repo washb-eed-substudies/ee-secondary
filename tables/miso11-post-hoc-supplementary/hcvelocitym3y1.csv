@@ -1,0 +1,5 @@
+"Outcome","N","Q1 Mean","Q2 Mean","Q3 Mean","Q4 Mean","Head circumference velocity (cm/month) Month 3 to Year 1, Q1 vs. Q2"," "," "," ","Head circumference velocity (cm/month) Month 3 to Year 1, Q1 vs. Q3"," "," "," ","Head circumference velocity (cm/month) Month 3 to Year 1, Q1 vs. Q4"," "," "," "
+" "," "," "," "," "," ","Unadjusted"," ","Fully adjusted"," ","Unadjusted"," ","Fully adjusted"," ","Unadjusted"," ","Fully adjusted"," "
+" "," "," "," "," "," ","Coefficient (95% CI)","P-value","Coefficient (95% CI)","P-value","Coefficient (95% CI)","P-value","Coefficient (95% CI)","P-value","Coefficient (95% CI)","P-value","Coefficient (95% CI)","P-value"
+"T/S Ratio Year 1"," ","1.46","1.44","1.44","1.42","-0.02 (-0.09, 0.05)","0.51","0 (-0.09, 0.08)","0.91","-0.02 (-0.09, 0.05)","0.65","0 (-0.09, 0.08)","0.92","-0.04 (-0.11, 0.03)","0.23","-0.03 (-0.12, 0.05)","0.44"
+"T/S Ratio Year 2"," ","1.48","1.43","1.45","1.44","-0.06 (-0.13, 0.02)","0.14","-0.09 (-0.15, -0.02)","0.01","-0.03 (-0.11, 0.05)","0.44","0.01 (-0.15, 0.16)","0.95","-0.05 (-0.12, 0.03)","0.24","-0.12 (-0.17, -0.06)","0"

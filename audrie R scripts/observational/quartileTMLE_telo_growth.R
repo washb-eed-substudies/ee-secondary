@@ -2190,10 +2190,50 @@ h6_waz_t3_vs_ts_t2gam.res <- GAM_simulCI(Y=d$waz_t3, X=d$TS_t2, W = NULL)
 h6_whz_t3_vs_ts_t2gam.res <- GAM_simulCI(Y=d$whz_t3, X=d$TS_t2, W = NULL)
 h6_hcz_t3_vs_ts_t2gam.res <- GAM_simulCI(Y=d$hcz_t3, X=d$TS_t2, W = NULL)
 
+#Hypothesis 6b
+h6b_ts_t3_vs_laz_t2gam.res <- GAM_simulCI(Y=d$TS_t3, X=d$laz_t2, W = NULL)
+h6b_ts_t3_vs_waz_t2gam.res <- GAM_simulCI(Y=d$TS_t3, X=d$waz_t2, W = NULL)
+h6b_ts_t3_vs_whz_t2gam.res <- GAM_simulCI(Y=d$TS_t3, X=d$whz_t2, W = NULL)
+h6b_ts_t3_vs_hcz_t2gam.res <- GAM_simulCI(Y=d$TS_t3, X=d$hcz_t2, W = NULL)
+
+#Hypothesis 6c
+h6c_ts_t2_vs_laz_t1gam.res <- GAM_simulCI(Y=d$TS_t2, X=d$laz_t1, W = NULL)
+h6c_ts_t2_vs_waz_t1gam.res <- GAM_simulCI(Y=d$TS_t2, X=d$waz_t1, W = NULL)
+h6c_ts_t2_vs_whz_t1gam.res <- GAM_simulCI(Y=d$TS_t2, X=d$whz_t1, W = NULL)
+h6c_ts_t2_vs_hcz_t1gam.res <- GAM_simulCI(Y=d$TS_t2, X=d$hcz_t1, W = NULL)
+
+
+#Hypothesis 6d
+h6c_ts_t3_vs_laz_t1gam.res <- GAM_simulCI(Y=d$TS_t3, X=d$laz_t1, W = NULL)
+h6c_ts_t3_vs_waz_t1gam.res <- GAM_simulCI(Y=d$TS_t3, X=d$waz_t1, W = NULL)
+h6c_ts_t3_vs_whz_t1gam.res <- GAM_simulCI(Y=d$TS_t3, X=d$whz_t1, W = NULL)
+h6c_ts_t3_vs_hcz_t1gam.res <- GAM_simulCI(Y=d$TS_t3, X=d$hcz_t1, W = NULL)
+
 #Hypothesis 7
 h7_len_veloc_vs_ts_t2gam.res <- GAM_simulCI(Y=d$len_velocity_t2_t3, X=d$TS_t2, W = NULL)
 h7_wei_veloc_vs_ts_t2gam.res <- GAM_simulCI(Y=d$wei_velocity_t2_t3, X=d$TS_t2, W = NULL)
 h7_hc_veloc_vs_ts_t2gam.res <- GAM_simulCI(Y=d$hc_velocity_t2_t3, X=d$TS_t2, W = NULL)
+
+#Hypothesis 7b
+h7b_ts_t2_vs_len_veloct1t2gam.res <- GAM_simulCI(Y=d$TS_t2, X=d$len_velocity_t1_t2, W = NULL)
+h7b_ts_t2_vs_wei_veloct1t2gam.res <- GAM_simulCI(Y=d$TS_t2, X=d$wei_velocity_t1_t2, W = NULL)
+h7b_ts_t2_vs_hc_veloct1t2gam.res <- GAM_simulCI(Y=d$TS_t2, X=d$hc_velocity_t1_t2, W = NULL)
+
+#Hypothesis 7c
+h7c_ts_t3_vs_len_veloct1t2gam.res <- GAM_simulCI(Y=d$TS_t3, X=d$len_velocity_t1_t2, W = NULL)
+h7c_ts_t3_vs_wei_veloct1t2gam.res <- GAM_simulCI(Y=d$TS_t3, X=d$wei_velocity_t1_t2, W = NULL)
+h7c_ts_t3_vs_hc_veloct1t2gam.res <- GAM_simulCI(Y=d$TS_t3, X=d$hc_velocity_t1_t2, W = NULL)
+
+#Hypothesis 7d
+h7d_ts_t3_vs_len_veloct2t3gam.res <- GAM_simulCI(Y=d$TS_t3, X=d$len_velocity_t2_t3, W = NULL)
+h7d_ts_t3_vs_wei_veloct2t3gam.res <- GAM_simulCI(Y=d$TS_t3, X=d$wei_velocity_t2_t3, W = NULL)
+h7d_ts_t3_vs_hc_veloct2t3gam.res <- GAM_simulCI(Y=d$TS_t3, X=d$hc_velocity_t2_t3, W = NULL)
+
+#Hypothesis 7e
+h7e_ts_t3_vs_len_veloct1t3gam.res <- GAM_simulCI(Y=d$TS_t3, X=d$len_velocity_t1_t3, W = NULL)
+h7e_ts_t3_vs_wei_veloct1t3gam.res <- GAM_simulCI(Y=d$TS_t3, X=d$wei_velocity_t1_t3, W = NULL)
+h7e_ts_t3_vs_hc_veloct1t3gam.res <- GAM_simulCI(Y=d$TS_t3, X=d$hc_velocity_t1_t3, W = NULL)
+
 
 #Hypothesis 8
 h8_delta_laz_v_ts_t2gam.res <- GAM_simulCI(Y=d$delta_laz_t2_t3, X=d$TS_t2, W = NULL)
@@ -2201,6 +2241,29 @@ h8_delta_waz_v_ts_t2gam.res <- GAM_simulCI(Y=d$delta_waz_t2_t3, X=d$TS_t2, W = N
 h8_delta_whz_v_ts_t2gam.res <- GAM_simulCI(Y=d$delta_whz_t2_t3, X=d$TS_t2, W = NULL)
 h8_delta_hcz_v_ts_t2gam.res <- GAM_simulCI(Y=d$delta_hcz_t2_t3, X=d$TS_t2, W = NULL, gamdf = 1:5) #drop df failing to converge)
 
+#Hypothesis 8b
+h8b_ts_t2_v_delta_lazt1t2gam.res <- GAM_simulCI(Y=d$TS_t2, X=d$delta_laz_t1_t2, W = NULL)
+h8b_ts_t2_v_delta_wazt1t2gam.res <- GAM_simulCI(Y=d$TS_t2, X=d$delta_waz_t1_t2, W = NULL)
+h8b_ts_t2_v_delta_whzt1t2gam.res <- GAM_simulCI(Y=d$TS_t2, X=d$delta_whz_t1_t2, W = NULL)
+h8b_ts_t2_v_delta_hczt1t2gam.res <- GAM_simulCI(Y=d$TS_t2, X=d$delta_hcz_t1_t2, W = NULL, gamdf = 1:5) #drop df failing to converge)
+
+#Hypothesis 8c
+h8c_ts_t3_v_delta_lazt1t2gam.res <- GAM_simulCI(Y=d$TS_t3, X=d$delta_laz_t1_t2, W = NULL)
+h8c_ts_t3_v_delta_wazt1t2gam.res <- GAM_simulCI(Y=d$TS_t3, X=d$delta_waz_t1_t2, W = NULL)
+h8c_ts_t3_v_delta_whzt1t2gam.res <- GAM_simulCI(Y=d$TS_t3, X=d$delta_whz_t1_t2, W = NULL)
+h8c_ts_t3_v_delta_hczt1t2gam.res <- GAM_simulCI(Y=d$TS_t3, X=d$delta_hcz_t1_t2, W = NULL, gamdf = 1:5) #drop df failing to converge)
+
+#Hypothesis 8d
+h8d_ts_t3_v_delta_lazt2t3gam.res <- GAM_simulCI(Y=d$TS_t3, X=d$delta_laz_t2_t3, W = NULL)
+h8d_ts_t3_v_delta_wazt2t3gam.res <- GAM_simulCI(Y=d$TS_t3, X=d$delta_waz_t2_t3, W = NULL)
+h8d_ts_t3_v_delta_whzt2t3gam.res <- GAM_simulCI(Y=d$TS_t3, X=d$delta_whz_t2_t3, W = NULL)
+h8d_ts_t3_v_delta_hczt2t3gam.res <- GAM_simulCI(Y=d$TS_t3, X=d$delta_hcz_t2_t3, W = NULL, gamdf = 1:5) #drop df failing to converge)
+
+#Hypothesis 8e
+h8e_ts_t3_v_delta_lazt1t3gam.res <- GAM_simulCI(Y=d$TS_t3, X=d$delta_laz_t1_t3, W = NULL)
+h8e_ts_t3_v_delta_wazt1t3gam.res <- GAM_simulCI(Y=d$TS_t3, X=d$delta_waz_t1_t3, W = NULL)
+h8e_ts_t3_v_delta_whzt1t3gam.res <- GAM_simulCI(Y=d$TS_t3, X=d$delta_whz_t1_t3, W = NULL)
+h8e_ts_t3_v_delta_hczt1t3gam.res <- GAM_simulCI(Y=d$TS_t3, X=d$delta_hcz_t1_t3, W = NULL, gamdf = 1:5) #drop df failing to converge)
 
 
 
@@ -2281,15 +2344,66 @@ save(
   h6_waz_t3_vs_ts_t2gam.res, 
   h6_whz_t3_vs_ts_t2gam.res, 
   h6_hcz_t3_vs_ts_t2gam.res, 
+  #Hypothesis 6b
+  h6b_ts_t3_vs_laz_t2gam.res,
+  h6b_ts_t3_vs_waz_t2gam.res,
+  h6b_ts_t3_vs_whz_t2gam.res,
+  h6b_ts_t3_vs_hcz_t2gam.res,
+  #Hypothesis 6c
+  h6c_ts_t2_vs_laz_t1gam.res,
+  h6c_ts_t2_vs_waz_t1gam.res,
+  h6c_ts_t2_vs_whz_t1gam.res,
+  h6c_ts_t2_vs_hcz_t1gam.res,
+  #Hypothesis 6d
+  h6c_ts_t3_vs_laz_t1gam.res,
+  h6c_ts_t3_vs_waz_t1gam.res,
+  h6c_ts_t3_vs_whz_t1gam.res,
+  h6c_ts_t3_vs_hcz_t1gam.res,
   #Hypothesis 7
   h7_len_veloc_vs_ts_t2gam.res, 
   h7_wei_veloc_vs_ts_t2gam.res, 
   h7_hc_veloc_vs_ts_t2gam.res,
+  #Hypothesis 7b
+  h7b_ts_t2_vs_len_veloct1t2gam.res,
+  h7b_ts_t2_vs_wei_veloct1t2gam.res,
+  h7b_ts_t2_vs_hc_veloct1t2gam.res,
+  #Hypothesis 7c
+  h7c_ts_t3_vs_len_veloct1t2gam.res,
+  h7c_ts_t3_vs_wei_veloct1t2gam.res,
+  h7c_ts_t3_vs_hc_veloct1t2gam.res,
+  #Hypothesis 7d
+  h7d_ts_t3_vs_len_veloct2t3gam.res,
+  h7d_ts_t3_vs_wei_veloct2t3gam.res,
+  h7d_ts_t3_vs_hc_veloct2t3gam.res,
+  #Hypothesis 7e
+  h7e_ts_t3_vs_len_veloct1t3gam.res,
+  h7e_ts_t3_vs_wei_veloct1t3gam.res,
+  h7e_ts_t3_vs_hc_veloct1t3gam.res,
   #Hypothesis 8
   h8_delta_laz_v_ts_t2gam.res,
   h8_delta_waz_v_ts_t2gam.res,
   h8_delta_whz_v_ts_t2gam.res, 
   h8_delta_hcz_v_ts_t2gam.res, 
+  #Hypothesis 8b
+  h8b_ts_t2_v_delta_lazt1t2gam.res, 
+  h8b_ts_t2_v_delta_wazt1t2gam.res, 
+  h8b_ts_t2_v_delta_whzt1t2gam.res,
+  h8b_ts_t2_v_delta_hczt1t2gam.res,
+  #Hypothesis 8c
+  h8c_ts_t3_v_delta_lazt1t2gam.res,
+  h8c_ts_t3_v_delta_wazt1t2gam.res,
+  h8c_ts_t3_v_delta_whzt1t2gam.res,
+  h8c_ts_t3_v_delta_hczt1t2gam.res,
+  #Hypothesis 8d
+  h8d_ts_t3_v_delta_lazt2t3gam.res,
+  h8d_ts_t3_v_delta_wazt2t3gam.res,
+  h8d_ts_t3_v_delta_whzt2t3gam.res,
+  h8d_ts_t3_v_delta_hczt2t3gam.res,
+  #Hypothesis 8e
+  h8e_ts_t3_v_delta_lazt1t3gam.res,
+  h8e_ts_t3_v_delta_wazt1t3gam.res,
+  h8e_ts_t3_v_delta_whzt1t3gam.res,
+  h8e_ts_t3_v_delta_hczt1t3gam.res,
   file=here::here("/audrie results/telo_growth_spline_fits.Rdata"))
   
 
