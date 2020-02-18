@@ -33,6 +33,7 @@ source(here::here("0-config.R"))
 
 source(here::here("audrie R scripts/observational/0-base-quartileTMLE_functions.R"))
 
+RNGkind(sample.kind = "Rounding")
 
 
 #load covariates, exposures, outcomes dataset

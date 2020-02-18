@@ -381,7 +381,7 @@ res_adj$Y <- outcomes
 
 #Save intermediate R objects for replication comparison
 dm <- d
-save(res_adj, W, W2, W3, dm, comp_adj, Y, file = here("replication objects/lisa_stress_W.rdata"))
+save(res_adj, W, W2, W3, dm,  file = here("replication objects/lisa_stress_W.rdata"))
 
 
 

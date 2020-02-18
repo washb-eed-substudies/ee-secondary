@@ -122,6 +122,47 @@ dim(d)
 df <- left_join(fulld, d, by="childid")
 dim(df)
 
+#---------------------------------------------------------------------------------------------
+# clean time-dependent covariates
+#---------------------------------------------------------------------------------------------
+
+# samplecoldate_t3_vital = the date for heart rate and blood pressure measurements
+# samplecoldate_t3_oragene = the date for gcr measurements
+# samplecoldate_t3_salimetrics = the date for saa and cortisol measurements
+# The urine collection date can be used for the 4 urinary f2-isoprostanes biomarkers.
+
+colnames(df)
+library(lubridate)
+df$samplecoldate_t3_vital <- dmy(df$samplecoldate_t3_vital)
+df$samplecoldate_t3_salimetrics <- dmy(df$samplecoldate_t3_salimetrics)
+df$samplecoldate_t3_oragene <- dmy(df$samplecoldate_t3_oragene)
+
+summary(as.numeric(df$samplecoldate_t3_vital-df$samplecoldate_t3_oragene))
+summary(as.numeric(df$samplecoldate_t3_salimetrics-df$samplecoldate_t3_vital))
+summary(as.numeric(df$samplecoldate_t3_oragene-df$samplecoldate_t3_vital))
+
+#Add in measure-specific monsoon status
+df <- df %>% mutate(monsoon3_vital = ifelse(month(samplecoldate_t3_vital) > 4 & month(samplecoldate_t3_vital) < 11, "1", "0"),
+                    monsoon3_oragene = ifelse(month(samplecoldate_t3_oragene) > 4 & month(samplecoldate_t3_oragene) < 11, "1", "0"),
+                    monsoon3_salimetrics = ifelse(month(samplecoldate_t3_salimetrics) > 4 & month(samplecoldate_t3_salimetrics) < 11, "1", "0"),
+                    monsoon3_vital = ifelse(is.na(monsoon3_vital),"missing", monsoon3_vital),
+                    monsoon3_oragene = ifelse(is.na(monsoon3_oragene),"missing", monsoon3_oragene),
+                    monsoon3_salimetrics = ifelse(is.na(monsoon3_salimetrics),"missing", monsoon3_salimetrics),
+                    monsoon3_vital = factor(monsoon3_vital),
+                    monsoon3_oragene = factor(monsoon3_oragene),
+                    monsoon3_salimetrics = factor(monsoon3_salimetrics))
+
+table(df$monsoon3_oragene)
+table(df$monsoon3_vital)
+table(df$monsoon3_salimetrics)
+
+
+#Calculate age at measurement time
+df$DOB <- dmy(df$DOB)
+df$vital_aged3 <- (as.numeric(df$samplecoldate_t3_vital-df$DOB))
+df$salimetrics_aged3 <- (as.numeric(df$samplecoldate_t3_salimetrics-df$DOB))
+df$oragene_aged3 <- (as.numeric(df$samplecoldate_t3_oragene-df$DOB))
+
 
 #---------------------------------------------------------------------------------------------
 # (temporary) blind treatment assignment

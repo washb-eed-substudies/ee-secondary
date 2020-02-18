@@ -193,7 +193,8 @@ tmle_wrapper <-function(d,
                        lib=lib, 
                        Wvars,
                        family){
-  
+  #set seed type so that it is consistent across R versions
+  RNGkind(sample.kind = "Rounding")
   set.seed(12345)
   d<-as.data.frame(d)
   Y<-subset(d, select=Y)
