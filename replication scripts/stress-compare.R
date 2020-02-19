@@ -4,7 +4,7 @@ d <- readRDS(paste0(dropboxDir,"Data/Cleaned/Andrew/clean_stress_dataset.RDS"))
 da <- readRDS(here::here("replication objects/audrie_stress_object.RDS"))
 dm <- readRDS(here::here("replication objects/andrew_stress_object.RDS"))
 
-
+da <- da %>% filter(tr %in% c("Control","Nutrition + WSH"))
 
 head(da)
 
@@ -64,6 +64,22 @@ table(dm$tr, dm$block)
 
   
   #Check covariates
+  Wvars<-c('sex', 'birthord',
+           'momage', 'momheight','momedu','hfiacat',
+           'Nlt18','Ncomp','watmin',
+           'walls', 'floor',
+           'elec', 'asset_wardrobe', 'asset_table', 'asset_chair', 'asset_clock', 
+           'asset_khat', 'asset_chouki', 'asset_radio', 
+           'asset_tv', 'asset_refrig', 'asset_bike',
+           'asset_moto', 'asset_sewmach', 'asset_mobile',
+           'n_cows', 'n_goats', 'n_chickens',
+           "ur_agem2", "ur_monsoon2")
   
   
+  
+da <- read.csv("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Data/Cleaned/Audrie/bangladesh-dm-ee-anthro-diar-ee-med-plasma-blind-tr-enrol-covariates-immun.csv")
 
+for(i in Wvars){
+  cat(i, "\n")
+  summary(dm[,i]) - summary(da[,i])
+}

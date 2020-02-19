@@ -169,16 +169,19 @@ df$vital_aged3 <- (as.numeric(df$samplecoldate_t3_vital-df$DOB))
 df$salimetrics_aged3 <- (as.numeric(df$samplecoldate_t3_salimetrics-df$DOB))
 df$oragene_aged3 <- (as.numeric(df$samplecoldate_t3_oragene-df$DOB))
 
+summary(df$vital_aged3 - df$ur_aged3)
+summary(df$salimetrics_aged3 - df$ur_aged3)
+summary(df$oragene_aged3 - df$ur_aged3)
 
 #---------------------------------------------------------------------------------------------
 # (temporary) blind treatment assignment
 #---------------------------------------------------------------------------------------------
-df$tr[1:10]
-table(df$tr)
-set.seed(12345)
-df$tr <- sample(df$tr, nrow(df))
-df$tr[1:10]
-table(df$tr)
+# df$tr[1:10]
+# table(df$tr)
+# set.seed(12345)
+# df$tr <- sample(df$tr, nrow(df))
+# df$tr[1:10]
+# table(df$tr)
 
 #---------------------------------------------------------------------------------------------
 # save data

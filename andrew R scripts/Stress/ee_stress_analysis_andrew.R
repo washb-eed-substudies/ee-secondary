@@ -1,6 +1,7 @@
 
 rm(list=ls())
 source(here::here("0-config.R"))
+#run using tmle version '1.3.0.2'
 
 #load the fake dataset
 # d <- readRDS("~/ee-secondary/replication objects/simulated_stress_dataset.rds")
