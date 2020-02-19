@@ -122,6 +122,12 @@ dim(d)
 df <- left_join(fulld, d, by="childid")
 dim(df)
 
+#drop treatment arms where outcome was not samples
+df <- df %>% filter(tr %in% c("Control","Nutrition + WSH"))
+
+df$tr <- factor(df$tr, levels = c("Control","Nutrition + WSH"))
+
+
 #---------------------------------------------------------------------------------------------
 # clean time-dependent covariates
 #---------------------------------------------------------------------------------------------

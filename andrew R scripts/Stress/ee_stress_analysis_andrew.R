@@ -9,9 +9,6 @@ source(here::here("0-config.R"))
 # #load stress outcomes dataset
 d <- readRDS(paste0(dropboxDir,"Data/Cleaned/Andrew/clean_stress_dataset_andrew.RDS"))
 
-d$tr <- factor(d$tr, levels = c("Control","Nutrition","WSH","Nutrition + WSH"))
-
-
 
 
 

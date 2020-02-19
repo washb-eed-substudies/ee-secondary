@@ -62,4 +62,8 @@ table(dm$tr, dm$block)
   temp_metric
 
 
+  
+  #Check covariates
+  
+  
 
