@@ -18,27 +18,41 @@ ci_interval<-function(str, tbl){
   paste(round(filter[1], 2), " (", round(filter[3], 2), ", ", round(filter[4], 2), ")", sep="")
 }
 
-outcomes2<-c("iPF(2??)-III", "Control", "Nutrition + WSH", "2,3-dinor-iPF(2??)-III", 
-              "Control", "Nutrition + WSH", "iPF(2??)-VI", "Control", "Nutrition + WSH", "8,12-iso-iPF(2??)-VI", 
+#mean
+mean <- function(str, str1, tbl){
+  filter <- tbl[tbl$Y == str,]
+  filter2 <- filter[filter$tr == str1,]
+  paste(round(filter2[3], 2))
+}
+mean("t2_f2_8ip", "Control", mean_sd_tr)
+
+outcomes2<-c("iPF(2α)-III", "Control", "Nutrition + WSH", "2,3-dinor-iPF(2α)-III", 
+              "Control", "Nutrition + WSH", "iPF(2α)-VI", "Control", "Nutrition + WSH", "8,12-iso-iPF(2α)-VI", 
               "Control","Nutrition + WSH")
 
-unadj_diff <-c("","", ci_interval("t2_f2_12i", res_unadj), "","", 
+unadj_diff <-c("","", ci_interval("t2_f2_8ip", res_unadj), "","", 
                           ci_interval("t2_f2_23d", res_unadj), "","",ci_interval("t2_f2_VI", res_unadj), "","",
-                          ci_interval("t2_f2_8ip", res_unadj))
+                          ci_interval("t2_f2_12i", res_unadj))
 
-age_sex_adj <- c("","", ci_interval("t2_f2_12i", res_sex),"","", 
+age_sex_adj <- c("","", ci_interval("t2_f2_8ip", res_sex),"","", 
                  ci_interval("t2_f2_23d", res_sex), "","",ci_interval("t2_f2_VI", res_sex), "","",
-                 ci_interval("t2_f2_8ip", res_sex))
+                 ci_interval("t2_f2_12i", res_sex))
 
-full_adj <- c("","", ci_interval("t2_f2_12i", res_adj),"","", 
+full_adj <- c("","", ci_interval("t2_f2_8ip", res_adj),"","", 
               ci_interval("t2_f2_23d", res_adj), "","",ci_interval("t2_f2_VI", res_adj), "","",
-              ci_interval("t2_f2_8ip", res_adj))
+              ci_interval("t2_f2_12i", res_adj))
+
+mean_tr <- c("", mean("t2_f2_8ip", "Control", mean_sd_tr), mean("t2_f2_8ip", "Nutrition + WSH", mean_sd_tr),"",
+             mean("t2_f2_23d", "Control", mean_sd_tr), mean("t2_f2_23d", "Nutrition + WSH", mean_sd_tr), "",
+             mean("t2_f2_VI", "Control", mean_sd_tr),mean("t2_f2_VI", "Nutrition + WSH", mean_sd_tr), "",
+             mean("t2_f2_12i", "Control", mean_sd_tr), mean("t2_f2_12i", "Nutrition + WSH", mean_sd_tr))
 
 tbls2 <- data.table(
   "Outcome" = outcomes2,
   "Unadjusted Analysis" = unadj_diff, 
   "Age and Sex Adjusted Analysis" = age_sex_adj,
-  "Fully Adjusted Analysis" = full_adj
+  "Fully Adjusted Analysis" = full_adj,
+  "Mean" = mean_tr
 )
 
 outcomes3<-c("Pre-stressor Salivary alpha-amylase" ,"Control", "Nutrition + WSH",
