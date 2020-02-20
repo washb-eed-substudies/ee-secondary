@@ -24,7 +24,12 @@ mean <- function(str, str1, tbl){
   filter2 <- filter[filter$tr == str1,]
   paste(round(filter2[3], 2))
 }
-mean("t2_f2_8ip", "Control", mean_sd_tr)
+
+#sd
+sd <- function(str, str1, tbl){
+  filter <- tbl[tbl$Y == str,]
+  filter2 <- filter[filter$tr == str1,]
+  paste(round(filter2[4], 2))
 
 outcomes2<-c("iPF(2α)-III", "Control", "Nutrition + WSH", "2,3-dinor-iPF(2α)-III", 
               "Control", "Nutrition + WSH", "iPF(2α)-VI", "Control", "Nutrition + WSH", "8,12-iso-iPF(2α)-VI", 
@@ -47,12 +52,18 @@ mean_tr <- c("", mean("t2_f2_8ip", "Control", mean_sd_tr), mean("t2_f2_8ip", "Nu
              mean("t2_f2_VI", "Control", mean_sd_tr),mean("t2_f2_VI", "Nutrition + WSH", mean_sd_tr), "",
              mean("t2_f2_12i", "Control", mean_sd_tr), mean("t2_f2_12i", "Nutrition + WSH", mean_sd_tr))
 
+sd_t2 <- c("", sd("t2_f2_8ip", "Control", mean_sd_tr), sd("t2_f2_8ip", "Nutrition + WSH", mean_sd_tr),"",
+           sd("t2_f2_23d", "Control", mean_sd_tr), sd("t2_f2_23d", "Nutrition + WSH", mean_sd_tr), "",
+           sd("t2_f2_VI", "Control", mean_sd_tr),sd("t2_f2_VI", "Nutrition + WSH", mean_sd_tr), "",
+           sd("t2_f2_12i", "Control", mean_sd_tr), sd("t2_f2_12i", "Nutrition + WSH", mean_sd_tr))
+
 tbls2 <- data.table(
   "Outcome" = outcomes2,
+  "Mean" = mean_tr,
+  "Standard Deviation" = sd_t2,
   "Unadjusted Analysis" = unadj_diff, 
   "Age and Sex Adjusted Analysis" = age_sex_adj,
-  "Fully Adjusted Analysis" = full_adj,
-  "Mean" = mean_tr
+  "Fully Adjusted Analysis" = full_adj
 )
 
 outcomes3<-c("Pre-stressor Salivary alpha-amylase" ,"Control", "Nutrition + WSH",
