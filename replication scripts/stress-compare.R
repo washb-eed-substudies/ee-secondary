@@ -78,8 +78,34 @@ table(dm$tr, dm$block)
   
   
 da <- read.csv("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Data/Cleaned/Audrie/bangladesh-dm-ee-anthro-diar-ee-med-plasma-blind-tr-enrol-covariates-immun.csv")
+da <- da %>% filter(tr %in% c("Control","Nutrition + WSH"))
 
 for(i in Wvars){
   cat(i, "\n")
-  summary(dm[,i]) - summary(da[,i])
+  print(summary(dm[!is.na(dm$t2_f2_VI_raw),i]))
+}
+
+
+
+Wvars<-c('sex', 'birthord',
+         'momage', 'momheight','momedu','hfiacat',
+         'Nlt18','Ncomp','watmin',
+         'walls', 'floor',
+         'elec', 'asset_wardrobe', 'asset_table', 'asset_chair', 'asset_clock', 
+         'asset_khat', 'asset_chouki', 'asset_radio', 
+         'asset_tv', 'asset_refrig', 'asset_bike',
+         'asset_moto', 'asset_sewmach', 'asset_mobile',
+         'n_cows', 'n_goats', 'n_chickens',
+         "oragene_aged3", "monsoon3_oragene")
+
+
+
+#Add in time varying covariates:
+# Wvars2<-c("ur_agem2", "ur_monsoon2") 
+# Wvars3_vital<-c("vital_aged3", "monsoon3_vital") 
+# Wvars3_salimetrics<-c("salimetrics_aged3", "monsoon3_salimetrics") 
+# Wvars3_oragene<-c("oragene_aged3", "monsoon3_oragene") 
+for(i in Wvars){
+  cat(i, "\n")
+  print(summary(dm[!is.na(dm$t3_gcr_mean_raw),i]))
 }

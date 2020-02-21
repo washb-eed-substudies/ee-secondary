@@ -42,33 +42,38 @@ stress_age_t3_L[,-1] - stress_age_t3_M[,-1]
 # N's and absolute means
 #------------------------------------------------------------------------------------------------
 
+raw_outcomes <- c("t2_f2_8ip_raw","t2_f2_23d_raw","t2_f2_VI_raw", "t2_f2_12i_raw",
+                  "t3_map","t3_hr_mean",
+                  "t3_saa_z01_raw","t3_saa_z02_raw","t3_cort_z01_raw","t3_cort_z03_raw",
+                  "t3_gcr_mean_raw","t3_gcr_cpg12_raw","t3_saa_slope","t3_cort_slope","t3_residual_saa","t3_residual_cort")
+
+#Function to count non-missing outcomes
+N_y <- function(x, na.rm=T){ sum(is.na(x),na.rm=na.rm)}
+
+absolute_mean_sd <- d %>% subset(., select=c(raw_outcomes)) %>% 
+  summarise_all(tibble::lst(mean, sd, N_y), na.rm=T) %>% 
+  gather() %>% as.data.frame()
+n <-nrow(absolute_mean_sd)/3
+#split mean and SD into different columns
+absolute_mean_sd <- data.frame(Y=gsub("_mean","",absolute_mean_sd[1:n,1]), mean=absolute_mean_sd[1:n,2], sd=absolute_mean_sd[(n+1):(2*n),2],  n=absolute_mean_sd[(2*n+1):(3*n),2]) 
+
+#Mean and SD by treatment arm
+absolute_mean_sd_tr <- d %>% group_by(tr) %>%
+  subset(., select=c("tr",raw_outcomes))%>% 
+  summarise_all(tibble::lst(mean, sd, N_y), na.rm=T) %>% 
+  gather(.,  stat, measurement, t2_f2_8ip_raw_mean:t3_residual_cort_N_y, factor_key=TRUE) %>%
+  as.data.frame()
+
+n <-nrow(absolute_mean_sd_tr)/3
+#split mean and SD into different columns
+absolute_mean_sd_tr <- data.frame(tr=absolute_mean_sd_tr[1:n,1], Y=gsub("_mean","",absolute_mean_sd_tr[1:n,2]), mean=absolute_mean_sd_tr[1:n,3], sd=absolute_mean_sd_tr[(n+1):(2*n),3],  n=absolute_mean_sd_tr[(2*n+1):(3*n),3]) 
+
+
 
 
 #------------------------------------------------------------------------------------------------
 # N's and transformed means
 #------------------------------------------------------------------------------------------------
-
-raw_outcomes <- c("t2_f2_8ip_raw","t2_f2_23d_raw","t2_f2_VI_raw", "t2_f2_12i_raw",
-              "t3_map","t3_hr_mean",
-              "t3_saa_z01_raw","t3_saa_z02_raw","t3_cort_z01_raw","t3_cort_z03_raw",
-              "t3_gcr_mean_raw","t3_gcr_cpg12_raw","t3_saa_slope","t3_cort_slope","t3_residual_saa","t3_residual_cort")
-
-absolute_mean_sd <- d %>% subset(., select=c(raw_outcomes)) %>% 
-  summarise_all(tibble::lst(mean, sd), na.rm=T) %>% 
-  gather() %>% as.data.frame()
-n <-nrow(absolute_mean_sd)/2
-#split mean and SD into different columns
-absolute_mean_sd <- data.frame(Y=gsub("_mean","",absolute_mean_sd[1:n,1]), mean=absolute_mean_sd[1:n,2], sd=absolute_mean_sd[(n+1):(2*n),2]) 
-
-#Mean and SD by treatment arm
-absolute_mean_sd_tr <- d %>% group_by(tr) %>% subset(., select=c("tr",raw_outcomes))%>% 
-  summarise_all(tibble::lst(mean, sd), na.rm=T) %>% 
-  gather(.,  stat, measurement, t2_f2_8ip_raw_mean:t3_residual_cort_sd, factor_key=TRUE) %>%
-  as.data.frame()
-
-n <-nrow(absolute_mean_sd_tr)/2
-#split mean and SD into different columns
-absolute_mean_sd_tr <- data.frame(tr=absolute_mean_sd_tr[1:n,1], Y=gsub("_mean","",absolute_mean_sd_tr[1:n,2]), mean=absolute_mean_sd_tr[1:n,3], sd=absolute_mean_sd_tr[(n+1):(2*n),3]) 
 
 
 
@@ -78,21 +83,21 @@ outcomes <- c("t2_f2_8ip","t2_f2_23d","t2_f2_VI", "t2_f2_12i",
               "t3_gcr_mean","t3_gcr_cpg12","t3_saa_slope","t3_cort_slope","t3_residual_saa","t3_residual_cort")
 
 mean_sd <- d %>% subset(., select=c(outcomes)) %>% 
-  summarise_all(tibble::lst(mean, sd), na.rm=T) %>% 
+  summarise_all(tibble::lst(mean, sd, N_y), na.rm=T) %>% 
   gather() %>% as.data.frame()
-n <-nrow(mean_sd)/2
+n <-nrow(mean_sd)/3
 #split mean and SD into different columns
-mean_sd <- data.frame(Y=gsub("_mean","",mean_sd[1:n,1]), mean=mean_sd[1:n,2], sd=mean_sd[(n+1):(2*n),2]) 
+mean_sd <- data.frame(Y=gsub("_mean","",mean_sd[1:n,1]), mean=mean_sd[1:n,2], sd=mean_sd[(n+1):(2*n),2],  n=mean_sd[(2*n+1):(3*n),2]) 
 
 #Mean and SD by treatment arm
 mean_sd_tr <- d %>% group_by(tr) %>% subset(., select=c("tr",outcomes))%>% 
-  summarise_all(tibble::lst(mean, sd), na.rm=T) %>% 
-  gather(.,  stat, measurement, t2_f2_8ip_mean:t3_residual_cort_sd, factor_key=TRUE) %>%
+  summarise_all(tibble::lst(mean, sd, N_y), na.rm=T) %>% 
+  gather(.,  stat, measurement, t2_f2_8ip_mean:t3_residual_cort_N_y, factor_key=TRUE) %>%
   as.data.frame()
 
-n <-nrow(mean_sd_tr)/2
+n <-nrow(mean_sd_tr)/3
 #split mean and SD into different columns
-mean_sd_tr <- data.frame(tr=mean_sd_tr[1:n,1], Y=gsub("_mean","",mean_sd_tr[1:n,2]), mean=mean_sd_tr[1:n,3], sd=mean_sd_tr[(n+1):(2*n),3]) 
+mean_sd_tr <- data.frame(tr=mean_sd_tr[1:n,1], Y=gsub("_mean","",mean_sd_tr[1:n,2]), mean=mean_sd_tr[1:n,3], sd=mean_sd_tr[(n+1):(2*n),3],  n=mean_sd_tr[(2*n+1):(3*n),3]) 
 
 
 # #Compare to Audrie's
