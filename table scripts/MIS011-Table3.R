@@ -1,6 +1,8 @@
 rm(list=ls())
+library("xtable")
 source(here::here("0-config.R"))
-source(here("audrie R scripts/observational/quartileTMLE_telo_growth.R"))
+load(here("audrie results/telo_growth_results.Rdata"))
+load(here("audrie results/telo_growth_spline_fits.Rdata"))
 
 # round all summary values from data tables for input
 round_df <- function(df, digits) {
@@ -69,4 +71,6 @@ tbl3 <- data.table(
 
 
 write.csv(tbl3, file=here("tables/mis011-table3.csv"))
+print(xtable(tbl3), type="html", file=here("tables/mis011-table3.html"))
+
 

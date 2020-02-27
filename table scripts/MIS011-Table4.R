@@ -1,4 +1,5 @@
 rm(list=ls())
+library("xtable")
 source(here::here("0-config.R"))
 load(here("audrie results/telo_growth_results.Rdata"))
 load(here("audrie results/telo_growth_spline_fits.Rdata"))
@@ -170,4 +171,6 @@ tbl4 <- data.table(
 
 
 write.csv(tbl4, file=here("tables/mis011-table4.csv"))
+print(xtable(tbl4), type="html", file=here("tables/mis011-table4.html"))
+
 

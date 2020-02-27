@@ -1,4 +1,5 @@
 rm(list=ls())
+library("xtable")
 source(here::here("0-config.R"))
 
 # load data to be included in Table 1
@@ -95,4 +96,6 @@ tbl <- rbind(tbl, list(" " = " ", " " = "Intimate partner violence (%)", " " = "
 
 # export table as csv
 write.csv(tbl, file = here("tables/mis011-table1.csv"))
+print(xtable(tbl), type="html", file=here("tables/mis011-table1.html"))
+
 
