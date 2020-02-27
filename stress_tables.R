@@ -32,6 +32,13 @@ sd <- function(str, str1, tbl){
   paste(round(filter2[4], 2))
 }
 
+#n
+n <- function(str, str1, tbl){
+  filter <- tbl[tbl$Y == str,]
+  filter2 <- filter[filter$tr == str1,]
+  paste(round(filter2[5], 2))
+}
+
 
 outcomes2<-c("iPF(2α)-III", "Control", "Nutrition + WSH", "2,3-dinor-iPF(2α)-III", 
               "Control", "Nutrition + WSH", "iPF(2α)-VI", "Control", "Nutrition + WSH", "8,12-iso-iPF(2α)-VI", 
@@ -48,6 +55,11 @@ age_sex_adj <- c("","", ci_interval("t2_f2_8ip", res_sex),"","",
 full_adj <- c("","", ci_interval("t2_f2_8ip", res_adj),"","", 
               ci_interval("t2_f2_23d", res_adj), "","",ci_interval("t2_f2_VI", res_adj), "","",
               ci_interval("t2_f2_12i", res_adj))
+
+n_t2 <- c("", n("t2_f2_8ip", "Control", mean_sd_tr), n("t2_f2_8ip", "Nutrition + WSH", mean_sd_tr),"",
+           n("t2_f2_23d", "Control", mean_sd_tr), n("t2_f2_23d", "Nutrition + WSH", mean_sd_tr), "",
+          n("t2_f2_VI", "Control", mean_sd_tr),n("t2_f2_VI", "Nutrition + WSH", mean_sd_tr), "",
+           n("t2_f2_12i", "Control", mean_sd_tr), n("t2_f2_12i", "Nutrition + WSH", mean_sd_tr))
 
 mean_tr <- c("", mean("t2_f2_8ip", "Control", mean_sd_tr), mean("t2_f2_8ip", "Nutrition + WSH", mean_sd_tr),"",
              mean("t2_f2_23d", "Control", mean_sd_tr), mean("t2_f2_23d", "Nutrition + WSH", mean_sd_tr), "",
@@ -66,6 +78,7 @@ abs_mean <- c("", mean("t2_f2_8ip_raw", "Control", absolute_mean_sd_tr), mean("t
 
 tbls2 <- data.table(
   "Outcome" = outcomes2,
+  "N" = n_t2,
   "Absolute Mean" = abs_mean,
   "Mean" = mean_tr,
   "Standard Deviation" = sd_t2,
