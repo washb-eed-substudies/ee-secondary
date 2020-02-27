@@ -12,6 +12,10 @@ telo2med <- round(quantile(d$TS_t3, na.rm=TRUE),2)
 telo2bpmed <- round(quantile(d$ts_t3_bp, na.rm=TRUE))
 deltatsmed <- round(quantile(d$delta_TS, na.rm=TRUE),2)
 deltatsbpmed <- round(quantile(d$delta_ts_bp, na.rm=TRUE))
+length_m3 <- round(quantile(d$laz_t1, na.rm=TRUE),2)
+weight_age_m3 <- round(quantile(d$waz_t1, na.rm=TRUE),2)
+weight_length_m3 <- round(quantile(d$whz_t1, na.rm=TRUE),2)
+headc_age_m3 <- round(quantile(d$hcz_t1, na.rm=TRUE),2)
 length_y1 <- round(quantile(d$laz_t2, na.rm=TRUE),2)
 weight_age_y1 <- round(quantile(d$waz_t2, na.rm=TRUE),2)
 weight_length_y1 <- round(quantile(d$whz_t2, na.rm=TRUE),2)
@@ -46,6 +50,14 @@ tbl <- rbind(tbl, list(" " = " ", " " = "Change in telomere length between Year 
                        "n (%) or median (IQR)" = paste(deltatsmed[3]," (", deltatsmed[2], ", ", deltatsmed[4], ")", sep="")), stringsAsFactors=FALSE)
 tbl <- rbind(tbl, list(" " = " ", " " = " ", " " = "Base Pairs", 
                        "n (%) or median (IQR)" = paste(deltatsbpmed[3]," (", deltatsbpmed[2], ", ", deltatsbpmed[4], ")", sep="")), stringsAsFactors=FALSE)
+tbl <- rbind(tbl, list(" " = " ", " " = "Anthropometry (3 months, Month 3)", " " = "Length-for-age Z score", 
+                       "n (%) or median (IQR)" = paste(length_m3[3], " (", length_m3[2], ", ", length_m3[4], ")", sep="")), stringsAsFactors=FALSE)
+tbl <- rbind(tbl, list(" " = " ", " " = " ", " " = "Weight-for-age Z score", 
+                       "n (%) or median (IQR)" = paste(weight_age_m3[3], " (", weight_age_m3[2], ", ", weight_age_m3[4], ")", sep="")), stringsAsFactors=FALSE)
+tbl <- rbind(tbl, list(" " = " ", " " = " ", " " = "Weight-for-length Z score", 
+                       "n (%) or median (IQR)" = paste(weight_length_m3[3], " (", weight_length_m3[2], ", ", weight_length_m3[4], ")", sep="")), stringsAsFactors=FALSE)
+tbl <- rbind(tbl, list(" " = " ", " " = " ", " " = "Head circumference-for-age Z score", 
+                       "n (%) or median (IQR)" = paste(headc_age_m3[3], " (", headc_age_m3[2], ", ", headc_age_m3[4], ")", sep="")), stringsAsFactors=FALSE)
 tbl <- rbind(tbl, list(" " = " ", " " = "Anthropometry (14 months, Year 1)", " " = "Length-for-age Z score", 
                        "n (%) or median (IQR)" = paste(length_y1[3], " (", length_y1[2], ", ", length_y1[4], ")", sep="")), stringsAsFactors=FALSE)
 tbl <- rbind(tbl, list(" " = " ", " " = " ", " " = "Weight-for-age Z score", 
