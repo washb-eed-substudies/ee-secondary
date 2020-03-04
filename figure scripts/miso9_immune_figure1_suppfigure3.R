@@ -12,14 +12,15 @@ readjustfunc <- function(data){
 }
 
 d <- rbind(
-  data.frame(readjustfunc(t2_ratio_il1_il10_N_tr), name="Interleukin-1/Interleukin-10", age=14),
-  data.frame(readjustfunc(t3_ratio_il1_il10_N_tr), name="Interleukin-1/Interleukin-10", age=28),
+  data.frame(readjustfunc(t2_ratio_il1_il10_N_tr), name="Interleukin-1β/Interleukin-10", age=14),
+  data.frame(readjustfunc(t3_ratio_il1_il10_N_tr), name="Interleukin-1β/Interleukin-10", age=28),
   data.frame(readjustfunc(t2_ratio_il6_il10_N_tr), name="Interleukin-6/Interleukin-10", age=14),
   data.frame(readjustfunc(t3_ratio_il6_il10_N_tr), name="Interleukin-6/Interleukin-10", age=28),
   data.frame(readjustfunc(t2_ratio_tnf_il10_N_tr), name="Tumor necrosis factor-α/Interleukin-10", age=14),
   data.frame(readjustfunc(t3_ratio_tnf_il10_N_tr), name="Tumor necrosis factor-α/Interleukin-10", age=28),
   data.frame(readjustfunc(t2_ratio_il12_il10_N_tr), name="Interleukin-12/Interleukin-10", age=14),
   data.frame(readjustfunc(t3_ratio_il12_il10_N_tr), name="Interleukin-12/Interleukin-10", age=28),
+  data.frame(readjustfunc(t2_ratio_ifn_il10_N_tr), name="Interferon-γ/Interleukin-10", age=14),
   data.frame(readjustfunc(t3_ratio_ifn_il10_N_tr), name="Interferon-γ/Interleukin-10", age=28),
   data.frame(readjustfunc(t2_ratio_il4_il10_N_tr), name="Interleukin-4/Interleukin-10", age=14),
   data.frame(readjustfunc(t3_ratio_il4_il10_N_tr), name="Interleukin-4/Interleukin-10", age=28),
@@ -33,8 +34,8 @@ d <- rbind(
   data.frame(readjustfunc(t3_ratio_il21_il10_N_tr), name="Interleukin-21/Interleukin-10", age=28),
   data.frame(readjustfunc(t2_ratio_il2_il10_N_tr), name="Interleukin-2/Interleukin-10", age=14),
   data.frame(readjustfunc(t3_ratio_il2_il10_N_tr), name="Interleukin-2/Interleukin-10", age=28),
-  data.frame(readjustfunc(t2_ratio_gmc_il10_N_tr), name="Granulocyte-macrophage colony-stimulating factor/Interleukin-10", age=14),
-  data.frame(readjustfunc(t3_ratio_gmc_il10_N_tr), name="Granulocyte-macrophage colony-stimulating factor/Interleukin-10", age=28),
+  data.frame(readjustfunc(t2_ratio_gmc_il10_N_tr), name="Granulocyte-macrophage \n colony-stimulating factor/Interleukin-10", age=14),
+  data.frame(readjustfunc(t3_ratio_gmc_il10_N_tr), name="Granulocyte-macrophage \n colony-stimulating factor/Interleukin-10", age=28),
   data.frame(readjustfunc(t2_ratio_il12_il4_N_tr), name="Interleukin-12/Interleukin-4", age=14),
   data.frame(readjustfunc(t3_ratio_il12_il4_N_tr), name="Interleukin-12/Interleukin-4", age=28),
   data.frame(readjustfunc(t2_ratio_ifn_il4_N_tr), name="Interferon-γ/Interleukin-4", age=14),
@@ -116,7 +117,7 @@ immune_plot_fun_wlabel <- function(d, name){
 }
 
 
-p1 <-immune_plot_fun(d, "Interleukin-1/Interleukin-10")
+p1 <-immune_plot_fun(d, "Interleukin-1β/Interleukin-10")
 p2 <-immune_plot_fun(d, "Interleukin-6/Interleukin-10")
 p3 <-immune_plot_fun(d, "Tumor necrosis factor-α/Interleukin-10")
 p4 <-immune_plot_fun(d, "Interleukin-12/Interleukin-10")
@@ -127,7 +128,7 @@ p8 <-immune_plot_fun(d, "Interleukin-13/Interleukin-10")
 p9 <-immune_plot_fun(d, "Interleukin-17/Interleukin-10")
 p10 <-immune_plot_fun(d, "Interleukin-21/Interleukin-10")
 p11 <-immune_plot_fun(d, "Interleukin-2/Interleukin-10")
-p12 <-immune_plot_fun(d, "Granulocyte-macrophage colony-stimulating factor/Interleukin-10")
+p12 <-immune_plot_fun(d, "Granulocyte-macrophage \n colony-stimulating factor/Interleukin-10")
 p13 <-immune_plot_fun(d, "Interleukin-12/Interleukin-4")
 p14 <-immune_plot_fun(d, "Interferon-γ/Interleukin-4")
 p15 <-immune_plot_fun(d, "Interleukin-12/Interleukin-5")
