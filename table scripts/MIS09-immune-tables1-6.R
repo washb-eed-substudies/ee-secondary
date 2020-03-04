@@ -2,9 +2,11 @@ rm(list=ls())
 library("xtable")
 source(here::here("0-config.R"))
 
-source(here('audrie R scripts/immune/bangladesh-immune-ages-unadjusted-glm.R'))
-source(here('audrie R scripts/immune/bangladesh-immune-adj-age-sex.R'))
-source(here('audrie R scripts/immune/bangladesh-immune-adj.R'))
+ages<-read.csv("bangladesh-dm-ee-anthro-diar-ee-med-plasma-blind-tr-enrol-covariates-lab.csv", stringsAsFactors = TRUE)
+load(here('audrie results/immune_N_tr_means.RData'))
+load(here('audrie results/immune_unadj_glm.RData'))
+load(here('audrie results/immune_adj_sex_age_glm.RData'))
+load(here('audrie results/immune_adj_glm.RData'))
 
 #### TABLE 1 ####
 
@@ -157,7 +159,7 @@ Ntbl2 <- c(" ", as.character(il1_t2_N_tr$t2_ln_il1_N_tr[1]), as.character(il1_t2
            " ", as.character(agp_t2_N_tr$t2_ln_agp_N_tr[1]), as.character(agp_t2_N_tr$t2_ln_agp_N_tr[2]),
            " ", as.character(igf_t2_N_tr$t2_ln_igf_N_tr[1]), as.character(igf_t2_N_tr$t2_ln_igf_N_tr[2]))
 
-absmeantbl2 <-c(" ", as.character(round(abs_il1_t2_N_tr$sd[1], 2)), as.character(round(abs_il1_t2_N_tr$sd[2], 2)),
+abssdtbl2 <-c(" ", as.character(round(abs_il1_t2_N_tr$sd[1], 2)), as.character(round(abs_il1_t2_N_tr$sd[2], 2)),
                 " ", as.character(round(abs_il6_t2_N_tr$sd[1], 2)), as.character(round(abs_il6_t2_N_tr$sd[2], 2)),
                 " ", as.character(round(abs_tnf_t2_N_tr$sd[1], 2)), as.character(round(abs_tnf_t2_N_tr$sd[2], 2)),
                 " ", as.character(round(abs_crp_t2_N_tr$sd[1], 2)), as.character(round(abs_crp_t2_N_tr$sd[2], 2)),
@@ -174,7 +176,7 @@ absmeantbl2 <-c(" ", as.character(round(abs_il1_t2_N_tr$sd[1], 2)), as.character
                 " ", as.character(round(abs_agp_t2_N_tr$sd[1], 2)), as.character(round(abs_agp_t2_N_tr$sd[2], 2)),
                 " ", as.character(round(abs_igf_t2_N_tr$sd[1], 2)), as.character(round(abs_igf_t2_N_tr$sd[2], 2)))
 
-abssdtbl2 <- c(" ", as.character(round(abs_il1_t2_N_tr$mean[1], 2)), as.character(round(abs_il1_t2_N_tr$mean[2], 2)),
+absmeantbl2 <- c(" ", as.character(round(abs_il1_t2_N_tr$mean[1], 2)), as.character(round(abs_il1_t2_N_tr$mean[2], 2)),
                " ", as.character(round(abs_il6_t2_N_tr$mean[1], 2)), as.character(round(abs_il6_t2_N_tr$mean[2], 2)),
                " ", as.character(round(abs_tnf_t2_N_tr$mean[1], 2)), as.character(round(abs_tnf_t2_N_tr$mean[2], 2)),
                " ", as.character(round(abs_crp_t2_N_tr$mean[1], 2)), as.character(round(abs_crp_t2_N_tr$mean[2], 2)),
@@ -1267,7 +1269,7 @@ tbl5 <- data.table(
   "Outcome, Arm" = outcometbl5,
   "N" = Ntbl5, 
   "Absolute Mean" = absmeantbl5,
-  "Absolute SD", abssdtbl5,
+  "Absolute SD" = abssdtbl5,
   "Mean" = meantbl5, 
   "SD" = sdtbl5,
   "Unadjusted difference: Intervention vs. Control (95% CI)" = unadjtbl5,

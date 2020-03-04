@@ -4,6 +4,7 @@ source(here::here("0-config.R"))
 
 source(here("table scripts/MIS09-immune-tables1-6.R"))
 load(here("audrie results/immune_ipcw.RData"))
+lab<-read.csv("bangladesh-dm-ee-anthro-diar-ee-med-plasma-blind-tr-enrol-covariates-lab.csv", stringsAsFactors = TRUE)
 
 ## IMPORTANT FUNCTIONS ##
 #to be used for formatting ipcw variables for table
@@ -240,7 +241,7 @@ ipcws4<-c(" ", " ", maketblvalue(il12_t2_adj_ipcw_L$`unlist(il12_t2_adj_ipcw$est
           " ", " ", maketblvalue(igf_t2_adj_ipcw_L$`unlist(igf_t2_adj_ipcw$estimates$ATE)`))
 
 tbls4<-cbind(tbl2, ipcws4)
-names(tbls4)[9]<-"IPCW adjusted difference: Intervention vs. Control (95% CI)"
+names(tbls4)[10]<-"IPCW adjusted difference: Intervention vs. Control (95% CI)"
 
 write.csv(tbls4, file=here('tables/miso9-immune-supptable4.csv'))
 print(xtable(tbls4), type="html", file=here("tables/miso9-immune-supptable4.html"))
@@ -278,7 +279,7 @@ ipcws5<-c(" ", " ", maketblvalue(ratio_il1_il10_t2_adj_ipcw_L$`unlist(ratio_il1_
           " ", " ", maketblvalue(ratio_th1_th17_t2_adj_ipcw_L$`unlist(ratio_th1_th17_t2_adj_ipcw$estimates$ATE)`))
 
 tbls5<-cbind(tbl3, ipcws5)
-names(tbls5)[9]<-"IPCW adjusted difference: Intervention vs. Control (95% CI)"
+names(tbls5)[10]<-"IPCW adjusted difference: Intervention vs. Control (95% CI)"
 
 write.csv(tbls5, file=here('tables/miso9-immune-supptable5.csv'))
 print(xtable(tbls5), type="html", file=here("tables/miso9-immune-supptable5.html"))
@@ -340,7 +341,7 @@ ipcws7<-c(" ", " ", maketblvalue(ratio_il1_il10_t3_adj_ipcw_L$`unlist(ratio_il1_
           " ", " ", maketblvalue(ratio_th1_th17_t3_adj_ipcw_L$`unlist(ratio_th1_th17_t3_adj_ipcw$estimates$ATE)`))
 
 tbls7<-cbind(tbl5, ipcws7)
-names(tbls7)[9]<-"IPCW adjusted difference: Intervention vs. Control (95% CI)"
+names(tbls7)[10]<-"IPCW adjusted difference: Intervention vs. Control (95% CI)"
 
 write.csv(tbls7, file=here('tables/miso9-immune-supptable7.csv'))
 print(xtable(tbls7), type="html", file=here("tables/miso9-immune-supptable7.html"))
@@ -365,7 +366,7 @@ ipcws8<-c(" ", " ", maketblvalue(d23_il1_adj_ipcw_L$`unlist(d23_il1_adj_ipcw$est
           " ", " ", maketblvalue(d23_igf_adj_ipcw_L$`unlist(d23_igf_adj_ipcw$estimates$ATE)`))
 
 tbls8<-cbind(tbl6, ipcws8)
-names(tbls8)[9]<-"IPCW adjusted difference: Intervention vs. Control (95% CI)"
+names(tbls8)[10]<-"IPCW adjusted difference: Intervention vs. Control (95% CI)"
 
 write.csv(tbls8, file=here('tables/miso9-immune-supptable8.csv'))
 print(xtable(tbls8), type="html", file=here("tables/miso9-immune-supptable8.html"))
