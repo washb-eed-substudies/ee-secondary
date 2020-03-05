@@ -1,8 +1,43 @@
 
 
-d <- readRDS(paste0(dropboxDir,"Data/Cleaned/Andrew/clean_stress_dataset.RDS"))
+d <- readRDS(paste0(dropboxDir,"Data/Cleaned/Andrew/clean_stress_dataset_andrew.RDS"))
 da <- readRDS(here::here("replication objects/audrie_stress_object.RDS"))
 dm <- readRDS(here::here("replication objects/andrew_stress_object.RDS"))
+
+a <- read.csv("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Data/Cleaned/Audrie/washb-bangladesh-dm-ee-vital-saa-cortisol-f2-gcr.csv")
+
+#check time-varying covariates
+head(a)
+
+
+
+table(d$monsoon3_oragene)
+table(d$monsoon3_vital)
+table(d$monsoon3_salimetrics)
+
+summary(d$oragene_aged3)
+
+#oragene is for gcr methylation, salimetrics for saa/cortisol, vitals for heart rate and blood pressure.
+summary(d$vital_aged3)
+summary(a$ageday_t3_vital)
+
+summary(d$salimetrics_aged3)
+summary(a$ageday_t3_salimetrics)
+
+summary(d$oragene_aged3)
+summary(a$ageday_t3_oragene)
+
+
+
+
+
+
+
+
+
+
+
+
 
 da <- da %>% filter(tr %in% c("Control","Nutrition + WSH"))
 

@@ -5,7 +5,7 @@ library(ggpubr)
 
 
 # Load results
-load(here("andrew results/stress_results.Rdata"))
+load(here::here("andrew results/stress_results.Rdata"))
 
 # Function for helping make table with name and age attached
 readjustfunc <- function(data, var){
@@ -98,7 +98,7 @@ p1 <- ggarrange(f2III, f223d, f2VI, f212, map, hr, saa1, saa2, cort1, cort2, gcr
 
 
 
-ggsave(p1, file = here("figures/stress_mean_by_tr.png"), height=9, width=14)
+ggsave(p1, file =here::here("figures/stress_mean_by_tr.png"), height=9, width=14)
 
 
 
@@ -185,5 +185,5 @@ p1 <- ggarrange(f2III, f223d, f2VI, f212, map, hr, saa1, saa2, cort1, cort2, gcr
 
 
 
-ggsave(p1, file = here("figures/stress_unadjusted_diff.png"), height=9, width=14)
+ggsave(p1, file = here::here("figures/stress_unadjusted_diff.png"), height=9, width=14)
 
