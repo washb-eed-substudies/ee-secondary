@@ -51,7 +51,7 @@ tbl <- rbind(tbl, list(" " = " ", " " = "Change in telomere length between Year 
                        "n (%) or median (IQR)" = paste(deltatsmed[3]," (", deltatsmed[2], ", ", deltatsmed[4], ")", sep="")), stringsAsFactors=FALSE)
 tbl <- rbind(tbl, list(" " = " ", " " = " ", " " = "Base Pairs", 
                        "n (%) or median (IQR)" = paste(deltatsbpmed[3]," (", deltatsbpmed[2], ", ", deltatsbpmed[4], ")", sep="")), stringsAsFactors=FALSE)
-tbl <- rbind(tbl, list(" " = " ", " " = "Anthropometry (3 months, Month 3)", " " = "Length-for-age Z score", 
+tbl <- rbind(tbl, list(" " = " ", " " = "Anthropometry (age 3 months, Month 3)", " " = "Length-for-age Z score", 
                        "n (%) or median (IQR)" = paste(length_m3[3], " (", length_m3[2], ", ", length_m3[4], ")", sep="")), stringsAsFactors=FALSE)
 tbl <- rbind(tbl, list(" " = " ", " " = " ", " " = "Weight-for-age Z score", 
                        "n (%) or median (IQR)" = paste(weight_age_m3[3], " (", weight_age_m3[2], ", ", weight_age_m3[4], ")", sep="")), stringsAsFactors=FALSE)
@@ -59,7 +59,7 @@ tbl <- rbind(tbl, list(" " = " ", " " = " ", " " = "Weight-for-length Z score",
                        "n (%) or median (IQR)" = paste(weight_length_m3[3], " (", weight_length_m3[2], ", ", weight_length_m3[4], ")", sep="")), stringsAsFactors=FALSE)
 tbl <- rbind(tbl, list(" " = " ", " " = " ", " " = "Head circumference-for-age Z score", 
                        "n (%) or median (IQR)" = paste(headc_age_m3[3], " (", headc_age_m3[2], ", ", headc_age_m3[4], ")", sep="")), stringsAsFactors=FALSE)
-tbl <- rbind(tbl, list(" " = " ", " " = "Anthropometry (14 months, Year 1)", " " = "Length-for-age Z score", 
+tbl <- rbind(tbl, list(" " = " ", " " = "Anthropometry (age 14 months, Year 1)", " " = "Length-for-age Z score", 
                        "n (%) or median (IQR)" = paste(length_y1[3], " (", length_y1[2], ", ", length_y1[4], ")", sep="")), stringsAsFactors=FALSE)
 tbl <- rbind(tbl, list(" " = " ", " " = " ", " " = "Weight-for-age Z score", 
                        "n (%) or median (IQR)" = paste(weight_age_y1[3], " (", weight_age_y1[2], ", ", weight_age_y1[4], ")", sep="")), stringsAsFactors=FALSE)
@@ -67,7 +67,7 @@ tbl <- rbind(tbl, list(" " = " ", " " = " ", " " = "Weight-for-length Z score",
                        "n (%) or median (IQR)" = paste(weight_length_y1[3], " (", weight_length_y1[2], ", ", weight_length_y1[4], ")", sep="")), stringsAsFactors=FALSE)
 tbl <- rbind(tbl, list(" " = " ", " " = " ", " " = "Head circumference-for-age Z score", 
                        "n (%) or median (IQR)" = paste(headc_age_y1[3], " (", headc_age_y1[2], ", ", headc_age_y1[4], ")", sep="")), stringsAsFactors=FALSE)
-tbl <- rbind(tbl, list(" " = " ", " " = "Anthropometry (28 months, Year 2)", " " = "Length-for-age Z score", 
+tbl <- rbind(tbl, list(" " = " ", " " = "Anthropometry (age 28 months, Year 2)", " " = "Length-for-age Z score", 
                        "n (%) or median (IQR)" = paste(length_y2[3], " (", length_y2[2], ", ", length_y2[4], ")", sep="")), stringsAsFactors=FALSE)
 tbl <- rbind(tbl, list(" " = " ", " " = " ", " " = "Weight-for-age Z score", 
                        "n (%) or median (IQR)" = paste(weight_age_y2[3], " (", weight_age_y2[2], ", ", weight_age_y2[4], ")", sep="")), stringsAsFactors=FALSE)
@@ -75,9 +75,9 @@ tbl <- rbind(tbl, list(" " = " ", " " = " ", " " = "Weight-for-length Z score",
                        "n (%) or median (IQR)" = paste(weight_length_y2[3], " (", weight_length_y2[2], ", ", weight_length_y2[4], ")", sep="")), stringsAsFactors=FALSE)
 tbl <- rbind(tbl, list(" " = " ", " " = " ", " " = "Head circumference-for-age Z score", 
                        "n (%) or median (IQR)" = paste(headc_age_y2[3], " (", headc_age_y2[2], ", ", headc_age_y2[4], ")", sep="")), stringsAsFactors=FALSE)
-tbl <- rbind(tbl, list(" " = " ", " " = "Diarrhea (14 months, Year 1)", " " = "Caregiver-reported 7-day recall (%)", 
+tbl <- rbind(tbl, list(" " = " ", " " = "Diarrhea (age 14 months, Year 1)", " " = "Caregiver-reported 7-day recall (%)", 
                        "n (%) or median (IQR)" = paste(sum(d$diar7d_t2, na.rm=TRUE), " (", d_y1, "%)", sep="")), stringsAsFactors=FALSE)
-tbl <- rbind(tbl, list(" " = " ", " " = "Diarrhea (28 months, Year 2)", " " = "Caregiver-reported 7-day recall (%)", 
+tbl <- rbind(tbl, list(" " = " ", " " = "Diarrhea (age 28 months, Year 2)", " " = "Caregiver-reported 7-day recall (%)", 
                        "n (%) or median (IQR)" = paste(sum(d$diar7d_t3, na.rm=TRUE), " (", d_y2, "%)", sep="")), stringsAsFactors=FALSE)
 tbl <- rbind(tbl, list(" " = "Mother", " " = " ", " " = "Age (years)", 
                        "n (%) or median (IQR)" = paste(agem[3], " (", agem[2], ", ", agem[4], ")", sep="")), stringsAsFactors=FALSE)
