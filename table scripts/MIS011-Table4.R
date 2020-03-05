@@ -1,6 +1,8 @@
 rm(list=ls())
+library("xtable")
 source(here::here("0-config.R"))
-source(here("audrie R scripts/observational/quartileTMLE_telo_growth.R"))
+load(here("audrie results/telo_growth_results.Rdata"))
+load(here("audrie results/telo_growth_spline_fits.Rdata"))
 
 # round all summary values from data tables for input
 round_df <- function(df, digits) {
@@ -54,8 +56,8 @@ Nhcv <- as.character(nrow(h2_hc_velocity_v_delta_tsgam.res))
 
 tbl4 <- data.table(
   "Outcome"=c(" ", " ", "LAZ, Year 2", "WAZ, Year 2", "WLZ, Year 2", "HCZ, Year 2",
-              " ", "Change in LAZ between Year 1 to Year 2", "Change in WAZ between Year 1 to Year 2", "Change in WLZ between Year 1 to Year 2", "Change in HCZ between Year 1 to Year 2", 
-              " ", "Length velocity (cm/month)", "Weight velocity (kg/month)", "Head circumference velocity (cm/month)"),
+              " ", "Change in LAZ between Year 1 and Year 2", "Change in WAZ between Year 1 and Year 2", "Change in WLZ between Year 1 and Year 2", "Change in HCZ between Year 1 and Year 2", 
+              " ", "Length velocity (cm/month) between Year 1 and Year 2", "Weight velocity (kg/month) between Year 1 and Year 2", "Head circumference velocity (cm/month) between Year 1 and Year 2"),
   "N"=c(" ", " ", Nlazy2h3, Nwazy2h3, Nwlzy2h3, Nhczy2h3, " ", Nlazh1, Nwazh1, Nwlzh1, Nhczh1, " ", Nlenv, Nweiv, Nhcv), 
   "Q1 Mean"=c(" ", " ", as.character(lazy2h3unadj$meanY[1]), as.character(wazy2h3unadj$meanY[1]), as.character(wlzy2h3unadj$meanY[1]), as.character(hczy2h3unadj$meanY[1]), " ",
               as.character(lazh1unadj$meanY[1]), as.character(wazh1unadj$meanY[1]), as.character(wlzh1unadj$meanY[1]), as.character(hczh1unadj$meanY[1]), " ",
@@ -169,4 +171,6 @@ tbl4 <- data.table(
 
 
 write.csv(tbl4, file=here("tables/mis011-table4.csv"))
+print(xtable(tbl4), type="html", file=here("tables/mis011-table4.html"))
+
 

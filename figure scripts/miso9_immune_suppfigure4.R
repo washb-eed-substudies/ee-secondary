@@ -8,8 +8,8 @@ library(ggpubr)
 load(here('audrie results/immune_unadj_glm.RData'))
 
 d <- rbind(
-  data.frame(t2_gmc_unadj_L, name="Granulocyte-macrophage colony-stimulating factor (pg/ml)", age=14),
-  data.frame(t3_gmc_unadj_L, name="Granulocyte-macrophage colony-stimulating factor (pg/ml)", age=28),
+  data.frame(t2_gmc_unadj_L, name="Granulocyte-macrophage \n colony-stimulating factor (pg/ml)", age=14),
+  data.frame(t3_gmc_unadj_L, name="Granulocyte-macrophage \n colony-stimulating factor (pg/ml)", age=28),
   data.frame(t2_ifn_unadj_L, name="Interferon-γ (pg/ml)", age=14),
   data.frame(t3_ifn_unadj_L, name="Interferon-γ (pg/ml)", age=28),
   data.frame(t2_il10_unadj_L, name="Interleukin-10 (pg/ml)", age=14),
@@ -84,7 +84,7 @@ immune_plot_fun_wlabels <- function(d, name){
 }
 
 
-gmc<-immune_plot_fun(d, "Granulocyte-macrophage colony-stimulating factor (pg/ml)")
+gmc<-immune_plot_fun(d, "Granulocyte-macrophage \n colony-stimulating factor (pg/ml)")
 ifn<-immune_plot_fun(d, "Interferon-γ (pg/ml)")
 il10<-immune_plot_fun(d, "Interleukin-10 (pg/ml)")
 il12<-immune_plot_fun(d, "Interleukin-12 (pg/ml)")

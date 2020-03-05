@@ -1,4 +1,4 @@
-"","Outcome, Arm","N","Absolute Mean","Absolute SD","Mean","SD","Unadjusted difference: Intervention vs. Control (95% CI)","Age- and sex- adjusted difference: Intervention vs. Control (95% CI)","IPCW adjusted difference: Intervention vs. Control (95% CI)","ipcws5"
+"","Outcome, Arm","N","Absolute Mean","Absolute SD","Mean","SD","Unadjusted difference: Intervention vs. Control (95% CI)","Age- and sex- adjusted difference: Intervention vs. Control (95% CI)","Fully adjusted difference: Intervention vs. Control (95% CI)","IPCW adjusted difference: Intervention vs. Control (95% CI)"
 "1","Ln IL-1β/IL-10"," "," "," "," "," "," "," "," "," "
 "2","Control","284","0.13","0.24","-2.5","0.9"," "," "," "," "
 "3","Nutrition + WSH","308","0.14","0.37","-2.52","1.07","-0.02 (-0.23, 0.19)","-0.03 (-0.25, 0.18)","-0.04 (-0.26, 0.18)","-0.03 (-0.25, 0.19)"

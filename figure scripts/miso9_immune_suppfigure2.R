@@ -12,8 +12,8 @@ readjustfunc <- function(data){
 }
 
 d <- rbind(
-  data.frame(readjustfunc(gmc_t2_N_tr), name="Granulocyte-macrophage colony-stimulating factor (pg/ml)", age=14),
-  data.frame(readjustfunc(gmc_t3_N_tr), name="Granulocyte-macrophage colony-stimulating factor (pg/ml)", age=28),
+  data.frame(readjustfunc(gmc_t2_N_tr), name="Granulocyte-macrophage \n colony-stimulating factor (pg/ml)", age=14),
+  data.frame(readjustfunc(gmc_t3_N_tr), name="Granulocyte-macrophage \n colony-stimulating factor (pg/ml)", age=28),
   data.frame(readjustfunc(ifn_t2_N_tr), name="Interferon-γ (pg/ml)", age=14),
   data.frame(readjustfunc(ifn_t3_N_tr), name="Interferon-γ (pg/ml)", age=28),
   data.frame(readjustfunc(il10_t2_N_tr), name="Interleukin-10 (pg/ml)", age=14),
@@ -81,7 +81,7 @@ immune_plot_fun <- function(d, name){
     geom_line(position=pos, alpha = 0.4) +
     scale_color_manual(values=c("blue", "red")) +
     labs(y = " ", x =  " ", title=name) +
-    coord_cartesian(ylim=c(df$mean[1]-df$sd[1]-0.5, df$mean[1]+df$sd[1]+0.5)) +
+    coord_cartesian(ylim=c(df$mean[1]-df$sd[1]-0.5*df$sd[1], df$mean[1]+df$sd[1]+0.5*df$sd[1])) +
     theme(axis.text.x=element_blank(),
           axis.ticks.x=element_blank(),
           plot.title = element_text(hjust = 0.5, face = "plain", size=9),
@@ -103,7 +103,7 @@ immune_plot_fun_wlabel <- function(d, name){
     geom_line(position=pos, alpha = 0.4) +
     scale_color_manual(values=c("blue", "red")) +
     labs(y = " ", x =  "Child age, months", title=name) +
-    coord_cartesian(ylim=c(df$mean[1]-df$sd[1]-0.5, df$mean[1]+df$sd[1]+0.5)) +
+    coord_cartesian(ylim=c(df$mean[1]-df$sd[1]-0.5*df$sd[1], df$mean[1]+df$sd[1]+0.5*df$sd[1])) +
     theme(axis.ticks.x=element_blank(),
           axis.text.x = element_text(size=9),
           plot.title = element_text(hjust = 0.5, face = "plain", size=9),
@@ -115,7 +115,7 @@ immune_plot_fun_wlabel <- function(d, name){
 }
 
 
-gmc<-immune_plot_fun(d, "Granulocyte-macrophage colony-stimulating factor (pg/ml)")
+gmc<-immune_plot_fun(d, "Granulocyte-macrophage \n colony-stimulating factor (pg/ml)")
 ifn<-immune_plot_fun(d, "Interferon-γ (pg/ml)")
 il10<-immune_plot_fun(d, "Interleukin-10 (pg/ml)")
 il12<-immune_plot_fun(d, "Interleukin-12 (pg/ml)")

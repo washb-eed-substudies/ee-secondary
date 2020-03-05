@@ -32,6 +32,13 @@ sd <- function(str, str1, tbl){
   paste(round(filter2[4], 2))
 }
 
+#n
+n <- function(str, str1, tbl){
+  filter <- tbl[tbl$Y == str,]
+  filter2 <- filter[filter$tr == str1,]
+  paste(round(filter2[5], 2))
+}
+
 
 outcomes2<-c("iPF(2α)-III", "Control", "Nutrition + WSH", "2,3-dinor-iPF(2α)-III", 
               "Control", "Nutrition + WSH", "iPF(2α)-VI", "Control", "Nutrition + WSH", "8,12-iso-iPF(2α)-VI", 
@@ -48,6 +55,11 @@ age_sex_adj <- c("","", ci_interval("t2_f2_8ip", res_sex),"","",
 full_adj <- c("","", ci_interval("t2_f2_8ip", res_adj),"","", 
               ci_interval("t2_f2_23d", res_adj), "","",ci_interval("t2_f2_VI", res_adj), "","",
               ci_interval("t2_f2_12i", res_adj))
+
+n_t2 <- c("", n("t2_f2_8ip", "Control", mean_sd_tr), n("t2_f2_8ip", "Nutrition + WSH", mean_sd_tr),"",
+           n("t2_f2_23d", "Control", mean_sd_tr), n("t2_f2_23d", "Nutrition + WSH", mean_sd_tr), "",
+          n("t2_f2_VI", "Control", mean_sd_tr),n("t2_f2_VI", "Nutrition + WSH", mean_sd_tr), "",
+           n("t2_f2_12i", "Control", mean_sd_tr), n("t2_f2_12i", "Nutrition + WSH", mean_sd_tr))
 
 mean_tr <- c("", mean("t2_f2_8ip", "Control", mean_sd_tr), mean("t2_f2_8ip", "Nutrition + WSH", mean_sd_tr),"",
              mean("t2_f2_23d", "Control", mean_sd_tr), mean("t2_f2_23d", "Nutrition + WSH", mean_sd_tr), "",
@@ -66,6 +78,7 @@ abs_mean <- c("", mean("t2_f2_8ip_raw", "Control", absolute_mean_sd_tr), mean("t
 
 tbls2 <- data.table(
   "Outcome" = outcomes2,
+  "N" = n_t2,
   "Absolute Mean" = abs_mean,
   "Mean" = mean_tr,
   "Standard Deviation" = sd_t2,
@@ -125,6 +138,19 @@ mean_tr3 <- c("", mean("t3_saa_z01", "Control", mean_sd_tr), mean("t3_saa_z01", 
              mean("t3_gcr", "Control", mean_sd_tr),mean("t3_gcr", "Nutrition + WSH", mean_sd_tr), "",
              mean("t3_gcr_cpg12", "Control", mean_sd_tr),mean("t3_gcr_cpg12", "Nutrition + WSH", mean_sd_tr) )
 
+n_t3 <- c("", n("t3_saa_z01", "Control", mean_sd_tr), n("t3_saa_z01", "Nutrition + WSH", mean_sd_tr),"",
+           n("t3_saa_z02", "Control", mean_sd_tr), n("t3_saa_z02", "Nutrition + WSH", mean_sd_tr), "",
+           n("t3_saa_slope", "Control", mean_sd_tr),n("t3_saa_slope", "Nutrition + WSH", mean_sd_tr), "",
+           n("t3_residual_saa", "Control", mean_sd_tr), n("t3_residual_saa", "Nutrition + WSH", mean_sd_tr), "",
+           n("t3_cort_z01", "Control", mean_sd_tr),n("t3_cort_z01", "Nutrition + WSH", mean_sd_tr), "",
+           n("t3_cort_z03", "Control", mean_sd_tr),n("t3_cort_z03", "Nutrition + WSH", mean_sd_tr), "",
+           n("t3_cort_slope", "Control", mean_sd_tr),n("t3_cort_slope", "Nutrition + WSH", mean_sd_tr), "",
+           n("t3_residual_cort", "Control", mean_sd_tr),n("t3_residual_cort", "Nutrition + WSH", mean_sd_tr), "",
+           n("t3_map", "Control", mean_sd_tr),n("t3_map", "Nutrition + WSH", mean_sd_tr), "",
+           n("t3_hr", "Control", mean_sd_tr),n("t3_hr", "Nutrition + WSH", mean_sd_tr), "",
+           n("t3_gcr", "Control", mean_sd_tr),n("t3_gcr", "Nutrition + WSH", mean_sd_tr), "",
+           n("t3_gcr_cpg12", "Control", mean_sd_tr), n("t3_gcr_cpg12", "Nutrition + WSH", mean_sd_tr) )
+
 sd_t3 <- c("", sd("t3_saa_z01", "Control", mean_sd_tr), sd("t3_saa_z01", "Nutrition + WSH", mean_sd_tr),"",
            sd("t3_saa_z02", "Control", mean_sd_tr), sd("t3_saa_z02", "Nutrition + WSH", mean_sd_tr), "",
            sd("t3_saa_slope", "Control", mean_sd_tr),sd("t3_saa_slope", "Nutrition + WSH", mean_sd_tr), "",
@@ -154,6 +180,7 @@ abs_mean_t3 <- c("", mean("t3_saa_z01_raw", "Control", absolute_mean_sd_tr), mea
 
 tbls3 <- data.table(
   "Outcome" = outcomes3,
+  "N" = n_t3,
   "Absolute Mean" = abs_mean_t3,
   "Mean" = mean_tr3,
   "Standard Deviation" = sd_t3,
