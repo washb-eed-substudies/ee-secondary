@@ -40,8 +40,8 @@ n <- function(str, str1, tbl){
 }
 
 
-outcomes2<-c("iPF(2α)-III", "Control", "Nutrition + WSH", "2,3-dinor-iPF(2α)-III", 
-              "Control", "Nutrition + WSH", "iPF(2α)-VI", "Control", "Nutrition + WSH", "8,12-iso-iPF(2α)-VI", 
+outcomes2<-c("iPF(2Î±)-III", "Control", "Nutrition + WSH", "2,3-dinor-iPF(2Î±)-III", 
+              "Control", "Nutrition + WSH", "iPF(2Î±)-VI", "Control", "Nutrition + WSH", "8,12-iso-iPF(2Î±)-VI", 
               "Control","Nutrition + WSH")
 
 unadj_diff <-c("","", ci_interval("t2_f2_8ip", res_unadj), "","", 
@@ -188,6 +188,9 @@ tbls3 <- data.table(
   "Age and Sex Adjusted Analysis" = age_sex_adj3,
   "Full Adjusted Analysis" = full_adj3
 )
+
+write.csv(tbls2,'miso9-stress-table2.csv')
+write.csv(tbls3,'miso9-stress-table3.csv')
 
 
 
