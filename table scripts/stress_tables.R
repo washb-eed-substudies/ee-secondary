@@ -40,8 +40,8 @@ n <- function(str, str1, tbl){
 }
 
 
-outcomes2<-c("iPF(2Î±)-III", "Control", "Nutrition + WSH", "2,3-dinor-iPF(2Î±)-III", 
-              "Control", "Nutrition + WSH", "iPF(2Î±)-VI", "Control", "Nutrition + WSH", "8,12-iso-iPF(2Î±)-VI", 
+outcomes2<-c("iPF(2α)-III", "Control", "Nutrition + WSH", "2,3-dinor-iPF(2α±)-III", 
+              "Control", "Nutrition + WSH", "iPF(2α±)-VI", "Control", "Nutrition + WSH", "8,12-iso-iPF(2α±)-VI", 
               "Control","Nutrition + WSH")
 
 unadj_diff <-c("","", ci_interval("t2_f2_8ip", res_unadj), "","", 
