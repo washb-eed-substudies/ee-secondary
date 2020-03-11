@@ -132,6 +132,20 @@ p +
   geom_segment(
     x=88, xend=88, y=10, yend=9, 
     size=0.15, linejoin = "mitre", lineend = "butt",
+    arrow = arrow(length = unit(1, "mm"), type= "closed")) +
+  geom_segment(
+    x=30, xend=17, y=85, yend=85, 
+    size=0.15, linejoin = "mitre", lineend = "butt") + 
+  geom_segment(
+    x=17, xend=17, y=85, yend=82, 
+    size=0.15, linejoin = "mitre", lineend = "butt",
+    arrow = arrow(length = unit(1, "mm"), type= "closed")) +
+  geom_segment(
+    x=70, xend=88, y=85, yend=85, 
+    size=0.15, linejoin = "mitre", lineend = "butt") + 
+  geom_segment(
+    x=88, xend=88, y=85, yend=82, 
+    size=0.15, linejoin = "mitre", lineend = "butt",
     arrow = arrow(length = unit(1, "mm"), type= "closed")) ->
   p
 p
