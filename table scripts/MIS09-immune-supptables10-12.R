@@ -139,8 +139,8 @@ tbls10 <- data.table(
   " " = adjbonpvals10
   )
 
-write.csv(tbls10, file=here('tables/mis09-immune-supptable10.csv'))
-print(xtable(tbls10), type="html", file=here("tables/miso9-immune-supptable10.html"))
+write.csv(tbls10, file=here('tables/immune/immune_supplementary/immune_supptable10.csv'))
+print(xtable(tbls10), type="html", file=here("tables/immune/immune_supplementary/immune_supptable10.html"))
 
 
 
@@ -270,8 +270,8 @@ tbls11 <- data.table(
   " " = adjbonpvals11
 )
 
-write.csv(tbls11, file=here('tables/mis09-immune-supptable11.csv'))
-print(xtable(tbls11), type="html", file=here("tables/miso9-immune-supptable11.html"))
+write.csv(tbls11, file=here('tables/immune/immune_supplementary/immune_supptable11.csv'))
+print(xtable(tbls11), type="html", file=here("tables/immune/immune_supplementary/immune_supptable11.html"))
 
 
 #### TABLE 12 ####
@@ -400,8 +400,8 @@ tbls12 <- data.table(
   " " = adjbonpvals12
 )
 
-write.csv(tbls12, file=here('tables/mis09-immune-supptable12.csv'))
-print(xtable(tbls12), type="html", file=here("tables/miso9-immune-supptable12.html"))
+write.csv(tbls12, file=here('tables/immune/immune_supplementary/immune_supptable12.csv'))
+print(xtable(tbls12), type="html", file=here("tables/immune/immune_supplementary/immune_supptable12.html"))
 
 
 

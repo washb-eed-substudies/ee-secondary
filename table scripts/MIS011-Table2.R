@@ -231,7 +231,7 @@ tbl2 <- data.table(
 )
 
 
-write.csv(tbl2, file=here("tables/mis011-table2.csv"))
-print(xtable(tbl2), type="html", file=here("tables/mis011-table2.html"))
+write.csv(tbl2, file=here("tables/telo_growth/telo_growth_main/telo_growth_table2.csv"))
+print(xtable(tbl2), type="html", file=here("tables/telo_growth/telo_growth_main/telo_growth_table2.html"))
 
 

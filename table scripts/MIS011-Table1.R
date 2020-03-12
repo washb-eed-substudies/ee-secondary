@@ -95,7 +95,7 @@ tbl <- rbind(tbl, list(" " = " ", " " = "Intimate partner violence (%)", " " = "
                        "n (%) or median (IQR)" = paste(sum(d$life_viol_any_t3, na.rm=TRUE), " (", viol, "%)", sep="")), stringsAsFactors=FALSE)
 
 # export table as csv
-write.csv(tbl, file = here("tables/mis011-table1.csv"))
-print(xtable(tbl), type="html", file=here("tables/mis011-table1.html"))
+write.csv(tbl, file = here("tables/telo_growth/telo_growth_main/telo_growth_table1.csv"))
+print(xtable(tbl), type="html", file=here("tables/telo_growth/telo_growth_main/telo_growth_table1.html"))
 
 

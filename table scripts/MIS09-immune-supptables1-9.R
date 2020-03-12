@@ -34,8 +34,8 @@ tbls1<-data.table(" "=append(c("No. of compounds:"), tbl1$`No. of compounds:`),
                   " "=append(c("N + WSH (N=404)"), tbl1$`N + WSH (N=404)`)
 )
 
-write.csv(tbls1, file=here("tables/miso9-immune-supptable1.csv"))
-print(xtable(tbls1), type="html", file=here("tables/miso9-immune-supptable1.html"))
+write.csv(tbls1, file=here("tables/immune/immune_supplementary/immune_supptable1.csv"))
+print(xtable(tbls1), type="html", file=here("tables/immune/immune_supplementary/immune_supptable1.html"))
 
 
 #### TABLE S2 ####
@@ -188,8 +188,8 @@ tbls2 <- data.table(
   "Lost to follow-up at Year 2 (N=96)" = lostcol
 )
 
-write.csv(tbls2, file=here('tables/miso9-immune-supptable2.csv'))
-print(xtable(tbls2), type="html", file=here("tables/miso9-immune-supptable2.html"))
+write.csv(tbls2, file=here('tables/immune/immune_supplementary/immune_supptable2.csv'))
+print(xtable(tbls2), type="html", file=here("tables/immune/immune_supplementary/immune_supptable2.html"))
 
 
 
@@ -216,8 +216,8 @@ tbls3<-data.table(" "=outcomes3,
                   "Child Age 14 Months"=t2,
                   "Child Age 28 Months"=t3)
 
-write.csv(tbls3, file=here('tables/miso9-immune-supptable3.csv'))
-print(xtable(tbls3), type="html", file=here("tables/miso9-immune-supptable3.html"))
+write.csv(tbls3, file=here('tables/immune/immune_supplementary/immune_supptable3.csv'))
+print(xtable(tbls3), type="html", file=here("tables/immune/immune_supplementary/immune_supptable3.html"))
 
 
 
@@ -243,8 +243,8 @@ ipcws4<-c(" ", " ", maketblvalue(il12_t2_adj_ipcw_L$`unlist(il12_t2_adj_ipcw$est
 tbls4<-cbind(tbl2, ipcws4)
 names(tbls4)[10]<-"IPCW adjusted difference: Intervention vs. Control (95% CI)"
 
-write.csv(tbls4, file=here('tables/miso9-immune-supptable4.csv'))
-print(xtable(tbls4), type="html", file=here("tables/miso9-immune-supptable4.html"))
+write.csv(tbls4, file=here('tables/immune/immune_supplementary/immune_supptable4.csv'))
+print(xtable(tbls4), type="html", file=here("tables/immune/immune_supplementary/immune_supptable4.html"))
 
 
 #### TABLE S5 ####
@@ -281,8 +281,8 @@ ipcws5<-c(" ", " ", maketblvalue(ratio_il1_il10_t2_adj_ipcw_L$`unlist(ratio_il1_
 tbls5<-cbind(tbl3, ipcws5)
 names(tbls5)[10]<-"IPCW adjusted difference: Intervention vs. Control (95% CI)"
 
-write.csv(tbls5, file=here('tables/miso9-immune-supptable5.csv'))
-print(xtable(tbls5), type="html", file=here("tables/miso9-immune-supptable5.html"))
+write.csv(tbls5, file=here('tables/immune/immune_supplementary/immune_supptable5.csv'))
+print(xtable(tbls5), type="html", file=here("tables/immune/immune_supplementary/immune_supptable5.html"))
 
 
 #### TABLE S6 ####
@@ -305,8 +305,8 @@ ipcws6<-c(" ", " ", maketblvalue(il1_t3_adj_ipcw_L$`unlist(il1_t3_adj_ipcw$estim
 tbls6<-cbind(tbl4, ipcws6)
 names(tbls6)[9]<-"IPCW adjusted difference: Intervention vs. Control (95% CI)"
 
-write.csv(tbls6, file=here('tables/miso9-immune-supptable6.csv'))
-print(xtable(tbls6), type="html", file=here("tables/miso9-immune-supptable6.html"))
+write.csv(tbls6, file=here('tables/immune/immune_supplementary/immune_supptable6.csv'))
+print(xtable(tbls6), type="html", file=here("tables/immune/immune_supplementary/immune_supptable6.html"))
 
 
 #### TABLE S7 ####
@@ -343,8 +343,8 @@ ipcws7<-c(" ", " ", maketblvalue(ratio_il1_il10_t3_adj_ipcw_L$`unlist(ratio_il1_
 tbls7<-cbind(tbl5, ipcws7)
 names(tbls7)[10]<-"IPCW adjusted difference: Intervention vs. Control (95% CI)"
 
-write.csv(tbls7, file=here('tables/miso9-immune-supptable7.csv'))
-print(xtable(tbls7), type="html", file=here("tables/miso9-immune-supptable7.html"))
+write.csv(tbls7, file=here('tables/immune/immune_supplementary/immune_supptable7.csv'))
+print(xtable(tbls7), type="html", file=here("tables/immune/immune_supplementary/immune_supptable7.html"))
 
 
 
@@ -368,8 +368,8 @@ ipcws8<-c(" ", " ", maketblvalue(d23_il1_adj_ipcw_L$`unlist(d23_il1_adj_ipcw$est
 tbls8<-cbind(tbl6, ipcws8)
 names(tbls8)[10]<-"IPCW adjusted difference: Intervention vs. Control (95% CI)"
 
-write.csv(tbls8, file=here('tables/miso9-immune-supptable8.csv'))
-print(xtable(tbls8), type="html", file=here("tables/miso9-immune-supptable8.html"))
+write.csv(tbls8, file=here('tables/immune/immune_supplementary/immune_supptable8.csv'))
+print(xtable(tbls8), type="html", file=here("tables/immune/immune_supplementary/immune_supptable8.html"))
 
 
 
@@ -694,7 +694,7 @@ tbls9<-data.table("Outcome, Arm" = outcomes9,
                   "Fully adjusted difference: Intervention vs. Control (95%)" = adjs9,
                   "IPCW adjusted difference: Intervention vs. Control (95%)" = ipcws9)
 
-write.csv(tbls9, file=here('tables/miso9-immune-supptable9.csv'))
-print(xtable(tbls9), type="html", file=here("tables/miso9-immune-supptable9.html"))
+write.csv(tbls9, file=here('tables/immune/immune_supplementary/immune_supptable9.csv'))
+print(xtable(tbls9), type="html", file=here("tables/immune/immune_supplementary/immune_supptable9.html"))
 
 
