@@ -7,7 +7,7 @@ d <- read.csv(paste0(dropboxDir, "Data/Cleaned/Audrie/bangladesh-dm-ee-telo-grow
 t2 <- sum(d$cesd_sum_t2 >= 16, na.rm=TRUE)/length(d$cesd_sum_t2)
 t3 <- sum(d$cesd_sum_ee_t3 >= 16, na.rm=TRUE)/length(d$cesd_sum_ee_t3)
 
-tbl <- data.frame("Year 1 CESD proportion" = c(t2),
+tbl <- data.table("Year 1 CESD proportion" = c(t2),
            "Year 2 CESD proportion" = c(t3))
 
 write.csv(tbl, file = here("tables/telo_growth/telo_growth_cesdcutoff_prop.csv"))
