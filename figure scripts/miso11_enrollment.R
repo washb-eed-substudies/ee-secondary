@@ -66,9 +66,8 @@ p +
   
   geom_rect(xmin = 40, xmax=60, ymin=-8, ymax=2, color='black',
             fill='white', size=0.25) +
-  annotate('text', x= 50, y=-3,label= 'Year 1 \n 135 clusters \n 662 children \n Year 2 \n 135 clusters \n 713 children', size=3) ->
-  annotate('text', x= 10, y=79,label= 'Analysis', size=4) +
-  
+  annotate('text', x= 50, y=-3,label= 'Year 1 \n 135 clusters \n 662 children \n Year 2 \n 135 clusters \n 713 children', size=3) +
+  annotate('text', x= 10, y=-3,label= 'Analysis', size=4) ->
   p
 p
 
