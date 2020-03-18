@@ -1,3 +1,4 @@
+rm(list=ls())
 library(tibble)
 data <- tibble(x = -10:100, y= -10:100)
 head(data)
@@ -112,4 +113,6 @@ p +
 p
 
 ggsave(p, file = here("figures/telo-growth/telo_growth_enrollment.png"), height=14, width=9)
+ggsave(p, file = here("figures/telo-growth/telo_growth_enrollment.tiff"), height=14, width=9)
+
 
