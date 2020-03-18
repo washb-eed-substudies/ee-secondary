@@ -189,8 +189,8 @@ tbls3 <- data.table(
   "Full Adjusted Analysis" = full_adj3
 )
 
-write.csv(tbls2,'miso9-stress-table2.csv')
-write.csv(tbls3,'miso9-stress-table3.csv')
+write.csv(tbls2, here('tables/stress/miso9-stress-table2.csv'))
+write.csv(tbls3, here('tables/stress/miso9-stress-table3.csv'))
 
 
 
