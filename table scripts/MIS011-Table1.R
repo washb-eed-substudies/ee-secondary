@@ -41,16 +41,10 @@ tbl <- rbind(tbl, list(" " = "Child", " " = " ", " " = "Female (%)",
                        "n (%) or median (IQR)" = paste(length(d$sex[d$sex == "female"]), " (", female, "%)", sep="")), stringsAsFactors=FALSE)
 tbl <- rbind(tbl, list(" " = " ", " " = "Telomere length at Year 1", " " = "T/S Ratio", 
                        "n (%) or median (IQR)" = paste(telo1med[3]," (", telo1med[2], ", ", telo1med[4], ")", sep="")), stringsAsFactors=FALSE)
-tbl <- rbind(tbl, list(" " = " ", " " = " ", " " = "Base Pairs", 
-                       "n (%) or median (IQR)" = paste(telo1bpmed[3]," (", telo1bpmed[2], ", ", telo1bpmed[4], ")", sep="")), stringsAsFactors=FALSE)
 tbl <- rbind(tbl, list(" " = " ", " " = "Telomere length at Year 2", " " = "T/S Ratio", 
                        "n (%) or median (IQR)" = paste(telo2med[3]," (", telo2med[2], ", ", telo2med[4], ")", sep="")), stringsAsFactors=FALSE)
-tbl <- rbind(tbl, list(" " = " ", " " = " ", " " = "Base Pairs", 
-                       "n (%) or median (IQR)" = paste(telo2bpmed[3]," (", telo2bpmed[2], ", ", telo2bpmed[4], ")", sep="")), stringsAsFactors=FALSE)
 tbl <- rbind(tbl, list(" " = " ", " " = "Change in telomere length between Year 1 and Year 2", " " = "T/S Ratio", 
                        "n (%) or median (IQR)" = paste(deltatsmed[3]," (", deltatsmed[2], ", ", deltatsmed[4], ")", sep="")), stringsAsFactors=FALSE)
-tbl <- rbind(tbl, list(" " = " ", " " = " ", " " = "Base Pairs", 
-                       "n (%) or median (IQR)" = paste(deltatsbpmed[3]," (", deltatsbpmed[2], ", ", deltatsbpmed[4], ")", sep="")), stringsAsFactors=FALSE)
 tbl <- rbind(tbl, list(" " = " ", " " = "Anthropometry (age 3 months, Month 3)", " " = "Length-for-age Z score", 
                        "n (%) or median (IQR)" = paste(length_m3[3], " (", length_m3[2], ", ", length_m3[4], ")", sep="")), stringsAsFactors=FALSE)
 tbl <- rbind(tbl, list(" " = " ", " " = " ", " " = "Weight-for-age Z score", 
