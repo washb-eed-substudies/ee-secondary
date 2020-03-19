@@ -71,7 +71,7 @@ tbl4 <- data.table(
   "Q4 Mean"=c(" ", " ", as.character(lazy2h3unadj$meanY[4]), as.character(wazy2h3unadj$meanY[4]), as.character(wlzy2h3unadj$meanY[4]), as.character(hczy2h3unadj$meanY[4]), " ",
               as.character(lazh1unadj$meanY[4]), as.character(wazh1unadj$meanY[4]), as.character(wlzh1unadj$meanY[4]), as.character(hczh1unadj$meanY[4]), " ",
               as.character(lenvunadj$meanY[4]), as.character(weivunadj$meanY[4]), as.character(hcvunadj$meanY[4])), 
-  "Change in T/S Ratio between Year 1 to Year 2, Q1 vs. Q2"=c("Unadjusted", "Coefficient (95% CI)", paste(lazy2h3unadj$ATE[2], " (", lazy2h3unadj$CI1[2], ", ", lazy2h3unadj$CI2[2], ")", sep=""),
+  "Change in T/S Ratio between Year 1 to Year 2, Q2 vs. Q1"=c("Unadjusted", "Coefficient (95% CI)", paste(lazy2h3unadj$ATE[2], " (", lazy2h3unadj$CI1[2], ", ", lazy2h3unadj$CI2[2], ")", sep=""),
                                   paste(wazy2h3unadj$ATE[2], " (", wazy2h3unadj$CI1[2], ", ", wazy2h3unadj$CI2[2], ")", sep=""),
                                   paste(wlzy2h3unadj$ATE[2], " (", wlzy2h3unadj$CI1[2], ", ", wlzy2h3unadj$CI2[2], ")", sep=""),
                                   paste(hczy2h3unadj$ATE[2], " (", hczy2h3unadj$CI1[2], ", ", hczy2h3unadj$CI2[2], ")", sep=""),
@@ -103,7 +103,7 @@ tbl4 <- data.table(
   " "=c(" ", "P-value", as.character(lazy2h3adj$Pval[2]), as.character(wazy2h3adj$Pval[2]), as.character(wlzy2h3adj$Pval[2]), as.character(hczy2h3adj$Pval[2]), " ",
         as.character(lazh1adj$Pval[2]), as.character(wazh1adj$Pval[2]), as.character(wlzh1adj$Pval[2]), as.character(hczh1adj$Pval[2]), " ",
         as.character(lenvadj$Pval[2]), as.character(weivadj$Pval[2]), as.character(hcvadj$Pval[2])), 
-  "Change in T/S Ratio between Year 1 to Year 2, Q1 vs. Q3"=c("Unadjusted", "Coefficient (95% CI)", paste(lazy2h3unadj$ATE[3], " (", lazy2h3unadj$CI1[3], ", ", lazy2h3unadj$CI2[3], ")", sep=""),
+  "Change in T/S Ratio between Year 1 to Year 2, Q3 vs. Q1"=c("Unadjusted", "Coefficient (95% CI)", paste(lazy2h3unadj$ATE[3], " (", lazy2h3unadj$CI1[3], ", ", lazy2h3unadj$CI2[3], ")", sep=""),
                                   paste(wazy2h3unadj$ATE[3], " (", wazy2h3unadj$CI1[3], ", ", wazy2h3unadj$CI2[3], ")", sep=""),
                                   paste(wlzy2h3unadj$ATE[3], " (", wlzy2h3unadj$CI1[3], ", ", wlzy2h3unadj$CI2[3], ")", sep=""),
                                   paste(hczy2h3unadj$ATE[3], " (", hczy2h3unadj$CI1[3], ", ", hczy2h3unadj$CI2[3], ")", sep=""),
@@ -135,7 +135,7 @@ tbl4 <- data.table(
   " "=c(" ", "P-value", as.character(lazy2h3adj$Pval[3]), as.character(wazy2h3adj$Pval[3]), as.character(wlzy2h3adj$Pval[3]), as.character(hczy2h3adj$Pval[3]), " ",
         as.character(lazh1adj$Pval[3]), as.character(wazh1adj$Pval[3]), as.character(wlzh1adj$Pval[3]), as.character(hczh1adj$Pval[3]), " ",
         as.character(lenvadj$Pval[3]), as.character(weivadj$Pval[3]), as.character(hcvadj$Pval[3])),
-  "Change in T/S Ratio between Year 1 to Year 2, Q1 vs. Q4"=c("Unadjusted", "Coefficient (95% CI)", paste(lazy2h3unadj$ATE[4], " (", lazy2h3unadj$CI1[4], ", ", lazy2h3unadj$CI2[4], ")", sep=""),
+  "Change in T/S Ratio between Year 1 to Year 2, Q4 vs. Q1"=c("Unadjusted", "Coefficient (95% CI)", paste(lazy2h3unadj$ATE[4], " (", lazy2h3unadj$CI1[4], ", ", lazy2h3unadj$CI2[4], ")", sep=""),
                                   paste(wazy2h3unadj$ATE[4], " (", wazy2h3unadj$CI1[4], ", ", wazy2h3unadj$CI2[4], ")", sep=""),
                                   paste(wlzy2h3unadj$ATE[4], " (", wlzy2h3unadj$CI1[4], ", ", wlzy2h3unadj$CI2[4], ")", sep=""),
                                   paste(hczy2h3unadj$ATE[4], " (", hczy2h3unadj$CI1[4], ", ", hczy2h3unadj$CI2[4], ")", sep=""),
@@ -171,6 +171,6 @@ tbl4 <- data.table(
 
 
 write.csv(tbl4, file=here("tables/telo_growth/telo_growth_main/telo_growth_table4.csv"))
-print(xtable(tbl4), type="html", file=here("/telo_growth/telo_growth_maintables/telo_growth_table4.html"))
+print(xtable(tbl4), type="html", file=here("tables/telo_growth/telo_growth_main/telo_growth_table4.html"))
 
 
