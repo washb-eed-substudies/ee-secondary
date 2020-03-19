@@ -1,21 +1,14 @@
 rm(list=ls())
+source(here::here("0-config.R"))
 library(tibble)
 data <- tibble(x = -10:100, y= -10:100)
 head(data)
 
-library(dplyr)
 data %>% 
   ggplot(aes(x, y)) +
   scale_x_continuous(minor_breaks = seq(10, 100, 10)) +
   scale_y_continuous(minor_breaks = seq(-10, 100, 10)) +
-  theme(axis.ticks.x=element_blank(),
-        axis.ticks.y=element_blank(),
-        axis.text.x=element_blank(),
-        axis.text.y=element_blank(),
-        axis.title.x=element_blank(),
-        axis.title.y=element_blank(),
-        panel.grid.major = element_blank(), 
-        panel.grid.minor = element_blank()) ->
+  theme_void() ->
   p
 
 p +
@@ -30,47 +23,69 @@ p +
   annotate('text', x= 73, y=89, label= 'Excluded: 7,728 compounds \n 7,429 compounds excluded to create buffer zones\n 219 compounds did not meet enrollment criteria\n 80 compounds declined to participate', size=3) +
   annotate('text', x= 10, y=89,label= 'Enrollment', size=4) +
   
-  geom_rect(xmin = 30, xmax=70, ymin=76, ymax=82, color='black',
+  
+  geom_rect(xmin = 20, xmax=80, ymin=76, ymax=82, color='black',
             fill='white', size=0.25) +
-  annotate('text', x= 50, y=79,label= '720 clusters created and randomly allocated \n 5,551 compounds randomly allocated', size=3)  +
+  annotate('text', x= 50, y=79,label= '720 clusters created and randomly allocated across 7 arms \n 5,551 compounds randomly allocated across 7 arms \n 2 of 7 arms selected into substudy', size=3)  +
   annotate('text', x= 10, y=79,label= 'Allocation', size=4) +
   
   geom_rect(xmin = 34, xmax=66, ymin=64, ymax=74, color='black',
             fill='white', size=0.25) +
-  annotate('text', x= 50, y=69,label= 'Control + Water + Sanitation\n + Handwashing + Nutrition\n 270 clusters \n 2,068 households', size=3) +
+  annotate('text', x= 50, y=70,label= "paste(bold('    Control and Nutrition + Water \n + Sanitation + Handwashing arms'))", parse=TRUE, size=3) +
+  annotate('text', x= 50, y=69,label= '\n\n270 clusters \n2,068 households', size=3) +
   annotate('text', x= 10, y=63,label= 'Subsample Target', size=4) +
+  
   
   geom_rect(xmin = 70, xmax=90, ymin=58, ymax=68, color='black',
             fill='white', size=0.25) +
   annotate('text', x= 80, y=63,label= 'Number of clusters not \n selected into substudy \n Year 1: 139 clusters \n Year 2: 135 clusters', size=3) +
   
-  geom_rect(xmin = 40, xmax=60, ymin=52, ymax=62, color='black',
-            fill='white', size=0.25) +
-  annotate('text', x=50, y=57,label= 'Year 1 \n 131 clusters \n 996 children \n Year 2 \n 135 clusters \n 1,021 children ', size=3)+
   
-  geom_rect(xmin = 38, xmax=62, ymin=26, ymax=50, color='black',
+  geom_rect(xmin = 42, xmax=58, ymin=52, ymax=62, color='black',
             fill='white', size=0.25) +
-  annotate('text', x= 50, y=38,label= 'Year 1 \n 240 children lost to follow-up \n 23 moved \n 45 absent \n 76 withdrew \n 66 no live birth \n 30 child death \n Year 2 \n 25 new children measured  \n 262 children lost to follow-up \n 63 moved \n 5 absent \n 90 withdrew \n 67 no live birth \n 37 child death ', size=3) +
-  annotate('text', x= 10, y=38,label= 'Follow-up', size=4) +
+  annotate('text', x=50, y=61.2,label= "paste(bold(' Year 1                    '))", parse=TRUE, size=3) + 
+  annotate('text', x=50, y=60.2,label= '\n\n            131 clusters                \n996 children   ', size=3) +
+  annotate('text', x=50, y=56.2,label= "paste(bold(' Year 2                    '))", parse=TRUE, size=3) + 
+  annotate('text', x=50, y=55.2,label= '\n\n            135 clusters                \n1,021 children ', size=3) +
   
-  geom_rect(xmin = 40, xmax=60, ymin=14, ymax=24, color='black',
+  
+  geom_rect(xmin = 37, xmax=63, ymin=26, ymax=50, color='black',
             fill='white', size=0.25) +
-  annotate('text', x= 50, y=19,label= 'Year 1 \n 131 clusters \n 756 children \n Year 2 \n 135 clusters \n 759 children ', size=3) + 
+  annotate('text', x= 50, y=48.9,label= "paste(bold('Year 1                                       '))", parse=TRUE, size=3) + 
+  annotate('text', x= 50, y=45.1,label= '\n\n  240 children lost to follow-up  \n23 moved                             \n45 absent                             \n76 withdrew                          \n66 no live birth                      \n30 child death                       ', size=3) + 
+  annotate('text', x= 50, y=37.7,label= "paste(bold('Year 2                                       '))", parse=TRUE, size=3) + 
+  annotate('text', x= 50, y=32.3,label= '\n  25 new children measured     \n  262 children lost to follow-up  \n63 moved                             \n5 absent                               \n90 withdrew                          \n67 no live birth                      \n37 child death                       ', size=3) + 
+  annotate('text', x= 10, y=38.1,label= 'Follow-up', size=4) +
+  
+  geom_rect(xmin = 42, xmax=58, ymin=14, ymax=24, color='black',
+            fill='white', size=0.25) +
+  annotate('text', x= 50, y=23.2,label= "paste(bold('Year 1                    '))", parse=TRUE, size=3) +
+  annotate('text', x= 50, y=22.2,label= '\n\n            131 clusters               \n756 children  ', size=3) + 
+  annotate('text', x= 50, y=18.2,label= "paste(bold('Year 2                    '))", parse=TRUE, size=3) +
+  annotate('text', x= 50, y=17.2,label= '\n\n            135 clusters               \n759 children  ', size=3) + 
   annotate('text', x= 10, y=19,label= 'Subsample Enrollment', size=4) +
   
   
-  geom_rect(xmin = 40, xmax=60, ymin=4, ymax=12, color='black',
+  geom_rect(xmin = 39, xmax=61, ymin=4, ymax=12, color='black',
             fill='white', size=0.25) +
-  annotate('text', x= 50, y=8,label= 'Year 1 \n 94 missing outcome \n Year 2 \n 46 missing outcome', size=3) + 
+  annotate('text', x= 50, y=10.7,label= "paste(bold('Year 1                           '))", parse=TRUE, size=3) + 
+  annotate('text', x= 50, y=9.2,label= ' 94 missing outcome', size=3) + 
+  annotate('text', x= 50, y=7.2,label= "paste(bold('Year 2                           '))", parse=TRUE, size=3) + 
+  annotate('text', x= 50, y=5.7,label= ' 46 missing outcome', size=3) + 
   annotate('text', x= 10, y=8,label= 'Specimen Collection', size=4) +
   
   
-  geom_rect(xmin = 40, xmax=60, ymin=-8, ymax=2, color='black',
+  geom_rect(xmin = 42, xmax=58, ymin=-8, ymax=2, color='black',
             fill='white', size=0.25) +
-  annotate('text', x= 50, y=-3,label= 'Year 1 \n 135 clusters \n 662 children \n Year 2 \n 135 clusters \n 713 children', size=3) +
+  annotate('text', x= 50, y=1.2,label= "paste(bold('Year 1                    '))", parse=TRUE, size=3) +
+  annotate('text', x= 50, y=0.2,label= '\n\n            135 clusters               \n662 children  ', size=3) +
+  annotate('text', x= 50, y=-3.8,label= "paste(bold('Year 2                    '))", parse=TRUE, size=3) +
+  annotate('text', x= 50, y=-4.8,label= '\n\n            135 clusters               \n713 children  ', size=3) +
   annotate('text', x= 10, y=-3,label= 'Analysis', size=4) ->
   p
-p
+
+ggsave(p, file = here("figures/telo-growth/telo_growth_enrollment.png"), height=14, width=9)
+
 
 p +
   geom_segment(
