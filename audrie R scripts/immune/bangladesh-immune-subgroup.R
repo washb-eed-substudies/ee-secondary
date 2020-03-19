@@ -30,7 +30,7 @@ setwd(paste0(dropboxDir,"Data/Cleaned/Audrie/")) #Set working directory
 # the baseline covariate dataset
 #---------------------------------------
 
-d <- read.csv("bangladesh-dm-ee-anthro-diar-ee-med-plasma-blind-tr-enrol-covariates-lab.csv",colClasses=c("dataid"="character"))
+d<-readRDS(paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-immune-analysis-dataset.rds"))
 
 
 #---------------------------------------

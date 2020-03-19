@@ -35,7 +35,8 @@ setwd(paste0(dropboxDir,"Data/Cleaned/Audrie/")) #Set working directory
 
 #Load in enrollment data,blinded tr data, stool data for adjusted analysis. Use read.dta() to read the .dta files, or read.csv() to 
 #read .csv files. Use stringAsFactors=TRUE so that any character-based variable will be read in as a factor.
-lab<-read.csv("bangladesh-dm-ee-anthro-diar-ee-med-plasma-blind-tr-enrol-covariates-lab.csv", stringsAsFactors = TRUE)
+lab<-readRDS(paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-immune-analysis-dataset.rds"))
+
 table(lab$tr) #crosstab of numbers in each treatment
 
 
