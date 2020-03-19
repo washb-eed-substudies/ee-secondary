@@ -1,6 +1,7 @@
 rm(list=ls())
 library("xtable")
 source(here::here("0-config.R"))
+setwd(paste0(dropboxDir,"Data/Cleaned/Audrie/"))
 
 ages<-read.csv("bangladesh-dm-ee-anthro-diar-ee-med-plasma-blind-tr-enrol-covariates-lab.csv", stringsAsFactors = TRUE)
 load(here('audrie results/immune_N_tr_means.RData'))
@@ -9,68 +10,119 @@ load(here('audrie results/immune_adj_sex_age_glm.RData'))
 load(here('audrie results/immune_adj_glm.RData'))
 
 #### TABLE 1 ####
+filtering <- function(row){
+  any(!is.na(row))
+}
+
+y1<-ages[apply(select(ages, grep("t2_ln", names(ages), ignore.case=T)), 1, filtering),]
+
+y2<-ages[apply(select(ages, grep("t3_ln", names(ages), ignore.case=T)), 1, filtering),]
+
 
 #calculating overall N by arm
-Nctrl<-length(ages$tr[ages$tr=="Control"])
-Nwsh<-length(ages$tr[ages$tr=="Nutrition + WSH"])
+y1Nctrl<-length(y1$tr[y1$tr=="Control"])
+y1Nwsh<-length(y1$tr[y1$tr=="Nutrition + WSH"])
+y2Nctrl<-length(y2$tr[y2$tr=="Control"])
+y2Nwsh<-length(y2$tr[y2$tr=="Nutrition + WSH"])
 
 #functions for calculating %/mean for all variables in table based on arm
-meansdfunc <- function(variable) {
-  ctrlmean<-round(mean(variable[ages$tr=="Control"], na.rm=TRUE))
-  ctrlsd<-round(sd(variable[ages$tr=="Control"], na.rm=TRUE))
-  wshmean<-round(mean(variable[ages$tr=="Nutrition + WSH"], na.rm=TRUE))
-  wshsd<-round(sd(variable[ages$tr=="Nutrition + WSH"], na.rm=TRUE))
+meansdfunc <- function(tbl, variable) {
+  ctrlmean<-round(mean(variable[tbl$tr=="Control"], na.rm=TRUE))
+  ctrlsd<-round(sd(variable[tbl$tr=="Control"], na.rm=TRUE))
+  wshmean<-round(mean(variable[tbl$tr=="Nutrition + WSH"], na.rm=TRUE))
+  wshsd<-round(sd(variable[tbl$tr=="Nutrition + WSH"], na.rm=TRUE))
   c(ctrlmean, ctrlsd, wshmean, wshsd)
 }
 
-npercfunc <- function(variable) {
-  ctrln<-sum(variable[ages$tr=="Control"], na.rm=TRUE)
-  ctrlperc<-round(mean(variable[ages$tr=="Control"], na.rm=TRUE)*100)
-  wshn<-sum(variable[ages$tr=="Nutrition + WSH"], na.rm=TRUE)
-  wshperc<-round(mean(variable[ages$tr=="Nutrition + WSH"], na.rm=TRUE)*100)
+npercfunc <- function(tbl, variable) {
+  ctrln<-sum(variable[tbl$tr=="Control"], na.rm=TRUE)
+  ctrlperc<-round(mean(variable[tbl$tr=="Control"], na.rm=TRUE)*100)
+  wshn<-sum(variable[tbl$tr=="Nutrition + WSH"], na.rm=TRUE)
+  wshperc<-round(mean(variable[tbl$tr=="Nutrition + WSH"], na.rm=TRUE)*100)
   c(ctrln, ctrlperc, wshn, wshperc)
 }
 
-momage<-meansdfunc(ages$momage)
-momeduy<-meansdfunc(ages$momeduy)
-dadeduy<-meansdfunc(ages$dadeduy)
-dadagri<-npercfunc(ages$dadagri)
-Nhh<-meansdfunc(ages$Nhh)
-elec<-npercfunc(ages$elec)
-cement<-npercfunc(ages$cement)
+y1momage<-meansdfunc(y1, y1$momage)
+y1momeduy<-meansdfunc(y1, y1$momeduy)
+y1dadeduy<-meansdfunc(y1, y1$dadeduy)
+y1dadagri<-npercfunc(y1, y1$dadagri)
+y1Nhh<-meansdfunc(y1, y1$Nhh)
+y1elec<-npercfunc(y1, y1$elec)
+y1cement<-npercfunc(y1, y1$cement)
 
-acresctrlm<-round(mean(ages$landacre[ages$tr=="Control"], na.rm=TRUE), 2)
-acresctrlsd<-round(sd(ages$landacre[ages$tr=="Control"], na.rm=TRUE), 2)
-acreswshm<-round(mean(ages$landacre[ages$tr=="Nutrition + WSH"], na.rm=TRUE), 2)
-acreswshsd<-round(mean(ages$landacre[ages$tr=="Nutrition + WSH"], na.rm=TRUE), 2)
-acres<-c(acresctrlm, acresctrlsd, acreswshm, acreswshsd)
+y2momage<-meansdfunc(y2, y2$momage)
+y2momeduy<-meansdfunc(y2, y2$momeduy)
+y2dadeduy<-meansdfunc(y2, y2$dadeduy)
+y2dadagri<-npercfunc(y2, y2$dadagri)
+y2Nhh<-meansdfunc(y2, y2$Nhh)
+y2elec<-npercfunc(y2, y2$elec)
+y2cement<-npercfunc(y2, y2$cement)
 
-tubewell<-npercfunc(ages$tubewell)
-storewater<-npercfunc(ages$storewat)
-treatwater<-npercfunc(ages$treatwat)
-waterdis<-meansdfunc(ages$watmin)
-odmen<-npercfunc(ages$odmen)
-odwomen<-npercfunc(ages$odwom)
-odchild815<-npercfunc(ages$odch815)
-odchild38<-npercfunc(ages$odch38)
-odchild03<-npercfunc(ages$odchu3)
-latowned<-npercfunc(ages$latown)
-latslab<-npercfunc(ages$latslab)
-latseal<-npercfunc(ages$latseal)
-latfeces<-npercfunc(ages$latfeces)
-potty<-npercfunc(ages$potty)
-feceshouse<-npercfunc(ages$humfeces)
-feceschildarea<-npercfunc(ages$humfecesch)
-handlatwater<-npercfunc(ages$hwlatwat)
-handlatsoap<-npercfunc(ages$hwlatsoap)
-handkitwater<-npercfunc(ages$hwkitwat)
-handkitsoap<-npercfunc(ages$hwkitsoap)
+y1acresctrlm<-round(mean(y1$landacre[y1$tr=="Control"], na.rm=TRUE), 2)
+y1acresctrlsd<-round(sd(y1$landacre[y1$tr=="Control"], na.rm=TRUE), 2)
+y1acreswshm<-round(mean(y1$landacre[y1$tr=="Nutrition + WSH"], na.rm=TRUE), 2)
+y1acreswshsd<-round(mean(y1$landacre[y1$tr=="Nutrition + WSH"], na.rm=TRUE), 2)
+y1acres<-c(y1acresctrlm, y1acresctrlsd, y1acreswshm, y1acreswshsd)
 
-fsctrln<-length(ages$hfiacat[ages$tr=="Control" & ages$hfiacat=="Food Secure"])
-fsctrlperc<-round(fsctrln/length(ages$hfiacat[ages$tr=="Control"])*100)
-fswshn<-length(ages$hfiacat[ages$tr=="Nutrition + WSH" & ages$hfiacat=="Food Secure"])
-fswshperc<-round(fswshn/length(ages$hfiacat[ages$tr=="Nutrition + WSH"])*100)
-foodsecure<-c(fsctrln, fsctrlperc, fswshn, fswshperc)
+y2acresctrlm<-round(mean(y2$landacre[y2$tr=="Control"], na.rm=TRUE), 2)
+y2acresctrlsd<-round(sd(y2$landacre[y2$tr=="Control"], na.rm=TRUE), 2)
+y2acreswshm<-round(mean(y2$landacre[y2$tr=="Nutrition + WSH"], na.rm=TRUE), 2)
+y2acreswshsd<-round(mean(y2$landacre[y2$tr=="Nutrition + WSH"], na.rm=TRUE), 2)
+y2acres<-c(y2acresctrlm, y2acresctrlsd, y2acreswshm, y2acreswshsd)
+
+y1tubewell<-npercfunc(y1, y1$tubewell)
+y1storewater<-npercfunc(y1, y1$storewat)
+y1treatwater<-npercfunc(y1, y1$treatwat)
+y1waterdis<-meansdfunc(y1, y1$watmin)
+y1odmen<-npercfunc(y1, y1$odmen)
+y1odwomen<-npercfunc(y1, y1$odwom)
+y1odchild815<-npercfunc(y1, y1$odch815)
+y1odchild38<-npercfunc(y1, y1$odch38)
+y1odchild03<-npercfunc(y1, y1$odchu3)
+y1latowned<-npercfunc(y1, y1$latown)
+y1latslab<-npercfunc(y1, y1$latslab)
+y1latseal<-npercfunc(y1, y1$latseal)
+y1latfeces<-npercfunc(y1, y1$latfeces)
+y1potty<-npercfunc(y1, y1$potty)
+y1feceshouse<-npercfunc(y1, y1$humfeces)
+y1feceschildarea<-npercfunc(y1, y1$humfecesch)
+y1handlatwater<-npercfunc(y1, y1$hwlatwat)
+y1handlatsoap<-npercfunc(y1, y1$hwlatsoap)
+y1handkitwater<-npercfunc(y1, y1$hwkitwat)
+y1handkitsoap<-npercfunc(y1, y1$hwkitsoap)
+
+y2tubewell<-npercfunc(y2, y2$tubewell)
+y2storewater<-npercfunc(y2, y2$storewat)
+y2treatwater<-npercfunc(y2, y2$treatwat)
+y2waterdis<-meansdfunc(y2, y2$watmin)
+y2odmen<-npercfunc(y2, y2$odmen)
+y2odwomen<-npercfunc(y2, y2$odwom)
+y2odchild815<-npercfunc(y2, y2$odch815)
+y2odchild38<-npercfunc(y2, y2$odch38)
+y2odchild03<-npercfunc(y2, y2$odchu3)
+y2latowned<-npercfunc(y2, y2$latown)
+y2latslab<-npercfunc(y2, y2$latslab)
+y2latseal<-npercfunc(y2, y2$latseal)
+y2latfeces<-npercfunc(y2, y2$latfeces)
+y2potty<-npercfunc(y2, y2$potty)
+y2feceshouse<-npercfunc(y2, y2$humfeces)
+y2feceschildarea<-npercfunc(y2, y2$humfecesch)
+y2handlatwater<-npercfunc(y2, y2$hwlatwat)
+y2handlatsoap<-npercfunc(y2, y2$hwlatsoap)
+y2handkitwater<-npercfunc(y2, y2$hwkitwat)
+y2handkitsoap<-npercfunc(y2, y2$hwkitsoap)
+
+y1fsctrln<-length(y1$hfiacat[y1$tr=="Control" & y1$hfiacat=="Food Secure"])
+y1fsctrlperc<-round(y1fsctrln/length(y1$hfiacat[y1$tr=="Control"])*100)
+y1fswshn<-length(y1$hfiacat[y1$tr=="Nutrition + WSH" & y1$hfiacat=="Food Secure"])
+y1fswshperc<-round(y1fswshn/length(y1$hfiacat[y1$tr=="Nutrition + WSH"])*100)
+y1foodsecure<-c(y1fsctrln, y1fsctrlperc, y1fswshn, y1fswshperc)
+
+y2fsctrln<-length(y2$hfiacat[y2$tr=="Control" & y2$hfiacat=="Food Secure"])
+y2fsctrlperc<-round(y2fsctrln/length(y2$hfiacat[y2$tr=="Control"])*100)
+y2fswshn<-length(y2$hfiacat[y2$tr=="Nutrition + WSH" & y2$hfiacat=="Food Secure"])
+y2fswshperc<-round(y2fswshn/length(y2$hfiacat[y2$tr=="Nutrition + WSH"])*100)
+y2foodsecure<-c(y2fsctrln, y2fsctrlperc, y2fswshn, y2fswshperc)
 
 #make vectors to put in table
 #function combines n and percent or mean and sd for vectors created from npercfunc or meansdfunc
@@ -83,54 +135,79 @@ charobjectperc<-function(variable, num) {
   paste(variable[num], " (", variable[num+1], "%)", sep="")
 }
 
-ctrl<-c(" ", charobject(momage, 1),charobject(momeduy, 1), " ", charobject(dadeduy, 1), charobjectperc(dadagri, 1),
-        " ", charobject(Nhh, 1), charobjectperc(elec, 1), charobjectperc(cement, 1), charobject(acres, 1),
-        " ", charobjectperc(tubewell, 1), charobjectperc(storewater, 1), charobjectperc(treatwater, 1), charobject(waterdis, 1), 
-        " ", " ", charobjectperc(odmen, 1), charobjectperc(odwomen, 1), charobjectperc(odchild815, 1), charobjectperc(odchild38, 1), charobjectperc(odchild03, 1), 
-        " ", charobjectperc(latowned, 1), charobjectperc(latslab, 1), charobjectperc(latseal, 1), charobjectperc(latfeces, 1),
-        charobjectperc(potty, 1), 
-        " ", charobjectperc(feceshouse, 1), charobjectperc(feceschildarea, 1), 
-        " ", " ", charobjectperc(handlatwater, 1), charobjectperc(handlatsoap, 1), 
-        " ", charobjectperc(handkitwater, 1), charobjectperc(handkitsoap, 1), 
-        " ", charobjectperc(foodsecure, 1))
-wsh<-c(" ", charobject(momage, 3),charobject(momeduy, 3), " ", charobject(dadeduy, 3), charobjectperc(dadagri, 3),
-       " ", charobject(Nhh, 3), charobjectperc(elec, 3), charobjectperc(cement, 3), charobject(acres, 3),
-       " ", charobjectperc(tubewell, 3), charobjectperc(storewater, 3), charobjectperc(treatwater, 3), charobject(waterdis, 3), 
-       " ", " ", charobjectperc(odmen, 3), charobjectperc(odwomen, 3), charobjectperc(odchild815, 3), charobjectperc(odchild38, 3), charobjectperc(odchild03, 3), 
-       " ", charobjectperc(latowned, 3), charobjectperc(latslab, 3), charobjectperc(latseal, 3), charobjectperc(latfeces, 3),
-       charobjectperc(potty, 3), 
-       " ", charobjectperc(feceshouse, 3), charobjectperc(feceschildarea, 3), 
-       " ", " ", charobjectperc(handlatwater, 3), charobjectperc(handlatsoap, 3), 
-       " ", charobjectperc(handkitwater, 3), charobjectperc(handkitsoap, 3), 
-       " ", charobjectperc(foodsecure, 3))
+ctrly1<-c(paste("Control (N=", y1Nctrl, ")", sep=""), " ", charobject(y1momage, 1),charobject(y1momeduy, 1), " ", charobject(y1dadeduy, 1), charobjectperc(y1dadagri, 1),
+        " ", charobject(y1Nhh, 1), charobjectperc(y1elec, 1), charobjectperc(y1cement, 1), charobject(y1acres, 1),
+        " ", charobjectperc(y1tubewell, 1), charobjectperc(y1storewater, 1), charobjectperc(y1treatwater, 1), charobject(y1waterdis, 1), 
+        " ", " ", charobjectperc(y1odmen, 1), charobjectperc(y1odwomen, 1), charobjectperc(y1odchild815, 1), charobjectperc(y1odchild38, 1), charobjectperc(y1odchild03, 1), 
+        " ", charobjectperc(y1latowned, 1), charobjectperc(y1latslab, 1), charobjectperc(y1latseal, 1), charobjectperc(y1latfeces, 1),
+        charobjectperc(y1potty, 1), 
+        " ", charobjectperc(y1feceshouse, 1), charobjectperc(y1feceschildarea, 1), 
+        " ", " ", charobjectperc(y1handlatwater, 1), charobjectperc(y1handlatsoap, 1), 
+        " ", charobjectperc(y1handkitwater, 1), charobjectperc(y1handkitsoap, 1), 
+        " ", charobjectperc(y1foodsecure, 1))
+
+wshy1<-c(paste("N+WSH Intervention (N=", y1Nwsh, ")", sep=""), " ", charobject(y1momage, 3),charobject(y1momeduy, 3), " ", charobject(y1dadeduy, 3), charobjectperc(y1dadagri, 3),
+       " ", charobject(y1Nhh, 3), charobjectperc(y1elec, 3), charobjectperc(y1cement, 3), charobject(y1acres, 3),
+       " ", charobjectperc(y1tubewell, 3), charobjectperc(y1storewater, 3), charobjectperc(y1treatwater, 3), charobject(y1waterdis, 3), 
+       " ", " ", charobjectperc(y1odmen, 3), charobjectperc(y1odwomen, 3), charobjectperc(y1odchild815, 3), charobjectperc(y1odchild38, 3), charobjectperc(y1odchild03, 3), 
+       " ", charobjectperc(y1latowned, 3), charobjectperc(y1latslab, 3), charobjectperc(y1latseal, 3), charobjectperc(y1latfeces, 3),
+       charobjectperc(y1potty, 3), 
+       " ", charobjectperc(y1feceshouse, 3), charobjectperc(y1feceschildarea, 3), 
+       " ", " ", charobjectperc(y1handlatwater, 3), charobjectperc(y1handlatsoap, 3), 
+       " ", charobjectperc(y1handkitwater, 3), charobjectperc(y1handkitsoap, 3), 
+       " ", charobjectperc(y1foodsecure, 3))
+
+ctrly2<-c(paste("Control (N=", y2Nctrl, ")", sep=""), " ", charobject(y2momage, 1),charobject(y2momeduy, 1), " ", charobject(y2dadeduy, 1), charobjectperc(y2dadagri, 1),
+          " ", charobject(y2Nhh, 1), charobjectperc(y2elec, 1), charobjectperc(y2cement, 1), charobject(y2acres, 1),
+          " ", charobjectperc(y2tubewell, 1), charobjectperc(y2storewater, 1), charobjectperc(y2treatwater, 1), charobject(y2waterdis, 1), 
+          " ", " ", charobjectperc(y2odmen, 1), charobjectperc(y2odwomen, 1), charobjectperc(y2odchild815, 1), charobjectperc(y2odchild38, 1), charobjectperc(y2odchild03, 1), 
+          " ", charobjectperc(y2latowned, 1), charobjectperc(y2latslab, 1), charobjectperc(y2latseal, 1), charobjectperc(y2latfeces, 1),
+          charobjectperc(y2potty, 1), 
+          " ", charobjectperc(y2feceshouse, 1), charobjectperc(y2feceschildarea, 1), 
+          " ", " ", charobjectperc(y2handlatwater, 1), charobjectperc(y2handlatsoap, 1), 
+          " ", charobjectperc(y2handkitwater, 1), charobjectperc(y2handkitsoap, 1), 
+          " ", charobjectperc(y2foodsecure, 1))
+  
+wshy2<-c(paste("N+WSH Intervention (N=", y2Nwsh, ")", sep=""), " ", charobject(y2momage, 3),charobject(y2momeduy, 3), " ", charobject(y2dadeduy, 3), charobjectperc(y2dadagri, 3),
+         " ", charobject(y2Nhh, 3), charobjectperc(y2elec, 3), charobjectperc(y2cement, 3), charobject(y2acres, 3),
+         " ", charobjectperc(y2tubewell, 3), charobjectperc(y2storewater, 3), charobjectperc(y2treatwater, 3), charobject(y2waterdis, 3), 
+         " ", " ", charobjectperc(y2odmen, 3), charobjectperc(y2odwomen, 3), charobjectperc(y2odchild815, 3), charobjectperc(y2odchild38, 3), charobjectperc(y2odchild03, 3), 
+         " ", charobjectperc(y2latowned, 3), charobjectperc(y2latslab, 3), charobjectperc(y2latseal, 3), charobjectperc(y2latfeces, 3),
+         charobjectperc(y2potty, 3), 
+         " ", charobjectperc(y2feceshouse, 3), charobjectperc(y2feceschildarea, 3), 
+         " ", " ", charobjectperc(y2handlatwater, 3), charobjectperc(y2handlatsoap, 3), 
+         " ", charobjectperc(y2handkitwater, 3), charobjectperc(y2handkitsoap, 3), 
+         " ", charobjectperc(y2foodsecure, 3))
 
 # Table 1: Enrollment characteristics by intervention group
 tbl1 <- data.table(
-  "No. of compounds:" = c("Maternal", "Age(years)", "Years of education", 
-                          "Paternal", "Years of education", "Works in agriculture", 
-                          "Household", "Number of people", "Has electricity", "Has a cement floor", "Acres of agricultural land owned", 
-                          "Drinking Water", "Shallow tubewell primary water source", "Stored water observed at home", "Reported treating water yesterday", "Distance (mins) to primary water source",
-                          "Sanitation", "Reported daily open defecation", "Adult men", "Adult women", "Children: 8 to <15 years", "Children: 3 to <8 years", "Children: 0 to <3 years", 
-                          "Latrine", "Owned", "Concrete Slab", "Functional water seal", "Visible stool on slab or floor",
-                          "Owned a child potty",
-                          "Human feces observed in the", "House", "Child's play area",
-                          "Handwashing location", "Within six steps of latrine", "Has water", "Has soap", "Within six steps of kitchen", "Has water", "Has soap", 
-                          "Nutrition", "Household is food secure"),
-  "Control (N=402)" = ctrl,
-  "N + WSH (N=404)" = wsh
+  " " = c("No. of compounds:", "Maternal", "Age(years)", "Years of education", 
+          "Paternal", "Years of education", "Works in agriculture", 
+          "Household", "Number of people", "Has electricity", "Has a cement floor", "Acres of agricultural land owned", 
+          "Drinking Water", "Shallow tubewell primary water source", "Stored water observed at home", "Reported treating water yesterday", "Distance (mins) to primary water source",
+          "Sanitation", "Reported daily open defecation", "Adult men", "Adult women", "Children: 8 to <15 years", "Children: 3 to <8 years", "Children: 0 to <3 years", 
+          "Latrine", "Owned", "Concrete Slab", "Functional water seal", "Visible stool on slab or floor",
+          "Owned a child potty",
+          "Human feces observed in the", "House", "Child's play area",
+          "Handwashing location", "Within six steps of latrine", "Has water", "Has soap", "Within six steps of kitchen", "Has water", "Has soap", 
+          "Nutrition", "Household is food secure"),
+  "Children measured at Year 1" = ctrly1,
+  " " = wshy1,
+  "Children measured at Year 2" = ctrly2,
+  " " = wshy2
 )
 
-write.csv(tbl1, file=here('tables/miso9-immune-table1.csv'))
-print(xtable(tbl1), type="html", file=here("tables/miso9-immune-table1.html"))
+write.csv(tbl1, file=here('tables/immune/immune_main/immune_table1.csv'))
+print(xtable(tbl1), type="html", file=here("tables/immune/immune_main/immune_table1.html"))
 
 
 #### TABLE 2 ####
-outcometbl2 <- c(paste("Ln IL-1", "β", " (pg/ml)", sep=""), "Control", "Nutrition + WSH", 
+outcometbl2 <- c(paste("Ln IL-1", "Î²", " (pg/ml)", sep=""), "Control", "Nutrition + WSH", 
                  "Ln IL-6 (pg/ml)", "Control", "Nutrition + WSH", 
-                 paste("Ln TNF-", "α", " (pg/ml)", sep=""), "Control", "Nutrition + WSH",
+                 paste("Ln TNF-", "Î±", " (pg/ml)", sep=""), "Control", "Nutrition + WSH",
                  "Ln CRP (mg/L)", "Control", "Nutrition + WSH", 
                  "Ln IL-12 (pg/ml)", "Control", "Nutrition + WSH", 
-                 paste("Ln IFN-", "γ", " (pg/ml)", sep=""), "Control", "Nutrition + WSH", 
+                 paste("Ln IFN-", "Î³", " (pg/ml)", sep=""), "Control", "Nutrition + WSH", 
                  "Ln IL-4 (pg/ml)", "Control", "Nutrition + WSH", 
                  "Ln IL-5 (pg/ml)", "Control", "Nutrition + WSH", 
                  "Ln IL-13 (pg/ml)", "Control", "Nutrition + WSH", 
@@ -140,7 +217,7 @@ outcometbl2 <- c(paste("Ln IL-1", "β", " (pg/ml)", sep=""), "Control", "Nutriti
                  "Ln IL-2 (pg/ml)", "Control", "Nutrition + WSH", 
                  "Ln GM-CSF (pg/ml)", "Control", "Nutrition + WSH", 
                  "Ln AGP (g/L)", "Control", "Nutrition + WSH",
-                 paste("Ln IGF-1 (", "μ", "g/L)", sep=""), "Control", "Nutrition + WSH")
+                 paste("Ln IGF-1 (", "Î¼", "g/L)", sep=""), "Control", "Nutrition + WSH")
 
 Ntbl2 <- c(" ", as.character(il1_t2_N_tr$t2_ln_il1_N_tr[1]), as.character(il1_t2_N_tr$t2_ln_il1_N_tr[2]),
            " ", as.character(il6_t2_N_tr$t2_ln_il6_N_tr[1]), as.character(il6_t2_N_tr$t2_ln_il6_N_tr[2]),
@@ -341,18 +418,18 @@ tbl2 <- data.table(
   "Age- and sex- adjusted difference: Intervention vs. Control (95% CI)" = asadjtbl2, 
   "Fully adjusted difference: Intervention vs. Control (95% CI)" = adjtbl2)
 
-write.csv(tbl2, file=here('tables/mis09-immune-table2.csv'))
-print(xtable(tbl2), type="html", file=here("tables/miso9-immune-table2.html"))
+write.csv(tbl2, file=here('tables/immune/immune_main/immune_table2.csv'))
+print(xtable(tbl2), type="html", file=here("tables/immune/immune_main/immune_table2.html"))
 
 
 
 #### TABLE 3 ####
 
-outcometbl3 <- c(paste("Ln IL-1", "β", "/IL-10", sep=""), "Control", "Nutrition + WSH", 
+outcometbl3 <- c(paste("Ln IL-1", "Î²", "/IL-10", sep=""), "Control", "Nutrition + WSH", 
                  "Ln IL-6/IL-10", "Control", "Nutrition + WSH", 
-                 paste("Ln TNF-", "α", "/IL-10", sep=""), "Control", "Nutrition + WSH",
+                 paste("Ln TNF-", "Î±", "/IL-10", sep=""), "Control", "Nutrition + WSH",
                  "Ln IL-12/IL-10", "Control", "Nutrition + WSH", 
-                 paste("Ln IFN-", "γ", "/IL-10", sep=""), "Control", "Nutrition + WSH", 
+                 paste("Ln IFN-", "Î³", "/IL-10", sep=""), "Control", "Nutrition + WSH", 
                  "Ln IL-4/IL-10", "Control", "Nutrition + WSH", 
                  "Ln IL-5/IL-10", "Control", "Nutrition + WSH", 
                  "Ln IL-13/IL-10", "Control", "Nutrition + WSH", 
@@ -361,15 +438,15 @@ outcometbl3 <- c(paste("Ln IL-1", "β", "/IL-10", sep=""), "Control", "Nutrition
                  "Ln IL-2/IL-10", "Control", "Nutrition + WSH", 
                  "Ln GM-CSF/IL-10", "Control", "Nutrition + WSH",
                  "Ln IL-12/IL-4", "Control", "Nutrition + WSH", 
-                 paste("Ln IFN-", "γ", "/IL-4", sep=""), "Control", "Nutrition + WSH",
+                 paste("Ln IFN-", "Î³", "/IL-4", sep=""), "Control", "Nutrition + WSH",
                  "Ln IL-12/IL-5", "Control", "Nutrition + WSH", 
-                 paste("Ln IFN-", "γ", "/IL-5", sep=""), "Control", "Nutrition + WSH",
+                 paste("Ln IFN-", "Î³", "/IL-5", sep=""), "Control", "Nutrition + WSH",
                  "Ln IL-12/IL-13", "Control", "Nutrition + WSH", 
-                 paste("Ln IFN-", "γ", "/IL-13", sep=""), "Control", "Nutrition + WSH",
+                 paste("Ln IFN-", "Î³", "/IL-13", sep=""), "Control", "Nutrition + WSH",
                  "Ln IL-12/IL-17A", "Control", "Nutrition + WSH", 
-                 paste("Ln IFN-", "γ", "/IL-17A", sep=""), "Control", "Nutrition + WSH",
+                 paste("Ln IFN-", "Î³", "/IL-17A", sep=""), "Control", "Nutrition + WSH",
                  "Ln IL-12/IL-21", "Control", "Nutrition + WSH", 
-                 paste("Ln IFN-", "γ", "/IL-21", sep=""), "Control", "Nutrition + WSH",
+                 paste("Ln IFN-", "Î³", "/IL-21", sep=""), "Control", "Nutrition + WSH",
                  "Ln Pro-inflammatory cytokines*/IL-10", "Control", "Nutrition + WSH",
                  "Ln Th1**/IL-10", "Control", "Nutrition + WSH", 
                  "Ln Th2***/IL-10", "Control", "Nutrition + WSH", 
@@ -709,16 +786,16 @@ tbl3 <- data.table(
   "Fully adjusted difference: Intervention vs. Control (95% CI)" = adjtbl3
 )
 
-write.csv(tbl3, file=here('tables/mis09-immune-table3.csv'))
-print(xtable(tbl3), type="html", file=here("tables/miso9-immune-table3.html"))
+write.csv(tbl3, file=here('tables/immune/immune_main/immune_table3.csv'))
+print(xtable(tbl3), type="html", file=here("tables/immune/immune_main/immune_table3.html"))
 
 
 #### TABLE 4 ####
-outcometbl4 <- c(paste("Ln IL-1", "β", " (pg/ml)", sep=""), "Control", "Nutrition + WSH", 
+outcometbl4 <- c(paste("Ln IL-1", "Î²", " (pg/ml)", sep=""), "Control", "Nutrition + WSH", 
                  "Ln IL-6 (pg/ml)", "Control", "Nutrition + WSH", 
-                 paste("Ln TNF-", "α", " (pg/ml)", sep=""), "Control", "Nutrition + WSH",
+                 paste("Ln TNF-", "Î±", " (pg/ml)", sep=""), "Control", "Nutrition + WSH",
                  "Ln IL-12 (pg/ml)", "Control", "Nutrition + WSH", 
-                 paste("Ln IFN-", "γ", " (pg/ml)", sep=""), "Control", "Nutrition + WSH", 
+                 paste("Ln IFN-", "Î³", " (pg/ml)", sep=""), "Control", "Nutrition + WSH", 
                  "Ln IL-4 (pg/ml)", "Control", "Nutrition + WSH", 
                  "Ln IL-5 (pg/ml)", "Control", "Nutrition + WSH", 
                  "Ln IL-13 (pg/ml)", "Control", "Nutrition + WSH", 
@@ -727,7 +804,7 @@ outcometbl4 <- c(paste("Ln IL-1", "β", " (pg/ml)", sep=""), "Control", "Nutriti
                  "Ln IL-10 (pg/ml)", "Control", "Nutrition + WSH", 
                  "Ln IL-2 (pg/ml)", "Control", "Nutrition + WSH", 
                  "Ln GM-CSF (pg/ml)", "Control", "Nutrition + WSH", 
-                 paste("Ln IGF-1 (", "μ", "g/L)", sep=""), "Control", "Nutrition + WSH")
+                 paste("Ln IGF-1 (", "Î¼", "g/L)", sep=""), "Control", "Nutrition + WSH")
 
 Ntbl4 <- c(" ", as.character(il1_t3_N_tr$t3_ln_il1_N_tr[1]), as.character(il1_t3_N_tr$t3_ln_il1_N_tr[2]),
            " ", as.character(il6_t3_N_tr$t3_ln_il6_N_tr[1]), as.character(il6_t3_N_tr$t3_ln_il6_N_tr[2]),
@@ -907,17 +984,17 @@ tbl4 <- data.table(
   "Fully adjusted difference: Intervention vs. Control (95% CI)" = adjtbl4
 )
 
-write.csv(tbl4, file=here('tables/miso9-immune-table4.csv'))
-print(xtable(tbl4), type="html", file=here("tables/miso9-immune-table4.html"))
+write.csv(tbl4, file=here('tables/immune/immune_main/immune_table4.csv'))
+print(xtable(tbl4), type="html", file=here("tables/immune/immune_main/immune_table4.html"))
 
 
 
 #### TABLE 5 ####
-outcometbl5 <- c(paste("Ln IL-1", "β", "/IL-10", sep=""), "Control", "Nutrition + WSH", 
+outcometbl5 <- c(paste("Ln IL-1", "Î²", "/IL-10", sep=""), "Control", "Nutrition + WSH", 
                  "Ln IL-6/IL-10", "Control", "Nutrition + WSH", 
-                 paste("Ln TNF-", "α", "/IL-10", sep=""), "Control", "Nutrition + WSH",
+                 paste("Ln TNF-", "Î±", "/IL-10", sep=""), "Control", "Nutrition + WSH",
                  "Ln IL-12/IL-10", "Control", "Nutrition + WSH", 
-                 paste("Ln IFN-", "γ", "/IL-10", sep=""), "Control", "Nutrition + WSH", 
+                 paste("Ln IFN-", "Î³", "/IL-10", sep=""), "Control", "Nutrition + WSH", 
                  "Ln IL-4/IL-10", "Control", "Nutrition + WSH", 
                  "Ln IL-5/IL-10", "Control", "Nutrition + WSH", 
                  "Ln IL-13/IL-10", "Control", "Nutrition + WSH", 
@@ -926,15 +1003,15 @@ outcometbl5 <- c(paste("Ln IL-1", "β", "/IL-10", sep=""), "Control", "Nutrition
                  "Ln IL-2/IL-10", "Control", "Nutrition + WSH", 
                  "Ln GM-CSF/IL-10", "Control", "Nutrition + WSH",
                  "Ln IL-12/IL-4", "Control", "Nutrition + WSH", 
-                 paste("Ln IFN-", "γ", "/IL-4", sep=""), "Control", "Nutrition + WSH",
+                 paste("Ln IFN-", "Î³", "/IL-4", sep=""), "Control", "Nutrition + WSH",
                  "Ln IL-12/IL-5", "Control", "Nutrition + WSH", 
-                 paste("Ln IFN-", "γ", "/IL-5", sep=""), "Control", "Nutrition + WSH",
+                 paste("Ln IFN-", "Î³", "/IL-5", sep=""), "Control", "Nutrition + WSH",
                  "Ln IL-12/IL-13", "Control", "Nutrition + WSH", 
-                 paste("Ln IFN-", "γ", "/IL-13", sep=""), "Control", "Nutrition + WSH",
+                 paste("Ln IFN-", "Î³", "/IL-13", sep=""), "Control", "Nutrition + WSH",
                  "Ln IL-12/IL-17A", "Control", "Nutrition + WSH", 
-                 paste("Ln IFN-", "γ", "/IL-17A", sep=""), "Control", "Nutrition + WSH",
+                 paste("Ln IFN-", "Î³", "/IL-17A", sep=""), "Control", "Nutrition + WSH",
                  "Ln IL-12/IL-21", "Control", "Nutrition + WSH", 
-                 paste("Ln IFN-", "γ", "/IL-21", sep=""), "Control", "Nutrition + WSH",
+                 paste("Ln IFN-", "Î³", "/IL-21", sep=""), "Control", "Nutrition + WSH",
                  "Ln Pro-inflammatory cytokines*/IL-10", "Control", "Nutrition + WSH",
                  "Ln Th1**/IL-10", "Control", "Nutrition + WSH", 
                  "Ln Th2***/IL-10", "Control", "Nutrition + WSH", 
@@ -1277,25 +1354,25 @@ tbl5 <- data.table(
   "Fully adjusted difference: Intervention vs. Control (95% CI)" = adjtbl5
 )
 
-write.csv(tbl5, file=here('tables/miso9-immune-table5.csv'))
-print(xtable(tbl5), type="html", file=here("tables/miso9-immune-table5.html"))
+write.csv(tbl5, file=here('tables/immune/immune_main/immune_table5.csv'))
+print(xtable(tbl5), type="html", file=here("tables/immune/immune_main/immune_table5.html"))
 
 
 #### TABLE 6 ####
-outcometbl6 <- c(paste("Ln ΔIL-1", "β", " (pg/ml)", sep=""), "Control", "Nutrition + WSH", 
-                 "Ln ΔIL-6 (pg/ml)", "Control", "Nutrition + WSH", 
-                 paste("Ln ΔTNF-", "α", " (pg/ml)", sep=""), "Control", "Nutrition + WSH",
-                 "Ln ΔIL-12 (pg/ml)", "Control", "Nutrition + WSH", 
-                 paste("Ln ΔIFN-", "γ", " (pg/ml)", sep=""), "Control", "Nutrition + WSH", 
-                 "Ln ΔIL-4 (pg/ml)", "Control", "Nutrition + WSH", 
-                 "Ln ΔIL-5 (pg/ml)", "Control", "Nutrition + WSH", 
-                 "Ln ΔIL-13 (pg/ml)", "Control", "Nutrition + WSH", 
-                 "Ln ΔIL-17A (pg/ml)", "Control", "Nutrition + WSH", 
-                 "Ln ΔIL-21 (pg/ml)", "Control", "Nutrition + WSH", 
-                 "Ln ΔIL-10 (pg/ml)", "Control", "Nutrition + WSH", 
-                 "Ln ΔIL-2 (pg/ml)", "Control", "Nutrition + WSH", 
-                 "Ln ΔGM-CSF (pg/ml)", "Control", "Nutrition + WSH", 
-                 paste("Ln ΔIGF-1 (", "μ", "g/L)", sep=""), "Control", "Nutrition + WSH")
+outcometbl6 <- c(paste("Ln ÎIL-1", "Î²", " (pg/ml)", sep=""), "Control", "Nutrition + WSH", 
+                 "Ln ÎIL-6 (pg/ml)", "Control", "Nutrition + WSH", 
+                 paste("Ln ÎTNF-", "Î±", " (pg/ml)", sep=""), "Control", "Nutrition + WSH",
+                 "Ln ÎIL-12 (pg/ml)", "Control", "Nutrition + WSH", 
+                 paste("Ln ÎIFN-", "Î³", " (pg/ml)", sep=""), "Control", "Nutrition + WSH", 
+                 "Ln ÎIL-4 (pg/ml)", "Control", "Nutrition + WSH", 
+                 "Ln ÎIL-5 (pg/ml)", "Control", "Nutrition + WSH", 
+                 "Ln ÎIL-13 (pg/ml)", "Control", "Nutrition + WSH", 
+                 "Ln ÎIL-17A (pg/ml)", "Control", "Nutrition + WSH", 
+                 "Ln ÎIL-21 (pg/ml)", "Control", "Nutrition + WSH", 
+                 "Ln ÎIL-10 (pg/ml)", "Control", "Nutrition + WSH", 
+                 "Ln ÎIL-2 (pg/ml)", "Control", "Nutrition + WSH", 
+                 "Ln ÎGM-CSF (pg/ml)", "Control", "Nutrition + WSH", 
+                 paste("Ln ÎIGF-1 (", "Î¼", "g/L)", sep=""), "Control", "Nutrition + WSH")
 
 Ntbl6 <- c(" ", as.character(d23_ln_il1_N_tr$d23_ln_il1_N_tr[1]), as.character(d23_ln_il1_N_tr$d23_ln_il1_N_tr[2]), 
            " ", as.character(d23_ln_il6_N_tr$d23_ln_il6_N_tr[1]), as.character(d23_ln_il6_N_tr$d23_ln_il6_N_tr[2]),
@@ -1475,6 +1552,6 @@ tbl6 <- data.table(
   "Fully adjusted difference: Intervention vs. Control (95% CI)" = adjtbl6
 )
 
-write.csv(tbl6, file=here('tables/miso9-immune-table6.csv'))
-print(xtable(tbl6), type="html", file=here("tables/miso9-immune-table6.html"))
+write.csv(tbl6, file=here('tables/immune/immune_main/immune_table6.csv'))
+print(xtable(tbl6), type="html", file=here("tables/immune/immune_main/immune_table6.html"))
 

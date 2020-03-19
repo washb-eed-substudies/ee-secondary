@@ -70,7 +70,7 @@ tbl3 <- data.table(
 )
 
 
-write.csv(tbl3, file=here("tables/mis011-table3.csv"))
-print(xtable(tbl3), type="html", file=here("tables/mis011-table3.html"))
+write.csv(tbl3, file=here("tables/telo_growth/telo_growth_main/telo_growth_table3.csv"))
+print(xtable(tbl3), type="html", file=here("tables/telo_growth/telo_growth_main/telo_growth_table3.html"))
 
 

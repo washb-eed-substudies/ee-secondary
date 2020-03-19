@@ -170,7 +170,7 @@ tbl4 <- data.table(
 )
 
 
-write.csv(tbl4, file=here("tables/mis011-table4.csv"))
-print(xtable(tbl4), type="html", file=here("tables/mis011-table4.html"))
+write.csv(tbl4, file=here("tables/telo_growth/telo_growth_main/telo_growth_table4.csv"))
+print(xtable(tbl4), type="html", file=here("/telo_growth/telo_growth_maintables/telo_growth_table4.html"))
 
 

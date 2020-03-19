@@ -1,9 +1,12 @@
 rm(list=ls())
 library("xtable")
 source(here::here("0-config.R"))
+setwd(paste0(dropboxDir,"Data/Cleaned/Audrie/"))
 
 source(here("table scripts/MIS09-immune-tables1-6.R"))
 load(here("audrie results/immune_ipcw.RData"))
+
+setwd(paste0(dropboxDir,"Data/Cleaned/Audrie/"))
 lab<-read.csv("bangladesh-dm-ee-anthro-diar-ee-med-plasma-blind-tr-enrol-covariates-lab.csv", stringsAsFactors = TRUE)
 
 ## IMPORTANT FUNCTIONS ##
@@ -14,8 +17,91 @@ maketblvalue<-function(ipcwadjvar){
 }
 
 
-#### TABLE S1 ####
-tbls1<-data.table(" "=append(c("No. of compounds:"), tbl1$`No. of compounds:`), 
+#### TABLE S1/S2 ####
+# filtering for children with no t3 measurements
+lost<-y1 %>% filter_at(vars(igf_t3, gmcsf_t3, ifng_t3, il10_t3, il12_t3, il13_t3, il17_t3,
+                              il1_t3, il2_t3, il21_t3, il4_t3, il5_t3, il6_t3, tnfa_t3), all_vars(is.na(.)))
+
+#calculating overall N by arm
+Nlostctrl<-nrow(lost[lost$tr=="Control",])
+Nlostwsh<-nrow(lost[lost$tr=="Nutrition + WSH",])
+
+imomage<-meansdfunc(lost, lost$momage)
+imomeduy<-meansdfunc(lost, lost$momeduy)
+idadeduy<-meansdfunc(lost, lost$dadeduy)
+idadagri<-npercfunc(lost, lost$dadagri)
+iNhh<-meansdfunc(lost, lost$Nhh)
+ielec<-npercfunc(lost, lost$elec)
+icement<-npercfunc(lost, lost$cement)
+
+iacresmctrl<-round(mean(lost$landacre[lost$tr=="Control"], na.rm=TRUE), 2)
+iacressdctrl<-round(sd(lost$landacre[lost$tr=="Control"], na.rm=TRUE), 2)
+iacresmwsh<-round(mean(lost$landacre[lost$tr=="Nutrition + WSH"], na.rm=TRUE), 2)
+iacressdwsh<-round(mean(lost$landacre[lost$tr=="Nutrition + WSH"], na.rm=TRUE), 2)
+iacres<-c(iacresmctrl, iacressdctrl, iacresmwsh, iacressdwsh)
+
+itubewell<-npercfunc(lost, lost$tubewell)
+istorewater<-npercfunc(lost, lost$storewat)
+itreatwater<-npercfunc(lost, lost$treatwat)
+iwaterdis<-meansdfunc(lost, lost$watmin)
+iodmen<-npercfunc(lost, lost$odmen)
+iodwomen<-npercfunc(lost, lost$odwom)
+iodchild815<-npercfunc(lost, lost$odch815)
+iodchild38<-npercfunc(lost, lost$odch38)
+iodchild03<-npercfunc(lost, lost$odchu3)
+ilatowned<-npercfunc(lost, lost$latown)
+ilatslab<-npercfunc(lost, lost$latslab)
+ilatseal<-npercfunc(lost, lost$latseal)
+ilatfeces<-npercfunc(lost, lost$latfeces)
+ipotty<-npercfunc(lost, lost$potty)
+ifeceshouse<-npercfunc(lost, lost$humfeces)
+ifeceschildarea<-npercfunc(lost, lost$humfecesch)
+ihandlatwater<-npercfunc(lost, lost$hwlatwat)
+ihandlatsoap<-npercfunc(lost, lost$hwlatsoap)
+ihandkitwater<-npercfunc(lost, lost$hwkitwat)
+ihandkitsoap<-npercfunc(lost, lost$hwkitsoap)
+
+ifsnctrl<-length(lost$hfiacat[lost$tr=="Control" & lost$hfiacat=="Food Secure"])
+ifspercctrl<-round(ifsnctrl/length(lost$hfiacat[lost$tr=="Control"])*100)
+ifsnwsh<-length(lost$hfiacat[lost$tr=="Nutrition + WSH" & lost$hfiacat=="Food Secure"])
+ifspercwsh<-round(ifsnwsh/length(lost$hfiacat[lost$tr=="Nutrition + WSH"])*100)
+ifoodsecure<-c(ifsnctrl, ifspercctrl, ifsnwsh, ifspercwsh)
+
+#make vectors to put in table
+#function combines n and percent or mean and sd for vectors created from npercfunc or meansdfunc
+#num is 1 if ctrl group, 3 if wsh
+ctrl<-c(paste("Control (N=", Nlostctrl, ")", sep=""), " ", charobject(imomage, 1),charobject(imomeduy, 1), " ", charobject(idadeduy, 1), charobjectperc(idadagri, 1),
+               " ", charobject(iNhh, 1), charobjectperc(ielec, 1), charobjectperc(icement, 1), charobject(iacres, 1),
+               " ", charobjectperc(itubewell, 1), charobjectperc(istorewater, 1), charobjectperc(itreatwater, 1), charobject(iwaterdis, 1), 
+               " ", " ", charobjectperc(iodmen, 1), charobjectperc(iodwomen, 1), charobjectperc(iodchild815, 1), charobjectperc(iodchild38, 1), charobjectperc(iodchild03, 1), 
+               " ", charobjectperc(ilatowned, 1), charobjectperc(ilatslab, 1), charobjectperc(ilatseal, 1), charobjectperc(ilatfeces, 1),
+               charobjectperc(ipotty, 1), 
+               " ", charobjectperc(ifeceshouse, 1), charobjectperc(ifeceschildarea, 1), 
+               " ", " ", charobjectperc(ihandlatwater, 1), charobjectperc(ihandlatsoap, 1), 
+               " ", charobjectperc(ihandkitwater, 1), charobjectperc(ihandkitsoap, 1), 
+               " ", charobjectperc(ifoodsecure, 1))
+wsh<-c(paste("Control (N=", Nlostwsh, ")", sep=""), " ", charobject(imomage, 3),charobject(imomeduy, 3), " ", charobject(idadeduy, 3), charobjectperc(idadagri, 3),
+       " ", charobject(iNhh, 3), charobjectperc(ielec, 3), charobjectperc(icement, 3), charobject(iacres, 3),
+       " ", charobjectperc(itubewell, 3), charobjectperc(istorewater, 3), charobjectperc(itreatwater, 3), charobject(iwaterdis, 3), 
+       " ", " ", charobjectperc(iodmen, 3), charobjectperc(iodwomen, 3), charobjectperc(iodchild815, 3), charobjectperc(iodchild38, 3), charobjectperc(iodchild03, 3), 
+       " ", charobjectperc(ilatowned, 3), charobjectperc(ilatslab, 3), charobjectperc(ilatseal, 3), charobjectperc(ilatfeces, 3),
+       charobjectperc(ipotty, 3), 
+       " ", charobjectperc(ifeceshouse, 3), charobjectperc(ifeceschildarea, 3), 
+       " ", " ", charobjectperc(ihandlatwater, 3), charobjectperc(ihandlatsoap, 3), 
+       " ", charobjectperc(ihandkitwater, 3), charobjectperc(ihandkitsoap, 3), 
+       " ", charobjectperc(ifoodsecure, 3))
+
+# Table S1/S2
+tbls1s2<-data.table(" "=c("No. of compounds:", "Maternal", "Age(years)", "Years of education", 
+                          "Paternal", "Years of education", "Works in agriculture", 
+                          "Household", "Number of people", "Has electricity", "Has a cement floor", "Acres of agricultural land owned", 
+                          "Drinking Water", "Shallow tubewell primary water source", "Stored water observed at home", "Reported treating water yesterday", "Distance (mins) to primary water source",
+                          "Sanitation", "Reported daily open defecation", "Adult men", "Adult women", "Children: 8 to <15 years", "Children: 3 to <8 years", "Children: 0 to <3 years", 
+                          "Latrine", "Owned", "Concrete Slab", "Functional water seal", "Visible stool on slab or floor",
+                          "Owned a child potty",
+                          "Human feces observed in the", "House", "Child's play area",
+                          "Handwashing location", "Within six steps of latrine", "Has water", "Has soap", "Within six steps of kitchen", "Has water", "Has soap", 
+                          "Nutrition", "Household is food secure"), 
                   "WASH Benefits Main Trial"=c("Control (N=1382)"," ", "24 (5)", "6 (3)", " ", "5 (4)", "414 (30%)", 
                                                " ", "5 (2)", "784 (57%)", "145 (10%)", "0.15 (0.21)",
                                                " ", "1038 (75%)", "666 (48%)", "4 (0%)", "1 (3)", 
@@ -30,166 +116,14 @@ tbls1<-data.table(" "=append(c("No. of compounds:"), tbl1$`No. of compounds:`),
                          " ", "367 (53%)", "621 (94%)", "155 (27%)", "298 (46%)", "30 (4%)", 
                          " ", "49 (8%)", "7 (1%)", 
                          " ", " ", "72 (11%)", "36 (6%)", " ", "60 (9%)", "18 (3%)", " ", "485 (71%)"), 
-                  "Immune Status Study"=append(c("Control (N=402)"), tbl1$`Control (N=402)`),
-                  " "=append(c("N + WSH (N=404)"), tbl1$`N + WSH (N=404)`)
+                  "Immune Status Study: Had outcomes at Year 1"=ctrly1,
+                  " "=wshy1, 
+                  "Immune Status Study: Lost to follow-up at Year 2"=ctrl,
+                  " "=wsh
 )
 
-write.csv(tbls1, file=here("tables/miso9-immune-supptable1.csv"))
-print(xtable(tbls1), type="html", file=here("tables/miso9-immune-supptable1.html"))
-
-
-#### TABLE S2 ####
-
-# filtering to include children that have at least one measurement for t2
-included<-ages[complete.cases(ages[c(103, 105:119)]),]
-
-# filtering for children with no t3 measurements
-lost<-ages %>% filter_at(vars(igf_t3, gmcsf_t3, ifng_t3, il10_t3, il12_t3, il13_t3, il17_t3,
-                              il1_t3, il2_t3, il21_t3, il4_t3, il5_t3, il6_t3, tnfa_t3), all_vars(is.na(.)))
-
-#calculating overall N by arm
-Nincluded<-nrow(included)
-Nlost<-nrow(lost)
-
-#functions for calculating %/mean for all variables in table based on arm
-meansdfunc <- function(variable) {
-  mean<-round(mean(variable, na.rm=TRUE))
-  sd<-round(sd(variable, na.rm=TRUE))
-  c(mean, sd)
-}
-
-npercfunc <- function(variable) {
-  n<-sum(variable, na.rm=TRUE)
-  perc<-round(mean(variable, na.rm=TRUE)*100)
-  c(n, perc)
-}
-
-imomage<-meansdfunc(included$momage)
-imomeduy<-meansdfunc(included$momeduy)
-idadeduy<-meansdfunc(included$dadeduy)
-idadagri<-npercfunc(included$dadagri)
-iNhh<-meansdfunc(included$Nhh)
-ielec<-npercfunc(included$elec)
-icement<-npercfunc(included$cement)
-
-iacresm<-round(mean(included$landacre, na.rm=TRUE), 2)
-iacressd<-round(sd(included$landacre, na.rm=TRUE), 2)
-iacres<-c(iacresm, iacressd)
-
-itubewell<-npercfunc(included$tubewell)
-istorewater<-npercfunc(included$storewat)
-itreatwater<-npercfunc(included$treatwat)
-iwaterdis<-meansdfunc(included$watmin)
-iodmen<-npercfunc(included$odmen)
-iodwomen<-npercfunc(included$odwom)
-iodchild815<-npercfunc(included$odch815)
-iodchild38<-npercfunc(included$odch38)
-iodchild03<-npercfunc(included$odchu3)
-ilatowned<-npercfunc(included$latown)
-ilatslab<-npercfunc(included$latslab)
-ilatseal<-npercfunc(included$latseal)
-ilatfeces<-npercfunc(included$latfeces)
-ipotty<-npercfunc(included$potty)
-ifeceshouse<-npercfunc(included$humfeces)
-ifeceschildarea<-npercfunc(included$humfecesch)
-ihandlatwater<-npercfunc(included$hwlatwat)
-ihandlatsoap<-npercfunc(included$hwlatsoap)
-ihandkitwater<-npercfunc(included$hwkitwat)
-ihandkitsoap<-npercfunc(included$hwkitsoap)
-
-ifsn<-length(included$hfiacat[included$hfiacat=="Food Secure"])
-ifsperc<-round(ifsn/length(included$hfiacat)*100)
-ifoodsecure<-c(ifsn, ifsperc)
-
-
-lmomage<-meansdfunc(lost$momage)
-lmomeduy<-meansdfunc(lost$momeduy)
-ldadeduy<-meansdfunc(lost$dadeduy)
-ldadagri<-npercfunc(lost$dadagri)
-lNhh<-meansdfunc(lost$Nhh)
-lelec<-npercfunc(lost$elec)
-lcement<-npercfunc(lost$cement)
-
-lacresm<-round(mean(lost$landacre, na.rm=TRUE), 2)
-lacressd<-round(sd(lost$landacre, na.rm=TRUE), 2)
-lacres<-c(lacresm, lacressd)
-
-ltubewell<-npercfunc(lost$tubewell)
-lstorewater<-npercfunc(lost$storewat)
-ltreatwater<-npercfunc(lost$treatwat)
-lwaterdis<-meansdfunc(lost$watmin)
-lodmen<-npercfunc(lost$odmen)
-lodwomen<-npercfunc(lost$odwom)
-lodchild815<-npercfunc(lost$odch815)
-lodchild38<-npercfunc(lost$odch38)
-lodchild03<-npercfunc(lost$odchu3)
-llatowned<-npercfunc(lost$latown)
-llatslab<-npercfunc(lost$latslab)
-llatseal<-npercfunc(lost$latseal)
-llatfeces<-npercfunc(lost$latfeces)
-lpotty<-npercfunc(lost$potty)
-lfeceshouse<-npercfunc(lost$humfeces)
-lfeceschildarea<-npercfunc(lost$humfecesch)
-lhandlatwater<-npercfunc(lost$hwlatwat)
-lhandlatsoap<-npercfunc(lost$hwlatsoap)
-lhandkitwater<-npercfunc(lost$hwkitwat)
-lhandkitsoap<-npercfunc(lost$hwkitsoap)
-
-lfsn<-length(lost$hfiacat[lost$hfiacat=="Food Secure"])
-lfsperc<-round(lfsn/length(lost$hfiacat)*100)
-lfoodsecure<-c(lfsn, lfsperc)
-
-
-#make vectors to put in table
-#function combines n and percent or mean and sd for vectors created from npercfunc or meansdfunc
-#num is 1 if ctrl group, 3 if wsh
-charobject<-function(variable, num) {
-  paste(variable[num], " (", variable[num+1], ")", sep="")
-}
-
-charobjectperc<-function(variable, num) {
-  paste(variable[num], " (", variable[num+1], "%)", sep="")
-}
-
-includedcol<-c(" ", charobject(imomage, 1),charobject(imomeduy, 1), " ", charobject(idadeduy, 1), charobjectperc(idadagri, 1),
-               " ", charobject(iNhh, 1), charobjectperc(ielec, 1), charobjectperc(icement, 1), charobject(iacres, 1),
-               " ", charobjectperc(itubewell, 1), charobjectperc(istorewater, 1), charobjectperc(itreatwater, 1), charobject(iwaterdis, 1), 
-               " ", " ", charobjectperc(iodmen, 1), charobjectperc(iodwomen, 1), charobjectperc(iodchild815, 1), charobjectperc(iodchild38, 1), charobjectperc(iodchild03, 1), 
-               " ", charobjectperc(ilatowned, 1), charobjectperc(ilatslab, 1), charobjectperc(ilatseal, 1), charobjectperc(ilatfeces, 1),
-               charobjectperc(ipotty, 1), 
-               " ", charobjectperc(ifeceshouse, 1), charobjectperc(ifeceschildarea, 1), 
-               " ", " ", charobjectperc(ihandlatwater, 1), charobjectperc(ihandlatsoap, 1), 
-               " ", charobjectperc(ihandkitwater, 1), charobjectperc(ihandkitsoap, 1), 
-               " ", charobjectperc(ifoodsecure, 1))
-lostcol<-c(" ", charobject(lmomage, 1),charobject(lmomeduy, 1), " ", charobject(ldadeduy, 1), charobjectperc(ldadagri, 1),
-           " ", charobject(lNhh, 1), charobjectperc(lelec, 1), charobjectperc(lcement, 1), charobject(lacres, 1),
-           " ", charobjectperc(ltubewell, 1), charobjectperc(lstorewater, 1), charobjectperc(ltreatwater, 1), charobject(lwaterdis, 1), 
-           " ", " ", charobjectperc(lodmen, 1), charobjectperc(lodwomen, 1), charobjectperc(lodchild815, 1), charobjectperc(lodchild38, 1), charobjectperc(lodchild03, 1), 
-           " ", charobjectperc(llatowned, 1), charobjectperc(llatslab, 1), charobjectperc(llatseal, 1), charobjectperc(llatfeces, 1),
-           charobjectperc(lpotty, 1), 
-           " ", charobjectperc(lfeceshouse, 1), charobjectperc(lfeceschildarea, 1), 
-           " ", " ", charobjectperc(lhandlatwater, 1), charobjectperc(lhandlatsoap, 1), 
-           " ", charobjectperc(lhandkitwater, 1), charobjectperc(lhandkitsoap, 1), 
-           " ", charobjectperc(lfoodsecure, 1))
-
-# Table 1: Enrollment characteristics by intervention group
-tbls2 <- data.table(
-  "No. of compounds:" = c("Maternal", "Age(years)", "Years of education", 
-                          "Paternal", "Years of education", "Works in agriculture", 
-                          "Household", "Number of people", "Has electricity", "Has a cement floor", "Acres of agricultural land owned", 
-                          "Drinking Water", "Shallow tubewell primary water source", "Stored water observed at home", "Reported treating water yesterday", "Distance (mins) to primary water source",
-                          "Sanitation", "Reported daily open defecation", "Adult men", "Adult women", "Children: 8 to <15 years", "Children: 3 to <8 years", "Children: 0 to <3 years", 
-                          "Latrine", "Owned", "Concrete Slab", "Functional water seal", "Visible stool on slab or floor",
-                          "Owned a child potty",
-                          "Human feces observed in the", "House", "Child's play area",
-                          "Handwashing location", "Within six steps of latrine", "Has water", "Has soap", "Within six steps of kitchen", "Has water", "Has soap", 
-                          "Nutrition", "Household is food secure"),
-  "Included (N=329)" = includedcol,
-  "Lost to follow-up at Year 2 (N=96)" = lostcol
-)
-
-write.csv(tbls2, file=here('tables/miso9-immune-supptable2.csv'))
-print(xtable(tbls2), type="html", file=here("tables/miso9-immune-supptable2.html"))
+write.csv(tbls1s2, file=here('tables/immune/immune_supplementary/immune_supptable1_2.csv'))
+print(xtable(tbls1s2), type="html", file=here("tables/immune/immune_supplementary/immune_supptable1_2.html"))
 
 
 
@@ -216,8 +150,8 @@ tbls3<-data.table(" "=outcomes3,
                   "Child Age 14 Months"=t2,
                   "Child Age 28 Months"=t3)
 
-write.csv(tbls3, file=here('tables/miso9-immune-supptable3.csv'))
-print(xtable(tbls3), type="html", file=here("tables/miso9-immune-supptable3.html"))
+write.csv(tbls3, file=here('tables/immune/immune_supplementary/immune_supptable3.csv'))
+print(xtable(tbls3), type="html", file=here("tables/immune/immune_supplementary/immune_supptable3.html"))
 
 
 
@@ -243,8 +177,8 @@ ipcws4<-c(" ", " ", maketblvalue(il12_t2_adj_ipcw_L$`unlist(il12_t2_adj_ipcw$est
 tbls4<-cbind(tbl2, ipcws4)
 names(tbls4)[10]<-"IPCW adjusted difference: Intervention vs. Control (95% CI)"
 
-write.csv(tbls4, file=here('tables/miso9-immune-supptable4.csv'))
-print(xtable(tbls4), type="html", file=here("tables/miso9-immune-supptable4.html"))
+write.csv(tbls4, file=here('tables/immune/immune_supplementary/immune_supptable4.csv'))
+print(xtable(tbls4), type="html", file=here("tables/immune/immune_supplementary/immune_supptable4.html"))
 
 
 #### TABLE S5 ####
@@ -281,8 +215,8 @@ ipcws5<-c(" ", " ", maketblvalue(ratio_il1_il10_t2_adj_ipcw_L$`unlist(ratio_il1_
 tbls5<-cbind(tbl3, ipcws5)
 names(tbls5)[10]<-"IPCW adjusted difference: Intervention vs. Control (95% CI)"
 
-write.csv(tbls5, file=here('tables/miso9-immune-supptable5.csv'))
-print(xtable(tbls5), type="html", file=here("tables/miso9-immune-supptable5.html"))
+write.csv(tbls5, file=here('tables/immune/immune_supplementary/immune_supptable5.csv'))
+print(xtable(tbls5), type="html", file=here("tables/immune/immune_supplementary/immune_supptable5.html"))
 
 
 #### TABLE S6 ####
@@ -305,8 +239,8 @@ ipcws6<-c(" ", " ", maketblvalue(il1_t3_adj_ipcw_L$`unlist(il1_t3_adj_ipcw$estim
 tbls6<-cbind(tbl4, ipcws6)
 names(tbls6)[9]<-"IPCW adjusted difference: Intervention vs. Control (95% CI)"
 
-write.csv(tbls6, file=here('tables/miso9-immune-supptable6.csv'))
-print(xtable(tbls6), type="html", file=here("tables/miso9-immune-supptable6.html"))
+write.csv(tbls6, file=here('tables/immune/immune_supplementary/immune_supptable6.csv'))
+print(xtable(tbls6), type="html", file=here("tables/immune/immune_supplementary/immune_supptable6.html"))
 
 
 #### TABLE S7 ####
@@ -343,8 +277,8 @@ ipcws7<-c(" ", " ", maketblvalue(ratio_il1_il10_t3_adj_ipcw_L$`unlist(ratio_il1_
 tbls7<-cbind(tbl5, ipcws7)
 names(tbls7)[10]<-"IPCW adjusted difference: Intervention vs. Control (95% CI)"
 
-write.csv(tbls7, file=here('tables/miso9-immune-supptable7.csv'))
-print(xtable(tbls7), type="html", file=here("tables/miso9-immune-supptable7.html"))
+write.csv(tbls7, file=here('tables/immune/immune_supplementary/immune_supptable7.csv'))
+print(xtable(tbls7), type="html", file=here("tables/immune/immune_supplementary/immune_supptable7.html"))
 
 
 
@@ -368,8 +302,8 @@ ipcws8<-c(" ", " ", maketblvalue(d23_il1_adj_ipcw_L$`unlist(d23_il1_adj_ipcw$est
 tbls8<-cbind(tbl6, ipcws8)
 names(tbls8)[10]<-"IPCW adjusted difference: Intervention vs. Control (95% CI)"
 
-write.csv(tbls8, file=here('tables/miso9-immune-supptable8.csv'))
-print(xtable(tbls8), type="html", file=here("tables/miso9-immune-supptable8.html"))
+write.csv(tbls8, file=here('tables/immune/immune_supplementary/immune_supptable8.csv'))
+print(xtable(tbls8), type="html", file=here("tables/immune/immune_supplementary/immune_supptable8.html"))
 
 
 
@@ -694,7 +628,7 @@ tbls9<-data.table("Outcome, Arm" = outcomes9,
                   "Fully adjusted difference: Intervention vs. Control (95%)" = adjs9,
                   "IPCW adjusted difference: Intervention vs. Control (95%)" = ipcws9)
 
-write.csv(tbls9, file=here('tables/miso9-immune-supptable9.csv'))
-print(xtable(tbls9), type="html", file=here("tables/miso9-immune-supptable9.html"))
+write.csv(tbls9, file=here('tables/immune/immune_supplementary/immune_supptable9.csv'))
+print(xtable(tbls9), type="html", file=here("tables/immune/immune_supplementary/immune_supptable9.html"))
 
 
