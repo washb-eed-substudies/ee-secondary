@@ -29,17 +29,21 @@ p +
   annotate('text', x= 50, y=79,label= '720 clusters created and randomly allocated across 7 arms \n 5,551 compounds randomly allocated across 7 arms \n 2 of 7 arms selected into substudy', size=3)  +
   annotate('text', x= 10, y=79,label= 'Allocation', size=4) +
   
-  geom_rect(xmin = 34, xmax=66, ymin=64, ymax=74, color='black',
+  geom_rect(xmin = 27, xmax=73, ymin=64, ymax=74, color='black',
             fill='white', size=0.25) +
-  annotate('text', x= 50, y=70,label= "paste(bold('    Control and Nutrition + Water \n + Sanitation + Handwashing arms'))", parse=TRUE, size=3) +
+  annotate('text', x= 50, y=71.2,label= "paste(bold('Control arm and'))", parse=TRUE, size=3) +
+  annotate('text', x= 50, y=69.8,label= "paste(bold('\nNutrition + Water + Sanitation + Handwashing arm'))", parse=TRUE, size=3) +
   annotate('text', x= 50, y=69,label= '\n\n270 clusters \n2,068 households', size=3) +
   annotate('text', x= 10, y=63,label= 'Subsample Target', size=4) +
   
   
-  geom_rect(xmin = 70, xmax=90, ymin=58, ymax=68, color='black',
+  geom_rect(xmin = 76, xmax=96, ymin=58, ymax=68, color='black',
             fill='white', size=0.25) +
-  annotate('text', x= 80, y=63,label= 'Number of clusters not \n selected into substudy \n Year 1: 139 clusters \n Year 2: 135 clusters', size=3) +
-  
+  annotate('text', x= 86, y=64.8,label= "paste(bold('Number of clusters not \n selected into substudy'))", parse=TRUE, size=3) + 
+  annotate('text', x= 86, y=63.4,label= "paste(bold('Year 1                    '))", parse=TRUE, size=3) + 
+  annotate('text', x= 86, y=62.1,label= '139 clusters     ', size=3) + 
+  annotate('text', x= 86, y=60.9,label= "paste(bold('Year 2                    '))", parse=TRUE, size=3) + 
+  annotate('text', x= 86, y=59.7,label= '135 clusters     ', size=3) +
   
   geom_rect(xmin = 42, xmax=58, ymin=52, ymax=62, color='black',
             fill='white', size=0.25) +
@@ -105,7 +109,7 @@ p +
     size=0.15, linejoin = "mitre", lineend = "butt",
     arrow = arrow(length = unit(1, "mm"), type= "closed")) +
   geom_segment(
-    x=50, xend=70, y=63, yend=63, 
+    x=50, xend=76, y=63, yend=63, 
     size=0.15, linejoin = "mitre", lineend = "butt",
     arrow = arrow(length = unit(1, "mm"), type= "closed")) +
   geom_segment(
