@@ -39,11 +39,11 @@ viol <- round(mean(d$life_viol_any_t3, na.rm=TRUE) * 100) #percentage
 tbl <- data.table(" "=character(), " "=character(), " "=character(), "n (%) or median (IQR)"=numeric())
 tbl <- rbind(tbl, list(" " = "Child", " " = " ", " " = "Female (%)", 
                        "n (%) or median (IQR)" = paste(length(d$sex[d$sex == "female"]), " (", female, "%)", sep="")), stringsAsFactors=FALSE)
-tbl <- rbind(tbl, list(" " = " ", " " = "Telomere length at Year 1", " " = "T/S Ratio", 
+tbl <- rbind(tbl, list(" " = " ", " " = "Telomere length at Year 1", " " = "T/S Ratio*", 
                        "n (%) or median (IQR)" = paste(telo1med[3]," (", telo1med[2], ", ", telo1med[4], ")", sep="")), stringsAsFactors=FALSE)
-tbl <- rbind(tbl, list(" " = " ", " " = "Telomere length at Year 2", " " = "T/S Ratio", 
+tbl <- rbind(tbl, list(" " = " ", " " = "Telomere length at Year 2", " " = "T/S Ratio*", 
                        "n (%) or median (IQR)" = paste(telo2med[3]," (", telo2med[2], ", ", telo2med[4], ")", sep="")), stringsAsFactors=FALSE)
-tbl <- rbind(tbl, list(" " = " ", " " = "Change in telomere length between Year 1 and Year 2", " " = "T/S Ratio", 
+tbl <- rbind(tbl, list(" " = " ", " " = "Change in telomere length between Year 1 and Year 2", " " = "T/S Ratio*", 
                        "n (%) or median (IQR)" = paste(deltatsmed[3]," (", deltatsmed[2], ", ", deltatsmed[4], ")", sep="")), stringsAsFactors=FALSE)
 tbl <- rbind(tbl, list(" " = " ", " " = "Anthropometry (age 3 months, Month 3)", " " = "Length-for-age Z score", 
                        "n (%) or median (IQR)" = paste(length_m3[3], " (", length_m3[2], ", ", length_m3[4], ")", sep="")), stringsAsFactors=FALSE)
@@ -90,6 +90,8 @@ tbl <- rbind(tbl, list(" " = " ", " " = "Intimate partner violence (%)", " " = "
 
 # export table as csv
 write.csv(tbl, file = here("tables/telo_growth/telo_growth_main/telo_growth_table1.csv"))
+write("*The unit for relative telomere length is the T/S ratio. Telomere length was measured by quantitative PCR (qPCR), a method that determines relative telomere length by measuring the factor by which each DNA sample differs from a reference DNA sample in its ratio of telomere repeat copy number (T) to single-copy gene copy number (S)",file=here("tables/telo_growth/telo_growth_main/telo_growth_table1.csv"),append=TRUE)
 print(xtable(tbl), type="html", file=here("tables/telo_growth/telo_growth_main/telo_growth_table1.html"))
+write("*The unit for relative telomere length is the T/S ratio. Telomere length was measured by quantitative PCR (qPCR), a method that determines relative telomere length by measuring the factor by which each DNA sample differs from a reference DNA sample in its ratio of telomere repeat copy number (T) to single-copy gene copy number (S)",file=here("tables/telo_growth/telo_growth_main/telo_growth_table1.html"),append=TRUE)
 
 

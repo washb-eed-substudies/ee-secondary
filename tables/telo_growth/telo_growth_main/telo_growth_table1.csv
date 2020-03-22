@@ -1,8 +1,8 @@
 ""," "," "," ","n (%) or median (IQR)"
 "1","Child"," ","Female (%)","417 (51%)"
-"2"," ","Telomere length at Year 1","T/S Ratio","1.42 (1.28, 1.56)"
-"3"," ","Telomere length at Year 2","T/S Ratio","1.43 (1.29, 1.58)"
-"4"," ","Change in telomere length between Year 1 and Year 2","T/S Ratio","0.04 (-0.22, 0.25)"
+"2"," ","Telomere length at Year 1","T/S Ratio*","1.42 (1.28, 1.56)"
+"3"," ","Telomere length at Year 2","T/S Ratio*","1.43 (1.29, 1.58)"
+"4"," ","Change in telomere length between Year 1 and Year 2","T/S Ratio*","0.04 (-0.22, 0.25)"
 "5"," ","Anthropometry (age 3 months, Month 3)","Length-for-age Z score","-1.28 (-2.02, -0.53)"
 "6"," "," ","Weight-for-age Z score","-1.19 (-1.84, -0.5)"
 "7"," "," ","Weight-for-length Z score","-0.26 (-1.11, 0.44)"
@@ -24,3 +24,4 @@
 "23"," ","Depression at Year 2","CES-D score","12 (9, 17)"
 "24"," ","Perceived stress at Year 2","Perceived Stress Scale score","14 (10, 18)"
 "25"," ","Intimate partner violence (%)","Any lifetime exposure: number of women","398 (56%)"
+*The unit for relative telomere length is the T/S ratio. Telomere length was measured by quantitative PCR (qPCR), a method that determines relative telomere length by measuring the factor by which each DNA sample differs from a reference DNA sample in its ratio of telomere repeat copy number (T) to single-copy gene copy number (S)
