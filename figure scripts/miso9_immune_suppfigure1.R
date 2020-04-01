@@ -7,7 +7,7 @@ data %>%
   ggplot(aes(x, y)) +
   scale_x_continuous(minor_breaks = seq(10, 100, 10)) +
   scale_y_continuous(minor_breaks = seq(10, 100, 10)) +
-  theme_linedraw() ->
+  theme_void() ->
   p
 
 p +
@@ -150,3 +150,4 @@ p +
   p
 p
 
+ggsave(p, file = here("figures/immune/immune_figures1.tiff"), height=14, width=9)
