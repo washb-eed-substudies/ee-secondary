@@ -3,7 +3,7 @@ library("xtable")
 source(here::here("0-config.R"))
 setwd(paste0(dropboxDir,"Data/Cleaned/Audrie/"))
 
-source(here("table scripts/MIS09-immune-tables1-6.R"))
+source(here("table scripts/immune/immune-tables1-6.R"))
 load(here("audrie results/immune_ipcw.RData"))
 
 setwd(paste0(dropboxDir,"Data/Cleaned/Audrie/"))
