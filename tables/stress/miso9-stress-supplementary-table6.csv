@@ -1,0 +1,37 @@
+"","Outcome","N","Absolute Mean","Mean","Standard Deviation","Unadjusted Analysis","Age and Sex Adjusted Analysis","Full Adjusted Analysis"
+"1","Pre-stressor Salivary alpha-amylase","",0,"","","",0,0
+"2","Control","450",0,"4.01","0.89","",0,0
+"3","Nutrition + WSH","452",0,"3.89","0.9","-0.115 (-0.318, 0.087)",0,0
+"4","Post-stressor Salivary alpha-amylase","",0,"","","",0,0
+"5","Control","450",0,"4.44","1.05","",0,0
+"6","Nutrition + WSH","452",0,"4.36","0.98","-0.062 (-0.397, 0.273)",0,0
+"7","Change in slope between pre- and post-stressor alpha-amylase","",0,"","","",0,0
+"8","Control","450",0,"-3.18","7.83","",0,0
+"9","Nutrition + WSH","452",0,"-2.92","5.15","0.281 (-1.462, 2.024)",0,0
+"10","Residualized gain score for alpha-amylase","",0,"","","",0,0
+"11","Control","450",0,"6.11","136.08","",0,0
+"12","Nutrition + WSH","452",0,"-1.47","82.53","-5.881 (-32.438, 20.675)",0,0
+"13","Pre-stressor salivary cortisol","",0,"","","",0,0
+"14","Control","450",0,"-2.01","0.71","",0,0
+"15","Nutrition + WSH","452",0,"-2.13","0.71","-0.11 (-0.271, 0.051)",0,0
+"16","Post-stressor salivary cortisol","",0,"","","",0,0
+"17","Control","450",0,"-1.35","0.9","",0,0
+"18","Nutrition + WSH","452",0,"-1.41","1.02","-0.05 (-0.285, 0.186)",0,0
+"19","Change in slope between pre- and post-stressor cortisol","",0,"","","",0,0
+"20","Control","450",0,"-0.01","0.01","",0,0
+"21","Nutrition + WSH","452",0,"-0.01","0.01","0 (-0.003, 0.002)",0,0
+"22","Residualized gain score for cortisol","",0,"","","",0,0
+"23","Control","450",0,"-0.01","0.27","",0,0
+"24","Nutrition + WSH","452",0,"0","0.29","0.009 (-0.06, 0.078)",0,0
+"25","Mean arterial Pressure","",0,"","","",0,0
+"26","Control","450",0,"64.96","6.4","",0,0
+"27","Nutrition + WSH","452",0,"65.28","6.62","0.33 (-1.052, 1.713)",0,0
+"28","Resting heart rate","",0,"","","",0,0
+"29","Control","450",0,"107.35","15.01","",0,0
+"30","Nutrition + WSH","452",0,"106.45","15.48","-0.928 (-4.695, 2.838)",0,0
+"31","NR3C1 exon 1F promoter methylation","",0,"","","",0,0
+"32","Control","450",0,"-3.53","0.1","",0,0
+"33","Nutrition + WSH","452",0,"-3.53","0.09","-0.006 (-0.028, 0.015)",0,0
+"34","NGFI-A transcription factor binding site","",0,"","","",0,0
+"35","Control","450",0,"-3.41","0.26","",0,0
+"36","Nutrition + WSH","452",0,"-3.42","0.26","-0.01 (-0.075, 0.054)",0,0
