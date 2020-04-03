@@ -9,7 +9,7 @@ source(here::here("0-config.R"))
 ######################
 
 
-d<- read.csv("washb-bangladesh-plasma-lab-t2-t3-ipcw.csv", stringsAsFactors = TRUE)
+d<- read.csv(paste0(dropboxDir,"Data/Cleaned/Audrie/washb-bangladesh-plasma-lab-t2-t3-ipcw.csv"), stringsAsFactors = TRUE)
 
 #drop Z-score, sd, and ratio measures
 d <- d[,!(grepl("z_",colnames(d)) | grepl("sd_",colnames(d)))]

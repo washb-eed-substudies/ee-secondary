@@ -32,7 +32,9 @@ if(dir.exists("C:/Users/Sophie/Dropbox/WASH/")){
 if(dir.exists("/Users/lisa/Dropbox/WASH/")){ 
   dropboxDir <- "/Users/lisa/Dropbox/WASH/"
 }
-
+if(dir.exists("/Users/caitlinhemlock/Dropbox/")){ 
+  dropboxDir <- "/Users/caitlinhemlock/"
+}
 
 
 theme_ki<-function(){

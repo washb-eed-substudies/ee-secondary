@@ -705,7 +705,8 @@ tnf_t2_unadj_ipcw
 #---------------------------------------
 
 #load the immune lab data
-washb_bd_immun<- read.csv(paste0(dropboxDir, "Data/Cleaned/Audrie/washb-bangladesh-plasma-lab-t2-t3-ipcw.csv"), stringsAsFactors = TRUE)
+washb_bd_immun<-readRDS(paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-lab-immune-analysis-dataset.rds"))
+
 
 #load
 dfull<- read.csv(paste0(dropboxDir, "Data/Cleaned/Audrie/washb-bangladesh-anthro-diar-ee-med-enrol-tracking-immun-ipcw2.csv"), stringsAsFactors = TRUE)
@@ -1682,7 +1683,7 @@ ratio_th1_th17_t2_unadj_ipcw
 #---------------------------------------
 
 #load the immune lab data
-washb_bd_immun<- read.csv(paste0(dropboxDir, "Data/Cleaned/Audrie/washb-bangladesh-plasma-lab-t2-t3-ipcw.csv"), stringsAsFactors = TRUE)
+washb_bd_immun<-readRDS(paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-lab-immune-analysis-dataset.rds"))
 
 #load
 dfull<- read.csv(paste0(dropboxDir, "Data/Cleaned/Audrie/washb-bangladesh-anthro-diar-ee-med-enrol-tracking-immun-ipcw2.csv"), stringsAsFactors = TRUE)
@@ -2251,7 +2252,7 @@ tnf_t3_unadj_ipcw
 #---------------------------------------
 
 #load the immune lab data
-washb_bd_immun<- read.csv(paste0(dropboxDir, "Data/Cleaned/Audrie/washb-bangladesh-plasma-lab-t2-t3-ipcw.csv"), stringsAsFactors = TRUE)
+washb_bd_immun<-readRDS(paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-lab-immune-analysis-dataset.rds"))
 
 #load
 dfull<- read.csv(paste0(dropboxDir, "Data/Cleaned/Audrie/washb-bangladesh-anthro-diar-ee-med-enrol-tracking-immun-ipcw2.csv"), stringsAsFactors = TRUE)
@@ -2295,9 +2296,9 @@ for(i in 1:ncol(W)){
 #in stata, coded missing as 99
 
 
-W$monsoon_bt3<-as.factor(W$monsoon_bt2)
+W$monsoon_bt3<-as.factor(W$monsoon_bt3)
 #If already a factor:
-W$monsoon_bt3<-addNA(W$monsoon_bt2)
+W$monsoon_bt3<-addNA(W$monsoon_bt3)
 levels(W$monsoon_bt3)[length(levels(W$monsoon_bt3))]<-"Missing"
 
 W$monsoon_bt3<-relevel(W$monsoon_bt3, ref="1")
@@ -3228,7 +3229,7 @@ ratio_th1_th17_t3_unadj_ipcw
 #---------------------------------------
 
 #load the immune lab data
-washb_bd_immun<- read.csv(paste0(dropboxDir, "Data/Cleaned/Audrie/washb-bangladesh-plasma-lab-t2-t3-ipcw.csv"), stringsAsFactors = TRUE)
+washb_bd_immun<-readRDS(paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-lab-immune-analysis-dataset.rds"))
 
 #load
 dfull<- read.csv(paste0(dropboxDir, "Data/Cleaned/Audrie/washb-bangladesh-anthro-diar-ee-med-enrol-tracking-immun-ipcw2.csv"), stringsAsFactors = TRUE)

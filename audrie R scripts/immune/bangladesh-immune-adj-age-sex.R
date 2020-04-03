@@ -165,7 +165,7 @@ t2_ratio_th1_th17_adj_sex_age_L<-list_immune$t2_ratio_th1_th17
 # the baseline covariate dataset
 #---------------------------------------
 
-d <- read.csv("bangladesh-dm-ee-anthro-diar-ee-med-plasma-blind-tr-enrol-covariates-lab.csv",colClasses=c("dataid"="character"))
+d<-readRDS(paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-immune-analysis-dataset.rds"))
 
 #---------------------------------------
 # subset to the relevant measurement
@@ -293,7 +293,7 @@ t3_ratio_th1_th17_adj_sex_age_L<-list_immune$t3_ratio_th1_th17
 # the baseline covariate dataset
 #---------------------------------------
 
-d <- read.csv("bangladesh-dm-ee-anthro-diar-ee-med-plasma-blind-tr-enrol-covariates-lab.csv",colClasses=c("dataid"="character"))
+d<-readRDS(paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-immune-analysis-dataset.rds"))
 
 #---------------------------------------
 # subset to the relevant measurement

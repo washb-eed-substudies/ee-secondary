@@ -2635,7 +2635,7 @@ tnf_t3_N_L<-tnf_t3_N
 save(igf_t2_N_L, igf_t3_N_L, crp_t2_N_L, agp_t2_N_L, gmc_t2_N_L, ifn_t2_N_L, il10_t2_N_L, il12_t2_N_L, il13_t2_N_L, il17_t2_N_L, il1_t2_N_L, il2_t2_N_L, il21_t2_N_L, il4_t2_N_L, il5_t2_N_L, il6_t2_N_L, tnf_t2_N_L, gmc_t3_N_L, ifn_t3_N_L, il10_t3_N_L, il12_t3_N_L, il13_t3_N_L, il17_t3_N_L, il1_t3_N_L, il2_t3_N_L, il21_t3_N_L, il4_t3_N_L, il5_t3_N_L, il6_t3_N_L, tnf_t3_N_L, file=here("audrie results/immune_N_means.RData")) #Save as R objects for the compare
 save(list=as.vector(ls(pattern="N_tr")), file=here('audrie results/immune_N_tr_means.RData'))
 
-ages<-read.csv("bangladesh-dm-ee-anthro-diar-ee-med-plasma-blind-tr-enrol-covariates-lab.csv", stringsAsFactors = TRUE)
+ages<-readRDS(paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-immune-analysis-dataset.rds"))
 
 # re-order the treatment factor for convenience, dropping the arms not included in EE
 ages$tr <- factor(ages$tr,levels=c("Control","Nutrition + WSH"))
@@ -2663,7 +2663,7 @@ ages_bt2_N_tr
 age_bt2_N_total <-rbind2(ages_bt2_N, ages_bt2_N_tr)
 age_t2_blood_L<-age_bt2_N_total[c(7, 1, 2, 3, 4, 5, 6)]
 
-ages<-read.csv("bangladesh-dm-ee-anthro-diar-ee-med-plasma-blind-tr-enrol-covariates-lab.csv", stringsAsFactors = TRUE)
+ages<-readRDS(paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-immune-analysis-dataset.rds"))
 
 # re-order the treatment factor for convenience, dropping the arms not included in immune
 ages$tr <- factor(ages$tr,levels=c("Control", "Nutrition + WSH"))
@@ -2714,7 +2714,7 @@ save(age_t2_blood_L, age_t3_blood_L, file=here("audrie results/immune-age-stats.
 
 #Load in enrollment data,blinded tr data, stool data for adjusted analysis. Use read.dta() to read the .dta files, or read.csv() to 
 #read .csv files. Use stringAsFactors=TRUE so that any character-based variable will be read in as a factor.
-d<-read.csv("bangladesh-dm-ee-anthro-diar-ee-med-plasma-blind-tr-enrol-covariates-lab.csv", stringsAsFactors = TRUE)
+d<-readRDS(paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-immune-analysis-dataset.rds"))
 table(d$tr) #crosstab of numbers in each treatment
 
 
@@ -2801,7 +2801,7 @@ t2_ratio_th1_th17_unadj_L<-list_immune$t2_ratio_th1_th17
 
 #Load in enrollment data,blinded tr data, stool data for adjusted analysis. Use read.dta() to read the .dta files, or read.csv() to 
 #read .csv files. Use stringAsFactors=TRUE so that any character-based variable will be read in as a factor.
-d<-read.csv("bangladesh-dm-ee-anthro-diar-ee-med-plasma-blind-tr-enrol-covariates-lab.csv", stringsAsFactors = TRUE)
+d<-readRDS(paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-immune-analysis-dataset.rds"))
 table(d$tr) #crosstab of numbers in each treatment
 
 
@@ -2889,7 +2889,7 @@ t3_ratio_th1_th17_unadj_L<-list_immune$t3_ratio_th1_th17
 
 #Load in enrollment data,blinded tr data, stool data for adjusted analysis. Use read.dta() to read the .dta files, or read.csv() to 
 #read .csv files. Use stringAsFactors=TRUE so that any character-based variable will be read in as a factor.
-d<-read.csv("bangladesh-dm-ee-anthro-diar-ee-med-plasma-blind-tr-enrol-covariates-lab.csv", stringsAsFactors = TRUE)
+d<-readRDS(paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-immune-analysis-dataset.rds"))
 table(d$tr) #crosstab of numbers in each treatment
 
 
