@@ -177,6 +177,9 @@ tbls6 <- data.table(
   "Full Adjusted Analysis" = 0
 )
 
+write.csv(tbls4, here('tables/stress/miso9-stress-supplementary-table4.csv'))
+write.csv(tbls6, here('tables/stress/miso9-stress-supplementary-table6.csv'))
+
 
 
 
