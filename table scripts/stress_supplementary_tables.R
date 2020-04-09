@@ -73,6 +73,14 @@ age_sex_adj <- c("","", ci_interval_adj("t2_ipf2a3", adj_age_sex_t2),"","",
                  ci_interval_adj("t2_23dinor", adj_age_sex_t2), "","",ci_interval_adj("t2_ipf2a6", adj_age_sex_t2), "","",
                  ci_interval_adj("t2_812iso", adj_age_sex_t2))
 
+load("~/ee-secondary/andrew results/stress_results.Rdata")
+
+absmean <- function(str, str1, tbl){
+  filter <- tbl[tbl$Y == str,]
+  filter2 <- filter[filter$tr == str1,]
+  paste(round(filter2[3], 2))
+}
+
 
 
 tbls4 <- data.table(
