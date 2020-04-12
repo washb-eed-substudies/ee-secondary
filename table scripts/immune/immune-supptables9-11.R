@@ -12,16 +12,16 @@ bonpval <- function(pval){
   bon 
 }
 
-#### TABLE S10 ####
+#### TABLE S9 ####
 outcomes10<-c("Outcome", "Ln IL-1β (pg/ml)", "Ln Il-6 (pg/ml)", "Ln TNF-α (pg/ml)", "Ln CRP (mg/L)", "Ln IL-12 (pg/ml)",
              "Ln IFN-γ (pg/ml)", "Ln IL-4 (pg/ml)", "Ln IL-5 (pg/ml)", "Ln IL-13 (pg/ml)", "Ln IL-17A (pg/ml)", 
-             "Ln IL-21 (pg/ml)", "Ln IL-10 (pg/ml)", "Ln IL-2 (pg/ml)", "Ln GMCSF (pg/ml)", "Ln AGP (g/L)", "Ln IGF-1 (μg/L)",
+             "Ln IL-21 (pg/ml)", "Ln IL-10 (pg/ml)", "Ln IL-2 (pg/ml)", "Ln GM-CSF (pg/ml)", "Ln AGP (g/L)", "Ln IGF-1 (μg/L)",
              "Ln IL-1β/IL-10", "Ln IL-6/IL-10", "Ln TNF-α/IL-10", "Ln IL-12/IL-10", "Ln IFN-γ/IL-10",
              "Ln IL-4/IL-10", "Ln IL-5/IL-10", "Ln IL-13/IL-10", "Ln IL-17A/IL-10", "Ln IL-21/IL-10",
              "Ln IL-2/IL-10", "Ln GM-CSF/IL-10", "Ln IL-12/IL-4", "Ln IFN-γ/IL-4", "Ln IL-12/IL-5", "Ln IFN-γ/IL-5",
              "Ln IL-12/IL-13", "Ln IFN-γ/IL-13", "Ln IL-12/IL-17A", "Ln IFN-γ/IL-17A", "Ln IL-12/IL-21", "Ln IFN-γ/IL-21",
-             "Ln Pro-inflammatory cytokines*/IL-10", "Ln Th1**/IL-10", "Ln Th2***/IL-10", "Ln Th17****/IL-10",
-             "Ln Th1**/Th2***", "Ln Th1**/Th17****")
+             "Ln Pro-inflammatory cytokines/IL-10", "Ln Th1/IL-10", "Ln Th2/IL-10", "Ln Th17/IL-10",
+             "Ln Th1/Th2", "Ln Th1/Th17")
 
 unadjdiffs10 <- c("Unadjusted Difference", 
                   as.character(round(t2_il1_unadj_L[1], 2)), as.character(round(t2_il6_unadj_L[1], 2)), as.character(round(t2_tnf_unadj_L[1], 2)),
@@ -127,7 +127,7 @@ adjbonpvals10 <- c("Bonferroni P-value",
                    as.character(bonpval(t2_ratio_pro_il10_adj_L[6])), as.character(bonpval(t2_ratio_th1_il10_adj_L[6])), as.character(bonpval(t2_ratio_th2_il10_adj_L[6])),
                    as.character(bonpval(t2_ratio_th17_il10_adj_L[6])), as.character(bonpval(t2_ratio_th1_th2_adj_L[6])), as.character(bonpval(t2_ratio_th1_th17_adj_L[6])))
 
-# Table 10: P-values of treatment estimates, unadjusted, and adjusted for multiple testing 
+# Table 19: P-values of treatment estimates, unadjusted, and adjusted for multiple testing 
 # (by controlling family-wise error rate using the Bonferroni correction) at age 14 months. 
 tbls10 <- data.table(
   " " = outcomes10,
@@ -139,21 +139,21 @@ tbls10 <- data.table(
   " " = adjbonpvals10
   )
 
-write.csv(tbls10, file=here('tables/immune/immune_supplementary/immune_supptable10.csv'))
-print(xtable(tbls10), type="html", file=here("tables/immune/immune_supplementary/immune_supptable10.html"))
+write.csv(tbls10, file=here('tables/immune/immune_supplementary/immune_supptable9.csv'))
+print(xtable(tbls10), type="html", file=here("tables/immune/immune_supplementary/immune_supptable9.html"))
 
 
 
-### TABLE S11 ####
+### TABLE S10 ####
 outcomes11<-c("Outcome", "Ln IL-1β (pg/ml)", "Ln Il-6 (pg/ml)", "Ln TNF-α (pg/ml)", "Ln IL-12 (pg/ml)",
               "Ln IFN-γ (pg/ml)", "Ln IL-4 (pg/ml)", "Ln IL-5 (pg/ml)", "Ln IL-13 (pg/ml)", "Ln IL-17A (pg/ml)", 
-              "Ln IL-21 (pg/ml)", "Ln IL-10 (pg/ml)", "Ln IL-2 (pg/ml)", "Ln GMCSF (pg/ml)", "Ln IGF-1 (μg/L)",
+              "Ln IL-21 (pg/ml)", "Ln IL-10 (pg/ml)", "Ln IL-2 (pg/ml)", "Ln GM-CSF (pg/ml)", "Ln IGF-1 (μg/L)",
               "Ln IL-1β/IL-10", "Ln IL-6/IL-10", "Ln TNF-α/IL-10", "Ln IL-12/IL-10", "Ln IFN-γ/IL-10",
               "Ln IL-4/IL-10", "Ln IL-5/IL-10", "Ln IL-13/IL-10", "Ln IL-17A/IL-10", "Ln IL-21/IL-10",
               "Ln IL-2/IL-10", "Ln GM-CSF/IL-10", "Ln IL-12/IL-4", "Ln IFN-γ/IL-4", "Ln IL-12/IL-5", "Ln IFN-γ/IL-5",
               "Ln IL-12/IL-13", "Ln IFN-γ/IL-13", "Ln IL-12/IL-17A", "Ln IFN-γ/IL-17A", "Ln IL-12/IL-21", "Ln IFN-γ/IL-21",
-              "Ln Pro-inflammatory cytokines*/IL-10", "Ln Th1**/IL-10", "Ln Th2***/IL-10", "Ln Th17****/IL-10",
-              "Ln Th1**/Th2***", "Ln Th1**/Th17****")
+              "Ln Pro-inflammatory cytokines/IL-10", "Ln Th1/IL-10", "Ln Th2/IL-10", "Ln Th17/IL-10",
+              "Ln Th1/Th2", "Ln Th1/Th17")
 
 unadjdiffs11 <- c("Unadjusted Difference", 
                   as.character(round(t3_il1_unadj_L[1], 2)), as.character(round(t3_il6_unadj_L[1], 2)), as.character(round(t3_tnf_unadj_L[1], 2)),
@@ -258,7 +258,7 @@ adjbonpvals11 <- c("Bonferroni P-value",
                    as.character(bonpval(t3_ratio_pro_il10_adj_L[6])), as.character(bonpval(t3_ratio_th1_il10_adj_L[6])), as.character(bonpval(t3_ratio_th2_il10_adj_L[6])),
                    as.character(bonpval(t3_ratio_th17_il10_adj_L[6])), as.character(bonpval(t3_ratio_th1_th2_adj_L[6])), as.character(bonpval(t3_ratio_th1_th17_adj_L[6])))
 
-# Table 11: P-values of treatment estimates, unadjusted, and adjusted for multiple testing 
+# Table 10: P-values of treatment estimates, unadjusted, and adjusted for multiple testing 
 # (by controlling family-wise error rate using the Bonferroni correction) at age 18 months. 
 tbls11 <- data.table(
   " " = outcomes11,
@@ -270,20 +270,20 @@ tbls11 <- data.table(
   " " = adjbonpvals11
 )
 
-write.csv(tbls11, file=here('tables/immune/immune_supplementary/immune_supptable11.csv'))
-print(xtable(tbls11), type="html", file=here("tables/immune/immune_supplementary/immune_supptable11.html"))
+write.csv(tbls11, file=here('tables/immune/immune_supplementary/immune_supptable10.csv'))
+print(xtable(tbls11), type="html", file=here("tables/immune/immune_supplementary/immune_supptable10.html"))
 
 
-#### TABLE 12 ####
+#### TABLE 11 ####
 outcomes12<-c("Outcome", "Ln ΔIL-1β (pg/ml)", "Ln ΔIl-6 (pg/ml)", "Ln ΔTNF-α (pg/ml)", "Ln ΔIL-12 (pg/ml)",
               "Ln ΔIFN-γ (pg/ml)", "Ln ΔIL-4 (pg/ml)", "Ln ΔIL-5 (pg/ml)", "Ln ΔIL-13 (pg/ml)", "Ln ΔIL-17A (pg/ml)", 
-              "Ln ΔIL-21 (pg/ml)", "Ln ΔIL-10 (pg/ml)", "Ln ΔIL-2 (pg/ml)", "Ln ΔGMCSF (pg/ml)", "Ln ΔIGF-1 (μg/L)",
+              "Ln ΔIL-21 (pg/ml)", "Ln ΔIL-10 (pg/ml)", "Ln ΔIL-2 (pg/ml)", "Ln ΔGM-CSF (pg/ml)", "Ln ΔIGF-1 (μg/L)",
               "Ln ΔIL-1β/IL-10", "Ln ΔIL-6/IL-10", "Ln ΔTNF-α/IL-10", "Ln ΔIL-12/IL-10", "Ln ΔIFN-γ/IL-10",
               "Ln ΔIL-4/IL-10", "Ln ΔIL-5/IL-10", "Ln ΔIL-13/IL-10", "Ln ΔIL-17A/IL-10", "Ln ΔIL-21/IL-10",
               "Ln ΔIL-2/IL-10", "Ln ΔGM-CSF/IL-10", "Ln ΔIL-12/IL-4", "Ln ΔIFN-γ/IL-4", "Ln ΔIL-12/IL-5", "Ln ΔIFN-γ/IL-5",
               "Ln ΔIL-12/IL-13", "Ln ΔIFN-γ/IL-13", "Ln ΔIL-12/IL-17A", "Ln ΔIFN-γ/IL-17A", "Ln ΔIL-12/IL-21", "Ln ΔIFN-γ/IL-21",
-              "Ln ΔPro-inflammatory cytokines*/IL-10", "Ln ΔTh1**/IL-10", "Ln ΔTh2***/IL-10", "Ln ΔTh17****/IL-10",
-              "Ln ΔTh1**/Th2***", "Ln ΔTh1**/Th17****")
+              "Ln ΔPro-inflammatory cytokines/IL-10", "Ln ΔTh1/IL-10", "Ln ΔTh2/IL-10", "Ln ΔTh17/IL-10",
+              "Ln ΔTh1/Th2", "Ln ΔTh1/Th17")
 
 unadjdiffs12 <- c("Unadjusted Difference", 
                   as.character(round(d23_ln_il1_unadj_L[1], 2)), as.character(round(d23_ln_il6_unadj_L[1], 2)), as.character(round(d23_ln_tnf_unadj_L[1], 2)),
@@ -388,7 +388,7 @@ adjbonpvals12 <- c("Bonferroni P-value",
                    as.character(bonpval(d23_ratio_pro_il10_adj_L[6])), as.character(bonpval(d23_ratio_th1_il10_adj_L[6])), as.character(bonpval(d23_ratio_th2_il10_adj_L[6])),
                    as.character(bonpval(d23_ratio_th17_il10_adj_L[6])), as.character(bonpval(d23_ratio_th1_th2_adj_L[6])), as.character(bonpval(d23_ratio_th1_th17_adj_L[6])))
 
-# Table 12: P-values of change in treatment estimates, unadjusted, and adjusted for multiple testing 
+# Table 11: P-values of change in treatment estimates, unadjusted, and adjusted for multiple testing 
 # (by controlling family-wise error rate using the Bonferroni correction). 
 tbls12 <- data.table(
   " " = outcomes12,
@@ -400,8 +400,8 @@ tbls12 <- data.table(
   " " = adjbonpvals12
 )
 
-write.csv(tbls12, file=here('tables/immune/immune_supplementary/immune_supptable12.csv'))
-print(xtable(tbls12), type="html", file=here("tables/immune/immune_supplementary/immune_supptable12.html"))
+write.csv(tbls12, file=here('tables/immune/immune_supplementary/immune_supptable11.csv'))
+print(xtable(tbls12), type="html", file=here("tables/immune/immune_supplementary/immune_supptable11.html"))
 
 
 

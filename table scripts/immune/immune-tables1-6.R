@@ -202,12 +202,12 @@ print(xtable(tbl1), type="html", file=here("tables/immune/immune_main/immune_tab
 
 
 #### TABLE 2 ####
-outcometbl2 <- c(paste("Ln IL-1", "Î²", " (pg/ml)", sep=""), "Control", "Nutrition + WSH", 
+outcometbl2 <- c(paste("Ln IL-1", "β", " (pg/ml)", sep=""), "Control", "Nutrition + WSH", 
                  "Ln IL-6 (pg/ml)", "Control", "Nutrition + WSH", 
-                 paste("Ln TNF-", "Î±", " (pg/ml)", sep=""), "Control", "Nutrition + WSH",
+                 paste("Ln TNF-", "α", " (pg/ml)", sep=""), "Control", "Nutrition + WSH",
                  "Ln CRP (mg/L)", "Control", "Nutrition + WSH", 
                  "Ln IL-12 (pg/ml)", "Control", "Nutrition + WSH", 
-                 paste("Ln IFN-", "Î³", " (pg/ml)", sep=""), "Control", "Nutrition + WSH", 
+                 paste("Ln IFN-", "γ", " (pg/ml)", sep=""), "Control", "Nutrition + WSH", 
                  "Ln IL-4 (pg/ml)", "Control", "Nutrition + WSH", 
                  "Ln IL-5 (pg/ml)", "Control", "Nutrition + WSH", 
                  "Ln IL-13 (pg/ml)", "Control", "Nutrition + WSH", 
@@ -217,7 +217,7 @@ outcometbl2 <- c(paste("Ln IL-1", "Î²", " (pg/ml)", sep=""), "Control", "Nutri
                  "Ln IL-2 (pg/ml)", "Control", "Nutrition + WSH", 
                  "Ln GM-CSF (pg/ml)", "Control", "Nutrition + WSH", 
                  "Ln AGP (g/L)", "Control", "Nutrition + WSH",
-                 paste("Ln IGF-1 (", "Î¼", "g/L)", sep=""), "Control", "Nutrition + WSH")
+                 paste("Ln IGF-1 (", "μ", "g/L)", sep=""), "Control", "Nutrition + WSH")
 
 Ntbl2 <- c(" ", as.character(il1_t2_N_tr$t2_ln_il1_N_tr[1]), as.character(il1_t2_N_tr$t2_ln_il1_N_tr[2]),
            " ", as.character(il6_t2_N_tr$t2_ln_il6_N_tr[1]), as.character(il6_t2_N_tr$t2_ln_il6_N_tr[2]),
@@ -425,11 +425,11 @@ print(xtable(tbl2), type="html", file=here("tables/immune/immune_main/immune_tab
 
 #### TABLE 3 ####
 
-outcometbl3 <- c(paste("Ln IL-1", "Î²", "/IL-10", sep=""), "Control", "Nutrition + WSH", 
+outcometbl3 <- c(paste("Ln IL-1", "β", "/IL-10", sep=""), "Control", "Nutrition + WSH", 
                  "Ln IL-6/IL-10", "Control", "Nutrition + WSH", 
-                 paste("Ln TNF-", "Î±", "/IL-10", sep=""), "Control", "Nutrition + WSH",
+                 paste("Ln TNF-", "α", "/IL-10", sep=""), "Control", "Nutrition + WSH",
                  "Ln IL-12/IL-10", "Control", "Nutrition + WSH", 
-                 paste("Ln IFN-", "Î³", "/IL-10", sep=""), "Control", "Nutrition + WSH", 
+                 paste("Ln IFN-", "γ", "/IL-10", sep=""), "Control", "Nutrition + WSH", 
                  "Ln IL-4/IL-10", "Control", "Nutrition + WSH", 
                  "Ln IL-5/IL-10", "Control", "Nutrition + WSH", 
                  "Ln IL-13/IL-10", "Control", "Nutrition + WSH", 
@@ -438,21 +438,21 @@ outcometbl3 <- c(paste("Ln IL-1", "Î²", "/IL-10", sep=""), "Control", "Nutriti
                  "Ln IL-2/IL-10", "Control", "Nutrition + WSH", 
                  "Ln GM-CSF/IL-10", "Control", "Nutrition + WSH",
                  "Ln IL-12/IL-4", "Control", "Nutrition + WSH", 
-                 paste("Ln IFN-", "Î³", "/IL-4", sep=""), "Control", "Nutrition + WSH",
+                 paste("Ln IFN-", "γ", "/IL-4", sep=""), "Control", "Nutrition + WSH",
                  "Ln IL-12/IL-5", "Control", "Nutrition + WSH", 
-                 paste("Ln IFN-", "Î³", "/IL-5", sep=""), "Control", "Nutrition + WSH",
+                 paste("Ln IFN-", "γ", "/IL-5", sep=""), "Control", "Nutrition + WSH",
                  "Ln IL-12/IL-13", "Control", "Nutrition + WSH", 
-                 paste("Ln IFN-", "Î³", "/IL-13", sep=""), "Control", "Nutrition + WSH",
+                 paste("Ln IFN-", "γ", "/IL-13", sep=""), "Control", "Nutrition + WSH",
                  "Ln IL-12/IL-17A", "Control", "Nutrition + WSH", 
-                 paste("Ln IFN-", "Î³", "/IL-17A", sep=""), "Control", "Nutrition + WSH",
+                 paste("Ln IFN-", "γ", "/IL-17A", sep=""), "Control", "Nutrition + WSH",
                  "Ln IL-12/IL-21", "Control", "Nutrition + WSH", 
-                 paste("Ln IFN-", "Î³", "/IL-21", sep=""), "Control", "Nutrition + WSH",
-                 "Ln Pro-inflammatory cytokines*/IL-10", "Control", "Nutrition + WSH",
-                 "Ln Th1**/IL-10", "Control", "Nutrition + WSH", 
-                 "Ln Th2***/IL-10", "Control", "Nutrition + WSH", 
-                 "Ln Th17****/IL-10", "Control", "Nutrition + WSH", 
-                 "Ln Th1**/Th2***", "Control", "Nutrition + WSH", 
-                 "Ln Th1**/Th17****", "Control", "Nutrition + WSH")
+                 paste("Ln IFN-", "γ", "/IL-21", sep=""), "Control", "Nutrition + WSH",
+                 "Ln Pro-inflammatory cytokines/IL-10", "Control", "Nutrition + WSH",
+                 "Ln Th1/IL-10", "Control", "Nutrition + WSH", 
+                 "Ln Th2/IL-10", "Control", "Nutrition + WSH", 
+                 "Ln Th17/IL-10", "Control", "Nutrition + WSH", 
+                 "Ln Th1/Th2", "Control", "Nutrition + WSH", 
+                 "Ln Th1/Th17", "Control", "Nutrition + WSH")
 
 Ntbl3 <- c(" ", as.character(t2_ratio_il1_il10_N_tr$t2_ratio_il1_il10_N_tr[1]), as.character(t2_ratio_il1_il10_N_tr$t2_ratio_il1_il10_N_tr[2]), 
            " ", as.character(t2_ratio_il6_il10_N_tr$t2_ratio_il6_il10_N_tr[1]), as.character(t2_ratio_il6_il10_N_tr$t2_ratio_il6_il10_N_tr[2]),  
@@ -791,11 +791,11 @@ print(xtable(tbl3), type="html", file=here("tables/immune/immune_main/immune_tab
 
 
 #### TABLE 4 ####
-outcometbl4 <- c(paste("Ln IL-1", "Î²", " (pg/ml)", sep=""), "Control", "Nutrition + WSH", 
+outcometbl4 <- c(paste("Ln IL-1", "β", " (pg/ml)", sep=""), "Control", "Nutrition + WSH", 
                  "Ln IL-6 (pg/ml)", "Control", "Nutrition + WSH", 
-                 paste("Ln TNF-", "Î±", " (pg/ml)", sep=""), "Control", "Nutrition + WSH",
+                 paste("Ln TNF-", "α", " (pg/ml)", sep=""), "Control", "Nutrition + WSH",
                  "Ln IL-12 (pg/ml)", "Control", "Nutrition + WSH", 
-                 paste("Ln IFN-", "Î³", " (pg/ml)", sep=""), "Control", "Nutrition + WSH", 
+                 paste("Ln IFN-", "γ", " (pg/ml)", sep=""), "Control", "Nutrition + WSH", 
                  "Ln IL-4 (pg/ml)", "Control", "Nutrition + WSH", 
                  "Ln IL-5 (pg/ml)", "Control", "Nutrition + WSH", 
                  "Ln IL-13 (pg/ml)", "Control", "Nutrition + WSH", 
@@ -804,7 +804,7 @@ outcometbl4 <- c(paste("Ln IL-1", "Î²", " (pg/ml)", sep=""), "Control", "Nutri
                  "Ln IL-10 (pg/ml)", "Control", "Nutrition + WSH", 
                  "Ln IL-2 (pg/ml)", "Control", "Nutrition + WSH", 
                  "Ln GM-CSF (pg/ml)", "Control", "Nutrition + WSH", 
-                 paste("Ln IGF-1 (", "Î¼", "g/L)", sep=""), "Control", "Nutrition + WSH")
+                 paste("Ln IGF-1 (", "μ", "g/L)", sep=""), "Control", "Nutrition + WSH")
 
 Ntbl4 <- c(" ", as.character(il1_t3_N_tr$t3_ln_il1_N_tr[1]), as.character(il1_t3_N_tr$t3_ln_il1_N_tr[2]),
            " ", as.character(il6_t3_N_tr$t3_ln_il6_N_tr[1]), as.character(il6_t3_N_tr$t3_ln_il6_N_tr[2]),
@@ -990,11 +990,11 @@ print(xtable(tbl4), type="html", file=here("tables/immune/immune_main/immune_tab
 
 
 #### TABLE 5 ####
-outcometbl5 <- c(paste("Ln IL-1", "Î²", "/IL-10", sep=""), "Control", "Nutrition + WSH", 
+outcometbl5 <- c(paste("Ln IL-1", "β", "/IL-10", sep=""), "Control", "Nutrition + WSH", 
                  "Ln IL-6/IL-10", "Control", "Nutrition + WSH", 
-                 paste("Ln TNF-", "Î±", "/IL-10", sep=""), "Control", "Nutrition + WSH",
+                 paste("Ln TNF-", "α", "/IL-10", sep=""), "Control", "Nutrition + WSH",
                  "Ln IL-12/IL-10", "Control", "Nutrition + WSH", 
-                 paste("Ln IFN-", "Î³", "/IL-10", sep=""), "Control", "Nutrition + WSH", 
+                 paste("Ln IFN-", "γ", "/IL-10", sep=""), "Control", "Nutrition + WSH", 
                  "Ln IL-4/IL-10", "Control", "Nutrition + WSH", 
                  "Ln IL-5/IL-10", "Control", "Nutrition + WSH", 
                  "Ln IL-13/IL-10", "Control", "Nutrition + WSH", 
@@ -1003,21 +1003,21 @@ outcometbl5 <- c(paste("Ln IL-1", "Î²", "/IL-10", sep=""), "Control", "Nutriti
                  "Ln IL-2/IL-10", "Control", "Nutrition + WSH", 
                  "Ln GM-CSF/IL-10", "Control", "Nutrition + WSH",
                  "Ln IL-12/IL-4", "Control", "Nutrition + WSH", 
-                 paste("Ln IFN-", "Î³", "/IL-4", sep=""), "Control", "Nutrition + WSH",
+                 paste("Ln IFN-", "γ", "/IL-4", sep=""), "Control", "Nutrition + WSH",
                  "Ln IL-12/IL-5", "Control", "Nutrition + WSH", 
-                 paste("Ln IFN-", "Î³", "/IL-5", sep=""), "Control", "Nutrition + WSH",
+                 paste("Ln IFN-", "γ", "/IL-5", sep=""), "Control", "Nutrition + WSH",
                  "Ln IL-12/IL-13", "Control", "Nutrition + WSH", 
-                 paste("Ln IFN-", "Î³", "/IL-13", sep=""), "Control", "Nutrition + WSH",
+                 paste("Ln IFN-", "γ", "/IL-13", sep=""), "Control", "Nutrition + WSH",
                  "Ln IL-12/IL-17A", "Control", "Nutrition + WSH", 
-                 paste("Ln IFN-", "Î³", "/IL-17A", sep=""), "Control", "Nutrition + WSH",
+                 paste("Ln IFN-", "γ", "/IL-17A", sep=""), "Control", "Nutrition + WSH",
                  "Ln IL-12/IL-21", "Control", "Nutrition + WSH", 
-                 paste("Ln IFN-", "Î³", "/IL-21", sep=""), "Control", "Nutrition + WSH",
-                 "Ln Pro-inflammatory cytokines*/IL-10", "Control", "Nutrition + WSH",
-                 "Ln Th1**/IL-10", "Control", "Nutrition + WSH", 
-                 "Ln Th2***/IL-10", "Control", "Nutrition + WSH", 
-                 "Ln Th17****/IL-10", "Control", "Nutrition + WSH", 
-                 "Ln Th1**/Th2***", "Control", "Nutrition + WSH", 
-                 "Ln Th1**/Th17****", "Control", "Nutrition + WSH")
+                 paste("Ln IFN-", "γ", "/IL-21", sep=""), "Control", "Nutrition + WSH",
+                 "Ln Pro-inflammatory cytokines/IL-10", "Control", "Nutrition + WSH",
+                 "Ln Th1/IL-10", "Control", "Nutrition + WSH", 
+                 "Ln Th2/IL-10", "Control", "Nutrition + WSH", 
+                 "Ln Th17/IL-10", "Control", "Nutrition + WSH", 
+                 "Ln Th1/Th2", "Control", "Nutrition + WSH", 
+                 "Ln Th1/Th17", "Control", "Nutrition + WSH")
 
 Ntbl5 <- c(" ", as.character(t3_ratio_il1_il10_N_tr$t3_ratio_il1_il10_N_tr[1]), as.character(t3_ratio_il1_il10_N_tr$t3_ratio_il1_il10_N_tr[2]), 
            " ", as.character(t3_ratio_il6_il10_N_tr$t3_ratio_il6_il10_N_tr[1]), as.character(t3_ratio_il6_il10_N_tr$t3_ratio_il6_il10_N_tr[2]), 
@@ -1359,20 +1359,20 @@ print(xtable(tbl5), type="html", file=here("tables/immune/immune_main/immune_tab
 
 
 #### TABLE 6 ####
-outcometbl6 <- c(paste("Ln ÎIL-1", "Î²", " (pg/ml)", sep=""), "Control", "Nutrition + WSH", 
-                 "Ln ÎIL-6 (pg/ml)", "Control", "Nutrition + WSH", 
-                 paste("Ln ÎTNF-", "Î±", " (pg/ml)", sep=""), "Control", "Nutrition + WSH",
-                 "Ln ÎIL-12 (pg/ml)", "Control", "Nutrition + WSH", 
-                 paste("Ln ÎIFN-", "Î³", " (pg/ml)", sep=""), "Control", "Nutrition + WSH", 
-                 "Ln ÎIL-4 (pg/ml)", "Control", "Nutrition + WSH", 
-                 "Ln ÎIL-5 (pg/ml)", "Control", "Nutrition + WSH", 
-                 "Ln ÎIL-13 (pg/ml)", "Control", "Nutrition + WSH", 
-                 "Ln ÎIL-17A (pg/ml)", "Control", "Nutrition + WSH", 
-                 "Ln ÎIL-21 (pg/ml)", "Control", "Nutrition + WSH", 
-                 "Ln ÎIL-10 (pg/ml)", "Control", "Nutrition + WSH", 
-                 "Ln ÎIL-2 (pg/ml)", "Control", "Nutrition + WSH", 
-                 "Ln ÎGM-CSF (pg/ml)", "Control", "Nutrition + WSH", 
-                 paste("Ln ÎIGF-1 (", "Î¼", "g/L)", sep=""), "Control", "Nutrition + WSH")
+outcometbl6 <- c(paste("Ln ΔIL-1", "β", " (pg/ml)", sep=""), "Control", "Nutrition + WSH", 
+                 "Ln ΔIL-6 (pg/ml)", "Control", "Nutrition + WSH", 
+                 paste("Ln ΔTNF-", "α", " (pg/ml)", sep=""), "Control", "Nutrition + WSH",
+                 "Ln ΔIL-12 (pg/ml)", "Control", "Nutrition + WSH", 
+                 paste("Ln ΔIFN-", "γ", " (pg/ml)", sep=""), "Control", "Nutrition + WSH", 
+                 "Ln ΔIL-4 (pg/ml)", "Control", "Nutrition + WSH", 
+                 "Ln ΔIL-5 (pg/ml)", "Control", "Nutrition + WSH", 
+                 "Ln ΔIL-13 (pg/ml)", "Control", "Nutrition + WSH", 
+                 "Ln ΔIL-17A (pg/ml)", "Control", "Nutrition + WSH", 
+                 "Ln ΔIL-21 (pg/ml)", "Control", "Nutrition + WSH", 
+                 "Ln ΔIL-10 (pg/ml)", "Control", "Nutrition + WSH", 
+                 "Ln ΔIL-2 (pg/ml)", "Control", "Nutrition + WSH", 
+                 "Ln ΔGM-CSF (pg/ml)", "Control", "Nutrition + WSH", 
+                 paste("Ln ΔIGF-1 (", "μ", "g/L)", sep=""), "Control", "Nutrition + WSH")
 
 Ntbl6 <- c(" ", as.character(d23_ln_il1_N_tr$d23_ln_il1_N_tr[1]), as.character(d23_ln_il1_N_tr$d23_ln_il1_N_tr[2]), 
            " ", as.character(d23_ln_il6_N_tr$d23_ln_il6_N_tr[1]), as.character(d23_ln_il6_N_tr$d23_ln_il6_N_tr[2]),

@@ -17,7 +17,7 @@ maketblvalue<-function(ipcwadjvar){
 }
 
 
-#### TABLE S1/S2 ####
+#### TABLE S1 ####
 # filtering for children with no t3 measurements
 lost<-y1 %>% filter_at(vars(igf_t3, gmcsf_t3, ifng_t3, il10_t3, il12_t3, il13_t3, il17_t3,
                               il1_t3, il2_t3, il21_t3, il4_t3, il5_t3, il6_t3, tnfa_t3), all_vars(is.na(.)))
@@ -80,7 +80,7 @@ ctrl<-c(paste("Control (N=", Nlostctrl, ")", sep=""), " ", charobject(imomage, 1
                " ", " ", charobjectperc(ihandlatwater, 1), charobjectperc(ihandlatsoap, 1), 
                " ", charobjectperc(ihandkitwater, 1), charobjectperc(ihandkitsoap, 1), 
                " ", charobjectperc(ifoodsecure, 1))
-wsh<-c(paste("Control (N=", Nlostwsh, ")", sep=""), " ", charobject(imomage, 3),charobject(imomeduy, 3), " ", charobject(idadeduy, 3), charobjectperc(idadagri, 3),
+wsh<-c(paste("N + WSH Intervention (N=", Nlostwsh, ")", sep=""), " ", charobject(imomage, 3),charobject(imomeduy, 3), " ", charobject(idadeduy, 3), charobjectperc(idadagri, 3),
        " ", charobject(iNhh, 3), charobjectperc(ielec, 3), charobjectperc(icement, 3), charobject(iacres, 3),
        " ", charobjectperc(itubewell, 3), charobjectperc(istorewater, 3), charobjectperc(itreatwater, 3), charobject(iwaterdis, 3), 
        " ", " ", charobjectperc(iodmen, 3), charobjectperc(iodwomen, 3), charobjectperc(iodchild815, 3), charobjectperc(iodchild38, 3), charobjectperc(iodchild03, 3), 
@@ -92,7 +92,7 @@ wsh<-c(paste("Control (N=", Nlostwsh, ")", sep=""), " ", charobject(imomage, 3),
        " ", charobjectperc(ifoodsecure, 3))
 
 # Table S1/S2
-tbls1s2<-data.table(" "=c("No. of compounds:", "Maternal", "Age(years)", "Years of education", 
+tbls1<-data.table(" "=c("No. of compounds:", "Maternal", "Age(years)", "Years of education", 
                           "Paternal", "Years of education", "Works in agriculture", 
                           "Household", "Number of people", "Has electricity", "Has a cement floor", "Acres of agricultural land owned", 
                           "Drinking Water", "Shallow tubewell primary water source", "Stored water observed at home", "Reported treating water yesterday", "Distance (mins) to primary water source",
@@ -109,7 +109,7 @@ tbls1s2<-data.table(" "=c("No. of compounds:", "Maternal", "Age(years)", "Years 
                                                " ", "750 (54%)", "1251 (95%)", "358 (31%)", "625 (48%)", "61 (4%)", 
                                                " ", "114 (8%)", "21 (2%)", 
                                                " ", " ", "178 (14%)", "88 (7%)", " ", "118 (9%)", "33 (3%)", " ", "932 (67%)"),
-                  " "=c ("N + WSH (N=686)", " ", "24 (6)", "6 (3)", " ", "5 (4)", "207 (30%)", 
+                  " "=c ("N + WSH Intervention (N=686)", " ", "24 (6)", "6 (3)", " ", "5 (4)", "207 (30%)", 
                          " ", "5 (2)", "412 (60%)", "72 (10%)", "0.14 (0.38)",
                          " ", "504 (73%)", "331 (48%)", "2 (0%)", "1 (2)", 
                          " ", " ", "50 (7%)", "24 (4%)", "28 (10%)", "134 (37%)", "123 (88%)",
@@ -122,12 +122,12 @@ tbls1s2<-data.table(" "=c("No. of compounds:", "Maternal", "Age(years)", "Years 
                   " "=wsh
 )
 
-write.csv(tbls1s2, file=here('tables/immune/immune_supplementary/immune_supptable1_2.csv'))
-print(xtable(tbls1s2), type="html", file=here("tables/immune/immune_supplementary/immune_supptable1_2.html"))
+write.csv(tbls1, file=here('tables/immune/immune_supplementary/immune_supptable1.csv'))
+print(xtable(tbls1), type="html", file=here("tables/immune/immune_supplementary/immune_supptable1.html"))
 
 
 
-#### TABLE S3 ####
+#### TABLE S2 ####
 
 writeqntle<-function(vector) {
   quantiles<-round(quantile(vector, na.rm=TRUE), 2)
@@ -136,7 +136,7 @@ writeqntle<-function(vector) {
 
 outcomes3<-c("Outcome", "IL-1β (pg/ml)", "Il-6 (pg/ml)", "TNF-α (pg/ml)", "CRP (mg/L)", "IL-12 (pg/ml)",
            "IFN-γ (pg/ml)", "IL-4 (pg/ml)", "IL-5 (pg/ml)", "IL-13 (pg/ml)", "IL-17A (pg/ml)", 
-           "IL-21 (pg/ml)", "IL-10 (pg/ml)", "IL-2 (pg/ml)", "GMCSF (pg/ml)", "AGP (g/L)", "IGF-1 (μg/L)")
+           "IL-21 (pg/ml)", "IL-10 (pg/ml)", "IL-2 (pg/ml)", "GM-CSF (pg/ml)", "AGP (g/L)", "IGF-1 (μg/L)")
 
 t2<-c("Median (25th, 75th percentile)", writeqntle(lab$il1_t2), writeqntle(lab$il6_t2), writeqntle(lab$tnfa_t2), writeqntle(lab$crp_t2), writeqntle(lab$il12_t2), writeqntle(lab$ifng_t2), 
       writeqntle(lab$il4_t2), writeqntle(lab$il5_t2), writeqntle(lab$il13_t2), writeqntle(lab$il17_t2), writeqntle(lab$il21_t2), writeqntle(lab$il10_t2), writeqntle(lab$il2_t2), 
@@ -150,12 +150,12 @@ tbls3<-data.table(" "=outcomes3,
                   "Child Age 14 Months"=t2,
                   "Child Age 28 Months"=t3)
 
-write.csv(tbls3, file=here('tables/immune/immune_supplementary/immune_supptable3.csv'))
-print(xtable(tbls3), type="html", file=here("tables/immune/immune_supplementary/immune_supptable3.html"))
+write.csv(tbls3, file=here('tables/immune/immune_supplementary/immune_supptable2.csv'))
+print(xtable(tbls3), type="html", file=here("tables/immune/immune_supplementary/immune_supptable2.html"))
 
 
 
-#### TABLE S4 ####
+#### TABLE S3 ####
 
 ipcws4<-c(" ", " ", maketblvalue(il12_t2_adj_ipcw_L$`unlist(il12_t2_adj_ipcw$estimates$ATE)`),
           " ", " ", maketblvalue(il6_t2_adj_ipcw_L$`unlist(il6_t2_adj_ipcw$estimates$ATE)`),
@@ -177,11 +177,11 @@ ipcws4<-c(" ", " ", maketblvalue(il12_t2_adj_ipcw_L$`unlist(il12_t2_adj_ipcw$est
 tbls4<-cbind(tbl2, ipcws4)
 names(tbls4)[10]<-"IPCW adjusted difference: Intervention vs. Control (95% CI)"
 
-write.csv(tbls4, file=here('tables/immune/immune_supplementary/immune_supptable4.csv'))
-print(xtable(tbls4), type="html", file=here("tables/immune/immune_supplementary/immune_supptable4.html"))
+write.csv(tbls4, file=here('tables/immune/immune_supplementary/immune_supptable3.csv'))
+print(xtable(tbls4), type="html", file=here("tables/immune/immune_supplementary/immune_supptable3.html"))
 
 
-#### TABLE S5 ####
+#### TABLE S4 ####
 
 ipcws5<-c(" ", " ", maketblvalue(ratio_il1_il10_t2_adj_ipcw_L$`unlist(ratio_il1_il10_t2_adj_ipcw$estimates$ATE)`),
           " ", " ", maketblvalue(ratio_il6_il10_t2_adj_ipcw_L$`unlist(ratio_il6_il10_t2_adj_ipcw$estimates$ATE)`),
@@ -215,11 +215,11 @@ ipcws5<-c(" ", " ", maketblvalue(ratio_il1_il10_t2_adj_ipcw_L$`unlist(ratio_il1_
 tbls5<-cbind(tbl3, ipcws5)
 names(tbls5)[10]<-"IPCW adjusted difference: Intervention vs. Control (95% CI)"
 
-write.csv(tbls5, file=here('tables/immune/immune_supplementary/immune_supptable5.csv'))
-print(xtable(tbls5), type="html", file=here("tables/immune/immune_supplementary/immune_supptable5.html"))
+write.csv(tbls5, file=here('tables/immune/immune_supplementary/immune_supptable4.csv'))
+print(xtable(tbls5), type="html", file=here("tables/immune/immune_supplementary/immune_supptable4.html"))
 
 
-#### TABLE S6 ####
+#### TABLE S5 ####
 
 ipcws6<-c(" ", " ", maketblvalue(il1_t3_adj_ipcw_L$`unlist(il1_t3_adj_ipcw$estimates$ATE)`),
           " ", " ", maketblvalue(il6_t3_adj_ipcw_L$`unlist(il6_t3_adj_ipcw$estimates$ATE)`),
@@ -237,13 +237,13 @@ ipcws6<-c(" ", " ", maketblvalue(il1_t3_adj_ipcw_L$`unlist(il1_t3_adj_ipcw$estim
           " ", " ", maketblvalue(igf_t3_adj_ipcw_L$`unlist(igf_t3_adj_ipcw$estimates$ATE)`))
 
 tbls6<-cbind(tbl4, ipcws6)
-names(tbls6)[9]<-"IPCW adjusted difference: Intervention vs. Control (95% CI)"
+names(tbls6)[10]<-"IPCW adjusted difference: Intervention vs. Control (95% CI)"
 
-write.csv(tbls6, file=here('tables/immune/immune_supplementary/immune_supptable6.csv'))
-print(xtable(tbls6), type="html", file=here("tables/immune/immune_supplementary/immune_supptable6.html"))
+write.csv(tbls6, file=here('tables/immune/immune_supplementary/immune_supptable5.csv'))
+print(xtable(tbls6), type="html", file=here("tables/immune/immune_supplementary/immune_supptable5.html"))
 
 
-#### TABLE S7 ####
+#### TABLE S6 ####
 
 ipcws7<-c(" ", " ", maketblvalue(ratio_il1_il10_t3_adj_ipcw_L$`unlist(ratio_il1_il10_t3_adj_ipcw$estimates$ATE)`),
           " ", " ", maketblvalue(ratio_il6_il10_t3_adj_ipcw_L$`unlist(ratio_il6_il10_t3_adj_ipcw$estimates$ATE)`),
@@ -277,12 +277,12 @@ ipcws7<-c(" ", " ", maketblvalue(ratio_il1_il10_t3_adj_ipcw_L$`unlist(ratio_il1_
 tbls7<-cbind(tbl5, ipcws7)
 names(tbls7)[10]<-"IPCW adjusted difference: Intervention vs. Control (95% CI)"
 
-write.csv(tbls7, file=here('tables/immune/immune_supplementary/immune_supptable7.csv'))
-print(xtable(tbls7), type="html", file=here("tables/immune/immune_supplementary/immune_supptable7.html"))
+write.csv(tbls7, file=here('tables/immune/immune_supplementary/immune_supptable6.csv'))
+print(xtable(tbls7), type="html", file=here("tables/immune/immune_supplementary/immune_supptable6.html"))
 
 
 
-#### TABLE S8 ####
+#### TABLE S7 ####
 
 ipcws8<-c(" ", " ", maketblvalue(d23_il1_adj_ipcw_L$`unlist(d23_il1_adj_ipcw$estimates$ATE)`),
           " ", " ", maketblvalue(d23_il6_adj_ipcw_L$`unlist(d23_il6_adj_ipcw$estimates$ATE)`),
@@ -302,12 +302,12 @@ ipcws8<-c(" ", " ", maketblvalue(d23_il1_adj_ipcw_L$`unlist(d23_il1_adj_ipcw$est
 tbls8<-cbind(tbl6, ipcws8)
 names(tbls8)[10]<-"IPCW adjusted difference: Intervention vs. Control (95% CI)"
 
-write.csv(tbls8, file=here('tables/immune/immune_supplementary/immune_supptable8.csv'))
-print(xtable(tbls8), type="html", file=here("tables/immune/immune_supplementary/immune_supptable8.html"))
+write.csv(tbls8, file=here('tables/immune/immune_supplementary/immune_supptable7.csv'))
+print(xtable(tbls8), type="html", file=here("tables/immune/immune_supplementary/immune_supptable7.html"))
 
 
 
-#### TABLE S9 ####
+#### TABLE S8 ####
 
 #calculates N, mean, and sd for each variable and stores as string in vector
 meansd<-function(var){
@@ -348,12 +348,12 @@ outcomes9<-c("Ln ΔIL-1β/IL-10", "Control", "Nutrition + WSH",
              "Ln ΔIFN-γ/IL-17A", "Control", "Nutrition + WSH",
              "Ln ΔIL-12/IL-21", "Control", "Nutrition + WSH",
              "Ln ΔIFN-γ/IL-21", "Control", "Nutrition + WSH",
-             "Ln ΔPro-inflammatory cytokines*/IL-10", "Control", "Nutrition + WSH",
-             "Ln ΔTh1**/IL-10", "Control", "Nutrition + WSH",
-             "Ln ΔTh2***/IL-10", "Control", "Nutrition + WSH",
-             "Ln ΔTh17****/IL-10", "Control", "Nutrition + WSH",
-             "Ln ΔTh1**/Th2***", "Control", "Nutrition + WSH",
-             "Ln ΔTh1**/Th17****", "Control", "Nutrition + WSH")
+             "Ln ΔPro-inflammatory cytokines/IL-10", "Control", "Nutrition + WSH",
+             "Ln ΔTh1/IL-10", "Control", "Nutrition + WSH",
+             "Ln ΔTh2/IL-10", "Control", "Nutrition + WSH",
+             "Ln ΔTh17/IL-10", "Control", "Nutrition + WSH",
+             "Ln ΔTh1/Th2", "Control", "Nutrition + WSH",
+             "Ln ΔTh1/Th17", "Control", "Nutrition + WSH")
 
 Ns9<-c(" ", as.character(d23_ratio_il1_il10_N_tr$d23_ratio_il1_il10_N_tr[1]), as.character(d23_ratio_il1_il10_N_tr$d23_ratio_il1_il10_N_tr[2]),
        " ", as.character(d23_ratio_il6_il10_N_tr$d23_ratio_il6_il10_N_tr[1]), as.character(d23_ratio_il6_il10_N_tr$d23_ratio_il6_il10_N_tr[2]),
@@ -628,7 +628,7 @@ tbls9<-data.table("Outcome, Arm" = outcomes9,
                   "Fully adjusted difference: Intervention vs. Control (95%)" = adjs9,
                   "IPCW adjusted difference: Intervention vs. Control (95%)" = ipcws9)
 
-write.csv(tbls9, file=here('tables/immune/immune_supplementary/immune_supptable9.csv'))
-print(xtable(tbls9), type="html", file=here("tables/immune/immune_supplementary/immune_supptable9.html"))
+write.csv(tbls9, file=here('tables/immune/immune_supplementary/immune_supptable8.csv'))
+print(xtable(tbls9), type="html", file=here("tables/immune/immune_supplementary/immune_supptable8.html"))
 
 
