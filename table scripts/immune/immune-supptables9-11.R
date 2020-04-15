@@ -93,7 +93,7 @@ adjdiffs10 <- c("Adjusted Difference",
                 as.character(round(t2_ratio_pro_il10_adj_L[1], 2)), as.character(round(t2_ratio_th1_il10_adj_L[1], 2)), as.character(round(t2_ratio_th2_il10_adj_L[1], 2)),
                 as.character(round(t2_ratio_th17_il10_adj_L[1], 2)), as.character(round(t2_ratio_th1_th2_adj_L[1], 2)), as.character(round(t2_ratio_th1_th17_adj_L[1], 2)))
 
-adjpvals10 <- c("Adjusted P-value",
+adjpvals10 <- c("Unadjusted P-value",
                 as.character(round(t2_il1_adj_L[6], 2)), as.character(round(t2_il6_adj_L[6], 2)), as.character(round(t2_tnf_adj_L[6], 2)),
                 as.character(round(t2_crp_adj_L[6], 2)), as.character(round(t2_il12_adj_L[6], 2)), as.character(round(t2_ifn_adj_L[6], 2)),
                 as.character(round(t2_il4_adj_L[6], 2)), as.character(round(t2_il5_adj_L[6], 2)), as.character(round(t2_il13_adj_L[6], 2)),
@@ -224,7 +224,7 @@ adjdiffs11 <- c("Adjusted Difference",
                 as.character(round(t3_ratio_pro_il10_adj_L[1], 2)), as.character(round(t3_ratio_th1_il10_adj_L[1], 2)), as.character(round(t3_ratio_th2_il10_adj_L[1], 2)),
                 as.character(round(t3_ratio_th17_il10_adj_L[1], 2)), as.character(round(t3_ratio_th1_th2_adj_L[1], 2)), as.character(round(t3_ratio_th1_th17_adj_L[1], 2)))
 
-adjpvals11 <- c("Adjusted P-value",
+adjpvals11 <- c("Unadjusted P-value",
                 as.character(round(t3_il1_adj_L[6], 2)), as.character(round(t3_il6_adj_L[6], 2)), as.character(round(t3_tnf_adj_L[6], 2)),
                 as.character(round(t3_il12_adj_L[6], 2)), as.character(round(t3_ifn_adj_L[6], 2)),
                 as.character(round(t3_il4_adj_L[6], 2)), as.character(round(t3_il5_adj_L[6], 2)), as.character(round(t3_il13_adj_L[6], 2)),
@@ -354,7 +354,7 @@ adjdiffs12 <- c("Adjusted Difference",
                 as.character(round(d23_ratio_pro_il10_adj_L[1], 2)), as.character(round(d23_ratio_th1_il10_adj_L[1], 2)), as.character(round(d23_ratio_th2_il10_adj_L[1], 2)),
                 as.character(round(d23_ratio_th17_il10_adj_L[1], 2)), as.character(round(d23_ratio_th1_th2_adj_L[1], 2)), as.character(round(d23_ratio_th1_th17_adj_L[1], 2)))
 
-adjpvals12 <- c("Adjusted P-value",
+adjpvals12 <- c("Unadjusted P-value",
                 as.character(round(d23_ln_il1_adj_L[6], 2)), as.character(round(d23_ln_il6_adj_L[6], 2)), as.character(round(d23_ln_tnf_adj_L[6], 2)),
                 as.character(round(d23_ln_il12_adj_L[6], 2)), as.character(round(d23_ln_ifn_adj_L[6], 2)),
                 as.character(round(d23_ln_il4_adj_L[6], 2)), as.character(round(d23_ln_il5_adj_L[6], 2)), as.character(round(d23_ln_il13_adj_L[6], 2)),

@@ -631,4 +631,3 @@ tbls9<-data.table("Outcome, Arm" = outcomes9,
 write.csv(tbls9, file=here('tables/immune/immune_supplementary/immune_supptable8.csv'))
 print(xtable(tbls9), type="html", file=here("tables/immune/immune_supplementary/immune_supptable8.html"))
 
-
