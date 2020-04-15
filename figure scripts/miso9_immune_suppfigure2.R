@@ -5,7 +5,7 @@ library(ggpubr)
 
 
 #Load tmle results
-source(here("audrie R scripts/immune/bangladesh-immune-ages-unadjusted-glm.R"))
+load(here("audrie results/immune_N_tr_means.RData"))
 
 readjustfunc <- function(data){
   select(data, tr, mean, sd)
@@ -59,7 +59,8 @@ immune_plot_fun <- function(d, name){
     geom_line(position=pos, alpha = 0.4) +
     scale_color_manual(values=c("blue", "red")) +
     labs(y = " ", x =  " ", title=name) +
-    coord_cartesian(ylim=c(df$mean[1]-df$sd[1]-0.5, df$mean[1]+df$sd[1]+0.5)) +
+    coord_cartesian(ylim=c(min(df$mean, na.rm=T)-max(df$sd, na.rm=T)-0.5*max(df$sd, na.rm=T), 
+                           max(df$mean, na.rm=T)+max(df$sd, na.rm=T)+0.5*max(df$sd, na.rm=T))) +
     theme_ki() +
     theme(plot.title = element_text(hjust = 0.5, face = "plain", size=9),
           legend.position = "right",
@@ -81,7 +82,8 @@ immune_plot_fun <- function(d, name){
     geom_line(position=pos, alpha = 0.4) +
     scale_color_manual(values=c("blue", "red")) +
     labs(y = " ", x =  " ", title=name) +
-    coord_cartesian(ylim=c(df$mean[1]-df$sd[1]-0.5*df$sd[1], df$mean[1]+df$sd[1]+0.5*df$sd[1])) +
+    coord_cartesian(ylim=c(min(df$mean, na.rm=T)-max(df$sd, na.rm=T)-0.5*max(df$sd, na.rm=T), 
+                           max(df$mean, na.rm=T)+max(df$sd, na.rm=T)+0.5*max(df$sd, na.rm=T))) +
     theme(axis.text.x=element_blank(),
           axis.ticks.x=element_blank(),
           plot.title = element_text(hjust = 0.5, face = "plain", size=9),
@@ -103,7 +105,8 @@ immune_plot_fun_wlabel <- function(d, name){
     geom_line(position=pos, alpha = 0.4) +
     scale_color_manual(values=c("blue", "red")) +
     labs(y = " ", x =  "Child age, months", title=name) +
-    coord_cartesian(ylim=c(df$mean[1]-df$sd[1]-0.5*df$sd[1], df$mean[1]+df$sd[1]+0.5*df$sd[1])) +
+    coord_cartesian(ylim=c(min(df$mean, na.rm=T)-max(df$sd, na.rm=T)-0.5*max(df$sd, na.rm=T), 
+                           max(df$mean, na.rm=T)+max(df$sd, na.rm=T)+0.5*max(df$sd, na.rm=T))) +
     theme(axis.ticks.x=element_blank(),
           axis.text.x = element_text(size=9),
           plot.title = element_text(hjust = 0.5, face = "plain", size=9),
@@ -140,5 +143,5 @@ p1 <- ggarrange(gmc, ifn, il10, il12, il13, il17, il1, il2, il21, il4, il5, il6,
 
 
 
-ggsave(p1, file = here("figures/miso9-figures2-immune.png"), height=9, width=14)
+ggsave(p1, file = here("figures/immune/immune_suppfigure1.tiff"), height=9, width=14, dpi=300)
 

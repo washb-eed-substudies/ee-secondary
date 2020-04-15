@@ -145,4 +145,4 @@ p <- ggarrange(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14,
 
 
 
-ggsave(p, file = here("figures/miso9-figures5-immune.png"), height=15, width=12)
+ggsave(p, file = here("figures/immune/immune_suppfigure3.tiff"), height=15, width=12, dpi=300)

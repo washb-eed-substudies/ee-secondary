@@ -5,7 +5,7 @@ library(ggpubr)
 
 
 #Load tmle results
-source(here("audrie R scripts/immune/bangladesh-immune-ages-unadjusted-glm.R"))
+load(here("audrie results/immune_N_tr_means.RData"))
 
 readjustfunc <- function(data){
   select(data, tr, mean, sd)
@@ -150,10 +150,9 @@ p28 <-immune_plot_fun_wlabel(d, "Th1/Th17")
 
 
 p <- ggarrange(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14,
-               p15, p16, p17, p18, p19, p20, p21, p22, p23, p24, p25, p26, p28,
+               p15, p16, p17, p18, p19, p20, p21, p22, p23, p24, p25, p26, p27, p28,
                 ncol=4, nrow=7, common.legend = TRUE, legend="bottom")
 
 
-ggsave(p27, file = here("figures/miso9-figure1-immune.png"), height = 10, width = 8)
-ggsave(p, file = here("figures/miso9-figures3-immune.png"), height=15, width=12)
+ggsave(p, file = here("figures/immune/immune_figure2.tiff"), height = 15, width = 12, dpi=300)
 
