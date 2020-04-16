@@ -151,3 +151,15 @@ p +
 p
 
 ggsave(p, file = here("figures/immune/immune_figures1.tiff"), height=14, width=9)
+
+
+library(rvg)
+library(tidyverse)
+library(officer)
+
+doc <- read_pptx()
+doc <- add_slide(doc, layout = "Title and Content", master = "Office Theme")
+doc <- officer::ph_with(doc,  value = p,
+                        location = ph_location_type (type = "body"))
+print(doc, target = "my_plot.pptx")
+
