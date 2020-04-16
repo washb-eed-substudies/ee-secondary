@@ -15,8 +15,8 @@ ipcw <- read.csv("/Users/lisa/Dropbox/WASH/Data/Cleaned/Andrew/BD-EE-ipcw.csv", 
 #ipcw <- left_join(ipcw, treatment, by=c("clusterid"))
 
 #Load in stress analysis dataset
-load(paste0("~/ee-secondary/andrew results/stress_results.Rdata"))
 
+d <- readRDS(paste0(dropboxDir,"Data/Cleaned/Andrew/clean_stress_IPCW_dataset_andrew.RDS"))
 
 #Keep only stress outcomes and time-varying covariates, drop the baseline covariates
 colnames(d)
