@@ -17,8 +17,6 @@ d <- readRDS(paste0(dropboxDir,"Data/Cleaned/Andrew/clean_stress_IPCW_dataset_an
 
 
 
-
-
 #Keep only stress outcomes and time-varying covariates, drop the baseline covariates
 colnames(d)
 d <- d %>% 
