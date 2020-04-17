@@ -29,15 +29,16 @@ ipcw <- read.csv("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Data/
 #ipcw <- left_join(ipcw, treatment, by=c("clusterid"))
 
 #Load in immune analysis dataset
-load(paste0(dropboxDir,"Data/Cleaned/Andrew/BD-EE-immune.Rdata"))
+d<-readRDS(paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-lab-immune-ipcw-analysis-dataset.rds"))
 
 
 #Keep only immune outcomes and time-varying covariates, drop the baseline covariates
 colnames(d)
 d <- d %>% 
   subset(., select=c(
-    childid, dataid, childNo, clusterid,
-    agemth_bt2, agemth_bt3, ageday_bt2, ageday_bt3, month2, month3,
+     childid,
+    #dataid, childNo, clusterid,
+    # agemth_bt2, agemth_bt3, ageday_bt2, ageday_bt3, month2, month3,
     igf_t2,          igf_t3,          crp_t2,         
     agp_t2,          gmcsf_t2,        ifng_t2,         il10_t2,         il12_t2,        
     il13_t2,         il17_t2,         il1_t2,          il2_t2,          il21_t2,        
@@ -49,7 +50,7 @@ d <- d %>%
 
 dim(d)
 dim(ipcw)
-d <- merge(ipcw, d, by = c("dataid","childid","clusterid"), all.x = T, all.y = T)
+d <- merge(ipcw, d, by = c("childid"), all.x = T, all.y = T)
 dim(d)
 
 #Merge in treatments
