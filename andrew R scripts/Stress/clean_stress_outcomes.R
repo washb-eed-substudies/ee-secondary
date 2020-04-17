@@ -107,7 +107,7 @@ ggsave(p, file = here::here("figures/stress/transformed_outcome_distributions.pn
 d <- d %>% subset(., select = -c(t3_hr1, t3_hr2, t3_hr3, t3_sysbp1, t3_diasbp1, t3_sysbp2,
                                  t3_diasbp2, t3_sysbp3, t3_diasbp3, t3_sysbp_mean, t3_diasbp_mean,
                                  t3_z01_time, t3_z02_time, t3_z03_time, t3_cort_min_elaps, t3_saa_min_elaps, t3_gcr_stdev))
-
+colnames(d)
 
 #---------------------------------------------------------------------------------------------
 # merge covariates
@@ -187,31 +187,20 @@ summary(df$oragene_aged3 - df$ur_aged3)
 # save data
 #---------------------------------------------------------------------------------------------
 
+
 saveRDS(df, file=paste0(dropboxDir,"Data/Cleaned/Andrew/clean_stress_dataset_andrew.RDS"))
 
 
+
+
 #---------------------------------------------------------------------------------------------
-# merge Audrie's covariates to check replication
+# save IPCW data
 #---------------------------------------------------------------------------------------------
 
+colnames(df)
+df2 <- df %>% subset(., select = -c(sex,birthord,urineVol_t1:mann.rec.MMOL_t3, wall:hfias))
+colnames(df2)
 
-# dfull <- read.csv("bangladesh-dm-ee-anthro-diar-ee-med-plasma-blind-tr-enrol-covariates-lab.csv",colClasses=c("dataid"="character"))
-# 
-# dim(dfull)
-# dim(d)
-# df <- left_join(dfull, d, by="childid")
-# dim(df)
-# 
-# 
-# df$tr[1:10]
-# table(df$tr)
-# set.seed(12345)
-# df$tr <- sample(df$tr, nrow(df))
-# df$tr[1:10]
-# table(df$tr)
-# 
-# 
-# saveRDS(df, file=paste0(dropboxDir,"Data/Cleaned/Andrew/clean_stress_dataset_andrew.RDS"))
-
+saveRDS(df2, file=paste0(dropboxDir,"Data/Cleaned/Andrew/clean_stress_IPCW_dataset_andrew.RDS"))
 
 
