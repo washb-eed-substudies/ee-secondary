@@ -1,5 +1,4 @@
 
-
 #---------------------------------------
 # EE-immune-ipcw-analysis.R
 #
@@ -30,15 +29,16 @@ ipcw <- read.csv("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/Data/
 #ipcw <- left_join(ipcw, treatment, by=c("clusterid"))
 
 #Load in immune analysis dataset
-load(paste0(dropboxDir,"Data/Cleaned/Andrew/BD-EE-immune.Rdata"))
+d<-readRDS(paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-lab-immune-ipcw-analysis-dataset.rds"))
 
 
 #Keep only immune outcomes and time-varying covariates, drop the baseline covariates
 colnames(d)
 d <- d %>% 
   subset(., select=c(
-    childid, dataid, childNo, clusterid,
-    agemth_bt2, agemth_bt3, ageday_bt2, ageday_bt3, month2, month3,
+     childid,
+    #dataid, childNo, clusterid,
+    # agemth_bt2, agemth_bt3, ageday_bt2, ageday_bt3, month2, month3,
     igf_t2,          igf_t3,          crp_t2,         
     agp_t2,          gmcsf_t2,        ifng_t2,         il10_t2,         il12_t2,        
     il13_t2,         il17_t2,         il1_t2,          il2_t2,          il21_t2,        
@@ -50,7 +50,7 @@ d <- d %>%
 
 dim(d)
 dim(ipcw)
-d <- merge(ipcw, d, by = c("dataid","childid","clusterid"), all.x = T, all.y = T)
+d <- merge(ipcw, d, by = c("childid"), all.x = T, all.y = T)
 dim(d)
 
 #Merge in treatments
@@ -91,12 +91,12 @@ d$month3[is.na(d$month3)] <-  6
 
 
 d <- d %>% mutate(
-                  monsoon2 = ifelse(month2 > 4 & month2 < 11, "1", "0"),
-                  monsoon3 = ifelse(month3 > 4 & month3 < 11, "1", "0"),
-                  monsoon2 = ifelse(is.na(month2),"missing", monsoon2),
-                  monsoon3 = ifelse(is.na(month3),"missing", monsoon3),
-                  monsoon2 = factor(monsoon2),
-                  monsoon3 = factor(monsoon3))
+  monsoon2 = ifelse(month2 > 4 & month2 < 11, "1", "0"),
+  monsoon3 = ifelse(month3 > 4 & month3 < 11, "1", "0"),
+  monsoon2 = ifelse(is.na(month2),"missing", monsoon2),
+  monsoon3 = ifelse(is.na(month3),"missing", monsoon3),
+  monsoon2 = factor(monsoon2),
+  monsoon3 = factor(monsoon3))
 
 #Temp fix several monsoon numbers to match audrie 
 d$monsoon2 <- as.character(d$monsoon2)
@@ -123,7 +123,7 @@ d$birthord<-factor(d$birthord)
 Wvars<-c('sex', 'birthord',
          'momage', 'momheight','momedu','hfiacat',
          'Nlt18','Ncomp','watmin',
-          'walls', 'floor',
+         'walls', 'floor',
          'elec', 'asset_wardrobe', 'asset_table', 'asset_chair', 'asset_clock', 
          'asset_khat', 'asset_chouki', 'asset_radio', 
          'asset_tv', 'asset_refrig', 'asset_bike',
@@ -174,72 +174,72 @@ table(d$n_chickens)
 #Relevel all factors
 table(d$sex)
 d$sex<-addNA(d$sex)
-  levels(d$sex)[3]<-"missing"
+levels(d$sex)[3]<-"missing"
 table(d$sex)
 d$momedu=relevel(d$momedu,ref="No education")
 d$hfiacat=relevel(d$hfiacat,ref="Food Secure")
-    d$hfiacat<-addNA(d$hfiacat)
+d$hfiacat<-addNA(d$hfiacat)
 d$wall<-factor(d$wall)
-    d$wall<-addNA(d$wall)
-    levels(d$wall)<-c("No improved wall","Improved wall","Missing")
-    d$wall=relevel(d$wall,ref="No improved wall")
+d$wall<-addNA(d$wall)
+levels(d$wall)<-c("No improved wall","Improved wall","Missing")
+d$wall=relevel(d$wall,ref="No improved wall")
 d$floor<-factor(d$floor)
-    d$floor<-addNA(d$floor)
-    levels(d$floor)<-c("No improved floor","Improved floor","Missing")
-    d$floor=relevel(d$floor,ref="No improved floor")
+d$floor<-addNA(d$floor)
+levels(d$floor)<-c("No improved floor","Improved floor","Missing")
+d$floor=relevel(d$floor,ref="No improved floor")
 d$elec<-factor(d$elec)
-    d$elec<-addNA(d$elec)
-    levels(d$elec)<-c("No electricity","Electricity","Missing")
-    d$elec=relevel(d$elec,ref="No electricity")
+d$elec<-addNA(d$elec)
+levels(d$elec)<-c("No electricity","Electricity","Missing")
+d$elec=relevel(d$elec,ref="No electricity")
 d$asset_wardrobe<-factor(d$asset_wardrobe)
-    d$asset_wardrobe<-addNA(d$asset_wardrobe)
-    levels(d$asset_wardrobe)<-c("No wardrobe","Wardrobe","Missing")
-    d$asset_wardrobe=relevel(d$asset_wardrobe,ref="No wardrobe")
+d$asset_wardrobe<-addNA(d$asset_wardrobe)
+levels(d$asset_wardrobe)<-c("No wardrobe","Wardrobe","Missing")
+d$asset_wardrobe=relevel(d$asset_wardrobe,ref="No wardrobe")
 d$asset_table<-factor(d$asset_table)
-    d$asset_table<-addNA(d$asset_table)
-    levels(d$asset_table)<-c("No table","Improved table","Missing")
-    d$asset_table=relevel(d$asset_table,ref="No table")
+d$asset_table<-addNA(d$asset_table)
+levels(d$asset_table)<-c("No table","Improved table","Missing")
+d$asset_table=relevel(d$asset_table,ref="No table")
 d$asset_chair<-factor(d$asset_chair)
-    d$asset_chair<-addNA(d$asset_chair)
-    levels(d$asset_chair)<-c("No chair","Chair","Missing")
-    d$asset_chair=relevel(d$asset_chair,ref="No chair")
+d$asset_chair<-addNA(d$asset_chair)
+levels(d$asset_chair)<-c("No chair","Chair","Missing")
+d$asset_chair=relevel(d$asset_chair,ref="No chair")
 d$asset_clock[is.na(d$asset_clock)]<-99
-    d$asset_clock<-factor(d$asset_clock)
-    d$asset_clock<-addNA(d$asset_clock)
-    levels(d$asset_clock)<-c("No clock","Clock","Missing", "Missing")
-    d$asset_clock=relevel(d$asset_clock,ref="No clock")
+d$asset_clock<-factor(d$asset_clock)
+d$asset_clock<-addNA(d$asset_clock)
+levels(d$asset_clock)<-c("No clock","Clock","Missing", "Missing")
+d$asset_clock=relevel(d$asset_clock,ref="No clock")
 d$asset_khat<-factor(d$asset_khat)
-    d$asset_khat<-addNA(d$asset_khat)
-    levels(d$asset_khat)<-c("No khat","Khat","Missing")
-    d$asset_khat=relevel(d$asset_khat,ref="No khat")
+d$asset_khat<-addNA(d$asset_khat)
+levels(d$asset_khat)<-c("No khat","Khat","Missing")
+d$asset_khat=relevel(d$asset_khat,ref="No khat")
 d$asset_chouki<-factor(d$asset_chouki)
-    d$asset_chouki<-addNA(d$asset_chouki)
-    levels(d$asset_chouki)<-c("No chouki","Chouki","Missing")
-    d$asset_chouki=relevel(d$asset_chouki,ref="No chouki")
+d$asset_chouki<-addNA(d$asset_chouki)
+levels(d$asset_chouki)<-c("No chouki","Chouki","Missing")
+d$asset_chouki=relevel(d$asset_chouki,ref="No chouki")
 d$asset_tv<-factor(d$asset_tv)
-    d$asset_tv<-addNA(d$asset_tv)
-    levels(d$asset_tv)<-c("No TV","Improved TV","Missing")
-    d$asset_tv=relevel(d$asset_tv,ref="No TV")
+d$asset_tv<-addNA(d$asset_tv)
+levels(d$asset_tv)<-c("No TV","Improved TV","Missing")
+d$asset_tv=relevel(d$asset_tv,ref="No TV")
 d$asset_refrig<-factor(d$asset_refrig)
-    d$asset_refrig<-addNA(d$asset_refrig)
-    levels(d$asset_refrig)<-c("No refrigerator","Refrigerator","Missing")
-    d$asset_refrig=relevel(d$asset_refrig,ref="No refrigerator")
+d$asset_refrig<-addNA(d$asset_refrig)
+levels(d$asset_refrig)<-c("No refrigerator","Refrigerator","Missing")
+d$asset_refrig=relevel(d$asset_refrig,ref="No refrigerator")
 d$asset_bike<-factor(d$asset_bike)
-    d$asset_bike<-addNA(d$asset_bike)
-    levels(d$asset_bike)<-c("No bicycle","Bicycle","Missing")
-    d$asset_bike=relevel(d$asset_bike,ref="No bicycle")
+d$asset_bike<-addNA(d$asset_bike)
+levels(d$asset_bike)<-c("No bicycle","Bicycle","Missing")
+d$asset_bike=relevel(d$asset_bike,ref="No bicycle")
 d$asset_moto<-factor(d$asset_moto)
-    d$asset_moto<-addNA(d$asset_moto)
-    levels(d$asset_moto)<-c("No motorcycle","Motorcycle","Missing")
-    d$asset_moto=relevel(d$asset_moto,ref="No motorcycle")
+d$asset_moto<-addNA(d$asset_moto)
+levels(d$asset_moto)<-c("No motorcycle","Motorcycle","Missing")
+d$asset_moto=relevel(d$asset_moto,ref="No motorcycle")
 d$asset_sewmach<-factor(d$asset_sewmach)
-    d$asset_sewmach<-addNA(d$asset_sewmach)
-    levels(d$asset_sewmach)<-c("No sewing machine","Sewing machine","Missing")
-    d$asset_sewmach=relevel(d$asset_sewmach,ref="No sewing machine")
+d$asset_sewmach<-addNA(d$asset_sewmach)
+levels(d$asset_sewmach)<-c("No sewing machine","Sewing machine","Missing")
+d$asset_sewmach=relevel(d$asset_sewmach,ref="No sewing machine")
 d$asset_mobile<-factor(d$asset_mobile)
-    d$asset_mobile<-addNA(d$asset_mobile)
-    levels(d$asset_mobile)<-c("No mobile phone","Mobile phone","Missing")
-    d$asset_mobile=relevel(d$asset_mobile,ref="No mobile phone")    
+d$asset_mobile<-addNA(d$asset_mobile)
+levels(d$asset_mobile)<-c("No mobile phone","Mobile phone","Missing")
+d$asset_mobile=relevel(d$asset_mobile,ref="No mobile phone")    
 
 #Re-subset W so new re-leveled factors are included
 W<- subset(d, select=Wvars)
@@ -300,7 +300,7 @@ d <- cbind(d, miss)
 
 
 
-  
+
 #Run the adjusted ipcw analysis
 
 
@@ -360,12 +360,6 @@ comp_ipcw$Pval - comp_ipcw$pvalue
 
 
 save(d, res_ipcw, comp_ipcw, Y, miss, W2, W3, file = here("replication objects/andrew_immune_ipcw_W.rdata"))
-
-
-
-
-
-
 
 
 

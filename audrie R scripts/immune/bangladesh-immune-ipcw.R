@@ -50,7 +50,7 @@ setwd(paste0(dropboxDir,"Data/Cleaned/Audrie/")) #Set working directory
 #---------------------------------------
 
 #load the immune lab data
-washb_bd_immun<-readRDS(paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-lab-immune-analysis-dataset.rds"))
+washb_bd_immun<-readRDS(paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-lab-immune-ipcw-analysis-dataset.rds"))
 
 #load
 dfull<- read.csv("washb-bangladesh-anthro-diar-ee-med-enrol-tracking-immun-ipcw2.csv", stringsAsFactors = TRUE)
@@ -109,7 +109,7 @@ W$monsoon_bt2<-as.factor(W$monsoon_bt2)
 W$monsoon_bt2<-addNA(W$monsoon_bt2)
 levels(W$monsoon_bt2)[length(levels(W$monsoon_bt2))]<-"Missing"
 
-W$monsoon_bt2<-relevel(W$monsoon_bt2, ref="1")
+W$monsoon_bt2<-relevel(factor(W$monsoon_bt2), ref="1")
 
 
 
@@ -156,7 +156,7 @@ W$n_chicken<-as.numeric(W$n_chicken)
 #Save intermediate R objects for replication comparison
 da <- idfull
 wa <- W
-save(da, wa, file = here("replication objects/audrie_immune_ipcw_W.rdata"))
+save(da, wa, file = here::here("replication objects/audrie_immune_ipcw_W.rdata"))
 
 
 
@@ -705,7 +705,7 @@ tnf_t2_unadj_ipcw
 #---------------------------------------
 
 #load the immune lab data
-washb_bd_immun<-readRDS(paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-lab-immune-analysis-dataset.rds"))
+washb_bd_immun<-readRDS(paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-lab-immune-ipcw-analysis-dataset.rds"))
 
 
 #load
@@ -755,7 +755,7 @@ W$monsoon_bt2<-as.factor(W$monsoon_bt2)
 W$monsoon_bt2<-addNA(W$monsoon_bt2)
 levels(W$monsoon_bt2)[length(levels(W$monsoon_bt2))]<-"Missing"
 
-W$monsoon_bt2<-relevel(W$monsoon_bt2, ref="1")
+W$monsoon_bt2<-relevel(factor(W$monsoon_bt2), ref="1")
 
 
 
@@ -1683,7 +1683,7 @@ ratio_th1_th17_t2_unadj_ipcw
 #---------------------------------------
 
 #load the immune lab data
-washb_bd_immun<-readRDS(paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-lab-immune-analysis-dataset.rds"))
+washb_bd_immun<-readRDS(paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-lab-immune-ipcw-analysis-dataset.rds"))
 
 #load
 dfull<- read.csv(paste0(dropboxDir, "Data/Cleaned/Audrie/washb-bangladesh-anthro-diar-ee-med-enrol-tracking-immun-ipcw2.csv"), stringsAsFactors = TRUE)
@@ -1732,7 +1732,7 @@ W$monsoon_bt3<-as.factor(W$monsoon_bt3)
 W$monsoon_bt3<-addNA(W$monsoon_bt3)
 levels(W$monsoon_bt3)[length(levels(W$monsoon_bt3))]<-"Missing"
 
-W$monsoon_bt3<-relevel(W$monsoon_bt3, ref="1")
+W$monsoon_bt3<-relevel(factor(W$monsoon_bt3), ref="1")
 
 
 
@@ -2252,7 +2252,7 @@ tnf_t3_unadj_ipcw
 #---------------------------------------
 
 #load the immune lab data
-washb_bd_immun<-readRDS(paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-lab-immune-analysis-dataset.rds"))
+washb_bd_immun<-readRDS(paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-lab-immune-ipcw-analysis-dataset.rds"))
 
 #load
 dfull<- read.csv(paste0(dropboxDir, "Data/Cleaned/Audrie/washb-bangladesh-anthro-diar-ee-med-enrol-tracking-immun-ipcw2.csv"), stringsAsFactors = TRUE)
@@ -2301,7 +2301,7 @@ W$monsoon_bt3<-as.factor(W$monsoon_bt3)
 W$monsoon_bt3<-addNA(W$monsoon_bt3)
 levels(W$monsoon_bt3)[length(levels(W$monsoon_bt3))]<-"Missing"
 
-W$monsoon_bt3<-relevel(W$monsoon_bt3, ref="1")
+W$monsoon_bt3<-relevel(factor(W$monsoon_bt3), ref="1")
 
 
 
@@ -3229,7 +3229,7 @@ ratio_th1_th17_t3_unadj_ipcw
 #---------------------------------------
 
 #load the immune lab data
-washb_bd_immun<-readRDS(paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-lab-immune-analysis-dataset.rds"))
+washb_bd_immun<-readRDS(paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-lab-immune-ipcw-analysis-dataset.rds"))
 
 #load
 dfull<- read.csv(paste0(dropboxDir, "Data/Cleaned/Audrie/washb-bangladesh-anthro-diar-ee-med-enrol-tracking-immun-ipcw2.csv"), stringsAsFactors = TRUE)
@@ -3280,14 +3280,14 @@ W$monsoon_bt2<-as.factor(W$monsoon_bt2)
 W$monsoon_bt2<-addNA(W$monsoon_bt2)
 levels(W$monsoon_bt2)[length(levels(W$monsoon_bt2))]<-"Missing"
 
-W$monsoon_bt2<-relevel(W$monsoon_bt3, ref="1")
+W$monsoon_bt3<-relevel(factor(W$monsoon_bt3), ref="1")
 
 W$monsoon_bt3<-as.factor(W$monsoon_bt3)
 #If already a factor:
 W$monsoon_bt3<-addNA(W$monsoon_bt3)
 levels(W$monsoon_bt3)[length(levels(W$monsoon_bt3))]<-"Missing"
 
-W$monsoon_bt3<-relevel(W$monsoon_bt3, ref="1")
+W$monsoon_bt3<-relevel(factor(W$monsoon_bt3), ref="1")
 
 W$ageday_bt2<-as.numeric(W$ageday_bt2)
 
@@ -5223,9 +5223,9 @@ save(igf_t2_adj_ipcw_L,
   d23_ratio_th2_il10_adj_ipcw_L,
   d23_ratio_th17_il10_adj_ipcw_L,
   d23_ratio_th1_th2_adj_ipcw_L,
-  d23_ratio_th1_th17_adj_ipcw_L, file=here("audrie results/immune_ipcw.RData"))
+  d23_ratio_th1_th17_adj_ipcw_L, file=here::here("audrie results/immune_ipcw.RData"))
 
-save(idfull, file=here("audrie results/idfull.RData"))
+save(idfull, file=here::here("audrie results/idfull.RData"))
 
 #unadjusted IPCW objects
 
