@@ -26,7 +26,13 @@ d <- d %>% subset(., select = -c(t2_ratio_pro_il10,
                                  t3_ratio_th2_il10,
                                  t3_ratio_th17_il10,
                                  t3_ratio_th1_th2,
-                                 t3_ratio_th1_th17))
+                                 t3_ratio_th1_th17,
+                                 d23_ratio_pro_il10, 
+                                 d23_ratio_th1_il10,  
+                                 d23_ratio_th2_il10,  
+                                 d23_ratio_th17_il10,
+                                 d23_ratio_th1_th2,
+                                 d23_ratio_th1_th17))
 
 
 
@@ -155,6 +161,21 @@ ggplot(d, aes(x=t3_ratio_th1_th2)) + geom_density()
 d <- create_score(d, numerator_vars=c("il12_t3", "ifng_t3"), denominator_vars=c("il17_t3", "il21_t3"), varname="t3_ratio_th1_th17")
 summary(d$t3_ratio_th1_th17)
 ggplot(d, aes(x=t3_ratio_th1_th17)) + geom_density()
+
+d <- d %>% mutate(
+  d23_ratio_pro_il10 = t3_ratio_pro_il10 - t2_ratio_pro_il10,
+  d23_ratio_th1_il10 = t3_ratio_th1_il10 - t2_ratio_th1_il10,
+  d23_ratio_th2_il10 = t3_ratio_th2_il10 - t2_ratio_th2_il10,
+  d23_ratio_th17_il10 = t3_ratio_th17_il10 - t2_ratio_th17_il10,
+  d23_ratio_th1_th2 = t3_ratio_th1_th2 - t2_ratio_th1_th2, 
+  d23_ratio_th1_th17 = t3_ratio_th1_th17 - t2_ratio_th1_th17)
+
+ggplot(d, aes(x=d23_ratio_pro_il10)) + geom_density()
+ggplot(d, aes(x=d23_ratio_th1_il10)) + geom_density()
+ggplot(d, aes(x=d23_ratio_th2_il10)) + geom_density()
+ggplot(d, aes(x=d23_ratio_th17_il10)) + geom_density()
+ggplot(d, aes(x=d23_ratio_th1_th2)) + geom_density()
+ggplot(d, aes(x=d23_ratio_th1_th17)) + geom_density()
 
 
 
