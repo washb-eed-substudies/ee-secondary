@@ -3,7 +3,7 @@ library("xtable")
 source(here::here("0-config.R"))
 
 load(here("andrew results/stress_results.RData"))
-
+load("~/ee-secondary/andrew results/andrew_stress_ipcw.rdata")
 
 bonpval <- function(pval){
   bon = round(pval * 2, 2)
@@ -76,6 +76,10 @@ abs_mean <- c("", mean("t2_f2_8ip_raw", "Control", absolute_mean_sd_tr), mean("t
               mean("t2_f2_VI_raw", "Control", absolute_mean_sd_tr),mean("t2_f2_VI_raw", "Nutrition + WSH", absolute_mean_sd_tr), "",
               mean("t2_f2_12i_raw", "Control", absolute_mean_sd_tr), mean("t2_f2_12i_raw", "Nutrition + WSH", absolute_mean_sd_tr))
 
+ipcw_adj <- c("","", ci_interval("t2_f2_8ip", res_ipcw),"","", 
+              ci_interval("t2_f2_23d", res_ipcw), "","",ci_interval("t2_f2_VI", res_ipcw), "","",
+              ci_interval("t2_f2_12i", res_ipcw))
+
 tbls4 <- data.table(
   "Outcome" = outcomes4,
   "N" = n_t4,
@@ -85,7 +89,7 @@ tbls4 <- data.table(
   "Unadjusted Analysis" = unadj_diff, 
   "Age and Sex Adjusted Analysis" = age_sex_adj,
   "Fully Adjusted Analysis" = full_adj,
-  "IPCW Adjusted Analysis" = 0
+  "IPCW Adjusted Analysis" = ipcw_adj
 )
 
 outcomes6<-c("Pre-stressor Salivary alpha-amylase" ,"Control", "Nutrition + WSH",
@@ -178,6 +182,13 @@ abs_mean_t6 <- c("", mean("t3_saa_z01_raw", "Control", absolute_mean_sd_tr), mea
                  mean("t3_gcr_raw", "Control", absolute_mean_sd_tr),mean("t3_gcr_raw", "Nutrition + WSH", absolute_mean_sd_tr), "",
                  mean("t3_gcr_cpg12_raw", "Control", absolute_mean_sd_tr),mean("t3_gcr_cpg12_raw", "Nutrition + WSH", absolute_mean_sd_tr) )
 
+ipcw_adj6 <-c("","", ci_interval("t3_saa_z01", res_ipcw), "","", 
+                ci_interval("t3_saa_z02", res_ipcw), "","",ci_interval("t3_saa_slope", res_ipcw), "","",
+                ci_interval("t3_residual_saa", res_ipcw),
+                "","",ci_interval("t3_cort_z01", res_ipcw),"","",ci_interval("t3_cort_z03", res_ipcw),
+                "","",ci_interval("t3_cort_slope", res_ipcw),"","",ci_interval("t3_residual_cort", res_ipcw),
+                "","",ci_interval("t3_map", res_ipcw),"","",ci_interval("t3_hr_mean", res_ipcw),
+                "","",ci_interval("t3_gcr_mean", res_ipcw),"","",ci_interval("t3_gcr_cpg12", res_ipcw))
 
 tbls6 <- data.table(
   "Outcome" = outcomes6,
@@ -187,6 +198,6 @@ tbls6 <- data.table(
   "Standard Deviation" = sd_t6,
   "Unadjusted Analysis" = unadj_diff6, 
   "Age and Sex Adjusted Analysis" = age_sex_adj6,
-  "Full Adjusted Analysis" = full_adj6
-  "IPCW Adjusted Analysis" = 0
+  "Full Adjusted Analysis" = full_adj6,
+  "IPCW Adjusted Analysis" = ipcw_adj6
 )
