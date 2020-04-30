@@ -48,7 +48,7 @@ raw_outcomes <- c("t2_f2_8ip_raw","t2_f2_23d_raw","t2_f2_VI_raw", "t2_f2_12i_raw
                   "t3_gcr_mean_raw","t3_gcr_cpg12_raw","t3_saa_slope","t3_cort_slope","t3_residual_saa","t3_residual_cort")
 
 #Function to count non-missing outcomes
-N_y <- function(x, na.rm=T){ sum(is.na(x),na.rm=na.rm)}
+N_y <- function(x, na.rm=T){ sum(!is.na(x),na.rm=na.rm)}
 
 absolute_mean_sd <- d %>% subset(., select=c(raw_outcomes)) %>% 
   summarise_all(tibble::lst(mean, sd, N_y), na.rm=T) %>% 
