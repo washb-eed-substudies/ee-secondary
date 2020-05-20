@@ -3,7 +3,215 @@ library("xtable")
 source(here::here("0-config.R"))
 
 load(here("andrew results/stress_results.RData"))
+d <- readRDS(paste0(dropboxDir,"Data/Cleaned/Andrew/clean_stress_dataset.RDS"))
 
+#### TABLE 1 ####
+
+filtering <- function(row){
+  any(!is.na(row))
+}
+
+y1<-d[apply(select(d, grep("t2_f2", names(d), ignore.case=T)), 1, filtering),]
+
+y2<-d[apply(select(d, c("t3_map","t3_hr_mean","t3_saa_z01","t3_saa_z02","t3_cort_z01","t3_cort_z03",
+                  "t3_gcr_mean","t3_gcr_cpg12","t3_saa_slope","t3_cort_slope","t3_residual_saa","t3_residual_cort")), 1, filtering),]
+
+
+#calculating overall N by arm
+y1Nctrl<-length(y1$tr[y1$tr=="Control"])
+y1Nwsh<-length(y1$tr[y1$tr=="Nutrition + WSH"])
+y2Nctrl<-length(y2$tr[y2$tr=="Control"])
+y2Nwsh<-length(y2$tr[y2$tr=="Nutrition + WSH"])
+
+#functions for calculating %/mean for all variables in table based on arm
+meansdfunc <- function(tbl, variable) {
+  ctrlmean<-round(mean(variable[tbl$tr=="Control"], na.rm=TRUE))
+  ctrlsd<-round(sd(variable[tbl$tr=="Control"], na.rm=TRUE))
+  wshmean<-round(mean(variable[tbl$tr=="Nutrition + WSH"], na.rm=TRUE))
+  wshsd<-round(sd(variable[tbl$tr=="Nutrition + WSH"], na.rm=TRUE))
+  c(ctrlmean, ctrlsd, wshmean, wshsd)
+}
+
+npercfunc <- function(tbl, variable) {
+  ctrln<-sum(variable[tbl$tr=="Control"], na.rm=TRUE)
+  ctrlperc<-round(mean(variable[tbl$tr=="Control"], na.rm=TRUE)*100)
+  wshn<-sum(variable[tbl$tr=="Nutrition + WSH"], na.rm=TRUE)
+  wshperc<-round(mean(variable[tbl$tr=="Nutrition + WSH"], na.rm=TRUE)*100)
+  c(ctrln, ctrlperc, wshn, wshperc)
+}
+
+y1momage<-meansdfunc(y1, y1$momage)
+y1momeduy<-meansdfunc(y1, y1$momeduy)
+y1dadeduy<-meansdfunc(y1, y1$dadeduy)
+y1dadagri<-npercfunc(y1, y1$dadagri)
+y1Nhh<-meansdfunc(y1, y1$Nhh)
+
+y1elecctrln<-length(y1$elec[y1$tr=="Control" & y1$elec=="Electricity"])
+y1elecctrlperc<-round(y1elecctrln/length(y1$elec[y1$tr=="Control"])*100)
+y1elecwshn<-length(y1$elec[y1$tr=="Nutrition + WSH" & y1$elec=="No electricity"])
+y1elecwshperc<-round(y1elecwshn/length(y1$elec[y1$tr=="Nutrition + WSH"])*100)
+y1elec<-c(y1elecctrln, y1elecctrlperc, y1elecwshn, y1elecwshperc)
+
+y1cement<-npercfunc(y1, y1$cement)
+
+y2momage<-meansdfunc(y2, y2$momage)
+y2momeduy<-meansdfunc(y2, y2$momeduy)
+y2dadeduy<-meansdfunc(y2, y2$dadeduy)
+y2dadagri<-npercfunc(y2, y2$dadagri)
+y2Nhh<-meansdfunc(y2, y2$Nhh)
+
+y2elecctrln<-length(y2$elec[y2$tr=="Control" & y2$elec=="Electricity"])
+y2elecctrlperc<-round(y2elecctrln/length(y2$elec[y2$tr=="Control"])*100)
+y2elecwshn<-length(y2$elec[y2$tr=="Nutrition + WSH" & y2$elec=="No electricity"])
+y2elecwshperc<-round(y2elecwshn/length(y2$elec[y2$tr=="Nutrition + WSH"])*100)
+y2elec<-c(y2elecctrln, y2elecctrlperc, y2elecwshn, y2elecwshperc)
+
+y2cement<-npercfunc(y2, y2$cement)
+
+y1acresctrlm<-round(mean(y1$landacre[y1$tr=="Control"], na.rm=TRUE), 2)
+y1acresctrlsd<-round(sd(y1$landacre[y1$tr=="Control"], na.rm=TRUE), 2)
+y1acreswshm<-round(mean(y1$landacre[y1$tr=="Nutrition + WSH"], na.rm=TRUE), 2)
+y1acreswshsd<-round(mean(y1$landacre[y1$tr=="Nutrition + WSH"], na.rm=TRUE), 2)
+y1acres<-c(y1acresctrlm, y1acresctrlsd, y1acreswshm, y1acreswshsd)
+
+y2acresctrlm<-round(mean(y2$landacre[y2$tr=="Control"], na.rm=TRUE), 2)
+y2acresctrlsd<-round(sd(y2$landacre[y2$tr=="Control"], na.rm=TRUE), 2)
+y2acreswshm<-round(mean(y2$landacre[y2$tr=="Nutrition + WSH"], na.rm=TRUE), 2)
+y2acreswshsd<-round(mean(y2$landacre[y2$tr=="Nutrition + WSH"], na.rm=TRUE), 2)
+y2acres<-c(y2acresctrlm, y2acresctrlsd, y2acreswshm, y2acreswshsd)
+
+y1tubewell<-npercfunc(y1, y1$tubewell)
+y1storewater<-npercfunc(y1, y1$storewat)
+y1treatwater<-npercfunc(y1, y1$treatwat)
+y1waterdis<-meansdfunc(y1, y1$watmin)
+y1odmen<-npercfunc(y1, y1$odmen)
+y1odwomen<-npercfunc(y1, y1$odwom)
+y1odchild815<-npercfunc(y1, y1$odch815)
+y1odchild38<-npercfunc(y1, y1$odch38)
+y1odchild03<-npercfunc(y1, y1$odchu3)
+y1latowned<-npercfunc(y1, y1$latown)
+y1latslab<-npercfunc(y1, y1$latslab)
+y1latseal<-npercfunc(y1, y1$latseal)
+y1latfeces<-npercfunc(y1, y1$latfeces)
+y1potty<-npercfunc(y1, y1$potty)
+y1feceshouse<-npercfunc(y1, y1$humfeces)
+y1feceschildarea<-npercfunc(y1, y1$humfecesch)
+y1handlatwater<-npercfunc(y1, y1$hwlatwat)
+y1handlatsoap<-npercfunc(y1, y1$hwlatsoap)
+y1handkitwater<-npercfunc(y1, y1$hwkitwat)
+y1handkitsoap<-npercfunc(y1, y1$hwkitsoap)
+
+y2tubewell<-npercfunc(y2, y2$tubewell)
+y2storewater<-npercfunc(y2, y2$storewat)
+y2treatwater<-npercfunc(y2, y2$treatwat)
+y2waterdis<-meansdfunc(y2, y2$watmin)
+y2odmen<-npercfunc(y2, y2$odmen)
+y2odwomen<-npercfunc(y2, y2$odwom)
+y2odchild815<-npercfunc(y2, y2$odch815)
+y2odchild38<-npercfunc(y2, y2$odch38)
+y2odchild03<-npercfunc(y2, y2$odchu3)
+y2latowned<-npercfunc(y2, y2$latown)
+y2latslab<-npercfunc(y2, y2$latslab)
+y2latseal<-npercfunc(y2, y2$latseal)
+y2latfeces<-npercfunc(y2, y2$latfeces)
+y2potty<-npercfunc(y2, y2$potty)
+y2feceshouse<-npercfunc(y2, y2$humfeces)
+y2feceschildarea<-npercfunc(y2, y2$humfecesch)
+y2handlatwater<-npercfunc(y2, y2$hwlatwat)
+y2handlatsoap<-npercfunc(y2, y2$hwlatsoap)
+y2handkitwater<-npercfunc(y2, y2$hwkitwat)
+y2handkitsoap<-npercfunc(y2, y2$hwkitsoap)
+
+y1fsctrln<-length(y1$hfiacat[y1$tr=="Control" & y1$hfiacat=="Food Secure"])
+y1fsctrlperc<-round(y1fsctrln/length(y1$hfiacat[y1$tr=="Control"])*100)
+y1fswshn<-length(y1$hfiacat[y1$tr=="Nutrition + WSH" & y1$hfiacat=="Food Secure"])
+y1fswshperc<-round(y1fswshn/length(y1$hfiacat[y1$tr=="Nutrition + WSH"])*100)
+y1foodsecure<-c(y1fsctrln, y1fsctrlperc, y1fswshn, y1fswshperc)
+
+y2fsctrln<-length(y2$hfiacat[y2$tr=="Control" & y2$hfiacat=="Food Secure"])
+y2fsctrlperc<-round(y2fsctrln/length(y2$hfiacat[y2$tr=="Control"])*100)
+y2fswshn<-length(y2$hfiacat[y2$tr=="Nutrition + WSH" & y2$hfiacat=="Food Secure"])
+y2fswshperc<-round(y2fswshn/length(y2$hfiacat[y2$tr=="Nutrition + WSH"])*100)
+y2foodsecure<-c(y2fsctrln, y2fsctrlperc, y2fswshn, y2fswshperc)
+
+#make vectors to put in table
+#function combines n and percent or mean and sd for vectors created from npercfunc or meansdfunc
+#num is 1 if ctrl group, 3 if wsh
+charobject<-function(variable, num) {
+  paste(variable[num], " (", variable[num+1], ")", sep="")
+}
+
+charobjectperc<-function(variable, num) {
+  paste(variable[num], " (", variable[num+1], "%)", sep="")
+}
+
+ctrly1<-c(paste("Control (N=", y1Nctrl, ")", sep=""), " ", charobject(y1momage, 1),charobject(y1momeduy, 1), " ", charobject(y1dadeduy, 1), charobjectperc(y1dadagri, 1),
+          " ", charobject(y1Nhh, 1), charobjectperc(y1elec, 1), charobjectperc(y1cement, 1), charobject(y1acres, 1),
+          " ", charobjectperc(y1tubewell, 1), charobjectperc(y1storewater, 1), charobjectperc(y1treatwater, 1), charobject(y1waterdis, 1), 
+          " ", " ", charobjectperc(y1odmen, 1), charobjectperc(y1odwomen, 1), charobjectperc(y1odchild815, 1), charobjectperc(y1odchild38, 1), charobjectperc(y1odchild03, 1), 
+          " ", charobjectperc(y1latowned, 1), charobjectperc(y1latslab, 1), charobjectperc(y1latseal, 1), charobjectperc(y1latfeces, 1),
+          charobjectperc(y1potty, 1), 
+          " ", charobjectperc(y1feceshouse, 1), charobjectperc(y1feceschildarea, 1), 
+          " ", " ", charobjectperc(y1handlatwater, 1), charobjectperc(y1handlatsoap, 1), 
+          " ", charobjectperc(y1handkitwater, 1), charobjectperc(y1handkitsoap, 1), 
+          " ", charobjectperc(y1foodsecure, 1))
+
+wshy1<-c(paste("N+WSH Intervention (N=", y1Nwsh, ")", sep=""), " ", charobject(y1momage, 3),charobject(y1momeduy, 3), " ", charobject(y1dadeduy, 3), charobjectperc(y1dadagri, 3),
+         " ", charobject(y1Nhh, 3), charobjectperc(y1elec, 3), charobjectperc(y1cement, 3), charobject(y1acres, 3),
+         " ", charobjectperc(y1tubewell, 3), charobjectperc(y1storewater, 3), charobjectperc(y1treatwater, 3), charobject(y1waterdis, 3), 
+         " ", " ", charobjectperc(y1odmen, 3), charobjectperc(y1odwomen, 3), charobjectperc(y1odchild815, 3), charobjectperc(y1odchild38, 3), charobjectperc(y1odchild03, 3), 
+         " ", charobjectperc(y1latowned, 3), charobjectperc(y1latslab, 3), charobjectperc(y1latseal, 3), charobjectperc(y1latfeces, 3),
+         charobjectperc(y1potty, 3), 
+         " ", charobjectperc(y1feceshouse, 3), charobjectperc(y1feceschildarea, 3), 
+         " ", " ", charobjectperc(y1handlatwater, 3), charobjectperc(y1handlatsoap, 3), 
+         " ", charobjectperc(y1handkitwater, 3), charobjectperc(y1handkitsoap, 3), 
+         " ", charobjectperc(y1foodsecure, 3))
+
+ctrly2<-c(paste("Control (N=", y2Nctrl, ")", sep=""), " ", charobject(y2momage, 1),charobject(y2momeduy, 1), " ", charobject(y2dadeduy, 1), charobjectperc(y2dadagri, 1),
+          " ", charobject(y2Nhh, 1), charobjectperc(y2elec, 1), charobjectperc(y2cement, 1), charobject(y2acres, 1),
+          " ", charobjectperc(y2tubewell, 1), charobjectperc(y2storewater, 1), charobjectperc(y2treatwater, 1), charobject(y2waterdis, 1), 
+          " ", " ", charobjectperc(y2odmen, 1), charobjectperc(y2odwomen, 1), charobjectperc(y2odchild815, 1), charobjectperc(y2odchild38, 1), charobjectperc(y2odchild03, 1), 
+          " ", charobjectperc(y2latowned, 1), charobjectperc(y2latslab, 1), charobjectperc(y2latseal, 1), charobjectperc(y2latfeces, 1),
+          charobjectperc(y2potty, 1), 
+          " ", charobjectperc(y2feceshouse, 1), charobjectperc(y2feceschildarea, 1), 
+          " ", " ", charobjectperc(y2handlatwater, 1), charobjectperc(y2handlatsoap, 1), 
+          " ", charobjectperc(y2handkitwater, 1), charobjectperc(y2handkitsoap, 1), 
+          " ", charobjectperc(y2foodsecure, 1))
+
+wshy2<-c(paste("N+WSH Intervention (N=", y2Nwsh, ")", sep=""), " ", charobject(y2momage, 3),charobject(y2momeduy, 3), " ", charobject(y2dadeduy, 3), charobjectperc(y2dadagri, 3),
+         " ", charobject(y2Nhh, 3), charobjectperc(y2elec, 3), charobjectperc(y2cement, 3), charobject(y2acres, 3),
+         " ", charobjectperc(y2tubewell, 3), charobjectperc(y2storewater, 3), charobjectperc(y2treatwater, 3), charobject(y2waterdis, 3), 
+         " ", " ", charobjectperc(y2odmen, 3), charobjectperc(y2odwomen, 3), charobjectperc(y2odchild815, 3), charobjectperc(y2odchild38, 3), charobjectperc(y2odchild03, 3), 
+         " ", charobjectperc(y2latowned, 3), charobjectperc(y2latslab, 3), charobjectperc(y2latseal, 3), charobjectperc(y2latfeces, 3),
+         charobjectperc(y2potty, 3), 
+         " ", charobjectperc(y2feceshouse, 3), charobjectperc(y2feceschildarea, 3), 
+         " ", " ", charobjectperc(y2handlatwater, 3), charobjectperc(y2handlatsoap, 3), 
+         " ", charobjectperc(y2handkitwater, 3), charobjectperc(y2handkitsoap, 3), 
+         " ", charobjectperc(y2foodsecure, 3))
+
+# Table 1: Enrollment characteristics by intervention group
+tbl1 <- data.table(
+  " " = c("No. of compounds:", "Maternal", "Age(years)", "Years of education", 
+          "Paternal", "Years of education", "Works in agriculture", 
+          "Household", "Number of people", "Has electricity", "Has a cement floor", "Acres of agricultural land owned", 
+          "Drinking Water", "Shallow tubewell primary water source", "Stored water observed at home", "Reported treating water yesterday", "Distance (mins) to primary water source",
+          "Sanitation", "Reported daily open defecation", "Adult men", "Adult women", "Children: 8 to <15 years", "Children: 3 to <8 years", "Children: 0 to <3 years", 
+          "Latrine", "Owned", "Concrete Slab", "Functional water seal", "No visible stool on slab or floor",
+          "Owned a child potty",
+          "Human feces observed in the", "House", "Child's play area",
+          "Handwashing location", "Within six steps of latrine", "Has water", "Has soap", "Within six steps of kitchen", "Has water", "Has soap", 
+          "Nutrition", "Household is food secure"),
+  "Children measured at Year 1" = ctrly1,
+  " " = wshy1,
+  "Children measured at Year 2" = ctrly2,
+  " " = wshy2
+)
+
+write.csv(tbl1, file=here('tables/stress/stress_table1.csv'))
+print(xtable(tbl1), type="html", file=here("tables/stress/stress_table1.html"))
+
+
+#### TABLE 2/3 ####
 
 bonpval <- function(pval){
   bon = round(pval * 2, 2)
