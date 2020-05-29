@@ -48,7 +48,7 @@ y1Nhh<-meansdfunc(y1, y1$Nhh)
 
 y1elecctrln<-length(y1$elec[y1$tr=="Control" & y1$elec=="Electricity"])
 y1elecctrlperc<-round(y1elecctrln/length(y1$elec[y1$tr=="Control"])*100)
-y1elecwshn<-length(y1$elec[y1$tr=="Nutrition + WSH" & y1$elec=="No electricity"])
+y1elecwshn<-length(y1$elec[y1$tr=="Nutrition + WSH" & y1$elec=="Electricity"])
 y1elecwshperc<-round(y1elecwshn/length(y1$elec[y1$tr=="Nutrition + WSH"])*100)
 y1elec<-c(y1elecctrln, y1elecctrlperc, y1elecwshn, y1elecwshperc)
 
@@ -62,7 +62,7 @@ y2Nhh<-meansdfunc(y2, y2$Nhh)
 
 y2elecctrln<-length(y2$elec[y2$tr=="Control" & y2$elec=="Electricity"])
 y2elecctrlperc<-round(y2elecctrln/length(y2$elec[y2$tr=="Control"])*100)
-y2elecwshn<-length(y2$elec[y2$tr=="Nutrition + WSH" & y2$elec=="No electricity"])
+y2elecwshn<-length(y2$elec[y2$tr=="Nutrition + WSH" & y2$elec=="Electricity"])
 y2elecwshperc<-round(y2elecwshn/length(y2$elec[y2$tr=="Nutrition + WSH"])*100)
 y2elec<-c(y2elecctrln, y2elecctrlperc, y2elecwshn, y2elecwshperc)
 
