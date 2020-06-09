@@ -79,7 +79,6 @@ for(i in 1:ncol(W)){
 
 #Looks good. Use this if any need to be changes:
 
-
 W$sex<-as.factor(W$sex)
 
 # Set up the WASHB function
@@ -88,46 +87,63 @@ W$sex<-as.factor(W$sex)
 # stratified by "sex"
 
 washb_function <- function(df,x) {
-  temp <- washb_tmle(Y=df[,x], tr=df$tr, pair=NULL, W=df["sex"], V="sex", id=df$block, contrast = c("Control","Nutrition + WSH"), family="gaussian", 
-                     Q.SL.library=SL.library,g.SL.library=SL.library, pval=0.2, seed=12345, verbose=FALSE)
+  temp <- washb_tmle(Y=df[,x], tr=df$tr, pair=NULL, W=df["sex"], id=df$block, contrast = c("Control","Nutrition + WSH"), family="gaussian", 
+                     Q.SL.library=SL.library,g.SL.library=SL.library, pval=0.2, seed=12345)
   temp_metric <-t(as.matrix(unlist(temp$estimates$ATE)))
   rownames(temp_metric) <- c("Nutrition + WSH v C")
   return(temp_metric)
 }
 
+#Create df t2 subset
+
+df_t2 = d[,c("block", "tr", "sex", "t2_ipf2a3", "t2_23dinor", "t2_ipf2a6", "t2_812iso")]
+df_t2$block=as.factor(df_t2$block)
+#Subset females 
+d_t2_f <- df_t2 %>%
+  filter(sex == 0)
+
+#Subset males
+d_t2_m <- df_t2 %>%
+  filter(sex == 1)
+
+##Female 
+
+list_stress_t2_f2 <- lapply(names(d_f)[grep('t2_', names(d_f))],  function(x) washb_function(d_f,x))
+
 #grab the variables with prefix 't2_' from the data frame and then apply the washb_function
 
-#####ERROR HERE####
-list_stress <- lapply(names(d)[grep('t2_', names(d))],  function(x) washb_function(d,x))
+list_stress_t2_f <- lapply(names(d_t2_f)[grep('t2_', names(d_t2_f))],  function(x) washb_function(d_t2_f,x))
 
-list_stress
-
-#Troubleshoot - change d to df
-
-list_stress <- lapply(names(df)[grep('t2_', names(df))], washb_function(df,W$sex))
-
-list_stress
-
-#create new df with subset to t2
-
-df_t2 <- df[,c("t2_ipf2a3", "t2_23dinor", "t2_ipf2a6", "t2_812iso")]
-
-list_stress2 <- function(x) washb_function(df_t2,x)
-
-list_stress
+list_stress_t2_f
 
 #put names of each of the variables into the matrix
-names(list_stress) <- names(d)[grep('t2_', names(d))]
+names(list_stress_t2_f) <- names(d_t2_f)[grep('t2_', names(d_t2_f))]
 
 #resulting matrix
-list_stress
+list_stress_t2_f
 
 #to save each matrix separately for comparing with Andrew. 
 
+t2_igf_subgroup_L_f<-list_stress_t2_f$t2_ln_igf
+
+##Male 
+
+#grab the variables with prefix 't2_' from the data frame and then apply the washb_function
 
 
-t2_igf_subgroup_L<-list_stress$t2_ln_igf
+list_stress_m <- lapply(names(d_t2_m)[grep('t2_', names(d_t2_m))],  function(x) washb_function(d_t2_m,x))
 
+list_stress_m
+
+#put names of each of the variables into the matrix
+names(list_stress_m) <- names(d_t2_m)[grep('t2_', names(d_t2_m))]
+
+#resulting matrix
+list_stress_m
+
+#to save each matrix separately for comparing with Andrew. 
+
+t2_igf_subgroup_L_m<-list_stress_m$t2_ln_igf
 
 
 #---------------------------------------
