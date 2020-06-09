@@ -35,6 +35,11 @@ if(dir.exists("/Users/lisa/Dropbox/WASH/")){
 if(dir.exists("/Users/caitlinhemlock/Dropbox/")){ 
   dropboxDir <- "/Users/caitlinhemlock/"
 }
+if(dir.exists("/Users/zbutzindozier/Dropbox/WBB-EE-analysis/")){ 
+  dropboxDir <- "/Users/zbutzindozier/Dropbox/WBB-EE-analysis/"
+}
+
+
 
 
 theme_ki<-function(){
