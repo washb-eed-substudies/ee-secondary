@@ -3,7 +3,7 @@ library("xtable")
 source(here::here("0-config.R"))
 
 load(here("andrew results/stress_results.RData"))
-d <- readRDS(paste0(dropboxDir,"Data/Cleaned/Andrew/clean_stress_dataset.RDS"))
+d <- readRDS(paste0(dropboxDir,"Data/Cleaned/Andrew/clean_stress_dataset_andrew.RDS"))
 
 #### TABLE 1 ####
 
@@ -45,13 +45,7 @@ y1momeduy<-meansdfunc(y1, y1$momeduy)
 y1dadeduy<-meansdfunc(y1, y1$dadeduy)
 y1dadagri<-npercfunc(y1, y1$dadagri)
 y1Nhh<-meansdfunc(y1, y1$Nhh)
-
-y1elecctrln<-length(y1$elec[y1$tr=="Control" & y1$elec=="Electricity"])
-y1elecctrlperc<-round(y1elecctrln/length(y1$elec[y1$tr=="Control"])*100)
-y1elecwshn<-length(y1$elec[y1$tr=="Nutrition + WSH" & y1$elec=="Electricity"])
-y1elecwshperc<-round(y1elecwshn/length(y1$elec[y1$tr=="Nutrition + WSH"])*100)
-y1elec<-c(y1elecctrln, y1elecctrlperc, y1elecwshn, y1elecwshperc)
-
+y1elec<-npercfunc(y1, y1$elec)
 y1cement<-npercfunc(y1, y1$cement)
 
 y2momage<-meansdfunc(y2, y2$momage)
@@ -59,13 +53,7 @@ y2momeduy<-meansdfunc(y2, y2$momeduy)
 y2dadeduy<-meansdfunc(y2, y2$dadeduy)
 y2dadagri<-npercfunc(y2, y2$dadagri)
 y2Nhh<-meansdfunc(y2, y2$Nhh)
-
-y2elecctrln<-length(y2$elec[y2$tr=="Control" & y2$elec=="Electricity"])
-y2elecctrlperc<-round(y2elecctrln/length(y2$elec[y2$tr=="Control"])*100)
-y2elecwshn<-length(y2$elec[y2$tr=="Nutrition + WSH" & y2$elec=="Electricity"])
-y2elecwshperc<-round(y2elecwshn/length(y2$elec[y2$tr=="Nutrition + WSH"])*100)
-y2elec<-c(y2elecctrln, y2elecctrlperc, y2elecwshn, y2elecwshperc)
-
+y2elec<-npercfunc(y2, y2$elec)
 y2cement<-npercfunc(y2, y2$cement)
 
 y1acresctrlm<-round(mean(y1$landacre[y1$tr=="Control"], na.rm=TRUE), 2)
