@@ -6,6 +6,8 @@ d <- readRDS(paste0(dropboxDir,"Data/Cleaned/Andrew/clean_stress_dataset.RDS"))
 data_y1 <- read.csv(here("tables/stress/stress_table1.csv"))
 load(here("andrew results/stress_results.RData"))
 load("~/ee-secondary/andrew results/andrew_stress_ipcw.rdata")
+load(here("audrie results/stress_subgroup.RData"))
+
 
 #### Table S1 ####
 # filtering for children with any t2 measurements
@@ -364,3 +366,114 @@ tbls6 <- data.table(
 
 write.csv(tbls4, here('tables/stress/miso9-stress-supplementarytable4.csv'))
 write.csv(tbls6, here('tables/stress/miso9-stress-supplementarytable6.csv'))
+
+####Table S 7: subgroup analyses by sex at t2#####
+
+# source(here::here("0-config.R"))
+# load("/Users/zbutzindozier/Documents/GitHub/ee-secondary/wash-stress/audrie results/stress_subgroup.RData")
+
+#Outcomes
+
+outcomes7 <- c( "", "iPF(2α)-III", "2,3-dinor-iPF(2α±)-III", "iPF(2α±)-VI", "8,12-iso-iPF(2α±)-VI")
+
+#####female
+
+#RD
+rdf7 <- c((as.character(round(subgroup_stress_t2_f$RD[1], 2))), as.character(round(subgroup_stress_t2_f$RD[2], 2)), as.character(round(subgroup_stress_t2_f$RD[3], 2)), as.character(round(subgroup_stress_t2_f$RD[4], 2)))
+
+#Variance
+varf7 <- c( "Variance", (as.character(round(subgroup_stress_t2_f$var[1], 2))), as.character(round(subgroup_stress_t2_f$var[2], 2)), as.character(round(subgroup_stress_t2_f$var[3], 2)), as.character(round(subgroup_stress_t2_f$var[4], 2)))
+
+#95% CI
+
+#lower bound
+lbf7 <- c((as.character(round(subgroup_stress_t2_f$ci.lb[1], 2))), as.character(round(subgroup_stress_t2_f$ci.lb[2], 2)), as.character(round(subgroup_stress_t2_f$ci.lb[3], 2)), as.character(round(subgroup_stress_t2_f$ci.lb[4], 2)))
+
+#upper bound
+ubf7 <- c((as.character(round(subgroup_stress_t2_f$ci.ub[1], 2))), as.character(round(subgroup_stress_t2_f$ci.ub[2], 2)), as.character(round(subgroup_stress_t2_f$ci.ub[3], 2)), as.character(round(subgroup_stress_t2_f$ci.ub[4], 2)))
+
+
+#P-value
+
+pvalf7 <- c( "P-value", (as.character(round(subgroup_stress_t2_f$`P-value`[1] , 2))), as.character(round(subgroup_stress_t2_f$`P-value`[2], 2)), as.character(round(subgroup_stress_t2_f$`P-value`[3], 2)), as.character(round(subgroup_stress_t2_f$`P-value`[4], 2)))
+
+####male
+
+#RD
+rdm7 <- c((as.character(round(subgroup_stress_t2_m$RD[1], 2))), as.character(round(subgroup_stress_t2_m$RD[2], 2)), as.character(round(subgroup_stress_t2_m$RD[3], 2)), as.character(round(subgroup_stress_t2_m$RD[4], 2)))
+
+#Variance
+varm7 <- c( "Variance",(as.character(round(subgroup_stress_t2_m$var[1], 2))), as.character(round(subgroup_stress_t2_m$var[2], 2)), as.character(round(subgroup_stress_t2_m$var[3], 2)), as.character(round(subgroup_stress_t2_m$var[4], 2)))
+
+#95% CI
+
+#lower bound
+lbm7 <- c((as.character(round(subgroup_stress_t2_m$ci.lb[1], 2))), as.character(round(subgroup_stress_t2_m$ci.lb[2], 2)), as.character(round(subgroup_stress_t2_m$ci.lb[3], 2)), as.character(round(subgroup_stress_t2_m$ci.lb[4], 2)))
+
+#upper bound
+ubm7 <- c((as.character(round(subgroup_stress_t2_m$ci.ub[1], 2))), as.character(round(subgroup_stress_t2_m$ci.ub[2], 2)), as.character(round(subgroup_stress_t2_m$ci.ub[3], 2)), as.character(round(subgroup_stress_t2_m$ci.ub[4], 2)))
+
+
+#P-value
+
+pvalm7 <- c( "P-value", (as.character(round(subgroup_stress_t2_m$`P-value`[1] , 2))), as.character(round(subgroup_stress_t2_m$`P-value`[2], 2)), as.character(round(subgroup_stress_t2_m$`P-value`[3], 2)), as.character(round(subgroup_stress_t2_m$`P-value`[4], 2)))
+
+#Combine RD and CI vectors
+RD_CI_f7 <- paste0(rdf7, "(", lbf7, ", ", ubf7,")")
+RD_CI_f7 <- c("Unadjusted difference: Intervention vs. Control (95% CI)", RD_CI_f7)
+
+RD_CI_m7  <- paste0(rdm7, "(", lbm7, ", ", ubm7,")")
+RD_CI_m7  <- c("Unadjusted difference: Intervention vs. Control (95% CI)", RD_CI_m7)
+RD_CI_m7
+
+
+#create table 7
+tbls7 <- data.table( 
+  " " = outcomes7,
+  "Female " =  RD_CI_f7, 
+  " " = varf7,
+  " " = pvalf7,
+  "Male " = RD_CI_m7,
+  " " = varm7,
+  " " = pvalm7
+)
+
+write.csv(tbls7, file=here('tables/stress/miso9-stress-supplementarytable7.csv'))
+print(xtable(tbls7), type="html", file=here('tables/stress/miso9-stress-supplementarytable7.html'))
+
+###Table S 7: subgroup analysis by sex at t3
+
+#outcomes
+
+outcomes8 <- c("Pre-stressor salivary alpha-amylase",
+               "Pre-stressor salivary cortisol",
+               "Post-stressor salivary alpha-amylase",
+               "Post-stressor salivary cortisol",
+               "Mean systolic arterial Pressure",
+               "Mean diastolic arterial Pressure",
+               "Resting heart rate",
+               "NR3C1 exon 1F promoter methylation",
+               "NGFI-A transcription factor binding site")
+
+
+#####female
+
+#RD
+rdf8 <- c((round(subgroup_stress_t3_f$RD[1], 2)), round(subgroup_stress_t3_f$RD[2], 2), round(subgroup_stress_t3_f$RD[3], 2), round(subgroup_stress_t3_f$RD[4], 2), round(subgroup_stress_t3_f$RD[5], 2), round(subgroup_stress_t3_f$RD[6], 2), round(subgroup_stress_t3_f$RD[7], 2), round(subgroup_stress_t3_f$RD[8], 2), round(subgroup_stress_t3_f$RD[9], 2))
+
+
+#Variance
+varf8 <- c((round(subgroup_stress_t3_f$var[1], 2)), round(subgroup_stress_t3_f$var[2], 2), round(subgroup_stress_t3_f$var[3], 2), round(subgroup_stress_t3_f$var[4], 2), round(subgroup_stress_t3_f$var[5], 2), round(subgroup_stress_t3_f$var[6], 2), round(subgroup_stress_t3_f$var[7], 2), round(subgroup_stress_t3_f$var[8], 2), round(subgroup_stress_t3_f$var[9], 2))
+
+
+#upper bound
+ubf8 <- c((round(subgroup_stress_t3_f$ci.ub[1], 2)), round(subgroup_stress_t3_f$ci.ub[2], 2), round(subgroup_stress_t3_f$ci.ub[3], 2), round(subgroup_stress_t3_f$ci.ub[4], 2), round(subgroup_stress_t3_f$ci.ub[5], 2), round(subgroup_stress_t3_f$ci.ub[6], 2), round(subgroup_stress_t3_f$ci.ub[7], 2), round(subgroup_stress_t3_f$ci.ub[8], 2), round(subgroup_stress_t3_f$ci.ub[9], 2))
+
+#lower bound
+lbf8 <- c((round(subgroup_stress_t3_f$ci.lb[1], 2)), round(subgroup_stress_t3_f$ci.lb[2], 2), round(subgroup_stress_t3_f$ci.lb[3], 2), round(subgroup_stress_t3_f$ci.lb[4], 2), round(subgroup_stress_t3_f$ci.lb[5], 2), round(subgroup_stress_t3_f$ci.lb[6], 2), round(subgroup_stress_t3_f$ci.lb[7], 2), round(subgroup_stress_t3_f$ci.lb[8], 2), round(subgroup_stress_t3_f$ci.lb[9], 2))
+
+#p-value
+pvalf8 <- c((round(subgroup_stress_t3_f$`P-value`[1], 2)), round(subgroup_stress_t3_f$`P-value`[2], 2), round(subgroup_stress_t3_f$`P-value`[3], 2), round(subgroup_stress_t3_f$`P-value`[4], 2), round(subgroup_stress_t3_f$`P-value`[5], 2), round(subgroup_stress_t3_f$`P-value`[6], 2), round(subgroup_stress_t3_f$`P-value`[7], 2), round(subgroup_stress_t3_f$`P-value`[8], 2), round(subgroup_stress_t3_f$`P-value`[9], 2))
+
+
+

@@ -29,7 +29,13 @@ setwd(paste0(dropboxDir,"Data/Cleaned/Audrie/")) #Set working directory
 # the baseline covariate dataset
 #---------------------------------------
 
-d <- readRDS(here("replication objects/simulated_stress_dataset.rds"))
+#d <- readRDS(here("replication objects/simulated_stress_dataset.rds"))
+#d <- load(here("audrie results/stress_subgroup.RData"))
+#dm <- load(here("audrie results/stress_N_means.RData"))
+
+#d <- read.csv("bangladesh-dm-ee-anthro-diar-ee-med-plasma-blind-tr-enrol-covariates-lab.csv")
+
+d <- readRDS(paste0(dropboxDir,"Data/Cleaned/Andrew/clean_stress_dataset.RDS"))
 
 
 #---------------------------------------
@@ -40,15 +46,20 @@ d <- readRDS(here("replication objects/simulated_stress_dataset.rds"))
 dim(d)
 
 
-
 # re-order the treatment factor for convenience, dropping the arms not included in stress
 d$tr <- factor(d$tr,levels=c("Control","Nutrition + WSH"))
 
 
 # subset to columns needed for unadjusted 
-df = d[,c("block", "tr","t2_ipf2a3", "t2_23dinor", "t2_ipf2a6", "t2_812iso", "t3_pre_saa", "t3_pre_cort",
+df = d[ ,c("block", "tr","t2_ipf2a3", "t2_23dinor", "t2_ipf2a6", "t2_812iso", "t3_pre_saa", "t3_pre_cort",
           "t3_post_saa", "t3_post_cort", "t3_sys", "t3_dia", "t3_heart", "t3_nr3c1", "t3_cpg12")]
 df$block=as.factor(df$block)
+df
+#Calculate N, Mean, and SD
+t2_ipf2a3_n_mean_sd <- df %>% 
+  group_by(block, tr) %>%
+  summarize(N=n(), mn= mean(t2_ipf2a3, na.rm=T), sd = sd(t2_ipf2a3, na.rm = T))
+
 
 # Set up the WASHB function
 # df=data frame
@@ -112,9 +123,12 @@ df_t2_m <- df_t2 %>%
 ##Female 
 #grab the variables with prefix 't2_' from the data frame and then apply the washb_function
 
-list_stress_t2_f2 <- lapply(names(df_t2_f)[grep('t2_', names(df_t2_f))],  function(x) washb_function(df_t2_f,x))
+list_stress_t2_f <- lapply(names(df_t2_f)[grep('t2_', names(df_t2_f))],  function(x) washb_function(df_t2_f,x))
 
 list_stress_t2_f
+
+#put names of each of the variables into the matrix
+names(list_stress_t2_f) <- names(df_t2_f)[grep('t2_', names(df_t2_f))]
 
 #Compile into data.frame for easier comparison in replication
 subgroup_stress_t2_f <- t(bind_rows(list_stress_t2_f))
@@ -133,6 +147,9 @@ subgroup_stress_t2_f
 list_stress_t2_m <- lapply(names(df_t2_m)[grep('t2_', names(df_t2_m))],  function(x) washb_function(df_t2_m,x))
 
 list_stress_t2_m
+
+#put names of each of the variables into the matrix
+names(list_stress_t2_m) <- names(df_t2_m)[grep('t2_', names(df_t2_m))]
 
 #Compile into data.frame for easier comparison in replication
 subgroup_stress_t2_m <- t(bind_rows(list_stress_t2_m))
@@ -169,6 +186,9 @@ list_stress_t3_f <- lapply(names(df_t3_f)[grep('t3_', names(df_t3_f))],  functio
 
 list_stress_t3_f
 
+#put names of each of the variables into the matrix
+names(list_stress_t3_f) <- names(df_t3_f)[grep('t3_', names(df_t3_f))]
+
 #Compile into data.frame for easier comparison in replication
 subgroup_stress_t3_f <- t(bind_rows(list_stress_t3_f))
 colnames(subgroup_stress_t3_f) <-c("RD","var","ci.lb","ci.ub","P-value")
@@ -183,6 +203,9 @@ subgroup_stress_t3_f
 list_stress_t3_m <- lapply(names(df_t3_m)[grep('t3_', names(df_t3_m))],  function(x) washb_function(df_t3_m,x))
 
 list_stress_t3_m
+
+#put names of each of the variables into the matrix
+names(list_stress_t3_m) <- names(df_t3_m)[grep('t3_', names(df_t3_m))]
 
 #Compile into data.frame for easier comparison in replication
 subgroup_stress_t3_m <- t(bind_rows(list_stress_t3_m))
