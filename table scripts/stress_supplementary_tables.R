@@ -2,7 +2,7 @@ rm(list=ls())
 library("xtable")
 source(here::here("0-config.R"))
 
-d <- readRDS(paste0(dropboxDir,"Data/Cleaned/Andrew/clean_stress_dataset.RDS"))
+d <- readRDS(paste0(dropboxDir,"Data/Cleaned/Andrew/clean_stress_dataset_andrew.RDS"))
 data_y1 <- read.csv(here("tables/stress/stress_table1.csv"))
 load(here("andrew results/stress_results.RData"))
 load("~/ee-secondary/andrew results/andrew_stress_ipcw.rdata")
@@ -47,13 +47,7 @@ momeduy<-meansdfunc(lost, lost$momeduy)
 dadeduy<-meansdfunc(lost, lost$dadeduy)
 dadagri<-npercfunc(lost, lost$dadagri)
 Nhh<-meansdfunc(lost, lost$Nhh)
-
-elecctrln<-length(lost$elec[lost$tr=="Control" & lost$elec=="Electricity"])
-elecctrlperc<-round(elecctrln/length(lost$elec[lost$tr=="Control"])*100)
-elecwshn<-length(lost$elec[lost$tr=="Nutrition + WSH" & lost$elec=="Electricity"])
-elecwshperc<-round(elecwshn/length(lost$elec[lost$tr=="Nutrition + WSH"])*100)
-elec<-c(elecctrln, elecctrlperc, elecwshn, elecwshperc)
-
+elec<-npercfunc(lost, lost$elec)
 cement<-npercfunc(lost, lost$cement)
 
 acresmctrl<-round(mean(lost$landacre[lost$tr=="Control"], na.rm=TRUE), 2)
