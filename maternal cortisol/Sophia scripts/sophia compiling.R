@@ -71,7 +71,7 @@ p1_p2$sample <- str_replace(p1_p2$sample, "\\s\\(.+\\)", '')
 p1_p2$`lab tech` <- name
 
 ## Merge data, rename, add assay column ##
-d <- rbindlist(list(p1_p2, cleaned_r1, cleaned_r2, cleaned_r3, cleaned_r4, cleaned_r5, cleaned_r6, cleaned_r7, cleaned_r8, cleaned_r9))
+d <- rbindlist(list(p1_p2, cleaned_p3, cleaned_p4, cleaned_r1, cleaned_r2, cleaned_r3, cleaned_r4, cleaned_r5, cleaned_r6, cleaned_r7, cleaned_r8, cleaned_r9))
 d <- select(d, c('date', 'assay', 'run', 'sample', 'dilution', 'wells', 'raw', 'percent', 'conc', 'conc_avg', 'lab tech'))
 
 write.csv(d, here('maternal cortisol/Sophia scripts/cleaned_maternal_cortisol_ST.csv'))
