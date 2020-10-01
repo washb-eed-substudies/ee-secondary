@@ -45,7 +45,7 @@ motor <- read.csv("washb-bangladesh-motormile-year1.csv")%>%
          walk_supp, stand_nosupp, walk_nosupp)
 
 development <- motor %>% left_join(cdi, 'childid') %>% left_join(efanotb, 'childid') %>% 
-  left_join(easq, 'childid') %>%
+  left_join(eftower, "childid") %>% left_join(easq, 'childid') %>%
   mutate(childid = as.integer(childid))
   
   # cdi %>% inner_join(easq, "childid") %>% inner_join(efanotb, "childid") %>%
@@ -55,4 +55,4 @@ development <- motor %>% left_join(cdi, 'childid') %>% left_join(efanotb, 'child
 
 telo_dev <- inner_join(d, development, "childid")
 
-save(telo_dev, file=paste0(dropboxDir, "Data/Cleaned/Audrie/bangladesh-ee-telo-development-covariates.csv"))
+write.csv(telo_dev, file=paste0(dropboxDir, "Data/Cleaned/Audrie/bangladesh-ee-telo-development-covariates.csv"))

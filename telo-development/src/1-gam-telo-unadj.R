@@ -1,10 +1,9 @@
 rm(list=ls())
 
 source(here::here("0-config.R"))
-source(here::here("src/0-gam-functions.R"))
+source(here::here("telo-development/src/0-gam-functions.R"))
 
-d <- readRDS(paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-immune-growth-analysis-dataset.rds"))
-
+d <- read.csv(paste0(dropboxDir, "Data/Cleaned/Audrie/bangladesh-ee-telo-development-covariates.csv"))
 
 #Example:
 
@@ -30,13 +29,12 @@ d <- readRDS(paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-immune-growth-ana
 
 #Loop over exposure-outcome pairs
 
-# all immune ratios at Y1 v. growth outcomes at Y1
-Xvars <- c("t2_ratio_pro_il10", "t2_ratio_th1_il10", "t2_ratio_th2_il10",     
-           "t2_ratio_th17_il10", "t2_ratio_th1_th2", "t2_ratio_th1_th17", "t2_ln_agp", "t2_ln_crp")            
-Yvars <- c("laz_t2", "waz_t2", "whz_t2" ,"hcz_t2") 
-# "len_velocity_t2_t3", "wei_velocity_t2_t3", "hc_velocity_t2_t3",
-# "laz_t3", "waz_t3", "whz_t3", "hcz_t3",
-# "delta_laz_t2_t3", "delta_waz_t2_t3", "delta_whz_t2_t3", "delta_hcz_t2_t3")
+# change in telomere length between y1 and y2
+Xvars <- c("delta_TS")            
+Yvars <- c("endline_communication_score", "endline_gross_motor_score", 
+           "endline_personal_social_score", "endline_A_not_B_score", 
+           "endline_tower_test") 
+
 
 #Fit models
 H1_models <- NULL
@@ -69,58 +67,25 @@ for(i in 1:nrow(H1_models)){
 
 
 #Save models
-saveRDS(H1_models, here("models/H1_models.RDS"))
+saveRDS(H1_models, here("telo-development/models/H1_models.RDS"))
 
 #Save results
-saveRDS(H1_res, here("results/unadjusted/H1_res.RDS"))
+saveRDS(H1_res, here("telo-development/results/H1_res.RDS"))
 
 
 #Save plots
 #saveRDS(H1_plot_list, here("figure-objects/H1_unadj_splines.RDS"))
 
 #Save plot data
-saveRDS(H1_plot_data, here("figure-data/H1_unadj_spline_data.RDS"))
+#saveRDS(H1_plot_data, here("figure-data/H1_unadj_spline_data.RDS"))
 
 
 
-## Hypothesis 2a
-#Change in slope between pre- and post-stressor cortisol measured at Year 2 is positively associated 
-#with concurrent child LAZ, WAZ, WLZ, and head circumference-for-age Z score at Year 2.
-
-#Exposure: Quartiles of pre- and post-stressor cortisol at Year 2
-#Primary Outcome: Child LAZ at Year 2
-#Secondary Outcome: Child WAZ and head circumference-for-age Z score at Year 2
-#Tertiary Outcome: Child WLZ at Year 2
-
-##Hypothesis 2b
-#Residualized gain score for cortisol measured at Year 2 is positively associated 
-#with concurrent child LAZ, WAZ, WLZ, and head circumference-for-age Z score at Year 2.
-
-#Exposure: Quartiles of pre- and post-stressor cortisol at Year 2
-#Primary Outcome: Child LAZ at Year 2
-#Secondary Outcome: Child WAZ and head circumference-for-age Z score at Year 2
-#Tertiary Outcomes: Child WLZ at Year 2
-
-##Hypothesis 2c
-#Change in slope between pre- and post-stressor alpha-amylase measured at Year 2 is negatively associated 
-#with concurrent child LAZ, WAZ, WLZ, and head circumference-for-age Z score at Year 2.
-
-#Exposure: Quartiles of pre- and post-stressor alpha-amylase at Year 2
-#Primary Outcome: Child LAZ at Year 2
-#Secondary Outcome: Child WAZ and head circumference-for-age Z score at Year 2
-#Tertiary Outcome: Child WLZ at Year 2
-
-##Hypothesis 2d
-#Residualized gain score for alpha-amylase measured at Year 2 is negatively associated 
-#with concurrent child LAZ, WAZ, WLZ, and head circumference-for-age Z score at Year 2.
-
-#Exposure: Quartiles of pre- and post-stressor alpha-amylase at Year 2
-#Primary Outcome: Child LAZ at Year 2
-#Secondary Outcome: Child WAZ and head circumference-for-age Z score at Year 2
-#Tertiary Outcome: Child WLZ at Year 2
-
-Xvars <- c("t3_cort_slope", "t3_residual_cort", "t3_saa_slope", "t3_residual_saa")            
-Yvars <- c("laz_t3", "waz_t3", "whz_t3", "hcz_t3")
+# Telomere at y1 v. development year 2
+Xvars <- c("TS_t2")            
+Yvars <- c("endline_communication_score", "endline_gross_motor_score", 
+           "endline_personal_social_score", "endline_A_not_B_score", 
+           "endline_tower_test") 
 
 #Fit models
 H2_models <- NULL
@@ -153,40 +118,23 @@ for(i in 1:nrow(H2_models)){
 
 
 #Save models
-saveRDS(H2_models, here("models/H2_models.RDS"))
+saveRDS(H2_models, here("telo_development/models/H2_models.RDS"))
 
 #Save results
-saveRDS(H2_res, here("results/unadjusted/H2_res.RDS"))
+saveRDS(H2_res, here("telo_development/results/H2_res.RDS"))
 
 
 #Save plots
 #saveRDS(H2_plot_list, here("figure-objects/H2_unadj_splines.RDS"))
 
 #Save plot data
-saveRDS(H2_plot_data, here("figure-data/H2_unadj_spline_data.RDS"))
+#saveRDS(H2_plot_data, here("figure-data/H2_unadj_spline_data.RDS"))
 
 
 
-##Hypothesis 3a
-#Mean arterial pressure measured at Year 2 is negatively associated with concurrent 
-#child LAZ, WAZ, WLZ, and head circumference-for-age Z score at Year 2.
-
-#Exposure: Quartiles of mean arterial pressure at Year 2
-#Primary Outcome: Child LAZ at Year 2
-#Secondary Outcome: Child WAZ and head circumference-for-age Z score at Year 2
-#Tertiary Outcomes: Child WLZ at Year 2
-
-##Hypothesis 3b
-#Resting heart rate measured at Year 2 is negatively associated with concurrent 
-#child LAZ, WAZ, WLZ, and head circumference-for-age Z score at Year 2.
-
-#Exposure: Quartiles of resting heart rate at Year 2
-#Primary Outcome: Child LAZ at Year 2
-#Secondary Outcome: Child WAZ and head circumference-for-age Z score at Year 2
-#Tertiary Outcomes: Child WLZ at Year 2
-
-Xvars <- c("t3_map", "t3_hr_mean")            
-Yvars <- c("laz_t3", "waz_t3", "whz_t3", "hcz_t3")
+# telomere length at year 1 v. development at year 1
+Xvars <- c("TS_t2")            
+Yvars <- c("endline_CDI_understand", "endline_CDI_say")
 
 #Fit models
 H3_models <- NULL
@@ -229,29 +177,14 @@ saveRDS(H3_res, here("results/unadjusted/H3_res.RDS"))
 #saveRDS(H3_plot_list, here("figure-objects/H3_unadj_splines.RDS"))
 
 #Save plot data
-saveRDS(H3_plot_data, here("figure-data/H3_unadj_spline_data.RDS"))
+#saveRDS(H3_plot_data, here("figure-data/H3_unadj_spline_data.RDS"))
 
 
-##Hypothesis 4a
-#Glucocorticoid receptor (NR3C1) exon 1F promoter methylation in saliva samples at Year 2 
-#is negatively associated with concurrent child LAZ, WAZ, WLZ, and head circumference-for-age Z score at Year 2.
-
-#Exposure: Quartiles of overall percentage of methylation across the entire promoter region at Year 2 post-intervention
-#Primary Outcome: Child LAZ at Year 2
-#Secondary Outcome: Child WAZ and head circumference-for-age Z score at Year 2
-#Tertiary Outcomes: Child WLZ at Year 2
-
-##Hypothesis 4b
-#Glucocorticoid receptor NGFI-A transcription factor binding site methylation in saliva samples at Year 2 
-#is negatively associated with concurrent child LAZ, WAZ, WLZ, and head circumference-for-age Z score at Year 2.
-
-#Exposure: Quartiles of percentage methylation at NGFI-A transcription factor binding 	site (CpG site #12)
-#Primary Outcome: Child LAZ at Year 2
-#Secondary Outcome: Child WAZ and head circumference-for-age Z score at Year 2
-#Tertiary Outcomes: Child WLZ at Year 2
-
-Xvars <- c("t3_gcr_mean", "t3_gcr_cpg12")            
-Yvars <- c("laz_t3", "waz_t3", "whz_t3", "hcz_t3")
+#Telomere length at year 2 v. development at year 2
+Xvars <- c("TS_t3")            
+Yvars <- c("endline_communication_score", "endline_gross_motor_score", 
+           "endline_personal_social_score", "endline_A_not_B_score", 
+           "endline_tower_test") 
 
 #Fit models
 H4_models <- NULL
@@ -294,5 +227,5 @@ saveRDS(H4_res, here("results/unadjusted/H4_res.RDS"))
 #saveRDS(H4_plot_list, here("figure-objects/H4_unadj_splines.RDS"))
 
 #Save plot data
-saveRDS(H4_plot_data, here("figure-data/H4_unadj_spline_data.RDS"))
+#saveRDS(H4_plot_data, here("figure-data/H4_unadj_spline_data.RDS"))
 
