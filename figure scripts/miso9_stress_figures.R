@@ -5,7 +5,7 @@ library(ggpubr)
 
 
 # Load results
-load(here("andrew results/stress_results.Rdata"))
+load(here::here("andrew results/stress_results.Rdata"))
 
 # Function for helping make table with name and age attached
 readjustfunc <- function(data, var){
@@ -15,17 +15,17 @@ readjustfunc <- function(data, var){
 #### FIGURE MEANS ####
 
 d <- rbind(
-  data.frame(readjustfunc(mean_sd_tr, "t2_f2_8ip"), name="iPF(2α)-III ", age=14),
-  data.frame(readjustfunc(mean_sd_tr, "t2_f2_23d"), name="2,3-dinor-iPF(2α)-III", age=14),
-  data.frame(readjustfunc(mean_sd_tr, "t2_f2_VI"), name="iPF(2α)-VI", age=14),
-  data.frame(readjustfunc(mean_sd_tr, "t2_f2_12i"), name="8,12-iso-iPF(2α)-VI", age=14),
+  data.frame(readjustfunc(mean_sd_tr, "t2_f2_8ip"), name="iPF(2a)-III ", age=14),
+  data.frame(readjustfunc(mean_sd_tr, "t2_f2_23d"), name="2,3-dinor-iPF(2a)-III", age=14),
+  data.frame(readjustfunc(mean_sd_tr, "t2_f2_VI"), name="iPF(2a)-VI", age=14),
+  data.frame(readjustfunc(mean_sd_tr, "t2_f2_12i"), name="8,12-iso-iPF(2a)-VI", age=14),
   data.frame(readjustfunc(mean_sd_tr, "t3_saa_z01"), name="Pre-stressor salivary alpha-amylase", age=28),
   data.frame(readjustfunc(mean_sd_tr, "t3_saa_z02"), name="Post-stressor salivary alpha-amylase", age=28),
-  data.frame(readjustfunc(mean_sd_tr, "t3_saa_slope"), name="Change in slope between pre- and post-stressor alpha-amylase", age=28),
+  data.frame(readjustfunc(mean_sd_tr, "t3_saa_slope"), name="Change in slope between pre- and \n post-stressor alpha-amylase", age=28),
   data.frame(readjustfunc(mean_sd_tr, "t3_residual_saa"), name="Residualized gain score for alpha-amylase", age=28),
   data.frame(readjustfunc(mean_sd_tr, "t3_cort_z01"), name="Pre-stressor salivary cortisol", age=28),
   data.frame(readjustfunc(mean_sd_tr, "t3_cort_z03"), name="Post-stressor salivary cortisol", age=28),
-  data.frame(readjustfunc(mean_sd_tr, "t3_cort_slope"), name="Change in slope between pre- and post-stressor cortisol", age=28),
+  data.frame(readjustfunc(mean_sd_tr, "t3_cort_slope"), name="Change in slope between pre- and \n post-stressor cortisol", age=28),
   data.frame(readjustfunc(mean_sd_tr, "t3_residual_cort"), name="Residualized gain score for cortisol", age=28),
   data.frame(readjustfunc(mean_sd_tr, "t3_map"), name="Mean arterial pressure", age=28),
   data.frame(readjustfunc(mean_sd_tr, "t3_hr"), name="Resting heart rate", age=28),
@@ -98,24 +98,24 @@ p1 <- ggarrange(f2III, f223d, f2VI, f212, map, hr, saa1, saa2, cort1, cort2, gcr
 
 
 
-ggsave(p1, file = here("figures/stress_mean_by_tr.png"), height=9, width=14)
+ggsave(p1, file =here::here("figures/stress_mean_by_tr.png"), height=9, width=14)
 
 
 
 #### FIGURE UNADJUSTED DIFFERENCES ####
 
 d <- rbind(
-  data.frame(readjustfunc(res_unadj, "t2_f2_8ip"), name="iPF(2α)-III ", age=14),
-  data.frame(readjustfunc(res_unadj, "t2_f2_23d"), name="2,3-dinor-iPF(2α)-III", age=14),
-  data.frame(readjustfunc(res_unadj, "t2_f2_VI"), name="iPF(2α)-VI", age=14),
-  data.frame(readjustfunc(res_unadj, "t2_f2_12i"), name="8,12-iso-iPF(2α)-VI", age=14),
+  data.frame(readjustfunc(res_unadj, "t2_f2_8ip"), name="iPF(2a)-III ", age=14),
+  data.frame(readjustfunc(res_unadj, "t2_f2_23d"), name="2,3-dinor-iPF(2a)-III", age=14),
+  data.frame(readjustfunc(res_unadj, "t2_f2_VI"), name="iPF(2a)-VI", age=14),
+  data.frame(readjustfunc(res_unadj, "t2_f2_12i"), name="8,12-iso-iPF(2a)-VI", age=14),
   data.frame(readjustfunc(res_unadj, "t3_saa_z01"), name="Pre-stressor salivary alpha-amylase", age=28),
   data.frame(readjustfunc(res_unadj, "t3_saa_z02"), name="Post-stressor salivary alpha-amylase", age=28),
-  data.frame(readjustfunc(res_unadj, "t3_saa_slope"), name="Change in slope between pre- and post-stressor alpha-amylase", age=28),
+  data.frame(readjustfunc(res_unadj, "t3_saa_slope"), name="Change in slope between pre- and \n post-stressor alpha-amylase", age=28),
   data.frame(readjustfunc(res_unadj, "t3_residual_saa"), name="Residualized gain score for alpha-amylase", age=28),
   data.frame(readjustfunc(res_unadj, "t3_cort_z01"), name="Pre-stressor salivary cortisol", age=28),
   data.frame(readjustfunc(res_unadj, "t3_cort_z03"), name="Post-stressor salivary cortisol", age=28),
-  data.frame(readjustfunc(res_unadj, "t3_cort_slope"), name="Change in slope between pre- and post-stressor cortisol", age=28),
+  data.frame(readjustfunc(res_unadj, "t3_cort_slope"), name="Change in slope between pre- and \n post-stressor cortisol", age=28),
   data.frame(readjustfunc(res_unadj, "t3_residual_cort"), name="Residualized gain score for cortisol", age=28),
   data.frame(readjustfunc(res_unadj, "t3_map"), name="Mean arterial pressure", age=28),
   data.frame(readjustfunc(res_unadj, "t3_hr_mean"), name="Resting heart rate", age=28),
@@ -185,5 +185,5 @@ p1 <- ggarrange(f2III, f223d, f2VI, f212, map, hr, saa1, saa2, cort1, cort2, gcr
 
 
 
-ggsave(p1, file = here("figures/stress_unadjusted_diff.png"), height=9, width=14)
+ggsave(p1, file = here::here("figures/stress_unadjusted_diff.png"), height=9, width=14)
 

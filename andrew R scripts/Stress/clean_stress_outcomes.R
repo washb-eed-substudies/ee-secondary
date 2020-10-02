@@ -2,10 +2,12 @@
 rm(list=ls())
 source(here::here("0-config.R"))
 library(car)
+library(e1071)  
 
 
 # #load stress outcomes
-d <- readRDS(paste0(dropboxDir,"Data/Cleaned/Audrie/washb-bangladesh-dm-ee-vital-saa-cortisol-f2-gcr-residuals.RDS"))
+#d <- readRDS(paste0(dropboxDir,"Data/Cleaned/Audrie/washb-bangladesh-dm-ee-vital-saa-cortisol-f2-gcr-residuals.RDS"))
+d <- read.csv(paste0(dropboxDir,"Data/Cleaned/Audrie/washb-bangladesh-dm-ee-enrol-vital-saa-cortisol-f2-gcr.csv"))
 
 
 
@@ -35,7 +37,6 @@ plotdf <- bind_rows(
         
 
 #Check skewness
-library(e1071)  
 skewness <- plotdf %>% group_by(outcome) %>%
   do(as.data.frame(e1071::skewness(.$Y, na.rm=T)))
 skewness
@@ -107,7 +108,7 @@ ggsave(p, file = here::here("figures/stress/transformed_outcome_distributions.pn
 d <- d %>% subset(., select = -c(t3_hr1, t3_hr2, t3_hr3, t3_sysbp1, t3_diasbp1, t3_sysbp2,
                                  t3_diasbp2, t3_sysbp3, t3_diasbp3, t3_sysbp_mean, t3_diasbp_mean,
                                  t3_z01_time, t3_z02_time, t3_z03_time, t3_cort_min_elaps, t3_saa_min_elaps, t3_gcr_stdev))
-
+colnames(d)
 
 #---------------------------------------------------------------------------------------------
 # merge covariates
@@ -117,10 +118,19 @@ d <- d %>% subset(., select = -c(t3_hr1, t3_hr2, t3_hr3, t3_sysbp1, t3_diasbp1, 
 d$childid <- as.numeric(d$childid)
 fulld <- read.csv(paste0(dropboxDir,"Data/Cleaned/Andrew/EE-BD_fulldata.csv"))
 
+#subset to needed variables
+fulld <- fulld %>% subset(., select = c(childid,sex,birthord,tr))#, wall:hfias))
+
 dim(fulld)
 dim(d)
 df <- left_join(fulld, d, by="childid")
 dim(df)
+
+#drop treatment arms where outcome was not samples
+df <- df %>% filter(tr %in% c("Control","Nutrition + WSH"))
+
+df$tr <- factor(df$tr, levels = c("Control","Nutrition + WSH"))
+
 
 #---------------------------------------------------------------------------------------------
 # clean time-dependent covariates
@@ -158,51 +168,54 @@ table(df$monsoon3_salimetrics)
 
 
 #Calculate age at measurement time
-df$DOB <- dmy(df$DOB)
-df$vital_aged3 <- (as.numeric(df$samplecoldate_t3_vital-df$DOB))
-df$salimetrics_aged3 <- (as.numeric(df$samplecoldate_t3_salimetrics-df$DOB))
-df$oragene_aged3 <- (as.numeric(df$samplecoldate_t3_oragene-df$DOB))
+# df$DOB <- dmy(df$DOB)
+# df$vital_aged3 <- (as.numeric(df$samplecoldate_t3_vital-df$DOB))
+# df$salimetrics_aged3 <- (as.numeric(df$samplecoldate_t3_salimetrics-df$DOB))
+# df$oragene_aged3 <- (as.numeric(df$samplecoldate_t3_oragene-df$DOB))
+# 
+# summary(df$vital_aged3 - df$ur_aged3)
+# summary(df$salimetrics_aged3 - df$ur_aged3)
+# summary(df$oragene_aged3 - df$ur_aged3)
+
+#rename variables to match old format
+df <- df %>%
+  rename(
+    vital_aged3=ageday_t3_vital,
+    salimetrics_aged3=ageday_t3_salimetrics,
+    oragene_aged3=ageday_t3_oragene,
+    wall=walls
+  )
 
 
 #---------------------------------------------------------------------------------------------
 # (temporary) blind treatment assignment
 #---------------------------------------------------------------------------------------------
-df$tr[1:10]
-table(df$tr)
-set.seed(12345)
-df$tr <- sample(df$tr, nrow(df))
-df$tr[1:10]
-table(df$tr)
-
-#---------------------------------------------------------------------------------------------
-# save data
-#---------------------------------------------------------------------------------------------
-
-saveRDS(df, file=paste0(dropboxDir,"Data/Cleaned/Andrew/clean_stress_dataset_andrew.RDS"))
-
-
-#---------------------------------------------------------------------------------------------
-# merge Audrie's covariates to check replication
-#---------------------------------------------------------------------------------------------
-
-
-# dfull <- read.csv("bangladesh-dm-ee-anthro-diar-ee-med-plasma-blind-tr-enrol-covariates-lab.csv",colClasses=c("dataid"="character"))
-# 
-# dim(dfull)
-# dim(d)
-# df <- left_join(dfull, d, by="childid")
-# dim(df)
-# 
-# 
 # df$tr[1:10]
 # table(df$tr)
 # set.seed(12345)
 # df$tr <- sample(df$tr, nrow(df))
 # df$tr[1:10]
 # table(df$tr)
-# 
-# 
-# saveRDS(df, file=paste0(dropboxDir,"Data/Cleaned/Andrew/clean_stress_dataset_andrew.RDS"))
 
+#---------------------------------------------------------------------------------------------
+# save data
+#---------------------------------------------------------------------------------------------
+
+
+saveRDS(df, file=paste0(dropboxDir,"Data/Cleaned/Andrew/clean_stress_dataset_andrew.RDS"))
+
+
+
+
+#---------------------------------------------------------------------------------------------
+# save IPCW data
+#---------------------------------------------------------------------------------------------
+
+colnames(df)
+#df2 <- df %>% subset(., select = -c(sex,birthord,urineVol_t1:mann.rec.MMOL_t3, wall:hfias))
+df2 <- df %>% subset(., select = -c(sex,birthord, wall:hfias))
+colnames(df2)
+
+saveRDS(df2, file=paste0(dropboxDir,"Data/Cleaned/Andrew/clean_stress_IPCW_dataset_andrew.RDS"))
 
 

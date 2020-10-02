@@ -171,6 +171,7 @@ id="childid"
   
   
   ##3. Fit the full model
+  set.seed(12345)
   sl_fit1 <- sl$train(washb_task1)
   sl_fit2 <- sl$train(washb_task2)
   yhat_full1 <- sl_fit1$predict_fold(washb_task1,"validation")

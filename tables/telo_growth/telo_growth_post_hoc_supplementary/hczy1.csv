@@ -1,0 +1,4 @@
+"Outcome","N","Q1 Mean","Q2 Mean","Q3 Mean","Q4 Mean","HCZ Year 1, Q1 vs. Q2"," "," "," ","HCZ Year 1, Q1 vs. Q3"," "," "," ","HCZ Year 1, Q1 vs. Q4"," "," "," "
+" "," "," "," "," "," ","Unadjusted"," ","Fully adjusted"," ","Unadjusted"," ","Fully adjusted"," ","Unadjusted"," ","Fully adjusted"," "
+" "," "," "," "," "," ","Coefficient (95% CI)","P-value","Coefficient (95% CI)","P-value","Coefficient (95% CI)","P-value","Coefficient (95% CI)","P-value","Coefficient (95% CI)","P-value","Coefficient (95% CI)","P-value"
+"T/S Ratio Year 2","613","1.44","1.46","1.45","1.43","0.02 (-0.04, 0.08)","0.44","0.01 (-0.04, 0.06)","0.76","0.01 (-0.04, 0.07)","0.65","0 (-0.06, 0.05)","0.91","0 (-0.06, 0.05)","0.91","-0.04 (-0.09, 0.01)","0.16"

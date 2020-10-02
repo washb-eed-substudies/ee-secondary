@@ -132,7 +132,6 @@ h1unadj.res <- tmle_quart(dat=d,
                           family="gaussian", 
                           SLlibrary="SL.gam")
 
-h1unadj.res$ATE - h1unadj.res_test$ATE
 
 h1unadj.res <- tmle_quart(dat=d, 
                           Y="delta_waz_t2_t3", 
@@ -173,7 +172,7 @@ h1unadj.res
 #null dataframe
 h1adj.res = NULL 
 
-Wvars<-c("sex","birthord", "momage","momheight","momedu", 
+Wvars_2_3<-c("sex","birthord", "momage","momheight","momedu", 
          "hfiacat", "Nlt18", "Ncomp", "watmin", 
          "floor", "walls", "elec", "asset_wardrobe", "asset_table", "asset_chair", "asset_clock", "asset_khat", 
          "asset_chouki", "asset_radio", "asset_tv", "asset_refrig",
@@ -183,10 +182,9 @@ Wvars<-c("sex","birthord", "momage","momheight","momedu",
          "life_viol_any_t3", "lenhei_med_t2", "weight_med_t2", "anthro_days_btwn_t2_t3")
 
 
-
 h1adj.res <- tmle_quart(dat=d, 
                         Y="delta_laz_t2_t3", 
-                        W=Wvars, 
+                        W=Wvars_2_3, 
                         A="delta_TS", 
                         id="block",
                         Alevels=c("Q1","Q2","Q3","Q4"),
@@ -196,7 +194,7 @@ h1adj.res <- tmle_quart(dat=d,
 
 h1adj.res <- tmle_quart(dat=d, 
                         Y="delta_waz_t2_t3", 
-                        W=Wvars, 
+                        W=Wvars_2_3, 
                         A="delta_TS", 
                         id="block",
                         Alevels=c("Q1","Q2","Q3","Q4"),
@@ -206,7 +204,7 @@ h1adj.res <- tmle_quart(dat=d,
 
 h1adj.res <- tmle_quart(dat=d, 
                         Y="delta_whz_t2_t3", 
-                        W=Wvars, 
+                        W=Wvars_2_3, 
                         A="delta_TS", 
                         id="block",
                         Alevels=c("Q1","Q2","Q3","Q4"),
@@ -216,7 +214,7 @@ h1adj.res <- tmle_quart(dat=d,
 
 h1adj.res <- tmle_quart(dat=d, 
                         Y="delta_hcz_t2_t3", 
-                        W=Wvars, 
+                        W=Wvars_2_3, 
                         A="delta_TS", 
                         id="block",
                         Alevels=c("Q1","Q2","Q3","Q4"),
@@ -275,20 +273,10 @@ h2unadj.res
 #null dataframe
 h2adj.res = NULL 
 
-Wvars<-c("sex","birthord", "momage","momheight","momedu", 
-         "hfiacat", "Nlt18", "Ncomp", "watmin", 
-         "floor", "walls", "elec", "asset_wardrobe", "asset_table", "asset_chair", "asset_clock", "asset_khat", 
-         "asset_chouki", "asset_radio", "asset_tv", "asset_refrig",
-         "asset_bike", "asset_moto", "asset_sewmach", "asset_mobile", 
-         "n_cattle", "n_goat", "n_chicken", "monsoon_ht2", "monsoon_ht3", "ageday_ht2", 
-         "ageday_ht3", "tr", "cesd_sum_t2", "cesd_sum_ee_t3", "pss_sum_mom_t3", "diar7d_t2", "diar7d_t3", 
-         "life_viol_any_t3", "lenhei_med_t2", "weight_med_t2", "anthro_days_btwn_t2_t3")
-
-
 
 h2adj.res <- tmle_quart(dat=d, 
                         Y="len_velocity_t2_t3", 
-                        W=Wvars, 
+                        W=Wvars_2_3, 
                         A="delta_TS", 
                         id="block",
                         Alevels=c("Q1","Q2","Q3","Q4"),
@@ -298,7 +286,7 @@ h2adj.res <- tmle_quart(dat=d,
 
 h2adj.res <- tmle_quart(dat=d, 
                         Y="wei_velocity_t2_t3", 
-                        W=Wvars, 
+                        W=Wvars_2_3, 
                         A="delta_TS", 
                         id="block",
                         Alevels=c("Q1","Q2","Q3","Q4"),
@@ -308,7 +296,7 @@ h2adj.res <- tmle_quart(dat=d,
 
 h2adj.res <- tmle_quart(dat=d, 
                         Y="hc_velocity_t2_t3", 
-                        W=Wvars, 
+                        W=Wvars_2_3, 
                         A="delta_TS", 
                         id="block",
                         Alevels=c("Q1","Q2","Q3","Q4"),
@@ -376,10 +364,7 @@ h3unadj.res
 
 #adjusted
 
-#null dataframe
-h3adj.res = NULL 
-
-Wvars<-c("sex","birthord", "momage", "momheight","momedu", 
+Wvars_H3<-c("sex","birthord", "momage", "momheight","momedu", 
          "hfiacat", "Nlt18", "Ncomp", "watmin", 
          "floor", "walls", "elec", "asset_wardrobe", "asset_table", "asset_chair", "asset_clock", "asset_khat", 
          "asset_chouki", "asset_radio", "asset_tv", "asset_refrig",
@@ -389,10 +374,13 @@ Wvars<-c("sex","birthord", "momage", "momheight","momedu",
          "life_viol_any_t3", "lenhei_med_t2", "weight_med_t2")
 
 
+#null dataframe
+h3adj.res = NULL 
+
 
 h3adj.res <- tmle_quart(dat=d, 
                         Y="laz_t3", 
-                        W=Wvars, 
+                        W=Wvars_H3, 
                         A="delta_TS", 
                         id="block",
                         Alevels=c("Q1","Q2","Q3","Q4"),
@@ -402,7 +390,7 @@ h3adj.res <- tmle_quart(dat=d,
 
 h3adj.res <- tmle_quart(dat=d, 
                         Y="waz_t3", 
-                        W=Wvars, 
+                        W=Wvars_H3, 
                         A="delta_TS", 
                         id="block",
                         Alevels=c("Q1","Q2","Q3","Q4"),
@@ -412,7 +400,7 @@ h3adj.res <- tmle_quart(dat=d,
 
 h3adj.res <- tmle_quart(dat=d, 
                         Y="whz_t3", 
-                        W=Wvars, 
+                        W=Wvars_H3, 
                         A="delta_TS", 
                         id="block",
                         Alevels=c("Q1","Q2","Q3","Q4"),
@@ -422,7 +410,7 @@ h3adj.res <- tmle_quart(dat=d,
 
 h3adj.res <- tmle_quart(dat=d, 
                         Y="hcz_t3", 
-                        W=Wvars, 
+                        W=Wvars_H3, 
                         A="delta_TS", 
                         id="block",
                         Alevels=c("Q1","Q2","Q3","Q4"),
@@ -496,7 +484,7 @@ h4unadj.res
 #Null data.frame
 h4adj.res = NULL
 
-Wvars<-c("sex","birthord", "momage", "momheight","momedu", 
+Wvars_2<-c("sex","birthord", "momage", "momheight","momedu", 
          "hfiacat", "Nlt18", "Ncomp", "watmin", "floor", 
          "walls", "elec", "asset_wardrobe", "asset_table", 
          "asset_chair", "asset_clock", "asset_khat", 
@@ -510,7 +498,7 @@ Wvars<-c("sex","birthord", "momage", "momheight","momedu",
 
 h4adj.res <- tmle_quart(dat=d, 
                       Y="laz_t2", 
-                      W=Wvars, 
+                      W=Wvars_2, 
                       A="TS_t2", 
                       id="block",
                       Alevels=c("Q1","Q2","Q3","Q4"),
@@ -522,7 +510,7 @@ h4adj.res <- tmle_quart(dat=d,
 
 h4adj.res <- tmle_quart(dat=d, 
                            Y="waz_t2", 
-                           W=Wvars, 
+                           W=Wvars_2, 
                            A="TS_t2", 
                            id="block",
                            Alevels=c("Q1","Q2","Q3","Q4"),
@@ -533,7 +521,7 @@ h4adj.res <- tmle_quart(dat=d,
 
 h4adj.res <- tmle_quart(dat=d, 
                            Y="whz_t2", 
-                           W=Wvars, 
+                           W=Wvars_2, 
                            A="TS_t2", 
                            id="block",
                            Alevels=c("Q1","Q2","Q3","Q4"),
@@ -545,7 +533,7 @@ h4adj.res <- tmle_quart(dat=d,
 
 h4adj.res <- tmle_quart(dat=d, 
                            Y="hcz_t2", 
-                           W=Wvars, 
+                           W=Wvars_2, 
                            A="TS_t2", 
                            id="block",
                            Alevels=c("Q1","Q2","Q3","Q4"),
@@ -615,7 +603,7 @@ h5unadj.res
 #null dataframe
 h5adj.res = NULL 
 
-Wvars<-c("sex","birthord", "momage", "momheight","momedu", 
+Wvars_3<-c("sex","birthord", "momage", "momheight","momedu", 
          "hfiacat", "Nlt18", "Ncomp", "watmin", 
          "floor", "walls", "elec", "asset_wardrobe", "asset_table", "asset_chair", "asset_clock", "asset_khat", 
          "asset_chouki", "asset_radio", "asset_tv", "asset_refrig",
@@ -630,7 +618,7 @@ Wvars<-c("sex","birthord", "momage", "momheight","momedu",
 
 h5adj.res <- tmle_quart(dat=d, 
                         Y="laz_t3", 
-                        W=Wvars, 
+                        W=Wvars_3, 
                         A="TS_t3", 
                         id="block",
                         Alevels=c("Q1","Q2","Q3","Q4"),
@@ -640,7 +628,7 @@ h5adj.res <- tmle_quart(dat=d,
 
 h5adj.res <- tmle_quart(dat=d, 
                         Y="waz_t3", 
-                        W=Wvars, 
+                        W=Wvars_3, 
                         A="TS_t3", 
                         id="block",
                         Alevels=c("Q1","Q2","Q3","Q4"),
@@ -650,7 +638,7 @@ h5adj.res <- tmle_quart(dat=d,
 
 h5adj.res <- tmle_quart(dat=d, 
                         Y="whz_t3", 
-                        W=Wvars, 
+                        W=Wvars_3, 
                         A="TS_t3", 
                         id="block",
                         Alevels=c("Q1","Q2","Q3","Q4"),
@@ -660,7 +648,7 @@ h5adj.res <- tmle_quart(dat=d,
 
 h5adj.res <- tmle_quart(dat=d, 
                         Y="hcz_t3", 
-                        W=Wvars, 
+                        W=Wvars_3, 
                         A="TS_t3", 
                         id="block",
                         Alevels=c("Q1","Q2","Q3","Q4"),
@@ -728,7 +716,7 @@ h6unadj.res
 #null dataframe
 h6adj.res = NULL 
 
-Wvars<-c("sex","birthord", "momage", "momheight","momedu", 
+Wvars_2_3_no_anthro_days <-c("sex","birthord", "momage", "momheight","momedu", 
          "hfiacat", "Nlt18", "Ncomp", "watmin", 
          "floor", "walls", "elec", "asset_wardrobe", "asset_table", "asset_chair", "asset_clock", "asset_khat", 
          "asset_chouki", "asset_radio", "asset_tv", "asset_refrig",
@@ -736,12 +724,12 @@ Wvars<-c("sex","birthord", "momage", "momheight","momedu",
          "n_cattle", "n_goat", "n_chicken", "monsoon_ht2", "monsoon_ht3", "ageday_ht2", 
          "ageday_ht3", "tr", "cesd_sum_t2", "cesd_sum_ee_t3", "pss_sum_mom_t3", "diar7d_t2", "diar7d_t3", 
          "life_viol_any_t3", "lenhei_med_t2", "weight_med_t2")
-         
+
 
 
 h6adj.res <- tmle_quart(dat=d, 
                       Y="laz_t3", 
-                      W=Wvars, 
+                      W=Wvars_2_3_no_anthro_days, 
                       A="TS_t2", 
                       id="block",
                       Alevels=c("Q1","Q2","Q3","Q4"),
@@ -751,7 +739,7 @@ h6adj.res <- tmle_quart(dat=d,
 
 h6adj.res <- tmle_quart(dat=d, 
                         Y="waz_t3", 
-                        W=Wvars, 
+                        W=Wvars_2_3_no_anthro_days, 
                         A="TS_t2", 
                         id="block",
                         Alevels=c("Q1","Q2","Q3","Q4"),
@@ -761,7 +749,7 @@ h6adj.res <- tmle_quart(dat=d,
 
 h6adj.res <- tmle_quart(dat=d, 
                         Y="whz_t3", 
-                        W=Wvars, 
+                        W=Wvars_2_3_no_anthro_days, 
                         A="TS_t2", 
                         id="block",
                         Alevels=c("Q1","Q2","Q3","Q4"),
@@ -771,7 +759,7 @@ h6adj.res <- tmle_quart(dat=d,
 
 h6adj.res <- tmle_quart(dat=d, 
                         Y="hcz_t3", 
-                        W=Wvars, 
+                        W=Wvars_2_3_no_anthro_days, 
                         A="TS_t2", 
                         id="block",
                         Alevels=c("Q1","Q2","Q3","Q4"),
@@ -839,7 +827,7 @@ h6bunadj.res
 #null dataframe
 h6badj.res = NULL 
 
-Wvars<-c("sex","birthord", "momage", "momheight","momedu", 
+Wvars_H6<-c("sex","birthord", "momage", "momheight","momedu", 
          "hfiacat", "Nlt18", "Ncomp", "watmin", 
          "floor", "walls", "elec", "asset_wardrobe", "asset_table", "asset_chair", "asset_clock", "asset_khat", 
          "asset_chouki", "asset_radio", "asset_tv", "asset_refrig",
@@ -851,7 +839,7 @@ Wvars<-c("sex","birthord", "momage", "momheight","momedu",
 
 h6badj.res <- tmle_quart(dat=d, 
                         Y="TS_t3", 
-                        W=Wvars, 
+                        W=Wvars_H6, 
                         A="laz_t2", 
                         id="block",
                         Alevels=c("Q1","Q2","Q3","Q4"),
@@ -861,7 +849,7 @@ h6badj.res <- tmle_quart(dat=d,
 
 h6badj.res <- tmle_quart(dat=d, 
                         Y="TS_t3", 
-                        W=Wvars, 
+                        W=Wvars_H6, 
                         A="waz_t2", 
                         id="block",
                         Alevels=c("Q1","Q2","Q3","Q4"),
@@ -871,7 +859,7 @@ h6badj.res <- tmle_quart(dat=d,
 
 h6badj.res <- tmle_quart(dat=d, 
                         Y="TS_t3", 
-                        W=Wvars, 
+                        W=Wvars_H6, 
                         A="whz_t2", 
                         id="block",
                         Alevels=c("Q1","Q2","Q3","Q4"),
@@ -881,7 +869,7 @@ h6badj.res <- tmle_quart(dat=d,
 
 h6badj.res <- tmle_quart(dat=d, 
                         Y="TS_t3", 
-                        W=Wvars, 
+                        W=Wvars_H6, 
                         A="hcz_t2", 
                         id="block",
                         Alevels=c("Q1","Q2","Q3","Q4"),
@@ -949,7 +937,7 @@ h6cunadj.res
 #null dataframe
 h6cadj.res = NULL 
 
-Wvars<-c("sex","birthord", "momage", "momheight","momedu", 
+Wvars_1_2<-c("sex","birthord", "momage", "momheight","momedu", 
          "hfiacat", "Nlt18", "Ncomp", "watmin", 
          "floor", "walls", "elec", "asset_wardrobe", "asset_table", "asset_chair", "asset_clock", "asset_khat", 
          "asset_chouki", "asset_radio", "asset_tv", "asset_refrig",
@@ -959,7 +947,7 @@ Wvars<-c("sex","birthord", "momage", "momheight","momedu",
 
 h6cadj.res <- tmle_quart(dat=d, 
                          Y="TS_t2", 
-                         W=Wvars, 
+                         W=Wvars_1_2, 
                          A="laz_t1", 
                          id="block",
                          Alevels=c("Q1","Q2","Q3","Q4"),
@@ -969,7 +957,7 @@ h6cadj.res <- tmle_quart(dat=d,
 
 h6cadj.res <- tmle_quart(dat=d, 
                          Y="TS_t2", 
-                         W=Wvars, 
+                         W=Wvars_1_2, 
                          A="waz_t1", 
                          id="block",
                          Alevels=c("Q1","Q2","Q3","Q4"),
@@ -979,7 +967,7 @@ h6cadj.res <- tmle_quart(dat=d,
 
 h6cadj.res <- tmle_quart(dat=d, 
                          Y="TS_t2", 
-                         W=Wvars, 
+                         W=Wvars_1_2, 
                          A="whz_t1", 
                          id="block",
                          Alevels=c("Q1","Q2","Q3","Q4"),
@@ -989,7 +977,7 @@ h6cadj.res <- tmle_quart(dat=d,
 
 h6cadj.res <- tmle_quart(dat=d, 
                          Y="TS_t2", 
-                         W=Wvars, 
+                         W=Wvars_1_2, 
                          A="hcz_t1", 
                          id="block",
                          Alevels=c("Q1","Q2","Q3","Q4"),
@@ -1059,7 +1047,7 @@ h6dunadj.res
 #null dataframe
 h6dadj.res = NULL 
 
-Wvars<-c("sex","birthord", "momage", "momheight","momedu", 
+Wvars_1_3<-c("sex","birthord", "momage", "momheight","momedu", 
          "hfiacat", "Nlt18", "Ncomp", "watmin", 
          "floor", "walls", "elec", "asset_wardrobe", "asset_table", "asset_chair", "asset_clock", "asset_khat", 
          "asset_chouki", "asset_radio", "asset_tv", "asset_refrig",
@@ -1071,7 +1059,7 @@ Wvars<-c("sex","birthord", "momage", "momheight","momedu",
 
 h6dadj.res <- tmle_quart(dat=d, 
                          Y="TS_t3", 
-                         W=Wvars, 
+                         W=Wvars_1_3, 
                          A="laz_t1", 
                          id="block",
                          Alevels=c("Q1","Q2","Q3","Q4"),
@@ -1081,7 +1069,7 @@ h6dadj.res <- tmle_quart(dat=d,
 
 h6dadj.res <- tmle_quart(dat=d, 
                          Y="TS_t3", 
-                         W=Wvars, 
+                         W=Wvars_1_3, 
                          A="waz_t1", 
                          id="block",
                          Alevels=c("Q1","Q2","Q3","Q4"),
@@ -1091,7 +1079,7 @@ h6dadj.res <- tmle_quart(dat=d,
 
 h6dadj.res <- tmle_quart(dat=d, 
                          Y="TS_t3", 
-                         W=Wvars, 
+                         W=Wvars_1_3, 
                          A="whz_t1", 
                          id="block",
                          Alevels=c("Q1","Q2","Q3","Q4"),
@@ -1101,7 +1089,7 @@ h6dadj.res <- tmle_quart(dat=d,
 
 h6dadj.res <- tmle_quart(dat=d, 
                          Y="TS_t3", 
-                         W=Wvars, 
+                         W=Wvars_1_3, 
                          A="hcz_t1", 
                          id="block",
                          Alevels=c("Q1","Q2","Q3","Q4"),
@@ -1163,7 +1151,7 @@ h7unadj.res
 #null dataframe
 h7adj.res = NULL 
 
-Wvars<-c("sex","birthord", "momage", "momheight","momedu", 
+Wvars_H7<-c("sex","birthord", "momage", "momheight","momedu", 
          "hfiacat", "Nlt18", "Ncomp", "watmin", 
          "floor", "walls", "elec", "asset_wardrobe", "asset_table", "asset_chair", "asset_clock", "asset_khat", 
          "asset_chouki", "asset_radio", "asset_tv", "asset_refrig",
@@ -1176,7 +1164,7 @@ Wvars<-c("sex","birthord", "momage", "momheight","momedu",
 
 h7adj.res <- tmle_quart(dat=d, 
                         Y="len_velocity_t2_t3", 
-                        W=Wvars, 
+                        W=Wvars_H7, 
                         A="TS_t2", 
                         id="block",
                         Alevels=c("Q1","Q2","Q3","Q4"),
@@ -1186,7 +1174,7 @@ h7adj.res <- tmle_quart(dat=d,
 
 h7adj.res <- tmle_quart(dat=d, 
                         Y="wei_velocity_t2_t3", 
-                        W=Wvars, 
+                        W=Wvars_H7, 
                         A="TS_t2", 
                         id="block",
                         Alevels=c("Q1","Q2","Q3","Q4"),
@@ -1196,7 +1184,7 @@ h7adj.res <- tmle_quart(dat=d,
 
 h7adj.res <- tmle_quart(dat=d, 
                         Y="hc_velocity_t2_t3", 
-                        W=Wvars, 
+                        W=Wvars_H7, 
                         A="TS_t2", 
                         id="block",
                         Alevels=c("Q1","Q2","Q3","Q4"),
@@ -1254,7 +1242,7 @@ h7bunadj.res
 #null dataframe
 h7badj.res = NULL 
 
-Wvars<-c("sex","birthord", "momage", "momheight","momedu", 
+Wvars_2_h7 <-c("sex","birthord", "momage", "momheight","momedu", 
          "hfiacat", "Nlt18", "Ncomp", "watmin", 
          "floor", "walls", "elec", "asset_wardrobe", "asset_table", "asset_chair", "asset_clock", "asset_khat", 
          "asset_chouki", "asset_radio", "asset_tv", "asset_refrig",
@@ -1263,12 +1251,13 @@ Wvars<-c("sex","birthord", "momage", "momheight","momedu",
          "tr", "cesd_sum_t2", "diar7d_t2", 
          "life_viol_any_t3")
 
+
 #Removed Year 2 covariates: cesd_sum_ee_t3, diar7d_t3, pss_sum_mom_t3
 #Kept life_viol_any_t3 (lifetime exposure to violence affects earlier timepoints)
 
 h7badj.res <- tmle_quart(dat=d, 
                          Y="TS_t2", 
-                         W=Wvars, 
+                         W=Wvars_2_h7, 
                          A="len_velocity_t1_t2", 
                          id="block",
                          Alevels=c("Q1","Q2","Q3","Q4"),
@@ -1278,7 +1267,7 @@ h7badj.res <- tmle_quart(dat=d,
 
 h7badj.res <- tmle_quart(dat=d, 
                          Y="TS_t2", 
-                         W=Wvars, 
+                         W=Wvars_2_h7, 
                          A="wei_velocity_t1_t2", 
                          id="block",
                          Alevels=c("Q1","Q2","Q3","Q4"),
@@ -1288,7 +1277,7 @@ h7badj.res <- tmle_quart(dat=d,
 
 h7badj.res <- tmle_quart(dat=d, 
                          Y="TS_t2", 
-                         W=Wvars, 
+                         W=Wvars_2_h7, 
                          A="hc_velocity_t1_t2", 
                          id="block",
                          Alevels=c("Q1","Q2","Q3","Q4"),
@@ -1347,7 +1336,7 @@ h7cunadj.res
 #null dataframe
 h7cadj.res = NULL 
 
-Wvars<-c("sex","birthord", "momage", "momheight","momedu", 
+Wvars_1_2_3<-c("sex","birthord", "momage", "momheight","momedu", 
          "hfiacat", "Nlt18", "Ncomp", "watmin", 
          "floor", "walls", "elec", "asset_wardrobe", "asset_table", "asset_chair", "asset_clock", "asset_khat", 
          "asset_chouki", "asset_radio", "asset_tv", "asset_refrig",
@@ -1359,7 +1348,7 @@ Wvars<-c("sex","birthord", "momage", "momheight","momedu",
 
 h7cadj.res <- tmle_quart(dat=d, 
                          Y="TS_t3", 
-                         W=Wvars, 
+                         W=Wvars_1_2_3, 
                          A="len_velocity_t1_t2", 
                          id="block",
                          Alevels=c("Q1","Q2","Q3","Q4"),
@@ -1369,7 +1358,7 @@ h7cadj.res <- tmle_quart(dat=d,
 
 h7cadj.res <- tmle_quart(dat=d, 
                          Y="TS_t3", 
-                         W=Wvars, 
+                         W=Wvars_1_2_3, 
                          A="wei_velocity_t1_t2", 
                          id="block",
                          Alevels=c("Q1","Q2","Q3","Q4"),
@@ -1379,7 +1368,7 @@ h7cadj.res <- tmle_quart(dat=d,
 
 h7cadj.res <- tmle_quart(dat=d, 
                          Y="TS_t3", 
-                         W=Wvars, 
+                         W=Wvars_1_2_3, 
                          A="hc_velocity_t1_t2", 
                          id="block",
                          Alevels=c("Q1","Q2","Q3","Q4"),
@@ -1438,7 +1427,7 @@ h7dunadj.res
 #null dataframe
 h7dadj.res = NULL 
 
-Wvars<-c("sex","birthord", "momage", "momheight","momedu", 
+Wvars_h7d<-c("sex","birthord", "momage", "momheight","momedu", 
          "hfiacat", "Nlt18", "Ncomp", "watmin", 
          "floor", "walls", "elec", "asset_wardrobe", "asset_table", "asset_chair", "asset_clock", "asset_khat", 
          "asset_chouki", "asset_radio", "asset_tv", "asset_refrig",
@@ -1448,9 +1437,10 @@ Wvars<-c("sex","birthord", "momage", "momheight","momedu",
          "life_viol_any_t3")
 
 
+
 h7dadj.res <- tmle_quart(dat=d, 
                         Y="TS_t3", 
-                        W=Wvars, 
+                        W=Wvars_h7d, 
                         A="len_velocity_t2_t3", 
                         id="block",
                         Alevels=c("Q1","Q2","Q3","Q4"),
@@ -1460,7 +1450,7 @@ h7dadj.res <- tmle_quart(dat=d,
 
 h7dadj.res <- tmle_quart(dat=d, 
                         Y="TS_t3", 
-                        W=Wvars, 
+                        W=Wvars_h7d, 
                         A="wei_velocity_t2_t3", 
                         id="block",
                         Alevels=c("Q1","Q2","Q3","Q4"),
@@ -1470,7 +1460,7 @@ h7dadj.res <- tmle_quart(dat=d,
 
 h7dadj.res <- tmle_quart(dat=d, 
                         Y="TS_t3", 
-                        W=Wvars, 
+                        W=Wvars_h7d, 
                         A="hc_velocity_t2_t3", 
                         id="block",
                         Alevels=c("Q1","Q2","Q3","Q4"),
@@ -1528,7 +1518,7 @@ h7eunadj.res
 #null dataframe
 h7eadj.res = NULL 
 
-Wvars<-c("sex","birthord", "momage", "momheight","momedu", 
+Wvars_h7e<-c("sex","birthord", "momage", "momheight","momedu", 
          "hfiacat", "Nlt18", "Ncomp", "watmin", 
          "floor", "walls", "elec", "asset_wardrobe", "asset_table", "asset_chair", "asset_clock", "asset_khat", 
          "asset_chouki", "asset_radio", "asset_tv", "asset_refrig",
@@ -1538,9 +1528,11 @@ Wvars<-c("sex","birthord", "momage", "momheight","momedu",
          "life_viol_any_t3")
 
 
+
+
 h7eadj.res <- tmle_quart(dat=d, 
                          Y="TS_t3", 
-                         W=Wvars, 
+                         W=Wvars_h7e, 
                          A="len_velocity_t1_t3", 
                          id="block",
                          Alevels=c("Q1","Q2","Q3","Q4"),
@@ -1550,7 +1542,7 @@ h7eadj.res <- tmle_quart(dat=d,
 
 h7eadj.res <- tmle_quart(dat=d, 
                          Y="TS_t3", 
-                         W=Wvars, 
+                         W=Wvars_h7e, 
                          A="wei_velocity_t1_t3", 
                          id="block",
                          Alevels=c("Q1","Q2","Q3","Q4"),
@@ -1560,7 +1552,7 @@ h7eadj.res <- tmle_quart(dat=d,
 
 h7eadj.res <- tmle_quart(dat=d, 
                          Y="TS_t3", 
-                         W=Wvars, 
+                         W=Wvars_h7e, 
                          A="hc_velocity_t1_t3", 
                          id="block",
                          Alevels=c("Q1","Q2","Q3","Q4"),
@@ -1634,7 +1626,7 @@ h8unadj.res
 #null dataframe
 h8adj.res = NULL 
 
-Wvars<-c("sex","birthord", "momage", "momheight","momedu", 
+Wvars_h8<-c("sex","birthord", "momage", "momheight","momedu", 
          "hfiacat", "Nlt18", "Ncomp", "watmin", 
          "floor", "walls", "elec", "asset_wardrobe", "asset_table", "asset_chair", "asset_clock", "asset_khat", 
          "asset_chouki", "asset_radio", "asset_tv", "asset_refrig",
@@ -1647,7 +1639,7 @@ Wvars<-c("sex","birthord", "momage", "momheight","momedu",
 
 h8adj.res <- tmle_quart(dat=d, 
                         Y="delta_laz_t2_t3", 
-                        W=Wvars, 
+                        W=Wvars_h8, 
                         A="TS_t2", 
                         id="block",
                         Alevels=c("Q1","Q2","Q3","Q4"),
@@ -1657,7 +1649,7 @@ h8adj.res <- tmle_quart(dat=d,
 
 h8adj.res <- tmle_quart(dat=d, 
                         Y="delta_waz_t2_t3", 
-                        W=Wvars, 
+                        W=Wvars_h8, 
                         A="TS_t2", 
                         id="block",
                         Alevels=c("Q1","Q2","Q3","Q4"),
@@ -1667,7 +1659,7 @@ h8adj.res <- tmle_quart(dat=d,
 
 h8adj.res <- tmle_quart(dat=d, 
                         Y="delta_whz_t2_t3", 
-                        W=Wvars, 
+                        W=Wvars_h8, 
                         A="TS_t2", 
                         id="block",
                         Alevels=c("Q1","Q2","Q3","Q4"),
@@ -1677,7 +1669,7 @@ h8adj.res <- tmle_quart(dat=d,
 
 h8adj.res <- tmle_quart(dat=d, 
                         Y="delta_hcz_t2_t3", 
-                        W=Wvars, 
+                        W=Wvars_h8, 
                         A="TS_t2", 
                         id="block",
                         Alevels=c("Q1","Q2","Q3","Q4"),
@@ -1744,7 +1736,7 @@ h8bunadj.res
 #null dataframe
 h8badj.res = NULL 
 
-Wvars<-c("sex","birthord", "momage", "momheight","momedu", 
+Wvars_h8b<-c("sex","birthord", "momage", "momheight","momedu", 
          "hfiacat", "Nlt18", "Ncomp", "watmin", 
          "floor", "walls", "elec", "asset_wardrobe", "asset_table", "asset_chair", "asset_clock", "asset_khat", 
          "asset_chouki", "asset_radio", "asset_tv", "asset_refrig",
@@ -1760,7 +1752,7 @@ Wvars<-c("sex","birthord", "momage", "momheight","momedu",
 
 h8badj.res <- tmle_quart(dat=d, 
                         Y="TS_t2", 
-                        W=Wvars, 
+                        W=Wvars_h8b, 
                         A="delta_laz_t1_t2", 
                         id="block",
                         Alevels=c("Q1","Q2","Q3","Q4"),
@@ -1770,7 +1762,7 @@ h8badj.res <- tmle_quart(dat=d,
 
 h8badj.res <- tmle_quart(dat=d, 
                         Y="TS_t2", 
-                        W=Wvars, 
+                        W=Wvars_h8b, 
                         A="delta_waz_t1_t2", 
                         id="block",
                         Alevels=c("Q1","Q2","Q3","Q4"),
@@ -1780,7 +1772,7 @@ h8badj.res <- tmle_quart(dat=d,
 
 h8badj.res <- tmle_quart(dat=d, 
                         Y="TS_t2", 
-                        W=Wvars, 
+                        W=Wvars_h8b, 
                         A="delta_whz_t1_t2", 
                         id="block",
                         Alevels=c("Q1","Q2","Q3","Q4"),
@@ -1790,7 +1782,7 @@ h8badj.res <- tmle_quart(dat=d,
 
 h8badj.res <- tmle_quart(dat=d, 
                         Y="TS_t2", 
-                        W=Wvars, 
+                        W=Wvars_h8b, 
                         A="delta_hcz_t1_t2", 
                         id="block",
                         Alevels=c("Q1","Q2","Q3","Q4"),
@@ -1859,7 +1851,7 @@ h8cunadj.res
 #null dataframe
 h8cadj.res = NULL 
 
-Wvars<-c("sex","birthord", "momage", "momheight","momedu", 
+Wvars_h8c<-c("sex","birthord", "momage", "momheight","momedu", 
          "hfiacat", "Nlt18", "Ncomp", "watmin", 
          "floor", "walls", "elec", "asset_wardrobe", "asset_table", "asset_chair", "asset_clock", "asset_khat", 
          "asset_chouki", "asset_radio", "asset_tv", "asset_refrig",
@@ -1875,7 +1867,7 @@ Wvars<-c("sex","birthord", "momage", "momheight","momedu",
 
 h8cadj.res <- tmle_quart(dat=d, 
                          Y="TS_t3", 
-                         W=Wvars, 
+                         W=Wvars_h8c, 
                          A="delta_laz_t1_t2", 
                          id="block",
                          Alevels=c("Q1","Q2","Q3","Q4"),
@@ -1885,7 +1877,7 @@ h8cadj.res <- tmle_quart(dat=d,
 
 h8cadj.res <- tmle_quart(dat=d, 
                          Y="TS_t3", 
-                         W=Wvars, 
+                         W=Wvars_h8c, 
                          A="delta_waz_t1_t2", 
                          id="block",
                          Alevels=c("Q1","Q2","Q3","Q4"),
@@ -1895,7 +1887,7 @@ h8cadj.res <- tmle_quart(dat=d,
 
 h8cadj.res <- tmle_quart(dat=d, 
                          Y="TS_t3", 
-                         W=Wvars, 
+                         W=Wvars_h8c, 
                          A="delta_whz_t1_t2", 
                          id="block",
                          Alevels=c("Q1","Q2","Q3","Q4"),
@@ -1905,7 +1897,7 @@ h8cadj.res <- tmle_quart(dat=d,
 
 h8cadj.res <- tmle_quart(dat=d, 
                          Y="TS_t3", 
-                         W=Wvars, 
+                         W=Wvars_h8c, 
                          A="delta_hcz_t1_t2", 
                          id="block",
                          Alevels=c("Q1","Q2","Q3","Q4"),
@@ -1975,7 +1967,7 @@ h8dunadj.res
 #null dataframe
 h8dadj.res = NULL 
 
-Wvars<-c("sex","birthord", "momage", "momheight","momedu", 
+Wvars_h8d<-c("sex","birthord", "momage", "momheight","momedu", 
          "hfiacat", "Nlt18", "Ncomp", "watmin", 
          "floor", "walls", "elec", "asset_wardrobe", "asset_table", "asset_chair", "asset_clock", "asset_khat", 
          "asset_chouki", "asset_radio", "asset_tv", "asset_refrig",
@@ -1992,7 +1984,7 @@ Wvars<-c("sex","birthord", "momage", "momheight","momedu",
 
 h8dadj.res <- tmle_quart(dat=d, 
                          Y="TS_t3", 
-                         W=Wvars, 
+                         W=Wvars_h8d, 
                          A="delta_laz_t2_t3", 
                          id="block",
                          Alevels=c("Q1","Q2","Q3","Q4"),
@@ -2002,7 +1994,7 @@ h8dadj.res <- tmle_quart(dat=d,
 
 h8dadj.res <- tmle_quart(dat=d, 
                          Y="TS_t3", 
-                         W=Wvars, 
+                         W=Wvars_h8d, 
                          A="delta_waz_t2_t3", 
                          id="block",
                          Alevels=c("Q1","Q2","Q3","Q4"),
@@ -2012,7 +2004,7 @@ h8dadj.res <- tmle_quart(dat=d,
 
 h8dadj.res <- tmle_quart(dat=d, 
                          Y="TS_t3", 
-                         W=Wvars, 
+                         W=Wvars_h8d, 
                          A="delta_whz_t2_t3", 
                          id="block",
                          Alevels=c("Q1","Q2","Q3","Q4"),
@@ -2022,7 +2014,7 @@ h8dadj.res <- tmle_quart(dat=d,
 
 h8dadj.res <- tmle_quart(dat=d, 
                          Y="TS_t3", 
-                         W=Wvars, 
+                         W=Wvars_h8d, 
                          A="delta_hcz_t2_t3", 
                          id="block",
                          Alevels=c("Q1","Q2","Q3","Q4"),
@@ -2090,7 +2082,7 @@ h8eunadj.res
 #null dataframe
 h8eadj.res = NULL 
 
-Wvars<-c("sex","birthord", "momage", "momheight","momedu", 
+Wvars_h8e<-c("sex","birthord", "momage", "momheight","momedu", 
          "hfiacat", "Nlt18", "Ncomp", "watmin", 
          "floor", "walls", "elec", "asset_wardrobe", "asset_table", "asset_chair", "asset_clock", "asset_khat", 
          "asset_chouki", "asset_radio", "asset_tv", "asset_refrig",
@@ -2108,7 +2100,7 @@ Wvars<-c("sex","birthord", "momage", "momheight","momedu",
 
 h8eadj.res <- tmle_quart(dat=d, 
                          Y="TS_t3", 
-                         W=Wvars, 
+                         W=Wvars_h8e, 
                          A="delta_laz_t1_t3", 
                          id="block",
                          Alevels=c("Q1","Q2","Q3","Q4"),
@@ -2118,7 +2110,7 @@ h8eadj.res <- tmle_quart(dat=d,
 
 h8eadj.res <- tmle_quart(dat=d, 
                          Y="TS_t3", 
-                         W=Wvars, 
+                         W=Wvars_h8e, 
                          A="delta_waz_t1_t3", 
                          id="block",
                          Alevels=c("Q1","Q2","Q3","Q4"),
@@ -2128,7 +2120,7 @@ h8eadj.res <- tmle_quart(dat=d,
 
 h8eadj.res <- tmle_quart(dat=d, 
                          Y="TS_t3", 
-                         W=Wvars, 
+                         W=Wvars_h8e, 
                          A="delta_whz_t1_t3", 
                          id="block",
                          Alevels=c("Q1","Q2","Q3","Q4"),
@@ -2138,7 +2130,7 @@ h8eadj.res <- tmle_quart(dat=d,
 
 h8eadj.res <- tmle_quart(dat=d, 
                          Y="TS_t3", 
-                         W=Wvars, 
+                         W=Wvars_h8e, 
                          A="delta_hcz_t1_t3", 
                          id="block",
                          Alevels=c("Q1","Q2","Q3","Q4"),
@@ -2204,10 +2196,10 @@ h6c_ts_t2_vs_hcz_t1gam.res <- GAM_simulCI(Y=d$TS_t2, X=d$hcz_t1, W = NULL)
 
 
 #Hypothesis 6d
-h6c_ts_t3_vs_laz_t1gam.res <- GAM_simulCI(Y=d$TS_t3, X=d$laz_t1, W = NULL)
-h6c_ts_t3_vs_waz_t1gam.res <- GAM_simulCI(Y=d$TS_t3, X=d$waz_t1, W = NULL)
-h6c_ts_t3_vs_whz_t1gam.res <- GAM_simulCI(Y=d$TS_t3, X=d$whz_t1, W = NULL)
-h6c_ts_t3_vs_hcz_t1gam.res <- GAM_simulCI(Y=d$TS_t3, X=d$hcz_t1, W = NULL)
+h6d_ts_t3_vs_laz_t1gam.res <- GAM_simulCI(Y=d$TS_t3, X=d$laz_t1, W = NULL)
+h6d_ts_t3_vs_waz_t1gam.res <- GAM_simulCI(Y=d$TS_t3, X=d$waz_t1, W = NULL)
+h6d_ts_t3_vs_whz_t1gam.res <- GAM_simulCI(Y=d$TS_t3, X=d$whz_t1, W = NULL)
+h6d_ts_t3_vs_hcz_t1gam.res <- GAM_simulCI(Y=d$TS_t3, X=d$hcz_t1, W = NULL)
 
 #Hypothesis 7
 h7_len_veloc_vs_ts_t2gam.res <- GAM_simulCI(Y=d$len_velocity_t2_t3, X=d$TS_t2, W = NULL)
@@ -2355,10 +2347,10 @@ save(
   h6c_ts_t2_vs_whz_t1gam.res,
   h6c_ts_t2_vs_hcz_t1gam.res,
   #Hypothesis 6d
-  h6c_ts_t3_vs_laz_t1gam.res,
-  h6c_ts_t3_vs_waz_t1gam.res,
-  h6c_ts_t3_vs_whz_t1gam.res,
-  h6c_ts_t3_vs_hcz_t1gam.res,
+  h6d_ts_t3_vs_laz_t1gam.res,
+  h6d_ts_t3_vs_waz_t1gam.res,
+  h6d_ts_t3_vs_whz_t1gam.res,
+  h6d_ts_t3_vs_hcz_t1gam.res,
   #Hypothesis 7
   h7_len_veloc_vs_ts_t2gam.res, 
   h7_wei_veloc_vs_ts_t2gam.res, 
