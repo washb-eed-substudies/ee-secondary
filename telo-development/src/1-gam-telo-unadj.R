@@ -3,7 +3,7 @@ rm(list=ls())
 source(here::here("0-config.R"))
 source(here::here("telo-development/src/0-gam-functions.R"))
 
-d <- read.csv(paste0(dropboxDir, "Data/Cleaned/Audrie/bangladesh-ee-telo-development-covariates.csv"))
+d <- readRDS(paste0(dropboxDir, "Data/Cleaned/Audrie/bangladesh-ee-telo-development-covariates.RDS"))
 
 #Example:
 
@@ -30,11 +30,10 @@ d <- read.csv(paste0(dropboxDir, "Data/Cleaned/Audrie/bangladesh-ee-telo-develop
 #Loop over exposure-outcome pairs
 
 # change in telomere length between y1 and y2
-Xvars <- c("delta_TS")            
+Xvars <- c("delta_TS_Z")            
 Yvars <- c("endline_communication_score", "endline_gross_motor_score", 
-           "endline_personal_social_score", "endline_A_not_B_score", 
+           "endline_personal_social_score", "combined_easq", "endline_A_not_B_score", 
            "endline_tower_test") 
-
 
 #Fit models
 H1_models <- NULL
@@ -70,7 +69,7 @@ for(i in 1:nrow(H1_models)){
 saveRDS(H1_models, here("telo-development/models/H1_models.RDS"))
 
 #Save results
-saveRDS(H1_res, here("telo-development/results/H1_res.RDS"))
+saveRDS(H1_res, here("telo-development/results/unadjusted/H1_res.RDS"))
 
 
 #Save plots
@@ -82,9 +81,9 @@ saveRDS(H1_res, here("telo-development/results/H1_res.RDS"))
 
 
 # Telomere at y1 v. development year 2
-Xvars <- c("TS_t2")            
+Xvars <- c("TS_t2_Z")            
 Yvars <- c("endline_communication_score", "endline_gross_motor_score", 
-           "endline_personal_social_score", "endline_A_not_B_score", 
+           "endline_personal_social_score", "combined_easq", "endline_A_not_B_score", 
            "endline_tower_test") 
 
 #Fit models
@@ -118,10 +117,10 @@ for(i in 1:nrow(H2_models)){
 
 
 #Save models
-saveRDS(H2_models, here("telo_development/models/H2_models.RDS"))
+saveRDS(H2_models, here("telo-development/models/H2_models.RDS"))
 
 #Save results
-saveRDS(H2_res, here("telo_development/results/H2_res.RDS"))
+saveRDS(H2_res, here("telo-development/results/unadjusted/H2_res.RDS"))
 
 
 #Save plots
@@ -133,7 +132,7 @@ saveRDS(H2_res, here("telo_development/results/H2_res.RDS"))
 
 
 # telomere length at year 1 v. development at year 1
-Xvars <- c("TS_t2")            
+Xvars <- c("TS_t2_Z")            
 Yvars <- c("endline_CDI_understand", "endline_CDI_say")
 
 #Fit models
@@ -167,10 +166,10 @@ for(i in 1:nrow(H3_models)){
 
 
 #Save models
-saveRDS(H3_models, here("models/H3_models.RDS"))
+saveRDS(H3_models, here("telo-development/models/H3_models.RDS"))
 
 #Save results
-saveRDS(H3_res, here("results/unadjusted/H3_res.RDS"))
+saveRDS(H3_res, here("telo-development/results/unadjusted/H3_res.RDS"))
 
 
 #Save plots
@@ -181,9 +180,9 @@ saveRDS(H3_res, here("results/unadjusted/H3_res.RDS"))
 
 
 #Telomere length at year 2 v. development at year 2
-Xvars <- c("TS_t3")            
+Xvars <- c("TS_t3_Z")            
 Yvars <- c("endline_communication_score", "endline_gross_motor_score", 
-           "endline_personal_social_score", "endline_A_not_B_score", 
+           "endline_personal_social_score", "combined_easq", "endline_A_not_B_score", 
            "endline_tower_test") 
 
 #Fit models
@@ -217,10 +216,10 @@ for(i in 1:nrow(H4_models)){
 
 
 #Save models
-saveRDS(H4_models, here("models/H4_models.RDS"))
+saveRDS(H4_models, here("telo-development/models/H4_models.RDS"))
 
 #Save results
-saveRDS(H4_res, here("results/unadjusted/H4_res.RDS"))
+saveRDS(H4_res, here("telo-development/results/unadjusted/H4_res.RDS"))
 
 
 #Save plots
