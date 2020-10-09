@@ -27,13 +27,14 @@ efanotb <- read.csv("washb-bangladesh-efanotb-year2.csv")%>%
 eftower <- read.csv("washb-bangladesh-eftower-year2.csv")%>%
   mutate(childid = get_childid(dataid, tchild)) %>% 
   select(childid, endline_tower_test)
-# home1 <- read.dta("washb-bangladesh-home-year1.dta")%>%
-#   mutate(tchild = replace("Target child (first)", tchild, "1")) %>%
-#   mutate(childid = get_childid(dataid, tchild)) %>% 
-#   select(childid, midline_stimulation)
-# home2 <- read.dta("washb-bangladesh-home-year2.dta")%>%
-#   mutate(childid = get_childid(dataid, tchild)) %>% 
-#   select(childid, endline_stimulation)
+home1 <- read.dta("washb-bangladesh-home-year1.dta")%>%
+  mutate(childid = substr(childid, 2, 2)) %>%
+  mutate(childid = get_childid(dataid, childid)) %>%
+  select(childid, midline_stimulation)
+home2 <- read.dta("washb-bangladesh-home-year2.dta")%>%
+  mutate(childid = substr(childid, 2, 2)) %>%
+  mutate(childid = get_childid(dataid, childid)) %>%
+  select(childid, endline_stimulation)
 # cesd1 <- read.csv("washb-bangladesh-momdepression-year1.csv")%>%
 #   mutate(childid = get_childid(dataid, tchild)) %>% 
 #   select(childid, midline_depression)
@@ -47,14 +48,10 @@ motor <- read.csv("washb-bangladesh-motormile-year1.csv")%>%
 
 
 development <- motor %>% full_join(cdi, 'childid') %>% full_join(efanotb, 'childid') %>% 
-  full_join(eftower, "childid") %>% full_join(easq, 'childid') %>%
+  full_join(eftower, "childid") %>% full_join(easq, 'childid') %>% left_join(home1, 'childid') %>%
+  left_join(home2, 'childid') %>%
   mutate(childid = as.integer(childid))
   
-  # cdi %>% inner_join(easq, "childid") %>% inner_join(efanotb, "childid") %>%
-  # inner_join(eftower, 'childid') %>% #inner_join(home1, 'childid') %>% inner_join(home2, 'childid') %>%
-  # inner_join(cesd1, 'childid') %>% inner_join(cesd2, 'childid') %>% inner_join(motor, 'childid') %>%
-  # mutate(childid = as.integer(childid))
-
 telo_dev <- inner_join(d, development, "childid")
 
 # Z-score of telomere measurements

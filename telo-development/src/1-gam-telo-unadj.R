@@ -29,7 +29,8 @@ d <- readRDS(paste0(dropboxDir, "Data/Cleaned/Audrie/bangladesh-ee-telo-developm
 
 #Loop over exposure-outcome pairs
 
-# change in telomere length between y1 and y2
+#### Hypothesis 1 ####
+# change in telomere length between y1 and y2 and development year 2
 Xvars <- c("delta_TS_Z")            
 Yvars <- c("endline_communication_score", "endline_gross_motor_score", 
            "endline_personal_social_score", "combined_easq", "endline_A_not_B_score", 
@@ -79,7 +80,7 @@ saveRDS(H1_res, here("telo-development/results/unadjusted/H1_res.RDS"))
 #saveRDS(H1_plot_data, here("figure-data/H1_unadj_spline_data.RDS"))
 
 
-
+#### Hypothesis 2 ####
 # Telomere at y1 v. development year 2
 Xvars <- c("TS_t2_Z")            
 Yvars <- c("endline_communication_score", "endline_gross_motor_score", 
@@ -130,7 +131,7 @@ saveRDS(H2_res, here("telo-development/results/unadjusted/H2_res.RDS"))
 #saveRDS(H2_plot_data, here("figure-data/H2_unadj_spline_data.RDS"))
 
 
-
+#### Hypothesis 3 ####
 # telomere length at year 1 v. development at year 1
 Xvars <- c("TS_t2_Z")            
 Yvars <- c("endline_CDI_understand", "endline_CDI_say")
@@ -179,6 +180,8 @@ saveRDS(H3_res, here("telo-development/results/unadjusted/H3_res.RDS"))
 #saveRDS(H3_plot_data, here("figure-data/H3_unadj_spline_data.RDS"))
 
 
+
+#### Hypothesis 4 ####
 #Telomere length at year 2 v. development at year 2
 Xvars <- c("TS_t3_Z")            
 Yvars <- c("endline_communication_score", "endline_gross_motor_score", 
