@@ -1,6 +1,7 @@
 library(tidyverse)
 library(haven)
 library(here)
+library(lubridate)
 
 # source(here::here('0-config.R'))
 
@@ -28,10 +29,16 @@ dev <- dev %>%
 
 # select columns from eed data
 stool <- stool %>% 
-  select("childid", 'clusterid', "aat2", "mpo2", "neo2", "stool_ml_date")
+  select("childid", 'hhid', 'clusterid', "aat2", "mpo2", "neo2", "stool_ml_date", 'DOB')
+
+stool$DOB <- ymd(stool$DOB)
+stool$urine_ml_date <- ymd(stool$stool_ml_date)
 
 urine <- urine %>% 
-  select("childid", "hhid", "Mann2", "Lact2", 'LM2', 'urine_ml_date')
+  select("childid", "hhid", 'clusterid',"Mann2", "Lact2", 'LM2', 'urine_ml_date', 'DOB')
+
+urine$DOB <- ymd(urine$DOB)
+urine$urine_ml_date <- ymd(urine$urine_ml_date)
 
 
 #######################################################
@@ -47,19 +54,64 @@ dev <- dev %>%
 
 # indicator variable of whether child was older than midline
 motor <- motor %>% 
-  mutate(age_midline = case_when(childage_devmm >= 17 ~ 1,
+  mutate(age_midline_m = case_when(childage_devmm >= 17 ~ 1,
                                  childage_devmm < 17 ~ 0)
   )
 
 dev <- dev %>% 
-  mutate(age_midline = case_when(childage_mo >= 22 ~ 1,
-                                 childage_mo < 22 ~ 0)
+  mutate(age_midline_d = case_when(childage_dev >= 22 ~ 1,
+                                   childage_dev < 22 ~ 0)
   )
 
 # % of children with development data collected after midline
 mean(motor$age_midline)
 mean(dev$age_midline, na.rm = TRUE)
 
+
+#######################################################
+# age at midline (eed)
+#######################################################
+
+urine$age_urine_ml <- interval(urine$DOB, urine$urine_ml_date) / months(1)
+stool$age_urine_ml <- interval(stool$DOB, stool$stool_ml_date) / months(1)
+
+
 #######################################################
 # merge datasets
 #######################################################
+
+biomarkers <- full_join(stool, urine)
+
+devel <- full_join(motor, dev)
+
+all_dta <- full_join(biomarkers, devel)
+
+
+#######################################################
+# numbers
+#######################################################
+devel %>% 
+  filter(!is.na(age_midline_m)) %>% 
+  summarize(N=n())
+
+devel %>% 
+  filter() %>% 
+  summarise_all(N=n())
+
+
+#######################################################
+# comparison
+#######################################################
+all_dta %>% 
+  filter(age_urine_ml < childage_devmm) %>% 
+  summarize(N = n())
+  
+
+all_dta <- all_dta %>% 
+  filter(!is.na(age_urine_ml), 
+         !is.na(childage_devmm))
+
+sum(all_dta$childage_devmm > all_dta$age_urine_ml)
+
+
+
