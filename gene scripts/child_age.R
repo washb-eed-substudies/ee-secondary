@@ -29,16 +29,19 @@ dev <- dev %>%
 
 # select columns from eed data
 stool <- stool %>% 
-  select("childid", 'hhid', 'clusterid', "aat2", "mpo2", "neo2", "stool_ml_date", 'DOB')
+  select("childid", 'hhid', 'clusterid', "aat2", "mpo2", "neo2", 
+         'stool_ml_date', "stool_el_date", 'DOB')
 
 stool$DOB <- ymd(stool$DOB)
 stool$urine_ml_date <- ymd(stool$stool_ml_date)
 
 urine <- urine %>% 
-  select("childid", "hhid", 'clusterid',"Mann2", "Lact2", 'LM2', 'urine_ml_date', 'DOB')
+  select("childid", "hhid", 'clusterid',"Mann2", "Lact2", 'LM2', 
+         'urine_ml_date', 'urine_el_date', 'DOB')
 
 urine$DOB <- ymd(urine$DOB)
 urine$urine_ml_date <- ymd(urine$urine_ml_date)
+urine$urine_el_date <- ymd(urine$urine_el_date)
 
 
 #######################################################
@@ -50,7 +53,7 @@ summary(dev$childage_dev / 365 * 12)[3:4] # in days
 
 # convert days to months
 dev <- dev %>% 
-  mutate(childage_mo = childage_dev / 365 * 12)
+  mutate(childage_mo_dev = childage_dev / 365 * 12)
 
 # indicator variable of whether child was older than midline
 motor <- motor %>% 
@@ -75,16 +78,23 @@ mean(dev$age_midline, na.rm = TRUE)
 urine$age_urine_ml <- interval(urine$DOB, urine$urine_ml_date) / months(1)
 stool$age_urine_ml <- interval(stool$DOB, stool$stool_ml_date) / months(1)
 
+#######################################################
+# age at endline (eed)
+#######################################################
+
+urine$age_urine_el <- interval(urine$DOB, urine$urine_el_date) / months(1)
+stool$age_urine_el <- interval(stool$DOB, stool$stool_el_date) / months(1)
+
 
 #######################################################
 # merge datasets
 #######################################################
 
-biomarkers <- full_join(stool, urine)
+biomarkers <- full_join(stool, urine, on = c('childid', 'hhid', 'clusterid'))
 
-devel <- full_join(motor, dev)
+devel <- full_join(motor, dev, on = c('childid', 'hhid', 'clusterid'))
 
-all_dta <- full_join(biomarkers, devel)
+all_dta <- full_join(biomarkers, devel, on = c('childid', 'hhid', 'clusterid'))
 
 
 #######################################################
@@ -112,6 +122,26 @@ all_dta <- all_dta %>%
          !is.na(childage_devmm))
 
 sum(all_dta$childage_devmm > all_dta$age_urine_ml)
+
+
+all_dta %>% 
+  filter(age_urine_el < childage_mo_dev) %>% 
+  summarize(N = n())
+
+
+all_dta <- all_dta %>% 
+  filter(!is.na(age_urine_el), 
+         !is.na(childage_mo_dev))
+
+sum(all_dta$childage_mo_dev > all_dta$age_urine_el)
+
+all_dta <- all_dta %>% 
+  mutate(ml_causal = ifelse(age_urine_ml < childage_devmm, 1, 0),
+         el_causal = ifelse(age_urine_el < childage_mo_dev, 1, 0)) 
+
+mean(all_dta$ml_causal, na.rm = TRUE)
+mean(all_dta$el_causal, na.rm = TRUE)
+
 
 
 
