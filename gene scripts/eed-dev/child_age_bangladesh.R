@@ -5,11 +5,11 @@ rm(list = ls())
 
 set_here(path = '..')
 
-motor_1 <- read.csv('../2-child-development-outcomes-datasets 2/washb-bangladesh-motormile-year1.csv')
-easq_2 <- read.csv('../2-child-development-outcomes-datasets 2/washb-bangladesh-easq-year2.csv')
+motor_1 <- read.csv(here('../2-child-development-outcomes-datasets 2/washb-bangladesh-motormile-year1.csv'))
+easq_2 <- read.csv(here('../2-child-development-outcomes-datasets 2/washb-bangladesh-easq-year2.csv'))
 
-urine <- read.csv('../data/BD-EE-urine.csv')
-stool <- read.csv('../data/BD-EE-stool.csv')
+urine <- read.csv(here('../data/BD-EE-urine.csv'))
+stool <- read.csv(here('../data/BD-EE-stool.csv'))
 
 
 # ---
@@ -43,28 +43,34 @@ easq_2 %>%
 # ---
 
 urine <- urine %>% 
-  select('childNo', 'agem2', "agem3", "month3", "DOB", 
+  select('childNo', 'agem1', 'agem2', "agem3", "month3", "DOB", 
          "sex", "clusterid", "birthord", "childid") %>% 
-  rename(urine_agemo_ml = 'agem2',
+  rename(urine_agemo_bl = 'agem1',
+         urine_agemo_ml = 'agem2',
          urine_agemo_el = 'agem3')
 
 stool <- stool %>% 
-  select('childNo', 'agem2', "agem3", "month3", "DOB", 
+  select('childNo', 'agem1', 'agem2', "agem3", "month3", "DOB", 
          "sex", "clusterid", "birthord", "childid") %>% 
-  rename(stool_agemo_ml = 'agem2',
+  rename(stool_agemo_bl = 'agem1',
+         stool_agemo_ml = 'agem2',
          stool_agemo_el = 'agem3')
 
 # ---
+# YEAR 0
+summary(urine$urine_agemo_bl)
+summary(stool$stool_agemo_bl)
+
 # YEAR 1
-mean(urine$urine_agemo_ml, na.rm = TRUE)
-mean(stool$stool_agemo_ml, na.rm = TRUE)
-mean(motor_1$motor_agemo)
+summary(urine$urine_agemo_ml, na.rm = TRUE)
+summary(stool$stool_agemo_ml, na.rm = TRUE)
+summary(motor_1$motor_agemo)
 
 
 # YEAR 2
-mean(urine$urine_agemo_el, na.rm = TRUE)
-mean(stool$stool_agemo_el, na.rm = TRUE)
-mean(easq_2$easq_agemo)
+summary(urine$urine_agemo_el, na.rm = TRUE)
+summary(stool$stool_agemo_el, na.rm = TRUE)
+summary(easq_2$easq_agemo)
 
 
 
