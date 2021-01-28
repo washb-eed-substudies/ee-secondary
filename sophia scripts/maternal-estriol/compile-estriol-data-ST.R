@@ -8,7 +8,7 @@ setwd('C:/Users/Sophia/Box/WASHB - Data Cleaning/Maternal Estriol/Untouched')
 library(readxl)
 
 # list of files names 
-files <- list.files(getwd())[4:15]
+files <- list.files(getwd())
 files
 
 # create vector of ranges of cells for each file
@@ -26,7 +26,7 @@ for (i in 1:length(files)){
   if(i==4){lab_tech="ZIA_SUNNY"}
   print(lab_tech)
   
-  if(grepl("Pilot", files[i])){run <- paste("P",str_extract(files[i], "[0-9]+"), sep="")}
+  if(grepl("Pilot", files[i])){run <- paste("Pilot",str_extract(files[i], "[1-9]+"), sep="")}
   else{run <- str_extract(files[i], "[0-9]+")}
   
   # read in data
@@ -72,9 +72,9 @@ for (i in 1:length(files)){
   temp$run <- run
   temp$lab_tech <- lab_tech
   
-  temp <- temp %>% rename(sample=`Name`, cond_dil=`Conc/Dil`, abs_450=`450`,
+  temp <- temp %>% rename(sample=`Name`, conc_dil=`Conc/Dil`, abs_450=`450`,
                           conc=`[Concentration]`) %>%
-    select(date, assay, run, sample, cond_dil, abs_450, conc, conc_avg, lab_tech)
+    select(date, assay, run, sample, conc_dil, abs_450, conc, conc_avg, lab_tech)
   
   print(head(temp))
   # bind to old data
